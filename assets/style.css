@@ -34,7 +34,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { max-width: 100%; overflow-x: hidden; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body {
   margin: 0;
   min-height: 100vh;
@@ -42,6 +42,7 @@ body {
   background: var(--paper);
   font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
   transition: color .38s ease, background-color .38s ease;
 }
 button, input { font: inherit; }
@@ -98,6 +99,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .pig-quote { margin: 40px 0 0; color: #76684f; font-family: var(--cn-serif); font-size: 12px; }
 
 .hero-specimen {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   min-height: 515px;
   padding: 48px 44px 38px;
   position: relative;
@@ -106,6 +110,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   align-items: center;
   justify-content: center;
   border: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  overflow: hidden;
   background: var(--plate-bg);
   color: var(--plate-ink);
   box-shadow: 24px 28px 0 var(--plate-shadow);
@@ -121,9 +129,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .hero-specimen::before { inset: 20px auto auto 20px; border-top: 1px solid var(--amber); border-left: 1px solid var(--amber); }
 .hero-specimen::after { inset: auto 20px 20px auto; border-right: 1px solid var(--amber); border-bottom: 1px solid var(--amber); }
 .plate-rule { width: 1px; height: 42px; background: var(--amber); margin-bottom: 24px; }
-.plate-logo { width: min(190px, 68%); height: 190px; margin-bottom: 22px; }
-.plate-logo img { width: 100%; height: 100%; display: block; object-fit: contain; }
-.theme-hint { position: absolute; top: 22px; right: 24px; color: var(--amber-pale); font-family: var(--serif); font-size: 7px; letter-spacing: .15em; opacity: .62; }
+.plate-logo { width: min(190px, 68%); height: 190px; min-width: 0; margin-bottom: 22px; position: relative; display: block; flex: 0 0 190px; overflow: hidden; }
+.plate-logo img { width: 100%; height: 100%; max-width: 100%; position: absolute; inset: 0; display: block; object-fit: contain; transition: opacity .28s ease; }
+.logo-night { opacity: 0; }
+:root[data-theme="night"] .logo-paper { opacity: 0; }
+:root[data-theme="night"] .logo-night { opacity: 1; }
+.theme-hint { position: absolute; top: 22px; right: 24px; color: var(--amber-pale); font-family: var(--serif); font-size: 8px; line-height: 1; letter-spacing: .15em; white-space: nowrap; opacity: .62; }
 .plate-kicker { margin: 0; color: var(--amber-pale); font-family: var(--serif); font-size: 11px; letter-spacing: .28em; }
 .plate-number { margin: 9px 0 0; font-family: var(--serif); font-size: 55px; font-weight: 400; line-height: 1; }
 .plate-name { margin: 16px 0 32px; font-family: var(--serif); font-size: 13px; letter-spacing: .24em; }
@@ -229,7 +240,8 @@ dialog::backdrop { background: rgba(16, 28, 39, .62); backdrop-filter: blur(4px)
   .lede { font-size: 13px; }
   .hero-actions { align-items: flex-start; flex-direction: column; gap: 15px; }
   .hero-specimen { min-height: 435px; padding-inline: 35px; box-shadow: 14px 16px 0 var(--paper-deep); }
-  .plate-logo { width: 150px; height: 150px; }
+  .plate-logo { width: 150px; height: 150px; flex-basis: 150px; }
+  .theme-hint { top: 18px; right: 20px; font-size: 7px; }
   .status-strip { grid-template-columns: repeat(2, 1fr); margin-bottom: 80px; }
   .status-strip div:nth-child(2) { border-right: 0; }
   .status-strip div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
