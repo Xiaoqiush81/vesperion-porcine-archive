@@ -12,8 +12,6 @@ function saveTheme(theme) {
 }
 
 export function initTheme(toggle) {
-  const logo = toggle.querySelector('img');
-
   function apply(theme, persist = true) {
     const next = theme in THEMES ? theme : 'paper';
     const isNight = next === 'night';
@@ -21,7 +19,6 @@ export function initTheme(toggle) {
     document.querySelector('meta[name="theme-color"]').content = THEMES[next];
     toggle.setAttribute('aria-pressed', String(isNight));
     toggle.setAttribute('aria-label', isNight ? '切换为象牙白主题' : '切换为深蓝主题');
-    logo.src = isNight ? logo.dataset.nightSrc : 'assets/vesperion-transfer-logo.svg';
     if (persist) saveTheme(next);
   }
 
