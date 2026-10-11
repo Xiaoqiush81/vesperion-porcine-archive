@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#071a30">
+  <meta name="theme-color" content="#f3efe5">
   <meta name="description" content="PIGDEX 081 — 维斯珀里昂猪类与异常现象图鉴">
   <title>PIGDEX 081 · 维斯珀里昂猪类图鉴</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('pigdex-theme')||'paper'}catch{document.documentElement.dataset.theme='paper'}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -37,14 +38,17 @@
         </div>
         <p class="pig-quote" id="pigQuote">“可猫可猪；若必须二选一，仍然是猪。”</p>
       </div>
-      <div class="hero-specimen" aria-label="081号馆藏铭牌">
+      <button class="hero-specimen" id="themeToggle" type="button" aria-label="切换为深蓝主题" aria-pressed="false">
+        <span class="theme-hint" aria-hidden="true">TAP TO INVERT · 点击换色</span>
         <div class="plate-rule"></div>
-        <img class="plate-logo" src="assets/vesperion-transfer-logo.svg" alt="VESPERION 家徽">
-        <p class="plate-kicker">VESPERION MANOR</p>
-        <p class="plate-number">№ 081</p>
-        <p class="plate-name">KEW AMBERIA</p>
+        <picture class="plate-logo">
+          <img src="assets/vesperion-transfer-logo.svg" data-night-src="assets/vesperion-transfer-logo-ivory.svg" alt="VESPERION 家徽" width="404" height="404">
+        </picture>
+        <span class="plate-kicker">VESPERION MANOR</span>
+        <span class="plate-number">№ 081</span>
+        <span class="plate-name">KEW AMBERIA</span>
         <div class="plate-caption"><span>PORCINE VARIANT</span><span>UNCONTAINED</span></div>
-      </div>
+      </button>
     </section>
 
     <section class="status-strip" aria-label="图鉴统计">
@@ -87,6 +91,6 @@
     <div id="dialogContent"></div>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script src="assets/app.js?v=20261011-31" defer></script>
+  <script type="module" src="assets/js/main.js?v=20261011-theme-1"></script>
 </body>
 </html>
