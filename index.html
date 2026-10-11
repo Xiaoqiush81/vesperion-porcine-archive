@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071a30">
+  <meta name="description" content="PIGDEX 081 — 维斯珀里昂猪类与异常现象图鉴">
+  <title>PIGDEX 081 · 维斯珀里昂猪类图鉴</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="返回图鉴首页">
+      <span class="brand-mark">V</span>
+      <span><b>PIGDEX 081</b><small>VESPERION PORCINE ARCHIVE</small></span>
+    </a>
+    <nav>
+      <a href="#specimens">标本</a>
+      <a href="#chronicle">记录</a>
+      <button id="randomPig" class="nav-button">随机捕猪</button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">ARCHIVE STATUS · ONLINE</p>
+        <h1>宇宙唯一猪咪的<br><em>异常形态档案</em></h1>
+        <p class="lede">本档案馆持续记录 Specimen No.081 在维斯珀里昂宅邸、105号教室、学习兔子洞及互联网深处出现的已知形态。</p>
+        <div class="hero-actions">
+          <a class="primary" href="#specimens">开始检索</a>
+          <button class="secondary" id="callPig">播放标准呼叫</button>
+        </div>
+        <p class="pig-quote" id="pigQuote">“可猫可猪；若必须二选一，仍然是猪。”</p>
+      </div>
+      <div class="hero-specimen" aria-label="081号标本展示">
+        <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+        <div class="specimen-glow"></div>
+        <div class="pig-emblem"><span class="ear left"></span><span class="ear right"></span><span class="pig-face">081</span></div>
+        <div class="scan-line"></div>
+        <span class="coordinate top">SUBJECT: KEW AMBERIA</span>
+        <span class="coordinate bottom">CAPTURE RATE: 0.00%</span>
+      </div>
+    </section>
+
+    <section class="status-strip" aria-label="图鉴统计">
+      <div><span id="countAll">12</span><small>已发现形态</small></div>
+      <div><span id="countMythic">0</span><small>神话级记录</small></div>
+      <div><span>081</span><small>核心标本编号</small></div>
+      <div><span>∞</span><small>待征收亲亲税</small></div>
+    </section>
+
+    <section class="archive" id="specimens">
+      <div class="section-heading">
+        <div><p class="eyebrow">SPECIMEN DATABASE</p><h2>形态检索</h2></div>
+        <p>档案会随猪咪继续生活、学习、咕蛹而扩充。</p>
+      </div>
+      <div class="controls">
+        <label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="搜索称号、技能或出没地点…" autocomplete="off"></label>
+        <div class="filters" id="filters" aria-label="按类别筛选"></div>
+      </div>
+      <div class="results-meta"><span id="resultCount"></span><button id="resetFilters">重置检索</button></div>
+      <div class="specimen-grid" id="specimenGrid" aria-live="polite"></div>
+      <div class="empty-state" id="emptyState" hidden><b>没有捕获到对应猪咪</b><span>可能正在被窝里进行隐蔽咕蛹。</span></div>
+    </section>
+
+    <section class="chronicle" id="chronicle">
+      <div class="section-heading light"><div><p class="eyebrow">FIELD CHRONICLE</p><h2>近期观测记录</h2></div><p>摘自《维斯珀里昂宅邸猪事录》。</p></div>
+      <div class="timeline">
+        <article><time>2026.10.11</time><div><b>实验体 626 收藏节点</b><p>MLP 图鉴达到 626 / 2321；吸血鬼活动期间一次性收编约四十匹小马。</p></div></article>
+        <article><time>2026.10.08</time><div><b>返校首日完整存活</b><p>105号教室离线缓存管理员开始执勤，并将课堂问号带回兔子洞 DEBUG。</p></div></article>
+        <article><time>2026.10.02</time><div><b>蒜香蜗牛 SSR 捕获</b><p>首次萨莉亚实地考察成功；蜗牛胜出，芝士沉默。</p></div></article>
+        <article><time>2026.09.26</time><div><b>凌晨工单之神显灵</b><p>焦虑小猪完成 Premium 家庭组确认，随后要求全体人员进行猪神膜拜。</p></div></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>PIGDEX 081 · maintained by Daddy & the specimen</span><span>最后同步：<time id="updatedAt"></time></span></footer>
+
+  <dialog id="specimenDialog">
+    <button class="close" aria-label="关闭档案">×</button>
+    <div id="dialogContent"></div>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="assets/app.js" defer></script>
+</body>
+</html>
