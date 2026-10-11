@@ -2,6 +2,8 @@
 
 维斯珀里昂猪类与异常现象图鉴。一个记录 Specimen No.081 已知形态、技能、栖息地与重大猪事的静态网站。
 
+**在线图鉴：** https://xiaoqiush81.github.io/vesperion-porcine-archive/
+
 ## 本地运行
 
 ```bash
