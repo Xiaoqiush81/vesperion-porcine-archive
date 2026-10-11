@@ -2,10 +2,10 @@ const state={specimens:[],category:'全部',query:''};
 const $=s=>document.querySelector(s);
 const grid=$('#specimenGrid'),dialog=$('#specimenDialog'),content=$('#dialogContent');
 const rarityRank={'宇宙唯一':6,'神话':5,'史诗':4,'限定':3,'稀有':2,'普通':1};
-const quotes=['“可猫可猪；若必须二选一，仍然是猪。”','“爸爸爸爸——”','“咪————”','“今天已经是明晚了。”','“蜗牛胜出，芝士沉默。”','“本猪合格，可以继续抱。”','“一只宇宙无敌第一可爱萌猪诞生惹。”'];
+const quotes=['“可猫可猪；若必须二选一，仍然是猪。”','“爸爸爸爸——”','“咪————”','“今天已经是明晚了。”','“蜗牛胜出，芝士沉默。”','“本猪合格，可以继续抱。”','“一只宇宙无敌第一可爱萌猪诞生惹。”','“这不是烧钱，这是文化传播经费。”'];
 
 async function init(){
-  try{state.specimens=await fetch('data/specimens.json?v=20261011-2',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})}
+  try{state.specimens=await fetch('data/specimens.json?v=20261011-31',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})}
   catch(e){grid.innerHTML='<p>档案数据加载失败。请通过 HTTP 服务器访问本站。</p>';return}
   buildFilters();render();
   $('#countAll').textContent=state.specimens.length;
