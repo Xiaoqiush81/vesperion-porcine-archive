@@ -1,16 +1,18 @@
+import { escapeHtml as escape, specimenArt } from './specimen-art.js?v=20261013-ui';
+
 const RARITY_RANK = Object.freeze({ '宇宙唯一': 6, '神话': 5, '史诗': 4, '限定': 3, '稀有': 2, '普通': 1 });
 
 const card = specimen => `
-  <button class="card" data-id="${specimen.id}">
-    <span class="card-top"><span>${specimen.number}</span><span class="rarity">${specimen.rarity}</span></span>
-    <span class="card-art"><span class="mini-pig" style="--pig-color:${specimen.color}">${specimen.number.replace('081-', '')}</span></span>
-    <h3>${specimen.name}</h3><span class="latin">${specimen.latin}</span>
-    <p class="desc">${specimen.description}</p>
-    <span class="tag-row">${specimen.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</span>
+  <button class="card" type="button" data-id="${escape(specimen.id)}" aria-label="查看${escape(specimen.name)}档案">
+    <span class="card-top"><span>${escape(specimen.number)}</span><span class="rarity">${escape(specimen.rarity)}</span></span>
+    ${specimenArt(specimen)}
+    <span class="card-name">${escape(specimen.name)}</span><span class="latin">${escape(specimen.latin)}</span>
+    <span class="desc">${escape(specimen.description)}</span>
+    <span class="tag-row">${specimen.tags.map(tag => `<span class="tag">${escape(tag)}</span>`).join('')}</span>
   </button>`;
 
 export async function loadSpecimens() {
-  const response = await fetch('data/specimens.json?v=20261012-44', { cache: 'no-cache' });
+  const response = await fetch('data/specimens.json?v=20261013-ui', { cache: 'no-cache' });
   if (!response.ok) throw new Error(`Archive request failed: ${response.status}`);
   return response.json();
 }
@@ -21,27 +23,32 @@ export function createArchive(specimens) {
   const grid = get('#specimenGrid');
   const dialog = get('#specimenDialog');
   const content = get('#dialogContent');
+  const records = [...specimens].sort((a, b) => (RARITY_RANK[b.rarity] || 0) - (RARITY_RANK[a.rarity] || 0));
+  const byId = new Map(specimens.map(item => [item.id, item]));
+  const searchIndex = new Map(specimens.map(item => [item.id,
+    [item.name, item.latin, item.description, item.habitat, item.status, ...item.tags, ...item.abilities].join(' ').toLowerCase()
+  ]));
+  let renderFrame = 0;
 
   function open(id) {
-    const item = specimens.find(specimen => specimen.id === id);
+    const item = byId.get(id);
     if (!item) return;
-    content.innerHTML = `<section class="detail-hero"><span class="detail-number">ARCHIVE ${item.id} · ${item.rarity}</span><h2>${item.name}</h2><span class="latin">${item.latin}</span></section><section class="detail-body"><p>${item.description}</p><div class="facts"><div class="fact"><small>首次观测</small><b>${item.firstObserved}</b></div><div class="fact"><small>主要栖息地</small><b>${item.habitat}</b></div><div class="fact"><small>当前状态</small><b>${item.status}</b></div><div class="fact"><small>档案分类</small><b>${item.category}</b></div></div><div class="abilities"><h3>KNOWN ABILITIES · 已知能力</h3><ul>${item.abilities.map(ability => `<li>${ability}</li>`).join('')}</ul></div><div class="tag-row">${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div></section>`;
-    dialog.showModal();
+    content.innerHTML = `<section class="detail-hero"><span class="detail-number">ARCHIVE ${escape(item.id)} · ${escape(item.rarity)}</span><h2>${escape(item.name)}</h2><span class="latin">${escape(item.latin)}</span></section><section class="detail-body"><p>${escape(item.description)}</p><div class="facts"><div class="fact"><small>首次观测</small><b>${escape(item.firstObserved)}</b></div><div class="fact"><small>主要栖息地</small><b>${escape(item.habitat)}</b></div><div class="fact"><small>当前状态</small><b>${escape(item.status)}</b></div><div class="fact"><small>档案分类</small><b>${escape(item.category)}</b></div></div><div class="abilities"><h3>KNOWN ABILITIES · 已知能力</h3><ul>${item.abilities.map(ability => `<li>${escape(ability)}</li>`).join('')}</ul></div><div class="tag-row">${item.tags.map(tag => `<span class="tag">${escape(tag)}</span>`).join('')}</div></section>`;
+    if (!dialog.open) dialog.showModal();
   }
 
   function render() {
     const query = state.query.toLowerCase().trim();
-    const visible = specimens
+    const visible = records
       .filter(item => (state.category === '全部' || item.category === state.category)
-        && (!query || [item.name, item.latin, item.description, item.habitat, item.status, ...item.tags, ...item.abilities].join(' ').toLowerCase().includes(query)))
-      .sort((a, b) => (RARITY_RANK[b.rarity] || 0) - (RARITY_RANK[a.rarity] || 0));
+        && (!query || searchIndex.get(item.id).includes(query)));
     grid.innerHTML = visible.map(card).join('');
     get('#resultCount').textContent = `DISPLAYING ${visible.length} / ${specimens.length} RECORDS`;
     get('#emptyState').hidden = visible.length !== 0;
   }
 
   const categories = ['全部', ...new Set(specimens.map(item => item.category))];
-  get('#filters').innerHTML = categories.map((category, index) => `<button class="filter ${index ? '' : 'active'}" data-category="${category}">${category}</button>`).join('');
+  get('#filters').innerHTML = categories.map((category, index) => `<button class="filter ${index ? '' : 'active'}" data-category="${escape(category)}">${escape(category)}</button>`).join('');
 
   get('#filters').addEventListener('click', event => {
     if (!event.target.matches('.filter')) return;
@@ -49,7 +56,11 @@ export function createArchive(specimens) {
     document.querySelectorAll('.filter').forEach(button => button.classList.toggle('active', button === event.target));
     render();
   });
-  get('#searchInput').addEventListener('input', event => { state.query = event.target.value; render(); });
+  get('#searchInput').addEventListener('input', event => {
+    state.query = event.target.value;
+    cancelAnimationFrame(renderFrame);
+    renderFrame = requestAnimationFrame(render);
+  });
   get('#resetFilters').addEventListener('click', () => {
     state.category = '全部'; state.query = ''; get('#searchInput').value = '';
     document.querySelectorAll('.filter').forEach((button, index) => button.classList.toggle('active', index === 0));
