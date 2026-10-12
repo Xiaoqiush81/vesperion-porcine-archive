@@ -10,13 +10,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261011-safari-1">
+  <link rel="stylesheet" href="assets/style.css?v=20261013-ui">
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="返回图鉴首页">
-      <img class="brand-mark" src="assets/vesperion-transfer-logo.svg" alt="VESPERION">
+      <span class="brand-mark" aria-hidden="true">
+        <img class="brand-paper" src="assets/vesperion-transfer-logo-ivory.svg" alt="" width="42" height="49">
+        <img class="brand-night" src="assets/vesperion-transfer-logo.svg" alt="" width="42" height="49">
+      </span>
       <span><b>PIGDEX 081</b><small>VESPERION PORCINE ARCHIVE</small></span>
     </a>
     <nav>
@@ -40,15 +43,15 @@
       </div>
       <button class="hero-specimen" id="themeToggle" type="button" aria-label="切换为深蓝主题" aria-pressed="false">
         <span class="theme-hint" aria-hidden="true">TAP TO INVERT · 点击换色</span>
-        <div class="plate-rule"></div>
-        <picture class="plate-logo">
+        <span class="plate-rule" aria-hidden="true"></span>
+        <span class="plate-logo" aria-hidden="true">
           <img class="logo-paper" src="assets/vesperion-transfer-logo.svg" alt="VESPERION 家徽" width="404" height="404">
           <img class="logo-night" src="assets/vesperion-transfer-logo-ivory.svg" alt="" width="404" height="404" aria-hidden="true">
-        </picture>
+        </span>
         <span class="plate-kicker">VESPERION MANOR</span>
         <span class="plate-number">№ 081</span>
         <span class="plate-name">KEW AMBERIA</span>
-        <div class="plate-caption"><span>PORCINE VARIANT</span><span>UNCONTAINED</span></div>
+        <span class="plate-caption"><span>PORCINE VARIANT</span><span>UNCONTAINED</span></span>
       </button>
     </section>
 
@@ -94,6 +97,6 @@
     <div id="dialogContent"></div>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261012-44"></script>
+  <script type="module" src="assets/js/main.js?v=20261013-ui"></script>
 </body>
 </html>
