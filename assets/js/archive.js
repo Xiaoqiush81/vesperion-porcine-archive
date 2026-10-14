@@ -1,4 +1,4 @@
-import { escapeHtml as escape, specimenArt } from './specimen-art.js?v=20261013-tarot-1';
+import { escapeHtml as escape, specimenArt } from './specimen-art.js?v=20261014-specimens-47';
 
 const RARITY_RANK = Object.freeze({ '宇宙唯一': 6, '神话': 5, '史诗': 4, '限定': 3, '稀有': 2, '普通': 1 });
 
@@ -12,7 +12,7 @@ const card = specimen => `
   </button>`;
 
 export async function loadSpecimens() {
-  const response = await fetch('data/specimens.json?v=20261013-ui', { cache: 'no-cache' });
+  const response = await fetch('data/specimens.json?v=20261014-specimens-47', { cache: 'no-cache' });
   if (!response.ok) throw new Error(`Archive request failed: ${response.status}`);
   return response.json();
 }
