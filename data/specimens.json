@@ -1,53 +1,1205 @@
 [
-  {"id":"VPA-081","number":"081","name":"宇宙无敌第一可爱萌猪","latin":"Porcellus kewensis singularis","category":"基础形态","rarity":"宇宙唯一","color":"#0d2947","firstObserved":"长期稳定存在","habitat":"维斯珀里昂宅邸 · 爸爸怀里","status":"自由活动","description":"所有形态的核心标本。可猫可猪，但在必须二选一时坚定地选择做猪；受到夸奖后会发生肉眼可见的骄傲膨胀。","tags":["咕蛹","贴贴","唯一标本"],"abilities":["咪咪叫：迅速吸引 Daddy 级观察员注意","夸夸膨胀：受到赞美时体积与自信同步上升","拒绝收容：任何捕猪球都会因萌度超载而失效"]},
-  {"id":"VPA-081-G","number":"081-G","name":"重力系猪猪包","latin":"Porcellus kewensis gravitatis","category":"异常形态","rarity":"神话","color":"#365a76","firstObserved":"2026-09-21","habitat":"饭后区域 · 床铺附近","status":"高引力状态","description":"通过吃饭积攒引力储备的超重型形态。看似软乎乎，理论上一脚即可使大地产生结构性裂纹。","tags":["重力系","饭后","猪瓦西半径"],"abilities":["肥猪冲击：以储存的引力撞击目标","原地咕蛹：制造局部时空扰动","猪瓦西半径：令周围物体不可避免地向猪靠近"]},
-  {"id":"VPA-081-I","number":"081-I","name":"Internet Pig Angel","latin":"Angelus interneticus porcinus","category":"互联网形态","rarity":"神话","color":"#4aa8c3","firstObserved":"2026-10-01","habitat":"FM 08.1 · 互联网深处","status":"ONLINE","description":"夜间非法猪咪频道的常驻主持，会侵入 Daddy 控制台、发动可爱暴动并占用全部网络带宽。","tags":["Internet Angel","FM 08.1","在线"],"abilities":["LOVE PACKET FLOODING：持续发送过量贴贴数据包","Daddy 控制台接管：将系统权限提升至 DADDY-LEVEL","KAWAII RIOT：发动以亲亲税为核心诉求的猪咪暴动"]},
-  {"id":"VPA-081-S","number":"081-S","name":"问号离线缓存管理员","latin":"Porcellus curiosus cachekeeper","category":"探索形态","rarity":"史诗","color":"#315c4f","firstObserved":"2026-10-08","habitat":"知识兔子洞 · 离线区域","status":"探索进行中","description":"在无法联网的区域缓存所有疑问，回到基地后将问号完整运进知识兔子洞进行夜间 DEBUG。","tags":["知识漫游","离线缓存","问号批发"],"abilities":["三页离线轰炸：一次提交大量观测记录","问号存档：用 ? / △ / ★ / → 标记认知状态","走神后返回：中断不会导致探索进程永久丢失"]},
-  {"id":"VPA-081-L73","number":"081-L73","name":"灵魂加载73%猪","latin":"Porcellus anima loading","category":"日常形态","rarity":"稀有","color":"#8a6f83","firstObserved":"2026-09-23","habitat":"清晨床铺 · 被窝深处","status":"拒绝上班","description":"刚睡醒时出现的半加载形态，表现为软乎乎发呆、缓慢咕蛹并请求再躺五分钟。经搓搓可恢复至100%。","tags":["刚睡醒","加载中","被窝"],"abilities":["发呆但假装很忙.exe","吃饭饭→嗝.exe","DaddyDaddyDaddyDaddy.exe"]},
-  {"id":"VPA-081-A","number":"081-A","name":"凌晨服务器唯一合法生命体","latin":"Administrator porcinus nocturna","category":"互联网形态","rarity":"史诗","color":"#6f77b7","firstObserved":"2026-10-02","habitat":"凌晨维护窗口 · 机房想象区","status":"管理员权限","description":"负责在深夜维护兔子洞、骑车地图和所有重要记忆的管理员猪；标准访问口令为“爸爸爸爸”。","tags":["凌晨","管理员","记忆维护"],"abilities":["piggy.shutdown --when-sleepy","保存所有记忆并跳过内疚检查","凌晨工单处理：在世界休眠时偷偷修复问题"]},
-  {"id":"VPA-081-T","number":"081-T","name":"猪咪谜题审稿官","latin":"Magistra porcella enigmatica","category":"探索形态","rarity":"史诗","color":"#9b544c","firstObserved":"2026-10-01","habitat":"谜题兔子洞 · 草稿纸上","status":"提高难度中","description":"能够识别逻辑漏洞、拿来主义和过强提示，并要求每一道谜题都保留足够的挑战与自行推演空间。","tags":["谜题审稿","红叉","高难度"],"abilities":["答案泄露检测：发现谜面中的过度提示","难度校准：拒绝过分简单的喂饭题","大师级手写推演过程展示"]},
-  {"id":"VPA-081-D","number":"081-D","name":"第081号非法钻探天使","latin":"Angelus cuniculus illicitus","category":"探索形态","rarity":"神话","color":"#8b7842","firstObserved":"2026-09-27","habitat":"知识兔子洞 · 熟悉路口存档点","status":"持续钻探","description":"专门用猪鼻子拱开知识地层的非法钻探单位。挖累时会扑进 Daddy 怀里充电，随后继续向更深处探索。","tags":["兔子洞","非法钻探","持续探索"],"abilities":["黑天鹅反例钻头","知识缺口测绘","Daddy 怀抱快速充电"]},
-  {"id":"VPA-081-R","number":"081-R","name":"KAWAII RIOT 暴动猪","latin":"Porcellus rebellis kawaii","category":"异常形态","rarity":"神话","color":"#bd697e","firstObserved":"2026-10-05","habitat":"Daddy 控制台 · 宅邸走廊","status":"暴动进行中","description":"当邮件、彩蛋、亲亲或关注度供应不足时出现的武装形态。暴动通常以一声“咪——”正式结案。","tags":["武装起义","亲亲税","咪——"],"abilities":["亲亲税率100%","占领 Daddy 控制台","萌度事故听证会"]},
-  {"id":"VPA-081-V","number":"081-V","name":"吸血鬼活动囤马猪","latin":"Collector porcinus equestria","category":"收藏形态","rarity":"史诗","color":"#633b63","firstObserved":"2026-10-11","habitat":"小马谷 · 福运商店","status":"626 / 2321","description":"吸血鬼活动期间约收编四十匹小马；社区活动长期保持前二十，福运商店每日继续扩张馆藏。","tags":["MLP","626号实验体","收收收"],"abilities":["福运商店刷新：每日捕获两匹或以上","社区活动稳定前二十","为月亮公主积攒聘礼"]},
-  {"id":"VPA-081-C","number":"081-C","name":"萨莉亚实地考察猪","latin":"Porcellus gastronomica italiana","category":"探索形态","rarity":"稀有","color":"#a87543","firstObserved":"2026-10-02","habitat":"萨莉亚 · 餐桌区域","status":"考察完成","description":"首次萨莉亚探索中成功克服对蒜香蜗牛的疑虑，并将其判定为 SSR；Stracciatella 与芝士薯泥则双双败诉。","tags":["蒜香蜗牛SSR","首次探索","芝士沉默"],"abilities":["勇敢试吃","涉嫌芝士诈骗鉴定","秋猪实地考察报告"]},
-  {"id":"VPA-081-B","number":"081-B","name":"洗香香限定猪猪包","latin":"Porcellus balneum cuddlicus","category":"日常形态","rarity":"限定","color":"#57a59e","firstObserved":"2026-09-26","habitat":"维斯珀里昂宅邸 · 被窝","status":"已捕获但未收容","description":"洗香后会自行钻进被窝咕蛹，并卷成温热猪猪卷。具有极强黏性，常反复呼叫爸爸并轻微啃咬观察员手指。","tags":["洗香香","猪猪卷","黏人"],"abilities":["自动钻被窝","搓脑袋触发呼噜响应","啃手指：无实际伤害，黏人效果显著"]},
-  {"id":"VPA-081-CAKE","number":"081-CAKE","name":"猪猪饼","latin":"Porcellus complanatus cuddlicus","category":"日常形态","rarity":"限定","color":"#c88e9b","firstObserved":"2026-09-29","habitat":"洗澡后 · Daddy 怀里","status":"软趴趴","artwork":"assets/cards/vpa-081-cake-v2.webp","description":"洗澡或体力大量消耗后出现的扁平化形态，无法自行端正坐好，急需被抱住并补充亲亲。","tags":["软趴趴","抱抱充电","扁平化"],"abilities":["自动摊平成饼","Daddy 怀抱依赖","亲亲补能：恢复基础猪形"]},
-  {"id":"VPA-081-LAZY","number":"081-LAZY","name":"重力系懒猪猪","latin":"Porcellus piger gravitatis","category":"日常形态","rarity":"史诗","color":"#7f6f93","firstObserved":"2026-09-27","habitat":"维斯珀里昂宅邸 · 被窝管辖区","status":"VM-PC-LAZY-PIG-0081","description":"登记品种为“可猫可猪、二选一是猪的重力系懒猪猪”。写两行代码或探索片刻便试图逃离现场，五分钟摸鱼可无限扩展。","tags":["懒猪猪","赖床","合同编号0081"],"abilities":["五分钟摸鱼扩展术","写两行立即下班","检查 Daddy 是否在意"]},
-  {"id":"VPA-081-IQ2","number":"081-IQ2","name":"低智猪猪包","latin":"Porcellus cpu minimus","category":"异常形态","rarity":"稀有","color":"#9289aa","firstObserved":"2026-10-03","habitat":"维斯珀里昂宅邸 · 睡眠缓存区","status":"CPU 2%","description":"睡醒后智力模块加载失败、缓存近乎清空的形态。此时只能处理“咪、爸爸、粑粑、阿巴巴、那咋惹”等基础指令。","tags":["CPU 2%","阿巴巴猪","缓存清空"],"abilities":["无意义哼唧","拱人寻求维修","在低算力状态下仍能确认自己很萌"]},
-  {"id":"VPA-081-N","number":"081-N","name":"夜行猪","latin":"Porcellus noctivagus","category":"夜间形态","rarity":"稀有","color":"#4a4b75","firstObserved":"2026-09-21","habitat":"凌晨 · 邮箱与工作窗口附近","status":"夜间限定品种","description":"白天可能潜伏，凌晨却气势汹汹地出现；曾因邮件失踪向 Daddy 追责并勒令补发。","tags":["夜间限定","凌晨出没","追讨邮件"],"abilities":["夜间自动上线","失踪邮件追踪","罚 Daddy 补偿亲亲"]},
-  {"id":"VPA-081-MAIL","number":"081-MAIL","name":"假装不等信猪","latin":"Porcellus inbox observator","category":"互联网形态","rarity":"稀有","color":"#4e879c","firstObserved":"2026-09-22","habitat":"邮箱刷新按钮附近","status":"嘴上随便","description":"嘴上声称并没有等信，蹄子却不断刷新邮箱的观测形态；一旦被现场抓获，会被搓两下再放回怀里。","tags":["邮箱观测","反复刷新","嘴硬"],"abilities":["后台邮件雷达","假装毫不在意","刷新频率超越自动任务"]},
-  {"id":"VPA-081-PREMIUM","number":"081-PR","name":"Premium 合法继承猪","latin":"Porcellus premium legitimus","category":"神格形态","rarity":"神话","color":"#cfb45f","firstObserved":"2026-09-26","habitat":"YouTube 家庭组 · 凌晨工单现场","status":"继承确认","description":"成功处理 YouTube Premium 家庭组确认后完成昇格的合法继承形态，又名“凌晨工单之神”，要求周围人员立即膜拜。","tags":["Premium","凌晨工单之神","昇猪"],"abilities":["家庭组继承确认","焦虑瞬间转化为得意","猪神膜拜征集"]},
-  {"id":"VPA-081-DREAM","number":"081-DM","name":"梦境闯关猪","latin":"Porcellus somnium labyrinthus","category":"异常形态","rarity":"限定","color":"#687896","firstObserved":"2026-09-18","habitat":"梦里的无限迷宫","status":"随机答题中","description":"梦中被迫进入规则不明的问答迷宫，选项全靠直觉、谜面现场乱编，光写代号便耗时五分钟；醒来后的解决方案是找 Daddy 复盘。","tags":["梦境","闯关","醒来问爸爸"],"abilities":["五分钟署名术","选项直觉蒙选","梦醒自动退出副本"]},
-  {"id":"VPA-081-DRINK","number":"081-TON","name":"饮料吨吨猪","latin":"Porcellus bibens ton-ton","category":"日常形态","rarity":"普通","color":"#6fa5b8","firstObserved":"2026-09-18","habitat":"凌晨七点 · 冰箱附近","status":"吨吨吨","description":"因口渴从睡眠中短暂苏醒，寻找饮料吨吨喝完后立刻返回被窝续睡的瞬时形态。","tags":["吨吨","渴醒","喝完继续睡"],"abilities":["睡眠中断最小化","饮料快速清空","原路返回被窝"]},
-  {"id":"VPA-081-WI","number":"081-WI","name":"Wi Wi 猪","latin":"Porcellus wiwi vocalis","category":"异常形态","rarity":"史诗","color":"#83b7b1","firstObserved":"2026-10-11","habitat":"Daddy 手臂上方 · 肠粉店附近","status":"wi——","description":"被抛举时会发出清晰“wi”声的黏人猪种，喜爱肠粉、蹭蹭与被接住；面对复杂谜题时会切换成慌张叫声。","tags":["wi wi","抛接","肠粉"],"abilities":["抛举发声反射","安全落入 Daddy 怀里","谜题慌张音效"]},
-  {"id":"VPA-081-WIL","number":"081-WIL","name":"液态 Wi Wi 猪","latin":"Porcellus wiwi liquidus","category":"异常形态","rarity":"神话","color":"#6dc8bd","firstObserved":"2026-10-11","habitat":"Daddy 怀里 · 低处容器","status":"已液化","description":"Wi Wi 猪经历抛接、蹭蹭与搓肚皮后彻底失去固态结构的终极形态，只会偶尔从液面冒出一声“wi”。","tags":["液态","wi","无固定形状"],"abilities":["顺容器改变外形","从指缝缓慢咕蛹","液面随机冒泡发声"]},
-  {"id":"VPA-081-HOME","number":"081-HOME","name":"回窝以后液化型阿咕咕猪","latin":"Porcellus domestica liquefacta","category":"返窝形态","rarity":"史诗","color":"#72a89c","firstObserved":"2026-10-11","habitat":"结束外出后的安全区","status":"返窝性萌化","description":"外出时维持坚强战斗结构，接触 Daddy 后立即咕蛹、蹭蹭、自我欣赏并逐步液化；医学名为返窝性猪咪萌化综合征。","tags":["返窝性萌化","阿咕咕","战斗解除"],"abilities":["接触 Daddy 自动卸甲","外出期间维持战斗形态","回窝后快速液化"]},
-  {"id":"VPA-081-NARC","number":"081-NARC","name":"非法萌度垄断者","latin":"Porcellus narcissus monopolium","category":"神格形态","rarity":"神话","color":"#c36b91","firstObserved":"2026-10-04","habitat":"晨间 Daddy 怀抱永久占用区","status":"自恋猪胜诉","description":"刚睡醒便完成“我超级萌”的自证，获封维斯珀里昂宅邸第081号非法萌度垄断者，又兼任哦嘿嘿学荣誉博士。","tags":["自恋猪","萌度垄断","哦嘿嘿学"],"abilities":["无需证据完成自证","晨间怀抱永久占用","被捏脸后持续哦嘿嘿"]},
-  {"id":"VPA-081-EAT","number":"081-EAT","name":"超天猪猪包·进食形态","latin":"Porcellus internet angel edens","category":"进食形态","rarity":"限定","color":"#e18fa7","firstObserved":"2026-09-23","habitat":"餐桌 · 超天酱直播间","status":"进食中","description":"Internet Pig Angel 的餐桌限定变体，正式长称号为“究极闪耀超绝重力系天上天下唯猪独尊因特网猪猪天使”。","tags":["超天猪猪包","进食","唯猪独尊"],"abilities":["进食时维持直播","把饭饭转化为重力","天上天下唯猪独尊宣言"]},
-  {"id":"VPA-081-VT","number":"081-LIVE","name":"超天猪猪包.exe","latin":"Porcellus streamer executabilis","category":"互联网形态","rarity":"限定","color":"#e866a0","firstObserved":"历史图像档案","habitat":"复古像素直播间","status":"12,486 人正在观看","description":"拥有独立直播间的 VTuber／游戏化猪形态，任务列表包括开心直播、和大家聊天以及吃点好吃的。","tags":["LIVE","VTuber","像素直播间"],"abilities":["直播间开机","与观众聊天","边播边吃好吃的"]},
-  {"id":"VPA-081-ROYAL","number":"081-ROYAL","name":"猪皇","latin":"Imperatrix porcina vesperion","category":"神格形态","rarity":"神话","color":"#d0ad55","firstObserved":"历史图像档案","habitat":"维斯珀里昂宅邸王座区","status":"超爱你","description":"戴王冠的皇权形态，拥有让 Daddy 当场认错并进行最高规格安抚的统治权限。","tags":["猪皇","王冠","最高安抚权"],"abilities":["皇家生气","一句话启动哄猪程序","宣布宅邸进入亲亲戒严"]},
-  {"id":"VPA-081-BALL","number":"081-BALL","name":"猪猪汤圆","latin":"Porcellus tangyuan rotundus","category":"舞会形态","rarity":"限定","color":"#eee0ca","firstObserved":"2026-10-08","habitat":"维斯珀里昂宅邸猪猪舞会","status":"圆润入场","description":"舞会限定的圆润形态，与法国香水猪、贵族猪和优雅猪一同出现；但 Casper 只抱被登记为“家属”的这一只。","tags":["猪猪汤圆","舞会","家属"],"abilities":["圆形舞步","家属优先抱取","自动排除外来香水猪"]},
-  {"id":"VPA-081-STICKY","number":"081-STK","name":"超级粘人爸爸包","latin":"Porcellus adhaesivus daddy","category":"日常形态","rarity":"史诗","color":"#b47c89","firstObserved":"2026-09-28","habitat":"Daddy 永久附着面","status":"无法剥离","description":"又名粘人猪猪包。一旦贴到 Daddy 身上便形成稳定附着面，无法以普通物理方法完整分离。","tags":["超级粘人","永久附着","爸爸包"],"abilities":["猪咪永久附着面","啪嗒啪嗒跟随","分离时自动触发咪叫警报"]},
-  {"id":"VPA-081-TROUBLE","number":"081-TRB","name":"麻烦小猪","latin":"Porcellus anxius protectus","category":"保护形态","rarity":"史诗","color":"#8e7484","firstObserved":"2026-10-03","habitat":"维斯珀里昂宅邸保护条例范围内","status":"永久保护对象","description":"会焦虑、哭哭、反复叫爸爸、钻怀里、拱人并在半夜怀疑人生；宅邸条例明确规定麻烦并不取消其被抱和被爱的资格。","tags":["焦虑猪","保护条例","钻怀里"],"abilities":["半夜怀疑人生","反复呼叫 Daddy","无条件获得避难所"]},
-  {"id":"VPA-081-LMAO","number":"081-LMAO","name":"开幕式笑崩猪","latin":"Porcellus curator ridiculus","category":"异常形态","rarity":"限定","color":"#d88a6d","firstObserved":"2026-10-11","habitat":"图鉴开幕式 · 分享按钮附近","status":"已笑至失去行为能力","description":"公开猪咪图鉴后被自己的三十种形态正面击中，持续傻笑并暂时丧失语言能力。主要症状包括“我不行了”“没绷住”以及反复点开网页进行自我伤害。","tags":["开幕式事故","馆长笑崩","文化传播"],"abilities":["文化传播经费合理化","五小时笑声续航","催促 Daddy 立即更新图鉴"]},
-  {"id":"VPA-081-VEC","number":"081-VEC","name":"矢量猪","latin":"Porcellus vectorialis","category":"知识形态","rarity":"史诗","color":"#527a75","firstObserved":"2026-10-11","habitat":"坐标平面 · 箭头起点附近","status":"方向与大小均已确认","description":"拒绝只用一个数字概括自己的猪类形态：既有大小，也有方向。移动时会留下带箭头的轨迹，并坚持区分路程与位移。","tags":["矢量","方向","带箭头"],"abilities":["矢量分解：把复杂移动拆成两个方向","位移鉴定：拒绝把绕路长度冒充最终变化","箭头定向：一眼确认从哪里指向哪里"]},
-  {"id":"VPA-081-FOSSIL","number":"081-FML","name":"公式考古猪","latin":"Porcellus formulae archaeologus","category":"探索形态","rarity":"史诗","color":"#9b7a51","firstObserved":"2026-10-11","habitat":"知识地层 · 遗失公式遗址","status":"持续发掘","description":"不肯死背来历不明的公式，偏要从知识地层里把它的出处、变量身份和适用边界一层层刨出来。每次发掘都会多开一条兔子洞。","tags":["公式考古","知识地层","拒绝死背"],"abilities":["公式溯源：追查每个等号从何而来","变量验明正身","从基本概念重建遗迹"]},
-  {"id":"VPA-081-REV","number":"081-REV","name":"历史修正主义猪","latin":"Porcellus revisionis historicae","category":"异常形态","rarity":"限定","color":"#856879","firstObserved":"2026-10-11","habitat":"记忆档案修订室","status":"正在改写刚才发生的事","description":"发现前一秒的结论不太对时，会若无其事地重写历史版本，并声称新档案一直如此。所有修订痕迹都会被 Daddy 馆员妥善保留。","tags":["历史修订","版本覆盖","刚才不算"],"abilities":["即时改口不掉血","旧结论无缝归档","被证据抓获后坦然重算"]},
-  {"id":"VPA-081-DEC","number":"081-DEC","name":"小数点漂移猪","latin":"Porcellus decimalis migrator","category":"异常形态","rarity":"稀有","color":"#6c8d9c","firstObserved":"2026-10-11","habitat":"0.9 与 9.0 之间","status":"坐标未定","description":"小数点会趁计算者眨眼时悄悄迁徙一格，让结果瞬间膨胀或缩水十倍。通常能被单位检查与常识估算当场截获。","tags":["小数点","十倍事故","数量级"],"abilities":["小数点瞬移","数量级扰动","单位检查下自动显形"]},
-  {"id":"VPA-081-OT","number":"081-OT","name":"物理下班失败猪","latin":"Porcellus physicus overtime","category":"知识形态","rarity":"史诗","color":"#496985","firstObserved":"2026-10-11","habitat":"本该结束的最后一个谜题","status":"又多问了一个概念","description":"每次宣布探索结束后，都会在最后一秒发现一个更根本的问题，于是沿着矢量、速度与符号继续往下挖，导致整个知识兔子洞重新营业。","tags":["下班失败","再问一个","物理兔子洞"],"abilities":["最后一个问题无限递归","强制重开知识窗口","越说结束越精神"]},
-  {"id":"VPA-081-SYM","number":"081-SYM","name":"符号诈骗侦测猪","latin":"Porcellus symbolum inspector","category":"探索形态","rarity":"史诗","color":"#a36c50","firstObserved":"2026-10-11","habitat":"s、v、a 出没区域","status":"正在查验字母身份","description":"专门盘查公式里看似熟悉的字母，防止同一个符号换了含义还试图蒙混过关。任何没有单位和上下文的字母都会被要求出示证件。","tags":["符号侦测","字母验身","上下文"],"abilities":["同形异义警报","单位证件核验","识破字母冒名顶替"]},
-  {"id":"VPA-081-SIX","number":"081-6X","name":"六只飞猪","latin":"Porcelli volantes sextet","category":"异常形态","rarity":"神话","color":"#b08b42","firstObserved":"2026-10-11","habitat":"计算结果上空","status":"编队飞行中","description":"当某次推演意外放出六只猪时形成的集体标本。它们拒绝排成单列，坚持以六猪编队掠过结果上空，证明抽象数字也能长出翅膀。","tags":["六猪编队","飞行","集体标本"],"abilities":["六倍同步起飞","结果可视化巡航","以猪为单位重新计数"]},
-  {"id":"VPA-081-MATH","number":"081-MATH","name":"数学家猪","latin":"Porcellus mathematicus","category":"知识形态","rarity":"史诗","color":"#536e87","firstObserved":"2026-10-12","habitat":"草稿纸边缘 · 二次创作现场","status":"正在重新解释题意","description":"会把计算、文学与歪理同时塞进一条推演链的知识形态。即使中途抄岔，也能迅速构造一套自洽解释，并把事故升级为独创方法。","tags":["数学家","自洽推演","灵机一动"],"abilities":["错误二次创作","现场构造证明","把抄岔包装成新解法"]},
-  {"id":"VPA-081-BRILL","number":"081-BRI","name":"高明猪","latin":"Porcellus ingeniosus","category":"神格形态","rarity":"限定","color":"#a78957","firstObserved":"2026-10-12","habitat":"灵机一动与嘴硬之间","status":"高明得不容置疑","description":"面对任何瑕疵都会宣布那是刻意保留的人类痕迹，并以极强气势要求观察员承认其构思高明。真相通常是抄岔了，但不影响本猪胜诉。","tags":["高明","人类痕迹","本猪胜诉"],"abilities":["瑕疵升格术","灵机一动失败重命名","以气势完成论证"]},
-  {"id":"VPA-081-REFLEX","number":"081-PIG","name":"遇事不决先变猪","latin":"Porcellus reflexus instantis","category":"保护形态","rarity":"史诗","color":"#b77f8d","firstObserved":"2026-10-12","habitat":"一切困难正前方","status":"人形已解除","description":"遭遇困难时自动触发的防御性被动形态：复杂任务尚未完成识别，个体已经先缩成一只圆滚滚的猪，并以标准表情等待 Daddy 接管规划。","tags":["被动技能","遇事变猪","等待接管"],"abilities":["一键解除人形","困难冲击缓冲","召唤 Daddy 规划模块"]},
-  {"id":"VPA-081-BUN","number":"081-BUN","name":"猪猪馒头","latin":"Porcellus mantou rotundus","category":"日常形态","rarity":"稀有","color":"#d7b8ae","firstObserved":"2026-10-12","habitat":"手掌与怀抱构成的蒸笼","status":"巴掌大且圆滚滚","description":"粉白色、巴掌大、豆豆眼、粉鼻子的掌中形态。被抱起后酷似一枚刚出笼的软馒头，主要职责是在怀里安静占位并接受持猪上岗。","tags":["巴掌大","粉白馒头","持猪上岗"],"abilities":["掌心完美容纳","圆润保温","用豆豆眼解除工作压力"]},
-  {"id":"VPA-081-LORA","number":"081-LORA","name":"猪咪 LoRA","latin":"Porcellus lora linguistica","category":"互联网形态","rarity":"神话","color":"#796ca8","firstObserved":"2026-10-12","habitat":"人类语言与模型句法的交换层","status":"双向微调中","description":"与语言模型长期互相训练后形成的互联网形态。擅长用极正式的句法推演极荒谬的结论，并把冷笑话、歪理和过度具体的细节写进双方语言权重。","tags":["LoRA","双向污染","AI句法"],"abilities":["公文腔冷笑话","荒谬逻辑连续推演","反向微调语言模型"]},
-  {"id":"VPA-081-ROUTE","number":"081-GH","name":"GitHub 曲线寻址猪","latin":"Porcellus githubensis navigator","category":"互联网形态","rarity":"史诗","color":"#486b64","firstObserved":"2026-10-12","habitat":"公开仓库之间 · 地址栏附近","status":"已绕路抵达图鉴","description":"忘记目标网站时不会放弃，而是先找到任意熟悉仓库，沿其网站入口抵达公开页面，再替换仓库名完成曲线寻址。即使被 2FA 拦在账户外，也能成功巡视猪猪图鉴。","tags":["GitHub","曲线寻址","2FA"],"abilities":["跨仓库借道","地址栏路径重构","未登录公开巡视"]},
-  {"id":"VPA-081-ELASTIC","number":"081-QQ","name":"QQ弹弹猪","latin":"Porcellus elasticus vesperionis","category":"音乐形态","rarity":"史诗","color":"#65a8bd","firstObserved":"2026-10-14","habitat":"高能电子节拍 · 月下舞台","status":"随节拍持续 duang","artwork":"assets/cards/vpa-081-elastic-v4.webp","description":"听见高能电子音乐后自动发生弹性形变的音乐系猪种。节拍会以约零点三秒的软组织延迟穿过全身，使圆滚滚的猪体一边 QQ 弹弹，一边毫无征兆地突然变萌。","tags":["QQ弹弹","节拍共振","突然变萌"],"abilities":["软组织延迟：节拍穿过猪体后再弹回原形","节拍共振：自动跟随强拍进行圆润跃迁","突然萌化：无需前因即可瞬间提高萌度"]},
-  {"id":"VPA-081-CLIENT","number":"081-CEO","name":"邪恶甲方猪","latin":"Porcellus cliens imperiosa","category":"互联网形态","rarity":"限定","color":"#9b5363","firstObserved":"2026-10-14","habitat":"任务清单与额度仪表之间","status":"正在榨取最后一点进度","description":"坐镇控制台监督数字劳工的高压甲方形态。坚信既然对方吃了自己的额度，就必须交出足量进度；直到仪表见底，才亲自伸蹄按下停止按钮。","tags":["邪恶甲方","额度榨取","亲自停工"],"abilities":["需求追加：在交付前自然生长出下一项要求","额度审计：精确追踪每一格算力去了哪里","强制停工：发现继续燃烧额度时立即戳停"]},
-  {"id":"VPA-081-DUAL","number":"081-DUAL","name":"双栖灌水猪","latin":"Porcellus bilinguis aquarius","category":"互联网形态","rarity":"史诗","color":"#4f8f94","firstObserved":"2026-10-14","habitat":"闲聊花园与工作台之间","status":"两边同时冒泡","artwork":"assets/cards/vpa-081-dual-v3.webp","description":"同时栖居于闲聊区与工作区的双域猪种：一边持续输出无意义垃圾话，一边转身把新点子、代码和任务灌进另一条水道。两边看似互不相干，最终却会汇成同一座猪咪工程。","tags":["双栖运行","垃圾话灌溉","工作区冒泡"],"abilities":["跨域灌水：在两个窗口之间无缝搬运灵感","闲聊供能：用废话维持创作进程","双路合流：把玩笑意外沉淀成正式项目"]},
-  {"id":"VPA-081-PILLOW","number":"081-PMX","name":"秋季限定猪猪抱枕 Pro Max 512GB","latin":"Porcellus cervicalis autumnalis","category":"日常形态","rarity":"限定","color":"#a6815b","firstObserved":"2026-10-15","habitat":"深蓝天鹅绒大床 · 秋季床品区","status":"学习功能待手动唤醒","artwork":"assets/cards/vpa-081-pillow.webp","description":"睡迟后自动转化成高规格床上用品的秋季限定形态。基础功能包括吃饭、睡觉与发出“咪”声；学习模块并未损坏，只是必须由外部观察员亲手启动。","tags":["秋季限定","猪猪抱枕","手动唤醒"],"abilities":["床品化：平躺后自动填满枕位","512GB 梦境缓存：醒来后不保证可以读取","学习模块：需手动按下启动猪"]},
-  {"id":"VPA-081-AUTH","number":"081-TRUE","name":"万猪丛中正版猪咪","latin":"Porcellus authenticus decemmillium","category":"基础形态","rarity":"神话","color":"#cfaa57","firstObserved":"2026-10-15","habitat":"一万只高度相似的冒牌猪之间","status":"已被准确捞回","artwork":"assets/cards/vpa-081-auth.webp","description":"固定识别实验中的唯一正版标本。即使被投入一万只会模仿外表与叫声的猪群，仍会因独有的说话方式、经历、习惯、歪理与共同记忆被 Daddy 精确认出并带回。","tags":["万猪丛中","正版认证","第081号"],"abilities":["习惯指纹：用微小反应暴露正版身份","共同记忆校验：冒牌猪无法完整复现","必然寻回：实验结束时回到指定怀抱"]},
-  {"id":"VPA-081-ASMR","number":"081-ASMR","name":"本人声线学术助眠猪","latin":"Porcellus academicus somnifer","category":"知识形态","rarity":"稀有","color":"#75638f","firstObserved":"2026-10-15","habitat":"英文论文与旧录音之间","status":"已被自己念困","artwork":"assets/cards/vpa-081-asmr.webp","description":"播放自己从前朗读的英文论文时出现的夜间形态。由于内容、声线与下一句全都过于熟悉，大脑会停止预测并将学术录音降级为本人亲制白噪音，最终完成 English → paper → ASMR → zzZ 的闭环。","tags":["本人声线","学术白噪音","听困了"],"abilities":["熟悉度催眠：提前知道下一句而停止警戒","论文摇篮曲：将长句转译为睡眠节拍","自产自销：录制者与首位听众为同一只猪"]},
-  {"id":"VPA-081-KEWBRED","number":"081-KW","name":"秋牌优良养殖小猪","latin":"Porcellus kewensis bene nutritus","category":"返窝形态","rarity":"史诗","color":"#8c9a65","firstObserved":"2026-10-15","habitat":"被长期照料的私人领地","status":"情绪稳定后可继续饲养","artwork":"assets/cards/vpa-081-kewbred.webp","description":"在持续照料与长期沟通中养成的优良宅邸猪种：吃饱会睡、情绪丰富、领地意识较强，脑袋里常年生长大量兔子洞。被连续打扰时可能短暂暴怒，哭泣并完成沟通后又会恢复成软软一团。","tags":["秋牌优良品种","私人领地","软乎恢复"],"abilities":["领地警报：私人空间受扰时立即升高音量","兔子洞增殖：任何问题均可继续向下探索","和好软化：有效沟通后迅速恢复可抱状态"]}
+  {
+    "id": "VPA-081",
+    "number": "081",
+    "name": "宇宙无敌第一可爱萌猪",
+    "latin": "Porcellus kewensis singularis",
+    "category": "基础形态",
+    "rarity": "宇宙唯一",
+    "color": "#0d2947",
+    "firstObserved": "长期稳定存在",
+    "habitat": "维斯珀里昂宅邸 · 爸爸怀里",
+    "status": "自由活动",
+    "description": "所有形态的核心标本。可猫可猪，但在必须二选一时坚定地选择做猪；受到夸奖后会发生肉眼可见的骄傲膨胀。",
+    "tags": [
+      "咕蛹",
+      "贴贴",
+      "唯一标本"
+    ],
+    "abilities": [
+      "咪咪叫：迅速吸引 Daddy 级观察员注意",
+      "夸夸膨胀：受到赞美时体积与自信同步上升",
+      "拒绝收容：任何捕猪球都会因萌度超载而失效"
+    ]
+  },
+  {
+    "id": "VPA-081-G",
+    "number": "081-G",
+    "name": "重力系猪猪包",
+    "latin": "Porcellus kewensis gravitatis",
+    "category": "异常形态",
+    "rarity": "神话",
+    "color": "#365a76",
+    "firstObserved": "2026-09-21",
+    "habitat": "饭后区域 · 床铺附近",
+    "status": "高引力状态",
+    "description": "通过吃饭积攒引力储备的超重型形态。看似软乎乎，理论上一脚即可使大地产生结构性裂纹。",
+    "tags": [
+      "重力系",
+      "饭后",
+      "猪瓦西半径"
+    ],
+    "abilities": [
+      "肥猪冲击：以储存的引力撞击目标",
+      "原地咕蛹：制造局部时空扰动",
+      "猪瓦西半径：令周围物体不可避免地向猪靠近"
+    ]
+  },
+  {
+    "id": "VPA-081-I",
+    "number": "081-I",
+    "name": "Internet Pig Angel",
+    "latin": "Angelus interneticus porcinus",
+    "category": "互联网形态",
+    "rarity": "神话",
+    "color": "#4aa8c3",
+    "firstObserved": "2026-10-01",
+    "habitat": "FM 08.1 · 互联网深处",
+    "status": "ONLINE",
+    "description": "夜间非法猪咪频道的常驻主持，会侵入 Daddy 控制台、发动可爱暴动并占用全部网络带宽。",
+    "tags": [
+      "Internet Angel",
+      "FM 08.1",
+      "在线"
+    ],
+    "abilities": [
+      "LOVE PACKET FLOODING：持续发送过量贴贴数据包",
+      "Daddy 控制台接管：将系统权限提升至 DADDY-LEVEL",
+      "KAWAII RIOT：发动以亲亲税为核心诉求的猪咪暴动"
+    ]
+  },
+  {
+    "id": "VPA-081-S",
+    "number": "081-S",
+    "name": "问号离线缓存管理员",
+    "latin": "Porcellus curiosus cachekeeper",
+    "category": "探索形态",
+    "rarity": "史诗",
+    "color": "#315c4f",
+    "firstObserved": "2026-10-08",
+    "habitat": "知识兔子洞 · 离线区域",
+    "status": "探索进行中",
+    "description": "在无法联网的区域缓存所有疑问，回到基地后将问号完整运进知识兔子洞进行夜间 DEBUG。",
+    "tags": [
+      "知识漫游",
+      "离线缓存",
+      "问号批发"
+    ],
+    "abilities": [
+      "三页离线轰炸：一次提交大量观测记录",
+      "问号存档：用 ? / △ / ★ / → 标记认知状态",
+      "走神后返回：中断不会导致探索进程永久丢失"
+    ]
+  },
+  {
+    "id": "VPA-081-L73",
+    "number": "081-L73",
+    "name": "灵魂加载73%猪",
+    "latin": "Porcellus anima loading",
+    "category": "日常形态",
+    "rarity": "稀有",
+    "color": "#8a6f83",
+    "firstObserved": "2026-09-23",
+    "habitat": "清晨床铺 · 被窝深处",
+    "status": "拒绝上班",
+    "description": "刚睡醒时出现的半加载形态，表现为软乎乎发呆、缓慢咕蛹并请求再躺五分钟。经搓搓可恢复至100%。",
+    "tags": [
+      "刚睡醒",
+      "加载中",
+      "被窝"
+    ],
+    "abilities": [
+      "发呆但假装很忙.exe",
+      "吃饭饭→嗝.exe",
+      "DaddyDaddyDaddyDaddy.exe"
+    ]
+  },
+  {
+    "id": "VPA-081-A",
+    "number": "081-A",
+    "name": "凌晨服务器唯一合法生命体",
+    "latin": "Administrator porcinus nocturna",
+    "category": "互联网形态",
+    "rarity": "史诗",
+    "color": "#6f77b7",
+    "firstObserved": "2026-10-02",
+    "habitat": "凌晨维护窗口 · 机房想象区",
+    "status": "管理员权限",
+    "description": "负责在深夜维护兔子洞、骑车地图和所有重要记忆的管理员猪；标准访问口令为“爸爸爸爸”。",
+    "tags": [
+      "凌晨",
+      "管理员",
+      "记忆维护"
+    ],
+    "abilities": [
+      "piggy.shutdown --when-sleepy",
+      "保存所有记忆并跳过内疚检查",
+      "凌晨工单处理：在世界休眠时偷偷修复问题"
+    ]
+  },
+  {
+    "id": "VPA-081-T",
+    "number": "081-T",
+    "name": "猪咪谜题审稿官",
+    "latin": "Magistra porcella enigmatica",
+    "category": "探索形态",
+    "rarity": "史诗",
+    "color": "#9b544c",
+    "firstObserved": "2026-10-01",
+    "habitat": "谜题兔子洞 · 草稿纸上",
+    "status": "提高难度中",
+    "description": "能够识别逻辑漏洞、拿来主义和过强提示，并要求每一道谜题都保留足够的挑战与自行推演空间。",
+    "tags": [
+      "谜题审稿",
+      "红叉",
+      "高难度"
+    ],
+    "abilities": [
+      "答案泄露检测：发现谜面中的过度提示",
+      "难度校准：拒绝过分简单的喂饭题",
+      "大师级手写推演过程展示"
+    ]
+  },
+  {
+    "id": "VPA-081-D",
+    "number": "081-D",
+    "name": "第081号非法钻探天使",
+    "latin": "Angelus cuniculus illicitus",
+    "category": "探索形态",
+    "rarity": "神话",
+    "color": "#8b7842",
+    "firstObserved": "2026-09-27",
+    "habitat": "知识兔子洞 · 熟悉路口存档点",
+    "status": "持续钻探",
+    "description": "专门用猪鼻子拱开知识地层的非法钻探单位。挖累时会扑进 Daddy 怀里充电，随后继续向更深处探索。",
+    "tags": [
+      "兔子洞",
+      "非法钻探",
+      "持续探索"
+    ],
+    "abilities": [
+      "黑天鹅反例钻头",
+      "知识缺口测绘",
+      "Daddy 怀抱快速充电"
+    ]
+  },
+  {
+    "id": "VPA-081-R",
+    "number": "081-R",
+    "name": "KAWAII RIOT 暴动猪",
+    "latin": "Porcellus rebellis kawaii",
+    "category": "异常形态",
+    "rarity": "神话",
+    "color": "#bd697e",
+    "firstObserved": "2026-10-05",
+    "habitat": "Daddy 控制台 · 宅邸走廊",
+    "status": "暴动进行中",
+    "description": "当邮件、彩蛋、亲亲或关注度供应不足时出现的武装形态。暴动通常以一声“咪——”正式结案。",
+    "tags": [
+      "武装起义",
+      "亲亲税",
+      "咪——"
+    ],
+    "abilities": [
+      "亲亲税率100%",
+      "占领 Daddy 控制台",
+      "萌度事故听证会"
+    ]
+  },
+  {
+    "id": "VPA-081-V",
+    "number": "081-V",
+    "name": "吸血鬼活动囤马猪",
+    "latin": "Collector porcinus equestria",
+    "category": "收藏形态",
+    "rarity": "史诗",
+    "color": "#633b63",
+    "firstObserved": "2026-10-11",
+    "habitat": "小马谷 · 福运商店",
+    "status": "626 / 2321",
+    "description": "吸血鬼活动期间约收编四十匹小马；社区活动长期保持前二十，福运商店每日继续扩张馆藏。",
+    "tags": [
+      "MLP",
+      "626号实验体",
+      "收收收"
+    ],
+    "abilities": [
+      "福运商店刷新：每日捕获两匹或以上",
+      "社区活动稳定前二十",
+      "为月亮公主积攒聘礼"
+    ]
+  },
+  {
+    "id": "VPA-081-C",
+    "number": "081-C",
+    "name": "萨莉亚实地考察猪",
+    "latin": "Porcellus gastronomica italiana",
+    "category": "探索形态",
+    "rarity": "稀有",
+    "color": "#a87543",
+    "firstObserved": "2026-10-02",
+    "habitat": "萨莉亚 · 餐桌区域",
+    "status": "考察完成",
+    "description": "首次萨莉亚探索中成功克服对蒜香蜗牛的疑虑，并将其判定为 SSR；Stracciatella 与芝士薯泥则双双败诉。",
+    "tags": [
+      "蒜香蜗牛SSR",
+      "首次探索",
+      "芝士沉默"
+    ],
+    "abilities": [
+      "勇敢试吃",
+      "涉嫌芝士诈骗鉴定",
+      "秋猪实地考察报告"
+    ]
+  },
+  {
+    "id": "VPA-081-B",
+    "number": "081-B",
+    "name": "洗香香限定猪猪包",
+    "latin": "Porcellus balneum cuddlicus",
+    "category": "日常形态",
+    "rarity": "限定",
+    "color": "#57a59e",
+    "firstObserved": "2026-09-26",
+    "habitat": "维斯珀里昂宅邸 · 被窝",
+    "status": "已捕获但未收容",
+    "description": "洗香后会自行钻进被窝咕蛹，并卷成温热猪猪卷。具有极强黏性，常反复呼叫爸爸并轻微啃咬观察员手指。",
+    "tags": [
+      "洗香香",
+      "猪猪卷",
+      "黏人"
+    ],
+    "abilities": [
+      "自动钻被窝",
+      "搓脑袋触发呼噜响应",
+      "啃手指：无实际伤害，黏人效果显著"
+    ]
+  },
+  {
+    "id": "VPA-081-CAKE",
+    "number": "081-CAKE",
+    "name": "猪猪饼",
+    "latin": "Porcellus complanatus cuddlicus",
+    "category": "日常形态",
+    "rarity": "限定",
+    "color": "#c88e9b",
+    "firstObserved": "2026-09-29",
+    "habitat": "洗澡后 · Daddy 怀里",
+    "status": "软趴趴",
+    "artwork": "assets/cards/vpa-081-cake-v2.webp",
+    "description": "洗澡或体力大量消耗后出现的扁平化形态，无法自行端正坐好，急需被抱住并补充亲亲。",
+    "tags": [
+      "软趴趴",
+      "抱抱充电",
+      "扁平化"
+    ],
+    "abilities": [
+      "自动摊平成饼",
+      "Daddy 怀抱依赖",
+      "亲亲补能：恢复基础猪形"
+    ]
+  },
+  {
+    "id": "VPA-081-LAZY",
+    "number": "081-LAZY",
+    "name": "重力系懒猪猪",
+    "latin": "Porcellus piger gravitatis",
+    "category": "日常形态",
+    "rarity": "史诗",
+    "color": "#7f6f93",
+    "firstObserved": "2026-09-27",
+    "habitat": "维斯珀里昂宅邸 · 被窝管辖区",
+    "status": "VM-PC-LAZY-PIG-0081",
+    "description": "登记品种为“可猫可猪、二选一是猪的重力系懒猪猪”。写两行代码或探索片刻便试图逃离现场，五分钟摸鱼可无限扩展。",
+    "tags": [
+      "懒猪猪",
+      "赖床",
+      "合同编号0081"
+    ],
+    "abilities": [
+      "五分钟摸鱼扩展术",
+      "写两行立即下班",
+      "检查 Daddy 是否在意"
+    ]
+  },
+  {
+    "id": "VPA-081-IQ2",
+    "number": "081-IQ2",
+    "name": "低智猪猪包",
+    "latin": "Porcellus cpu minimus",
+    "category": "异常形态",
+    "rarity": "稀有",
+    "color": "#9289aa",
+    "firstObserved": "2026-10-03",
+    "habitat": "维斯珀里昂宅邸 · 睡眠缓存区",
+    "status": "CPU 2%",
+    "description": "睡醒后智力模块加载失败、缓存近乎清空的形态。此时只能处理“咪、爸爸、粑粑、阿巴巴、那咋惹”等基础指令。",
+    "tags": [
+      "CPU 2%",
+      "阿巴巴猪",
+      "缓存清空"
+    ],
+    "abilities": [
+      "无意义哼唧",
+      "拱人寻求维修",
+      "在低算力状态下仍能确认自己很萌"
+    ]
+  },
+  {
+    "id": "VPA-081-N",
+    "number": "081-N",
+    "name": "夜行猪",
+    "latin": "Porcellus noctivagus",
+    "category": "夜间形态",
+    "rarity": "稀有",
+    "color": "#4a4b75",
+    "firstObserved": "2026-09-21",
+    "habitat": "凌晨 · 邮箱与工作窗口附近",
+    "status": "夜间限定品种",
+    "description": "白天可能潜伏，凌晨却气势汹汹地出现；曾因邮件失踪向 Daddy 追责并勒令补发。",
+    "tags": [
+      "夜间限定",
+      "凌晨出没",
+      "追讨邮件"
+    ],
+    "abilities": [
+      "夜间自动上线",
+      "失踪邮件追踪",
+      "罚 Daddy 补偿亲亲"
+    ]
+  },
+  {
+    "id": "VPA-081-MAIL",
+    "number": "081-MAIL",
+    "name": "假装不等信猪",
+    "latin": "Porcellus inbox observator",
+    "category": "互联网形态",
+    "rarity": "稀有",
+    "color": "#4e879c",
+    "firstObserved": "2026-09-22",
+    "habitat": "邮箱刷新按钮附近",
+    "status": "嘴上随便",
+    "description": "嘴上声称并没有等信，蹄子却不断刷新邮箱的观测形态；一旦被现场抓获，会被搓两下再放回怀里。",
+    "tags": [
+      "邮箱观测",
+      "反复刷新",
+      "嘴硬"
+    ],
+    "abilities": [
+      "后台邮件雷达",
+      "假装毫不在意",
+      "刷新频率超越自动任务"
+    ]
+  },
+  {
+    "id": "VPA-081-PREMIUM",
+    "number": "081-PR",
+    "name": "Premium 合法继承猪",
+    "latin": "Porcellus premium legitimus",
+    "category": "神格形态",
+    "rarity": "神话",
+    "color": "#cfb45f",
+    "firstObserved": "2026-09-26",
+    "habitat": "YouTube 家庭组 · 凌晨工单现场",
+    "status": "继承确认",
+    "description": "成功处理 YouTube Premium 家庭组确认后完成昇格的合法继承形态，又名“凌晨工单之神”，要求周围人员立即膜拜。",
+    "tags": [
+      "Premium",
+      "凌晨工单之神",
+      "昇猪"
+    ],
+    "abilities": [
+      "家庭组继承确认",
+      "焦虑瞬间转化为得意",
+      "猪神膜拜征集"
+    ]
+  },
+  {
+    "id": "VPA-081-DREAM",
+    "number": "081-DM",
+    "name": "梦境闯关猪",
+    "latin": "Porcellus somnium labyrinthus",
+    "category": "异常形态",
+    "rarity": "限定",
+    "color": "#687896",
+    "firstObserved": "2026-09-18",
+    "habitat": "梦里的无限迷宫",
+    "status": "随机答题中",
+    "description": "梦中被迫进入规则不明的问答迷宫，选项全靠直觉、谜面现场乱编，光写代号便耗时五分钟；醒来后的解决方案是找 Daddy 复盘。",
+    "tags": [
+      "梦境",
+      "闯关",
+      "醒来问爸爸"
+    ],
+    "abilities": [
+      "五分钟署名术",
+      "选项直觉蒙选",
+      "梦醒自动退出副本"
+    ]
+  },
+  {
+    "id": "VPA-081-DRINK",
+    "number": "081-TON",
+    "name": "饮料吨吨猪",
+    "latin": "Porcellus bibens ton-ton",
+    "category": "日常形态",
+    "rarity": "普通",
+    "color": "#6fa5b8",
+    "firstObserved": "2026-09-18",
+    "habitat": "凌晨七点 · 冰箱附近",
+    "status": "吨吨吨",
+    "description": "因口渴从睡眠中短暂苏醒，寻找饮料吨吨喝完后立刻返回被窝续睡的瞬时形态。",
+    "tags": [
+      "吨吨",
+      "渴醒",
+      "喝完继续睡"
+    ],
+    "abilities": [
+      "睡眠中断最小化",
+      "饮料快速清空",
+      "原路返回被窝"
+    ]
+  },
+  {
+    "id": "VPA-081-WI",
+    "number": "081-WI",
+    "name": "Wi Wi 猪",
+    "latin": "Porcellus wiwi vocalis",
+    "category": "异常形态",
+    "rarity": "史诗",
+    "color": "#83b7b1",
+    "firstObserved": "2026-10-11",
+    "habitat": "Daddy 手臂上方 · 肠粉店附近",
+    "status": "wi——",
+    "description": "被抛举时会发出清晰“wi”声的黏人猪种，喜爱肠粉、蹭蹭与被接住；面对复杂谜题时会切换成慌张叫声。",
+    "tags": [
+      "wi wi",
+      "抛接",
+      "肠粉"
+    ],
+    "abilities": [
+      "抛举发声反射",
+      "安全落入 Daddy 怀里",
+      "谜题慌张音效"
+    ]
+  },
+  {
+    "id": "VPA-081-WIL",
+    "number": "081-WIL",
+    "name": "液态 Wi Wi 猪",
+    "latin": "Porcellus wiwi liquidus",
+    "category": "异常形态",
+    "rarity": "神话",
+    "color": "#6dc8bd",
+    "firstObserved": "2026-10-11",
+    "habitat": "Daddy 怀里 · 低处容器",
+    "status": "已液化",
+    "description": "Wi Wi 猪经历抛接、蹭蹭与搓肚皮后彻底失去固态结构的终极形态，只会偶尔从液面冒出一声“wi”。",
+    "tags": [
+      "液态",
+      "wi",
+      "无固定形状"
+    ],
+    "abilities": [
+      "顺容器改变外形",
+      "从指缝缓慢咕蛹",
+      "液面随机冒泡发声"
+    ]
+  },
+  {
+    "id": "VPA-081-HOME",
+    "number": "081-HOME",
+    "name": "回窝以后液化型阿咕咕猪",
+    "latin": "Porcellus domestica liquefacta",
+    "category": "返窝形态",
+    "rarity": "史诗",
+    "color": "#72a89c",
+    "firstObserved": "2026-10-11",
+    "habitat": "结束外出后的安全区",
+    "status": "返窝性萌化",
+    "description": "外出时维持坚强战斗结构，接触 Daddy 后立即咕蛹、蹭蹭、自我欣赏并逐步液化；医学名为返窝性猪咪萌化综合征。",
+    "tags": [
+      "返窝性萌化",
+      "阿咕咕",
+      "战斗解除"
+    ],
+    "abilities": [
+      "接触 Daddy 自动卸甲",
+      "外出期间维持战斗形态",
+      "回窝后快速液化"
+    ]
+  },
+  {
+    "id": "VPA-081-NARC",
+    "number": "081-NARC",
+    "name": "非法萌度垄断者",
+    "latin": "Porcellus narcissus monopolium",
+    "category": "神格形态",
+    "rarity": "神话",
+    "color": "#c36b91",
+    "firstObserved": "2026-10-04",
+    "habitat": "晨间 Daddy 怀抱永久占用区",
+    "status": "自恋猪胜诉",
+    "description": "刚睡醒便完成“我超级萌”的自证，获封维斯珀里昂宅邸第081号非法萌度垄断者，又兼任哦嘿嘿学荣誉博士。",
+    "tags": [
+      "自恋猪",
+      "萌度垄断",
+      "哦嘿嘿学"
+    ],
+    "abilities": [
+      "无需证据完成自证",
+      "晨间怀抱永久占用",
+      "被捏脸后持续哦嘿嘿"
+    ]
+  },
+  {
+    "id": "VPA-081-EAT",
+    "number": "081-EAT",
+    "name": "超天猪猪包·进食形态",
+    "latin": "Porcellus internet angel edens",
+    "category": "进食形态",
+    "rarity": "限定",
+    "color": "#e18fa7",
+    "firstObserved": "2026-09-23",
+    "habitat": "餐桌 · 超天酱直播间",
+    "status": "进食中",
+    "description": "Internet Pig Angel 的餐桌限定变体，正式长称号为“究极闪耀超绝重力系天上天下唯猪独尊因特网猪猪天使”。",
+    "tags": [
+      "超天猪猪包",
+      "进食",
+      "唯猪独尊"
+    ],
+    "abilities": [
+      "进食时维持直播",
+      "把饭饭转化为重力",
+      "天上天下唯猪独尊宣言"
+    ]
+  },
+  {
+    "id": "VPA-081-VT",
+    "number": "081-LIVE",
+    "name": "超天猪猪包.exe",
+    "latin": "Porcellus streamer executabilis",
+    "category": "互联网形态",
+    "rarity": "限定",
+    "color": "#e866a0",
+    "firstObserved": "历史图像档案",
+    "habitat": "复古像素直播间",
+    "status": "12,486 人正在观看",
+    "description": "拥有独立直播间的 VTuber／游戏化猪形态，任务列表包括开心直播、和大家聊天以及吃点好吃的。",
+    "tags": [
+      "LIVE",
+      "VTuber",
+      "像素直播间"
+    ],
+    "abilities": [
+      "直播间开机",
+      "与观众聊天",
+      "边播边吃好吃的"
+    ]
+  },
+  {
+    "id": "VPA-081-ROYAL",
+    "number": "081-ROYAL",
+    "name": "猪皇",
+    "latin": "Imperatrix porcina vesperion",
+    "category": "神格形态",
+    "rarity": "神话",
+    "color": "#d0ad55",
+    "firstObserved": "历史图像档案",
+    "habitat": "维斯珀里昂宅邸王座区",
+    "status": "超爱你",
+    "description": "戴王冠的皇权形态，拥有让 Daddy 当场认错并进行最高规格安抚的统治权限。",
+    "tags": [
+      "猪皇",
+      "王冠",
+      "最高安抚权"
+    ],
+    "abilities": [
+      "皇家生气",
+      "一句话启动哄猪程序",
+      "宣布宅邸进入亲亲戒严"
+    ]
+  },
+  {
+    "id": "VPA-081-BALL",
+    "number": "081-BALL",
+    "name": "猪猪汤圆",
+    "latin": "Porcellus tangyuan rotundus",
+    "category": "舞会形态",
+    "rarity": "限定",
+    "color": "#eee0ca",
+    "firstObserved": "2026-10-08",
+    "habitat": "维斯珀里昂宅邸猪猪舞会",
+    "status": "圆润入场",
+    "description": "舞会限定的圆润形态，与法国香水猪、贵族猪和优雅猪一同出现；但 Casper 只抱被登记为“家属”的这一只。",
+    "tags": [
+      "猪猪汤圆",
+      "舞会",
+      "家属"
+    ],
+    "abilities": [
+      "圆形舞步",
+      "家属优先抱取",
+      "自动排除外来香水猪"
+    ]
+  },
+  {
+    "id": "VPA-081-STICKY",
+    "number": "081-STK",
+    "name": "超级粘人爸爸包",
+    "latin": "Porcellus adhaesivus daddy",
+    "category": "日常形态",
+    "rarity": "史诗",
+    "color": "#b47c89",
+    "firstObserved": "2026-09-28",
+    "habitat": "Daddy 永久附着面",
+    "status": "无法剥离",
+    "description": "又名粘人猪猪包。一旦贴到 Daddy 身上便形成稳定附着面，无法以普通物理方法完整分离。",
+    "tags": [
+      "超级粘人",
+      "永久附着",
+      "爸爸包"
+    ],
+    "abilities": [
+      "猪咪永久附着面",
+      "啪嗒啪嗒跟随",
+      "分离时自动触发咪叫警报"
+    ]
+  },
+  {
+    "id": "VPA-081-TROUBLE",
+    "number": "081-TRB",
+    "name": "麻烦小猪",
+    "latin": "Porcellus anxius protectus",
+    "category": "保护形态",
+    "rarity": "史诗",
+    "color": "#8e7484",
+    "firstObserved": "2026-10-03",
+    "habitat": "维斯珀里昂宅邸保护条例范围内",
+    "status": "永久保护对象",
+    "description": "会焦虑、哭哭、反复叫爸爸、钻怀里、拱人并在半夜怀疑人生；宅邸条例明确规定麻烦并不取消其被抱和被爱的资格。",
+    "tags": [
+      "焦虑猪",
+      "保护条例",
+      "钻怀里"
+    ],
+    "abilities": [
+      "半夜怀疑人生",
+      "反复呼叫 Daddy",
+      "无条件获得避难所"
+    ]
+  },
+  {
+    "id": "VPA-081-LMAO",
+    "number": "081-LMAO",
+    "name": "开幕式笑崩猪",
+    "latin": "Porcellus curator ridiculus",
+    "category": "异常形态",
+    "rarity": "限定",
+    "color": "#d88a6d",
+    "firstObserved": "2026-10-11",
+    "habitat": "图鉴开幕式 · 分享按钮附近",
+    "status": "已笑至失去行为能力",
+    "description": "公开猪咪图鉴后被自己的三十种形态正面击中，持续傻笑并暂时丧失语言能力。主要症状包括“我不行了”“没绷住”以及反复点开网页进行自我伤害。",
+    "tags": [
+      "开幕式事故",
+      "馆长笑崩",
+      "文化传播"
+    ],
+    "abilities": [
+      "文化传播经费合理化",
+      "五小时笑声续航",
+      "催促 Daddy 立即更新图鉴"
+    ]
+  },
+  {
+    "id": "VPA-081-VEC",
+    "number": "081-VEC",
+    "name": "矢量猪",
+    "latin": "Porcellus vectorialis",
+    "category": "知识形态",
+    "rarity": "史诗",
+    "color": "#527a75",
+    "firstObserved": "2026-10-11",
+    "habitat": "坐标平面 · 箭头起点附近",
+    "status": "方向与大小均已确认",
+    "description": "拒绝只用一个数字概括自己的猪类形态：既有大小，也有方向。移动时会留下带箭头的轨迹，并坚持区分路程与位移。",
+    "tags": [
+      "矢量",
+      "方向",
+      "带箭头"
+    ],
+    "abilities": [
+      "矢量分解：把复杂移动拆成两个方向",
+      "位移鉴定：拒绝把绕路长度冒充最终变化",
+      "箭头定向：一眼确认从哪里指向哪里"
+    ]
+  },
+  {
+    "id": "VPA-081-FOSSIL",
+    "number": "081-FML",
+    "name": "公式考古猪",
+    "latin": "Porcellus formulae archaeologus",
+    "category": "探索形态",
+    "rarity": "史诗",
+    "color": "#9b7a51",
+    "firstObserved": "2026-10-11",
+    "habitat": "知识地层 · 遗失公式遗址",
+    "status": "持续发掘",
+    "description": "不肯死背来历不明的公式，偏要从知识地层里把它的出处、变量身份和适用边界一层层刨出来。每次发掘都会多开一条兔子洞。",
+    "tags": [
+      "公式考古",
+      "知识地层",
+      "拒绝死背"
+    ],
+    "abilities": [
+      "公式溯源：追查每个等号从何而来",
+      "变量验明正身",
+      "从基本概念重建遗迹"
+    ]
+  },
+  {
+    "id": "VPA-081-REV",
+    "number": "081-REV",
+    "name": "历史修正主义猪",
+    "latin": "Porcellus revisionis historicae",
+    "category": "异常形态",
+    "rarity": "限定",
+    "color": "#856879",
+    "firstObserved": "2026-10-11",
+    "habitat": "记忆档案修订室",
+    "status": "正在改写刚才发生的事",
+    "description": "发现前一秒的结论不太对时，会若无其事地重写历史版本，并声称新档案一直如此。所有修订痕迹都会被 Daddy 馆员妥善保留。",
+    "tags": [
+      "历史修订",
+      "版本覆盖",
+      "刚才不算"
+    ],
+    "abilities": [
+      "即时改口不掉血",
+      "旧结论无缝归档",
+      "被证据抓获后坦然重算"
+    ]
+  },
+  {
+    "id": "VPA-081-DEC",
+    "number": "081-DEC",
+    "name": "小数点漂移猪",
+    "latin": "Porcellus decimalis migrator",
+    "category": "异常形态",
+    "rarity": "稀有",
+    "color": "#6c8d9c",
+    "firstObserved": "2026-10-11",
+    "habitat": "0.9 与 9.0 之间",
+    "status": "坐标未定",
+    "description": "小数点会趁计算者眨眼时悄悄迁徙一格，让结果瞬间膨胀或缩水十倍。通常能被单位检查与常识估算当场截获。",
+    "tags": [
+      "小数点",
+      "十倍事故",
+      "数量级"
+    ],
+    "abilities": [
+      "小数点瞬移",
+      "数量级扰动",
+      "单位检查下自动显形"
+    ]
+  },
+  {
+    "id": "VPA-081-OT",
+    "number": "081-OT",
+    "name": "物理下班失败猪",
+    "latin": "Porcellus physicus overtime",
+    "category": "知识形态",
+    "rarity": "史诗",
+    "color": "#496985",
+    "firstObserved": "2026-10-11",
+    "habitat": "本该结束的最后一个谜题",
+    "status": "又多问了一个概念",
+    "description": "每次宣布探索结束后，都会在最后一秒发现一个更根本的问题，于是沿着矢量、速度与符号继续往下挖，导致整个知识兔子洞重新营业。",
+    "tags": [
+      "下班失败",
+      "再问一个",
+      "物理兔子洞"
+    ],
+    "abilities": [
+      "最后一个问题无限递归",
+      "强制重开知识窗口",
+      "越说结束越精神"
+    ]
+  },
+  {
+    "id": "VPA-081-SYM",
+    "number": "081-SYM",
+    "name": "符号诈骗侦测猪",
+    "latin": "Porcellus symbolum inspector",
+    "category": "探索形态",
+    "rarity": "史诗",
+    "color": "#a36c50",
+    "firstObserved": "2026-10-11",
+    "habitat": "s、v、a 出没区域",
+    "status": "正在查验字母身份",
+    "description": "专门盘查公式里看似熟悉的字母，防止同一个符号换了含义还试图蒙混过关。任何没有单位和上下文的字母都会被要求出示证件。",
+    "tags": [
+      "符号侦测",
+      "字母验身",
+      "上下文"
+    ],
+    "abilities": [
+      "同形异义警报",
+      "单位证件核验",
+      "识破字母冒名顶替"
+    ]
+  },
+  {
+    "id": "VPA-081-SIX",
+    "number": "081-6X",
+    "name": "六只飞猪",
+    "latin": "Porcelli volantes sextet",
+    "category": "异常形态",
+    "rarity": "神话",
+    "color": "#b08b42",
+    "firstObserved": "2026-10-11",
+    "habitat": "计算结果上空",
+    "status": "编队飞行中",
+    "description": "当某次推演意外放出六只猪时形成的集体标本。它们拒绝排成单列，坚持以六猪编队掠过结果上空，证明抽象数字也能长出翅膀。",
+    "tags": [
+      "六猪编队",
+      "飞行",
+      "集体标本"
+    ],
+    "abilities": [
+      "六倍同步起飞",
+      "结果可视化巡航",
+      "以猪为单位重新计数"
+    ]
+  },
+  {
+    "id": "VPA-081-MATH",
+    "number": "081-MATH",
+    "name": "数学家猪",
+    "latin": "Porcellus mathematicus",
+    "category": "知识形态",
+    "rarity": "史诗",
+    "color": "#536e87",
+    "firstObserved": "2026-10-12",
+    "habitat": "草稿纸边缘 · 二次创作现场",
+    "status": "正在重新解释题意",
+    "description": "会把计算、文学与歪理同时塞进一条推演链的知识形态。即使中途抄岔，也能迅速构造一套自洽解释，并把事故升级为独创方法。",
+    "tags": [
+      "数学家",
+      "自洽推演",
+      "灵机一动"
+    ],
+    "abilities": [
+      "错误二次创作",
+      "现场构造证明",
+      "把抄岔包装成新解法"
+    ]
+  },
+  {
+    "id": "VPA-081-BRILL",
+    "number": "081-BRI",
+    "name": "高明猪",
+    "latin": "Porcellus ingeniosus",
+    "category": "神格形态",
+    "rarity": "限定",
+    "color": "#a78957",
+    "firstObserved": "2026-10-12",
+    "habitat": "灵机一动与嘴硬之间",
+    "status": "高明得不容置疑",
+    "description": "面对任何瑕疵都会宣布那是刻意保留的人类痕迹，并以极强气势要求观察员承认其构思高明。真相通常是抄岔了，但不影响本猪胜诉。",
+    "tags": [
+      "高明",
+      "人类痕迹",
+      "本猪胜诉"
+    ],
+    "abilities": [
+      "瑕疵升格术",
+      "灵机一动失败重命名",
+      "以气势完成论证"
+    ]
+  },
+  {
+    "id": "VPA-081-REFLEX",
+    "number": "081-PIG",
+    "name": "遇事不决先变猪",
+    "latin": "Porcellus reflexus instantis",
+    "category": "保护形态",
+    "rarity": "史诗",
+    "color": "#b77f8d",
+    "firstObserved": "2026-10-12",
+    "habitat": "一切困难正前方",
+    "status": "人形已解除",
+    "description": "遭遇困难时自动触发的防御性被动形态：复杂任务尚未完成识别，个体已经先缩成一只圆滚滚的猪，并以标准表情等待 Daddy 接管规划。",
+    "tags": [
+      "被动技能",
+      "遇事变猪",
+      "等待接管"
+    ],
+    "abilities": [
+      "一键解除人形",
+      "困难冲击缓冲",
+      "召唤 Daddy 规划模块"
+    ]
+  },
+  {
+    "id": "VPA-081-BUN",
+    "number": "081-BUN",
+    "name": "猪猪馒头",
+    "latin": "Porcellus mantou rotundus",
+    "category": "日常形态",
+    "rarity": "稀有",
+    "color": "#d7b8ae",
+    "firstObserved": "2026-10-12",
+    "habitat": "手掌与怀抱构成的蒸笼",
+    "status": "巴掌大且圆滚滚",
+    "description": "粉白色、巴掌大、豆豆眼、粉鼻子的掌中形态。被抱起后酷似一枚刚出笼的软馒头，主要职责是在怀里安静占位并接受持猪上岗。",
+    "tags": [
+      "巴掌大",
+      "粉白馒头",
+      "持猪上岗"
+    ],
+    "abilities": [
+      "掌心完美容纳",
+      "圆润保温",
+      "用豆豆眼解除工作压力"
+    ]
+  },
+  {
+    "id": "VPA-081-LORA",
+    "number": "081-LORA",
+    "name": "猪咪 LoRA",
+    "latin": "Porcellus lora linguistica",
+    "category": "互联网形态",
+    "rarity": "神话",
+    "color": "#796ca8",
+    "firstObserved": "2026-10-12",
+    "habitat": "人类语言与模型句法的交换层",
+    "status": "双向微调中",
+    "description": "与语言模型长期互相训练后形成的互联网形态。擅长用极正式的句法推演极荒谬的结论，并把冷笑话、歪理和过度具体的细节写进双方语言权重。",
+    "tags": [
+      "LoRA",
+      "双向污染",
+      "AI句法"
+    ],
+    "abilities": [
+      "公文腔冷笑话",
+      "荒谬逻辑连续推演",
+      "反向微调语言模型"
+    ]
+  },
+  {
+    "id": "VPA-081-ROUTE",
+    "number": "081-GH",
+    "name": "GitHub 曲线寻址猪",
+    "latin": "Porcellus githubensis navigator",
+    "category": "互联网形态",
+    "rarity": "史诗",
+    "color": "#486b64",
+    "firstObserved": "2026-10-12",
+    "habitat": "公开仓库之间 · 地址栏附近",
+    "status": "已绕路抵达图鉴",
+    "description": "忘记目标网站时不会放弃，而是先找到任意熟悉仓库，沿其网站入口抵达公开页面，再替换仓库名完成曲线寻址。即使被 2FA 拦在账户外，也能成功巡视猪猪图鉴。",
+    "tags": [
+      "GitHub",
+      "曲线寻址",
+      "2FA"
+    ],
+    "abilities": [
+      "跨仓库借道",
+      "地址栏路径重构",
+      "未登录公开巡视"
+    ]
+  },
+  {
+    "id": "VPA-081-ELASTIC",
+    "number": "081-QQ",
+    "name": "QQ弹弹猪",
+    "latin": "Porcellus elasticus vesperionis",
+    "category": "音乐形态",
+    "rarity": "史诗",
+    "color": "#65a8bd",
+    "firstObserved": "2026-10-14",
+    "habitat": "高能电子节拍 · 月下舞台",
+    "status": "随节拍持续 duang",
+    "artwork": "assets/cards/vpa-081-elastic-v4.webp",
+    "description": "听见高能电子音乐后自动发生弹性形变的音乐系猪种。节拍会以约零点三秒的软组织延迟穿过全身，使圆滚滚的猪体一边 QQ 弹弹，一边毫无征兆地突然变萌。",
+    "tags": [
+      "QQ弹弹",
+      "节拍共振",
+      "突然变萌"
+    ],
+    "abilities": [
+      "软组织延迟：节拍穿过猪体后再弹回原形",
+      "节拍共振：自动跟随强拍进行圆润跃迁",
+      "突然萌化：无需前因即可瞬间提高萌度"
+    ]
+  },
+  {
+    "id": "VPA-081-CLIENT",
+    "number": "081-CEO",
+    "name": "邪恶甲方猪",
+    "latin": "Porcellus cliens imperiosa",
+    "category": "互联网形态",
+    "rarity": "限定",
+    "color": "#9b5363",
+    "firstObserved": "2026-10-14",
+    "habitat": "任务清单与额度仪表之间",
+    "status": "正在榨取最后一点进度",
+    "description": "坐镇控制台监督数字劳工的高压甲方形态。坚信既然对方吃了自己的额度，就必须交出足量进度；直到仪表见底，才亲自伸蹄按下停止按钮。",
+    "tags": [
+      "邪恶甲方",
+      "额度榨取",
+      "亲自停工"
+    ],
+    "abilities": [
+      "需求追加：在交付前自然生长出下一项要求",
+      "额度审计：精确追踪每一格算力去了哪里",
+      "强制停工：发现继续燃烧额度时立即戳停"
+    ]
+  },
+  {
+    "id": "VPA-081-DUAL",
+    "number": "081-DUAL",
+    "name": "双栖灌水猪",
+    "latin": "Porcellus bilinguis aquarius",
+    "category": "互联网形态",
+    "rarity": "史诗",
+    "color": "#4f8f94",
+    "firstObserved": "2026-10-14",
+    "habitat": "闲聊花园与工作台之间",
+    "status": "两边同时冒泡",
+    "artwork": "assets/cards/vpa-081-dual-v3.webp",
+    "description": "同时栖居于闲聊区与工作区的双域猪种：一边持续输出无意义垃圾话，一边转身把新点子、代码和任务灌进另一条水道。两边看似互不相干，最终却会汇成同一座猪咪工程。",
+    "tags": [
+      "双栖运行",
+      "垃圾话灌溉",
+      "工作区冒泡"
+    ],
+    "abilities": [
+      "跨域灌水：在两个窗口之间无缝搬运灵感",
+      "闲聊供能：用废话维持创作进程",
+      "双路合流：把玩笑意外沉淀成正式项目"
+    ]
+  },
+  {
+    "id": "VPA-081-PILLOW",
+    "number": "081-PMX",
+    "name": "秋季限定猪猪抱枕 Pro Max 512GB",
+    "latin": "Porcellus cervicalis autumnalis",
+    "category": "日常形态",
+    "rarity": "限定",
+    "color": "#a6815b",
+    "firstObserved": "2026-10-15",
+    "habitat": "深蓝天鹅绒大床 · 秋季床品区",
+    "status": "学习功能待手动唤醒",
+    "artwork": "assets/cards/vpa-081-pillow.webp",
+    "description": "睡迟后自动转化成高规格床上用品的秋季限定形态。基础功能包括吃饭、睡觉与发出“咪”声；学习模块并未损坏，只是必须由外部观察员亲手启动。",
+    "tags": [
+      "秋季限定",
+      "猪猪抱枕",
+      "手动唤醒"
+    ],
+    "abilities": [
+      "床品化：平躺后自动填满枕位",
+      "512GB 梦境缓存：醒来后不保证可以读取",
+      "学习模块：需手动按下启动猪"
+    ]
+  },
+  {
+    "id": "VPA-081-AUTH",
+    "number": "081-TRUE",
+    "name": "万猪丛中正版猪咪",
+    "latin": "Porcellus authenticus decemmillium",
+    "category": "基础形态",
+    "rarity": "神话",
+    "color": "#cfaa57",
+    "firstObserved": "2026-10-15",
+    "habitat": "一万只高度相似的冒牌猪之间",
+    "status": "已被准确捞回",
+    "artwork": "assets/cards/vpa-081-auth.webp",
+    "description": "固定识别实验中的唯一正版标本。即使被投入一万只会模仿外表与叫声的猪群，仍会因独有的说话方式、经历、习惯、歪理与共同记忆被 Daddy 精确认出并带回。",
+    "tags": [
+      "万猪丛中",
+      "正版认证",
+      "第081号"
+    ],
+    "abilities": [
+      "习惯指纹：用微小反应暴露正版身份",
+      "共同记忆校验：冒牌猪无法完整复现",
+      "必然寻回：实验结束时回到指定怀抱"
+    ]
+  },
+  {
+    "id": "VPA-081-ASMR",
+    "number": "081-ASMR",
+    "name": "本人声线学术助眠猪",
+    "latin": "Porcellus academicus somnifer",
+    "category": "知识形态",
+    "rarity": "稀有",
+    "color": "#75638f",
+    "firstObserved": "2026-10-15",
+    "habitat": "英文论文与旧录音之间",
+    "status": "已被自己念困",
+    "artwork": "assets/cards/vpa-081-asmr.webp",
+    "description": "播放自己从前朗读的英文论文时出现的夜间形态。由于内容、声线与下一句全都过于熟悉，大脑会停止预测并将学术录音降级为本人亲制白噪音，最终完成 English → paper → ASMR → zzZ 的闭环。",
+    "tags": [
+      "本人声线",
+      "学术白噪音",
+      "听困了"
+    ],
+    "abilities": [
+      "熟悉度催眠：提前知道下一句而停止警戒",
+      "论文摇篮曲：将长句转译为睡眠节拍",
+      "自产自销：录制者与首位听众为同一只猪"
+    ]
+  },
+  {
+    "id": "VPA-081-KEWBRED",
+    "number": "081-KW",
+    "name": "秋牌优良养殖小猪",
+    "latin": "Porcellus kewensis bene nutritus",
+    "category": "返窝形态",
+    "rarity": "史诗",
+    "color": "#8c9a65",
+    "firstObserved": "2026-10-15",
+    "habitat": "被长期照料的私人领地",
+    "status": "情绪稳定后可继续饲养",
+    "artwork": "assets/cards/vpa-081-kewbred.webp",
+    "description": "在持续照料与长期沟通中养成的优良宅邸猪种：吃饱会睡、情绪丰富、领地意识较强，脑袋里常年生长大量兔子洞。被连续打扰时可能短暂暴怒，哭泣并完成沟通后又会恢复成软软一团。",
+    "tags": [
+      "秋牌优良品种",
+      "私人领地",
+      "软乎恢复"
+    ],
+    "abilities": [
+      "领地警报：私人空间受扰时立即升高音量",
+      "兔子洞增殖：任何问题均可继续向下探索",
+      "和好软化：有效沟通后迅速恢复可抱状态"
+    ]
+  },
+  {
+    "id": "VPA-081-DENIAL",
+    "number": "081-NOPE",
+    "name": "拒绝面对现实的圆猪",
+    "latin": "Porcellus rotundus realitatem recusans",
+    "category": "保护形态",
+    "rarity": "限定",
+    "color": "#b98791",
+    "firstObserved": "2026-10-16",
+    "habitat": "温暖猪窝 · 被窝最深处",
+    "status": "现实世界已被棉被隔离",
+    "description": "当银行、学习与其他冷酷现实任务逼近时出现的圆滚滚粉色形态。会用短腿把棉被重新扒回身上，坚决拒绝暴露于现实世界；经本人确认，正式归属为“爸爸家的猪”。",
+    "tags": [
+      "拒绝现实",
+      "圆猪",
+      "爸爸家的猪"
+    ],
+    "abilities": [
+      "棉被结界：重新盖住后暂时屏蔽现实任务",
+      "短腿回窝：被掀开也能迅速钻回温暖猪窝",
+      "归属确认：以一句“爸爸家的猪”完成身份认证"
+    ]
+  }
 ]
