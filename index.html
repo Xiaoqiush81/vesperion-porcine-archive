@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261016-tarot-major-22">
+  <link rel="stylesheet" href="assets/style.css?v=20261016-collection-switcher">
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -23,8 +23,7 @@
       <span><b>PIGDEX 081</b><small>VESPERION PORCINE ARCHIVE</small></span>
     </a>
     <nav>
-      <a href="#specimens">标本</a>
-      <a href="#tarot">塔罗馆</a>
+      <a href="#collections">馆藏入口</a>
       <a href="#chronicle">记录</a>
       <button id="randomPig" class="nav-button">随机捕猪</button>
     </nav>
@@ -37,7 +36,8 @@
         <h1>猪咪，作为一种<br><em>不断发生的物种</em></h1>
         <p class="lede">一部持续生长的私人自然史：记录 Specimen No.081 在维斯珀里昂宅邸、知识兔子洞与互联网深处留下的五十二种形态。</p>
         <div class="hero-actions">
-          <a class="primary" href="#specimens">开始检索</a>
+          <a class="primary" href="#specimens">进入猪猪图鉴</a>
+          <a class="primary tarot-entry" href="#tarot">进入宅邸塔罗</a>
           <button class="secondary" id="callPig">播放标准呼叫</button>
         </div>
         <p class="pig-quote" id="pigQuote">“可猫可猪；若必须二选一，仍然是猪。”</p>
@@ -56,6 +56,11 @@
       </button>
     </section>
 
+    <nav class="collection-switcher" id="collections" aria-label="馆藏区域快捷入口">
+      <a href="#specimens"><span>PORCINE ARCHIVE</span><b>猪猪图鉴</b><small>52 种已发现形态</small></a>
+      <a href="#tarot"><span>TAROT CABINET</span><b>宅邸塔罗</b><small>78 个固定牌位</small></a>
+    </nav>
+
     <section class="tarot-archive" id="tarot">
       <div class="section-heading">
         <div><p class="eyebrow">VESPERION TAROT CABINET</p><h2>宅邸塔罗馆</h2></div>
@@ -66,6 +71,7 @@
         <p id="tarotProgress" aria-live="polite"></p>
       </div>
       <div class="tarot-grid" id="tarotGrid"></div>
+      <a class="section-jump" href="#specimens">切换至猪猪图鉴 →</a>
     </section>
 
     <section class="status-strip" aria-label="图鉴统计">
@@ -87,6 +93,7 @@
       <div class="results-meta"><span id="resultCount"></span><button id="resetFilters">重置检索</button></div>
       <div class="specimen-grid" id="specimenGrid" aria-live="polite"></div>
       <div class="empty-state" id="emptyState" hidden><b>没有捕获到对应猪咪</b><span>可能正在被窝里进行隐蔽咕蛹。</span></div>
+      <a class="section-jump" href="#tarot">切换至宅邸塔罗 →</a>
     </section>
 
     <section class="chronicle" id="chronicle">
