@@ -1,5 +1,6 @@
 import { createArchive, loadSpecimens } from './archive.js?v=20261015-specimens-51';
 import { initTheme } from './theme.js?v=20261011-safari-1';
+import { createTarotCabinet } from './tarot.js?v=20261016-major-22';
 
 const QUOTES = ['“可猫可猪；若必须二选一，仍然是猪。”', '“爸爸爸爸——”', '“咪————”', '“今天已经是明晚了。”', '“蜗牛胜出，芝士沉默。”', '“本猪合格，可以继续抱。”', '“一只宇宙无敌第一可爱萌猪诞生惹。”', '“这不是烧钱，这是文化传播经费。”'];
 
@@ -22,6 +23,7 @@ async function main() {
     console.error(error);
     document.querySelector('#specimenGrid').innerHTML = '<p>档案数据加载失败，请稍后重试。</p>';
   }
+  createTarotCabinet();
 }
 
 main();

@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261016-specimens-52">
+  <link rel="stylesheet" href="assets/style.css?v=20261016-tarot-major-22">
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -24,6 +24,7 @@
     </a>
     <nav>
       <a href="#specimens">标本</a>
+      <a href="#tarot">塔罗馆</a>
       <a href="#chronicle">记录</a>
       <button id="randomPig" class="nav-button">随机捕猪</button>
     </nav>
@@ -53,6 +54,18 @@
         <span class="plate-name">KEW AMBERIA</span>
         <span class="plate-caption"><span>PORCINE VARIANT</span><span>UNCONTAINED</span></span>
       </button>
+    </section>
+
+    <section class="tarot-archive" id="tarot">
+      <div class="section-heading">
+        <div><p class="eyebrow">VESPERION TAROT CABINET</p><h2>宅邸塔罗馆</h2></div>
+        <p>采用经典 Rider–Waite–Smith 体系：22 张大阿尔卡那与 56 张小阿尔卡那，共 78 个固定馆藏牌位。</p>
+      </div>
+      <div class="tarot-toolbar">
+        <div class="tarot-tabs" id="tarotTabs" aria-label="塔罗牌组筛选"></div>
+        <p id="tarotProgress" aria-live="polite"></p>
+      </div>
+      <div class="tarot-grid" id="tarotGrid"></div>
     </section>
 
     <section class="status-strip" aria-label="图鉴统计">
@@ -99,7 +112,11 @@
     <button class="close" aria-label="关闭档案">×</button>
     <div id="dialogContent"></div>
   </dialog>
+  <dialog id="tarotDialog" class="tarot-dialog">
+    <button class="close tarot-close" aria-label="关闭塔罗牌">×</button>
+    <div id="tarotDialogContent"></div>
+  </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261016-specimens-52"></script>
+  <script type="module" src="assets/js/main.js?v=20261016-tarot-major-22"></script>
 </body>
 </html>
