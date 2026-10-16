@@ -60,7 +60,7 @@ export function createTarotCabinet() {
   function render() {
     const visible = cards.filter(card => group === 'all' || card.group === group);
     grid.innerHTML = visible.map(card => `<button class="tarot-card ${card.artwork ? 'is-collected' : 'is-pending'}" data-id="${escape(card.id)}" type="button">
-      <span class="tarot-art">${card.artwork ? `<img src="assets/tarot/thumbs/${escape(card.artwork)}" alt="${escape(card.name)}牌面" width="320" height="480" loading="lazy" decoding="async" fetchpriority="low"><span class="tarot-frame" aria-hidden="true"><b>${escape(card.number)}</b><i>${escape(card.title)}</i></span>` : `<span class="tarot-placeholder"><b>${escape(card.number)}</b><i>VESPERION</i><span>馆藏空位</span></span>`}</span>
+      <span class="tarot-art">${card.artwork ? `<img src="assets/tarot/thumbs/${escape(card.artwork)}" alt="${escape(card.name)}牌面" width="320" height="480" loading="lazy" decoding="async" fetchpriority="low">` : `<span class="tarot-placeholder"><b>${escape(card.number)}</b><i>VESPERION</i><span>馆藏空位</span></span>`}</span>
       <span class="tarot-meta"><small>${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</small><b>${escape(card.name)}</b><em>${escape(card.title)}</em></span>
     </button>`).join('');
     const collected = visible.filter(card => card.artwork).length;
@@ -69,7 +69,7 @@ export function createTarotCabinet() {
   function open(id) {
     const card = cards.find(item => item.id === id);
     if (!card?.artwork) return;
-    content.innerHTML = `<div class="tarot-detail"><figure class="tarot-detail-art"><img src="assets/tarot/${escape(card.artwork)}" alt="${escape(card.name)}牌面" width="768" height="1152" decoding="async"><span class="tarot-frame" aria-hidden="true"><b>${escape(card.number)}</b><i>${escape(card.title)}</i></span></figure><div><p class="eyebrow">${escape(card.number)} · ${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</p><h2>${escape(card.name)}</h2><p class="tarot-english">${escape(card.title)}</p><p>${escape(card.meaning)}</p></div></div>`;
+    content.innerHTML = `<div class="tarot-detail"><figure class="tarot-detail-art"><img src="assets/tarot/${escape(card.artwork)}" alt="${escape(card.name)}牌面" width="768" height="1152" decoding="async"></figure><div><p class="eyebrow">${escape(card.number)} · ${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</p><h2>${escape(card.name)}</h2><p class="tarot-english">${escape(card.title)}</p><p>${escape(card.meaning)}</p></div></div>`;
     dialog.showModal();
   }
   tabs.addEventListener('click', event => {
