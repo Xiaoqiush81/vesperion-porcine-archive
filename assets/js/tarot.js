@@ -34,7 +34,7 @@ const MAJOR_ART = Object.freeze({
 const MINOR_ART = Object.freeze({
   'wands-1':'wands-ace.webp', 'wands-2':'wands-two.webp', 'wands-3':'wands-three.webp',
   'wands-4':'wands-four.webp', 'wands-5':'wands-five.webp', 'wands-6':'wands-six.webp',
-  'wands-7':'wands-seven.webp', 'wands-9':'wands-nine.webp', 'wands-10':'wands-ten.webp'
+  'wands-7':'wands-seven.webp', 'wands-8':'wands-eight.webp', 'wands-9':'wands-nine.webp', 'wands-10':'wands-ten.webp'
 });
 
 const SUITS = [
