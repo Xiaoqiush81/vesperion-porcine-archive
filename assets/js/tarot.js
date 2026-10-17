@@ -39,7 +39,10 @@ const MINOR_ART = Object.freeze({
   'cups-1':'cups-ace.webp', 'cups-2':'cups-two.webp', 'cups-3':'cups-three.webp', 'cups-4':'cups-four.webp',
   'cups-5':'cups-five.webp', 'cups-6':'cups-six.webp', 'cups-7':'cups-seven.webp', 'cups-8':'cups-eight.webp',
   'cups-9':'cups-nine.webp', 'cups-10':'cups-ten.webp',
-  'cups-11':'cups-page.webp', 'cups-12':'cups-knight.webp', 'cups-13':'cups-queen.webp', 'cups-14':'cups-king.webp'
+  'cups-11':'cups-page.webp', 'cups-12':'cups-knight.webp', 'cups-13':'cups-queen.webp', 'cups-14':'cups-king.webp',
+  'swords-1':'swords-ace.webp', 'swords-2':'swords-two.webp', 'swords-3':'swords-three.webp',
+  'swords-4':'swords-four.webp', 'swords-5':'swords-five.webp', 'swords-6':'swords-six.webp',
+  'swords-7':'swords-seven.webp', 'swords-8':'swords-eight.webp', 'swords-9':'swords-nine.webp', 'swords-10':'swords-ten.webp'
 });
 
 const SUITS = [
