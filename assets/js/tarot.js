@@ -35,9 +35,11 @@ const MINOR_ART = Object.freeze({
   'wands-1':'wands-ace.webp', 'wands-2':'wands-two.webp', 'wands-3':'wands-three.webp',
   'wands-4':'wands-four.webp', 'wands-5':'wands-five.webp', 'wands-6':'wands-six.webp',
   'wands-7':'wands-seven.webp', 'wands-8':'wands-eight.webp', 'wands-9':'wands-nine.webp', 'wands-10':'wands-ten.webp',
+  'wands-11':'wands-page.webp', 'wands-12':'wands-knight.webp', 'wands-13':'wands-queen.webp', 'wands-14':'wands-king.webp',
   'cups-1':'cups-ace.webp', 'cups-2':'cups-two.webp', 'cups-3':'cups-three.webp', 'cups-4':'cups-four.webp',
   'cups-5':'cups-five.webp', 'cups-6':'cups-six.webp', 'cups-7':'cups-seven.webp', 'cups-8':'cups-eight.webp',
-  'cups-9':'cups-nine.webp', 'cups-10':'cups-ten.webp'
+  'cups-9':'cups-nine.webp', 'cups-10':'cups-ten.webp',
+  'cups-11':'cups-page.webp', 'cups-12':'cups-knight.webp', 'cups-13':'cups-queen.webp', 'cups-14':'cups-king.webp'
 });
 
 const SUITS = [
