@@ -31,6 +31,12 @@ const MAJOR_ART = Object.freeze({
   'XX':'judgement.webp','XXI':'the-world.webp'
 });
 
+const MINOR_ART = Object.freeze({
+  'wands-1':'wands-ace.webp', 'wands-2':'wands-two.webp', 'wands-3':'wands-three.webp',
+  'wands-4':'wands-four.webp', 'wands-5':'wands-five.webp', 'wands-6':'wands-six.webp',
+  'wands-7':'wands-seven.webp', 'wands-9':'wands-nine.webp', 'wands-10':'wands-ten.webp'
+});
+
 const SUITS = [
   ['WANDS', '权杖', '火 · 行动与创造'], ['CUPS', '圣杯', '水 · 情感与关系'],
   ['SWORDS', '宝剑', '风 · 思考与冲突'], ['PENTACLES', '星币', '土 · 物质与养成']
@@ -41,7 +47,8 @@ const cards = [
   ...MAJOR.map(([number,title,name,meaning]) => ({ id:`major-${number}`, group:'major', number, title, name, meaning, artwork:MAJOR_ART[number] })),
   ...SUITS.flatMap(([suit,suitCn,element]) => RANKS.map((rank,index) => ({
     id:`${suit.toLowerCase()}-${index+1}`, group:suit.toLowerCase(), number:String(index+1).padStart(2,'0'),
-    title:`${rank} OF ${suit}`, name:`${suitCn} · ${rank}`, meaning:element
+    title:`${rank} OF ${suit}`, name:`${suitCn} · ${rank}`, meaning:element,
+    artwork:MINOR_ART[`${suit.toLowerCase()}-${index+1}`]
   })))
 ];
 
