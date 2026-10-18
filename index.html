@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261016-collection-switcher">
+  <link rel="stylesheet" href="assets/style.css?v=20261018-tarot-practice">
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -66,6 +66,31 @@
         <div><p class="eyebrow">VESPERION TAROT CABINET</p><h2>宅邸塔罗馆</h2></div>
         <p>采用经典 Rider–Waite–Smith 体系：22 张大阿尔卡那与 56 张小阿尔卡那，共 78 个固定馆藏牌位。</p>
       </div>
+      <section class="tarot-practice" aria-labelledby="practiceTitle">
+        <div class="practice-intro">
+          <p class="eyebrow">THE DRAWING TABLE</p>
+          <h3 id="practiceTitle">宅邸抽牌桌</h3>
+          <p>默念一个清晰的问题，洗牌，然后亲手翻开答案。牌面不会提前泄露。</p>
+        </div>
+        <div class="practice-controls">
+          <label class="question-field"><span>本次问题</span><input id="tarotQuestion" maxlength="80" placeholder="例如：我现在最该留意什么？" autocomplete="off"></label>
+          <div class="spread-picker" id="spreadPicker" aria-label="选择牌阵">
+            <button class="spread-choice active" data-spread="one" type="button"><b>一张</b><small>今日指引</small></button>
+            <button class="spread-choice" data-spread="three" type="button"><b>三张</b><small>现状 · 阻碍 · 建议</small></button>
+            <button class="spread-choice" data-spread="timeline" type="button"><b>时间流</b><small>过去 · 现在 · 未来</small></button>
+          </div>
+          <div class="practice-actions">
+            <button class="primary practice-draw" id="drawTarot" type="button">洗牌并抽取</button>
+            <button class="secondary practice-reset" id="resetTarot" type="button" disabled>收起本次牌阵</button>
+          </div>
+          <p class="practice-status" id="practiceStatus" aria-live="polite">牌组安静地等待着。</p>
+        </div>
+        <div class="reading-table" id="readingTable" aria-live="polite"></div>
+        <div class="reading-notes" id="readingNotes" hidden>
+          <label><span>我的串联解读</span><textarea id="readingJournal" rows="3" maxlength="500" placeholder="先写下三张牌之间发生了什么，不必急着追求标准答案。"></textarea></label>
+          <p>提示：先看画面，再看关键词，最后回到最初的问题。</p>
+        </div>
+      </section>
       <div class="tarot-toolbar">
         <div class="tarot-tabs" id="tarotTabs" aria-label="塔罗牌组筛选"></div>
         <p id="tarotProgress" aria-live="polite"></p>
@@ -124,6 +149,7 @@
     <div id="tarotDialogContent"></div>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261018-queen-frame-78"></script>
+  <script type="module" src="assets/js/main.js?v=20261018-tarot-practice"></script>
 </body>
 </html>
+
