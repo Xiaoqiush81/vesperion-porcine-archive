@@ -65,6 +65,25 @@ const cards = [
   })))
 ];
 
+const RANK_THEMES = [
+  '开端、机会、纯粹的能量','平衡、选择、两股力量','发展、协作、初见成果','稳定、守护、暂停整顿',
+  '摩擦、失落、迫使改变','恢复、交流、重新取得平衡','考验、评估、选择方向','推进、行动、离开旧局面',
+  '接近完成、坚持、独立承担','结果、极致、一个周期的落点','好奇、消息、尚在成长','行动、追逐、把能量带向远方',
+  '成熟、照料、从容掌握','主导、责任、让力量稳定落地'
+];
+const SUIT_THEMES = Object.freeze({
+  wands:'行动、热情与创造力', cups:'情感、关系与直觉', swords:'思想、沟通与冲突', pentacles:'金钱、身体与现实积累'
+});
+const SPREADS = Object.freeze({
+  one:['今日指引'], three:['现状','阻碍','建议'], timeline:['过去','现在','未来']
+});
+
+function practiceMeaning(card) {
+  if (card.group === 'major') return card.meaning;
+  const index = Math.max(0, Number(card.number) - 1);
+  return `${SUIT_THEMES[card.group]}；${RANK_THEMES[index]}`;
+}
+
 const escape = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
 export function createTarotCabinet() {
@@ -73,7 +92,16 @@ export function createTarotCabinet() {
   const progress = document.querySelector('#tarotProgress');
   const dialog = document.querySelector('#tarotDialog');
   const content = document.querySelector('#tarotDialogContent');
+  const spreadPicker = document.querySelector('#spreadPicker');
+  const drawButton = document.querySelector('#drawTarot');
+  const resetButton = document.querySelector('#resetTarot');
+  const readingTable = document.querySelector('#readingTable');
+  const readingNotes = document.querySelector('#readingNotes');
+  const readingJournal = document.querySelector('#readingJournal');
+  const practiceStatus = document.querySelector('#practiceStatus');
   let group = 'all';
+  let spread = 'one';
+  let drawing = false;
   const groups = [['all','全部 78'],['major','大阿尔卡那'],...SUITS.map(([suit,cn]) => [suit.toLowerCase(),cn])];
 
   tabs.innerHTML = groups.map(([id,label],i) => `<button class="tarot-tab ${i ? '' : 'active'}" data-group="${id}">${label}</button>`).join('');
@@ -100,5 +128,70 @@ export function createTarotCabinet() {
   grid.addEventListener('click', event => open(event.target.closest('.tarot-card')?.dataset.id));
   dialog.querySelector('.tarot-close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+
+  function randomIndex(max) {
+    if (globalThis.crypto?.getRandomValues) {
+      const value = new Uint32Array(1); globalThis.crypto.getRandomValues(value); return value[0] % max;
+    }
+    return Math.floor(Math.random() * max);
+  }
+  function drawCards(count) {
+    const pool = cards.filter(card => card.artwork);
+    const result = [];
+    while (result.length < count && pool.length) result.push(pool.splice(randomIndex(pool.length), 1)[0]);
+    return result;
+  }
+  function clearReading(message = '牌组安静地等待着。') {
+    readingTable.className = 'reading-table';
+    readingTable.innerHTML = '';
+    readingNotes.hidden = true;
+    readingJournal.value = '';
+    resetButton.disabled = true;
+    practiceStatus.textContent = message;
+    drawing = false;
+  }
+  function deal() {
+    if (drawing) return;
+    drawing = true;
+    drawButton.disabled = true;
+    readingNotes.hidden = true;
+    readingTable.className = 'reading-table has-cards';
+    readingTable.innerHTML = '';
+    practiceStatus.textContent = '正在洗牌……请把注意力留在问题上。';
+    const positions = SPREADS[spread];
+    const selected = drawCards(positions.length);
+    window.setTimeout(() => {
+      readingTable.innerHTML = selected.map((card, index) => `<article class="draw-slot" data-draw-index="${index}">
+        <p class="draw-position">${escape(positions[index])}</p>
+        <button class="draw-card" type="button" aria-label="翻开${escape(positions[index])}牌">
+          <span class="draw-card-inner"><span class="draw-face draw-back" aria-hidden="true"></span><span class="draw-face draw-front"><img src="assets/tarot/${escape(card.artwork)}?v=queen-frame-429be3d" alt="" width="320" height="480" decoding="async"></span></span>
+        </button>
+        <span class="draw-hint">点击翻牌</span>
+        <p class="draw-meaning"><b>${escape(card.name)} · ${escape(card.title)}</b>${escape(practiceMeaning(card))}</p>
+      </article>`).join('');
+      practiceStatus.textContent = `已抽取 ${selected.length} 张。按自己的节奏逐张翻开。`;
+      resetButton.disabled = false;
+      drawButton.disabled = false;
+      drawing = false;
+    }, 620);
+  }
+  spreadPicker.addEventListener('click', event => {
+    const button = event.target.closest('.spread-choice'); if (!button || drawing) return;
+    spread = button.dataset.spread;
+    spreadPicker.querySelectorAll('.spread-choice').forEach(item => item.classList.toggle('active', item === button));
+    clearReading(`已选择「${button.querySelector('small').textContent}」。`);
+  });
+  drawButton.addEventListener('click', deal);
+  resetButton.addEventListener('click', () => clearReading('本次牌阵已收起，可以带着新问题再次洗牌。'));
+  readingTable.addEventListener('click', event => {
+    const button = event.target.closest('.draw-card'); if (!button || button.classList.contains('revealed')) return;
+    button.classList.add('revealed');
+    button.closest('.draw-slot').classList.add('is-revealed');
+    button.nextElementSibling.textContent = '已翻开';
+    const left = readingTable.querySelectorAll('.draw-card:not(.revealed)').length;
+    practiceStatus.textContent = left ? `还有 ${left} 张牌没有翻开。` : '牌阵已经完整显现。现在试着把它们串成一句话。';
+    if (!left) readingNotes.hidden = false;
+  });
   render();
 }
+
