@@ -100,17 +100,20 @@ export function createTarotCabinet() {
   const readingNotes = document.querySelector('#readingNotes');
   const readingJournal = document.querySelector('#readingJournal');
   const practiceStatus = document.querySelector('#practiceStatus');
-  let group = 'all';
+  // Print-art review is intentionally staged. Keep the cabinet focused on the
+  // batch that has actually been restored instead of mixing approved originals
+  // with the still-quarantined Queen-frame composites.
+  let group = 'major';
   let spread = 'one';
   let drawing = false;
   const revealed = new Set();
-  const groups = [['all','全部 78'],['major','大阿尔卡那'],...SUITS.map(([suit,cn]) => [suit.toLowerCase(),cn])];
+  const groups = [['major','第一批 · 大阿尔卡那 22 张']];
 
   tabs.innerHTML = groups.map(([id,label],i) => `<button class="tarot-tab ${i ? '' : 'active'}" data-group="${id}">${label}</button>`).join('');
   function render() {
     const visible = cards.filter(card => group === 'all' || card.group === group);
     grid.innerHTML = visible.map(card => `<button class="tarot-card ${card.artwork ? 'is-collected' : 'is-pending'} ${revealed.has(card.id) ? 'is-revealed' : ''}" data-id="${escape(card.id)}" type="button" aria-label="${revealed.has(card.id) ? `查看${escape(card.name)}详情` : `翻开${escape(card.name)}`}">
-      <span class="tarot-art"><span class="tarot-card-inner"><span class="tarot-face tarot-back"><img src="assets/tarot/card-back.webp?v=2651" alt="" width="320" height="480" loading="lazy" decoding="async"></span><span class="tarot-face tarot-front">${card.artwork ? `<img src="assets/tarot/${escape(card.artwork)}?v=swords-redraw-80037a5" alt="${escape(card.name)}牌面" width="320" height="480" loading="lazy" decoding="async" fetchpriority="low">` : `<span class="tarot-placeholder"><b>${escape(card.number)}</b><i>VESPERION</i><span>馆藏空位</span></span>`}</span></span></span>
+      <span class="tarot-art"><span class="tarot-card-inner"><span class="tarot-face tarot-back"><img src="assets/tarot/card-back.webp?v=2651" alt="" width="320" height="480" loading="lazy" decoding="async"></span><span class="tarot-face tarot-front">${card.artwork ? `<img src="assets/tarot/${escape(card.artwork)}?v=swords-uniform-aged-20261019" alt="${escape(card.name)}牌面" width="320" height="480" loading="lazy" decoding="async" fetchpriority="low">` : `<span class="tarot-placeholder"><b>${escape(card.number)}</b><i>VESPERION</i><span>馆藏空位</span></span>`}</span></span></span>
       <span class="tarot-meta"><small>${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</small><b>${escape(card.name)}</b><em>${escape(card.title)}</em></span>
     </button>`).join('');
     const collected = visible.filter(card => card.artwork).length;
@@ -119,7 +122,7 @@ export function createTarotCabinet() {
   function open(id) {
     const card = cards.find(item => item.id === id);
     if (!card?.artwork) return;
-    content.innerHTML = `<div class="tarot-detail"><figure class="tarot-detail-art"><img src="assets/tarot/${escape(card.artwork)}?v=swords-redraw-80037a5" alt="${escape(card.name)}牌面" width="768" height="1152" decoding="async"></figure><div><p class="eyebrow">${escape(card.number)} · ${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</p><h2>${escape(card.name)}</h2><p class="tarot-english">${escape(card.title)}</p><p>${escape(card.meaning)}</p></div></div>`;
+    content.innerHTML = `<div class="tarot-detail"><figure class="tarot-detail-art"><img src="assets/tarot/${escape(card.artwork)}?v=restored-originals-batch-major" alt="${escape(card.name)}牌面" width="768" height="1152" decoding="async"></figure><div><p class="eyebrow">${escape(card.number)} · ${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</p><h2>${escape(card.name)}</h2><p class="tarot-english">${escape(card.title)}</p><p>${escape(card.meaning)}</p></div></div>`;
     dialog.showModal();
   }
   tabs.addEventListener('click', event => {
@@ -156,7 +159,7 @@ export function createTarotCabinet() {
     return Math.floor(Math.random() * max);
   }
   function drawCards(count) {
-    const pool = cards.filter(card => card.artwork);
+    const pool = cards.filter(card => card.group === 'major' && card.artwork);
     const result = [];
     while (result.length < count && pool.length) result.push(pool.splice(randomIndex(pool.length), 1)[0]);
     return result;
@@ -184,7 +187,7 @@ export function createTarotCabinet() {
       readingTable.innerHTML = selected.map((card, index) => `<article class="draw-slot" data-draw-index="${index}">
         <p class="draw-position">${escape(positions[index])}</p>
         <button class="draw-card" type="button" aria-label="翻开${escape(positions[index])}牌">
-          <span class="draw-card-inner"><span class="draw-face draw-back" aria-hidden="true"><img src="assets/tarot/card-back.webp?v=2651" alt="" width="320" height="480" decoding="async"></span><span class="draw-face draw-front"><img src="assets/tarot/${escape(card.artwork)}?v=swords-redraw-80037a5" alt="" width="320" height="480" decoding="async"></span></span>
+          <span class="draw-card-inner"><span class="draw-face draw-back" aria-hidden="true"><img src="assets/tarot/card-back.webp?v=2651" alt="" width="320" height="480" decoding="async"></span><span class="draw-face draw-front"><img src="assets/tarot/${escape(card.artwork)}?v=swords-uniform-aged-20261019" alt="" width="320" height="480" decoding="async"></span></span>
         </button>
         <span class="draw-hint">点击翻牌</span>
         <p class="draw-meaning"><b>${escape(card.name)} · ${escape(card.title)}</b>${escape(practiceMeaning(card))}</p>
