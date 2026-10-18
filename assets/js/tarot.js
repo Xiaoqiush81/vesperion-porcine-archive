@@ -90,6 +90,7 @@ export function createTarotCabinet() {
   const grid = document.querySelector('#tarotGrid');
   const tabs = document.querySelector('#tarotTabs');
   const progress = document.querySelector('#tarotProgress');
+  const revealButton = document.querySelector('#revealTarot');
   const dialog = document.querySelector('#tarotDialog');
   const content = document.querySelector('#tarotDialogContent');
   const spreadPicker = document.querySelector('#spreadPicker');
@@ -102,13 +103,14 @@ export function createTarotCabinet() {
   let group = 'all';
   let spread = 'one';
   let drawing = false;
+  const revealed = new Set();
   const groups = [['all','全部 78'],['major','大阿尔卡那'],...SUITS.map(([suit,cn]) => [suit.toLowerCase(),cn])];
 
   tabs.innerHTML = groups.map(([id,label],i) => `<button class="tarot-tab ${i ? '' : 'active'}" data-group="${id}">${label}</button>`).join('');
   function render() {
     const visible = cards.filter(card => group === 'all' || card.group === group);
-    grid.innerHTML = visible.map(card => `<button class="tarot-card ${card.artwork ? 'is-collected' : 'is-pending'}" data-id="${escape(card.id)}" type="button">
-      <span class="tarot-art">${card.artwork ? `<img src="assets/tarot/${escape(card.artwork)}?v=queen-frame-429be3d" alt="${escape(card.name)}牌面" width="320" height="480" loading="lazy" decoding="async" fetchpriority="low">` : `<span class="tarot-placeholder"><b>${escape(card.number)}</b><i>VESPERION</i><span>馆藏空位</span></span>`}</span>
+    grid.innerHTML = visible.map(card => `<button class="tarot-card ${card.artwork ? 'is-collected' : 'is-pending'} ${revealed.has(card.id) ? 'is-revealed' : ''}" data-id="${escape(card.id)}" type="button" aria-label="${revealed.has(card.id) ? `查看${escape(card.name)}详情` : `翻开${escape(card.name)}`}">
+      <span class="tarot-art"><span class="tarot-card-inner"><span class="tarot-face tarot-back"><img src="assets/tarot/card-back.webp?v=final" alt="" width="320" height="480" loading="lazy" decoding="async"></span><span class="tarot-face tarot-front">${card.artwork ? `<img src="assets/tarot/${escape(card.artwork)}?v=queen-frame-429be3d" alt="${escape(card.name)}牌面" width="320" height="480" loading="lazy" decoding="async" fetchpriority="low">` : `<span class="tarot-placeholder"><b>${escape(card.number)}</b><i>VESPERION</i><span>馆藏空位</span></span>`}</span></span></span>
       <span class="tarot-meta"><small>${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</small><b>${escape(card.name)}</b><em>${escape(card.title)}</em></span>
     </button>`).join('');
     const collected = visible.filter(card => card.artwork).length;
@@ -125,7 +127,25 @@ export function createTarotCabinet() {
     group = button.dataset.group;
     tabs.querySelectorAll('button').forEach(item => item.classList.toggle('active', item === button)); render();
   });
-  grid.addEventListener('click', event => open(event.target.closest('.tarot-card')?.dataset.id));
+  grid.addEventListener('click', event => {
+    const button = event.target.closest('.tarot-card');
+    const id = button?.dataset.id;
+    if (!id || button.classList.contains('is-pending')) return;
+    if (!revealed.has(id)) {
+      revealed.add(id);
+      button.classList.add('is-revealed');
+      button.setAttribute('aria-label', `查看${cards.find(card => card.id === id)?.name || ''}详情`);
+      return;
+    }
+    open(id);
+  });
+  revealButton.addEventListener('click', () => {
+    const visible = cards.filter(card => (group === 'all' || card.group === group) && card.artwork);
+    const allOpen = visible.every(card => revealed.has(card.id));
+    visible.forEach(card => allOpen ? revealed.delete(card.id) : revealed.add(card.id));
+    revealButton.textContent = allOpen ? '全部翻开' : '全部盖回';
+    render();
+  });
   dialog.querySelector('.tarot-close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
 
@@ -164,7 +184,7 @@ export function createTarotCabinet() {
       readingTable.innerHTML = selected.map((card, index) => `<article class="draw-slot" data-draw-index="${index}">
         <p class="draw-position">${escape(positions[index])}</p>
         <button class="draw-card" type="button" aria-label="翻开${escape(positions[index])}牌">
-          <span class="draw-card-inner"><span class="draw-face draw-back" aria-hidden="true"></span><span class="draw-face draw-front"><img src="assets/tarot/${escape(card.artwork)}?v=queen-frame-429be3d" alt="" width="320" height="480" decoding="async"></span></span>
+          <span class="draw-card-inner"><span class="draw-face draw-back" aria-hidden="true"><img src="assets/tarot/card-back.webp?v=final" alt="" width="320" height="480" decoding="async"></span><span class="draw-face draw-front"><img src="assets/tarot/${escape(card.artwork)}?v=queen-frame-429be3d" alt="" width="320" height="480" decoding="async"></span></span>
         </button>
         <span class="draw-hint">点击翻牌</span>
         <p class="draw-meaning"><b>${escape(card.name)} · ${escape(card.title)}</b>${escape(practiceMeaning(card))}</p>
