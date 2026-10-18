@@ -239,6 +239,52 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .empty-state span { margin-top: 8px; font-size: 12px; }
 
 .tarot-archive { padding: 110px clamp(24px, 7vw, 110px) 125px; background: var(--paper); border-top: 1px solid var(--line); }
+.tarot-practice { width: min(100%, 1240px); margin: 0 auto 58px; padding: clamp(24px, 4vw, 48px); position: relative; overflow: hidden; color: var(--chronicle-ink); background: var(--chronicle-bg); box-shadow: 0 24px 60px rgba(6, 17, 29, .13); }
+.tarot-practice::before { content: ""; position: absolute; inset: 13px; pointer-events: none; border: 1px solid rgba(207,185,143,.3); }
+.tarot-practice::after { content: "✦"; position: absolute; top: 18px; right: 23px; color: var(--amber-pale); font-family: var(--serif); font-size: 22px; }
+.practice-intro, .practice-controls, .reading-table, .reading-notes { position: relative; z-index: 1; }
+.practice-intro { display: grid; grid-template-columns: 1fr minmax(260px, .7fr); align-items: end; gap: 25px; }
+.practice-intro .eyebrow { grid-column: 1 / -1; margin-bottom: -10px; color: var(--amber-pale); }
+.practice-intro h3 { margin: 0; font-family: var(--cn-serif); font-size: clamp(30px, 4vw, 48px); font-weight: 500; }
+.practice-intro > p:last-child { margin: 0; color: var(--chronicle-muted); font-family: var(--cn-serif); font-size: 12px; line-height: 1.85; text-align: right; }
+.practice-controls { margin-top: 34px; padding-top: 24px; border-top: 1px solid var(--chronicle-line); }
+.question-field, .reading-notes label { display: block; }
+.question-field span, .reading-notes label > span { display: block; margin-bottom: 9px; color: var(--amber-pale); font-family: var(--serif); font-size: 10px; letter-spacing: .14em; }
+.question-field input, .reading-notes textarea { width: 100%; padding: 12px 0; color: var(--chronicle-ink); background: transparent; border: 0; border-bottom: 1px solid var(--chronicle-line); outline: 0; font-family: var(--cn-serif); font-size: 13px; }
+.question-field input::placeholder, .reading-notes textarea::placeholder { color: var(--chronicle-muted); opacity: .72; }
+.question-field input:focus, .reading-notes textarea:focus { border-color: var(--amber-pale); }
+.spread-picker { margin: 22px 0; display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--chronicle-line); }
+.spread-choice { min-height: 72px; padding: 13px 15px; color: var(--chronicle-muted); background: transparent; border: 0; cursor: pointer; }
+.spread-choice + .spread-choice { border-left: 1px solid var(--chronicle-line); }
+.spread-choice b, .spread-choice small { display: block; }
+.spread-choice b { color: inherit; font-family: var(--cn-serif); font-size: 13px; font-weight: 500; }
+.spread-choice small { margin-top: 5px; font-size: 9px; letter-spacing: .08em; }
+.spread-choice.active { color: #10263d; background: var(--amber-pale); }
+.practice-actions { display: flex; align-items: center; gap: 24px; }
+.practice-draw { color: #10263d; background: var(--amber-pale); border-color: var(--amber-pale); }
+.practice-reset { color: var(--chronicle-ink); border-color: var(--amber-pale); }
+.practice-reset:disabled { opacity: .4; cursor: default; }
+.practice-status { margin: 18px 0 0; color: var(--chronicle-muted); font-family: var(--cn-serif); font-size: 11px; }
+.reading-table { min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 220px)); justify-content: center; gap: clamp(16px, 3vw, 38px); transition: min-height .3s ease, margin .3s ease; }
+.reading-table.has-cards { min-height: 420px; margin-top: 38px; padding-top: 34px; border-top: 1px solid var(--chronicle-line); }
+.draw-slot { min-width: 0; text-align: center; }
+.draw-position { margin: 0 0 11px; color: var(--amber-pale); font-family: var(--cn-serif); font-size: 11px; letter-spacing: .12em; }
+.draw-card { width: 100%; aspect-ratio: 2 / 3; padding: 0; position: relative; border: 0; background: transparent; cursor: pointer; perspective: 1000px; }
+.draw-card-inner { width: 100%; height: 100%; position: relative; display: block; transform-style: preserve-3d; transition: transform .75s cubic-bezier(.2,.72,.22,1); }
+.draw-card.revealed .draw-card-inner { transform: rotateY(180deg); }
+.draw-face { position: absolute; inset: 0; display: block; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 16px 34px rgba(0,0,0,.3); }
+.draw-back { padding: 8px; background: #b98a55; border: 1px solid #d9b774; }
+.draw-back::before { content: ""; position: absolute; inset: 8px; border: 2px solid #c89c61; background: repeating-radial-gradient(circle at center, transparent 0 13px, rgba(211,174,112,.34) 14px 15px), linear-gradient(45deg, transparent 46%, rgba(213,179,117,.24) 48% 52%, transparent 54%), #123d48; }
+.draw-back::after { content: "୨✦୧"; position: absolute; inset: 18px; display: grid; place-items: center; color: #edc981; border: 1px solid rgba(237,201,129,.75); font-family: var(--serif); font-size: clamp(24px, 4vw, 42px); letter-spacing: .12em; }
+.draw-front { transform: rotateY(180deg); background: #d6c5a6; }
+.draw-front img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.draw-hint { display: block; margin-top: 10px; color: var(--chronicle-muted); font-size: 9px; letter-spacing: .08em; }
+.draw-meaning { min-height: 58px; margin: 11px 0 0; opacity: 0; transform: translateY(6px); color: var(--chronicle-muted); font-family: var(--cn-serif); font-size: 11px; line-height: 1.7; transition: .3s ease; }
+.draw-slot.is-revealed .draw-meaning { opacity: 1; transform: none; }
+.draw-meaning b { display: block; margin-bottom: 3px; color: var(--chronicle-ink); font-weight: 500; }
+.reading-notes { margin-top: 25px; padding-top: 24px; border-top: 1px solid var(--chronicle-line); }
+.reading-notes textarea { resize: vertical; line-height: 1.75; }
+.reading-notes > p { margin: 10px 0 0; color: var(--chronicle-muted); font-family: var(--cn-serif); font-size: 10px; }
 .tarot-toolbar, .tarot-grid { width: min(100%, 1240px); margin-inline: auto; }
 .tarot-toolbar { margin-bottom: 32px; padding-block: 16px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-block: 1px solid var(--line); }
 .tarot-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -337,6 +383,16 @@ dialog::backdrop { background: rgba(6, 17, 29, .76); }
   .filter { white-space: nowrap; }
   .specimen-grid { grid-template-columns: 1fr; row-gap: 48px; }
   .tarot-toolbar { align-items: flex-start; flex-direction: column; }
+  .tarot-practice { padding: 28px 22px; }
+  .practice-intro { display: block; }
+  .practice-intro > p:last-child { margin-top: 13px; text-align: left; }
+  .spread-picker { grid-template-columns: 1fr; }
+  .spread-choice + .spread-choice { border-left: 0; border-top: 1px solid var(--chronicle-line); }
+  .reading-table { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .reading-table.has-cards { min-height: 285px; }
+  .draw-position { min-height: 30px; font-size: 9px; }
+  .draw-meaning { font-size: 9px; }
+  .draw-back::after { inset: 10px; font-size: 18px; }
   .tarot-tabs { max-width: 100%; overflow-x: auto; flex-wrap: nowrap; }
   .tarot-tab { white-space: nowrap; }
   .tarot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 12px; }
@@ -359,3 +415,4 @@ dialog::backdrop { background: rgba(6, 17, 29, .76); }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
 
 :root[data-theme="night"] dialog { box-shadow: 0 30px 100px rgba(0, 0, 0, .5); }
+
