@@ -100,14 +100,17 @@ export function createTarotCabinet() {
   const readingNotes = document.querySelector('#readingNotes');
   const readingJournal = document.querySelector('#readingJournal');
   const practiceStatus = document.querySelector('#practiceStatus');
-  // Print-art review is intentionally staged. Keep the cabinet focused on the
-  // batch that has actually been restored instead of mixing approved originals
-  // with the still-quarantined Queen-frame composites.
   let group = 'major';
   let spread = 'one';
   let drawing = false;
   const revealed = new Set();
-  const groups = [['major','第一批 · 大阿尔卡那 22 张']];
+  const groups = [
+    ['major','第一批 · 大阿尔卡那 22 张'],
+    ['wands','第二批 · 权杖 14 张'],
+    ['cups','第三批 · 圣杯 14 张'],
+    ['swords','第四批 · 宝剑 14 张'],
+    ['pentacles','第五批 · 星币 14 张']
+  ];
 
   tabs.innerHTML = groups.map(([id,label],i) => `<button class="tarot-tab ${i ? '' : 'active'}" data-group="${id}">${label}</button>`).join('');
   function render() {
@@ -159,7 +162,7 @@ export function createTarotCabinet() {
     return Math.floor(Math.random() * max);
   }
   function drawCards(count) {
-    const pool = cards.filter(card => card.group === 'major' && card.artwork);
+    const pool = cards.filter(card => card.artwork);
     const result = [];
     while (result.length < count && pool.length) result.push(pool.splice(randomIndex(pool.length), 1)[0]);
     return result;
