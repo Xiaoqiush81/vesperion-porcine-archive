@@ -44,8 +44,8 @@ const MINOR_ART = Object.freeze({
   'swords-4':'swords-four.webp', 'swords-5':'swords-five.webp', 'swords-6':'swords-six.webp',
   'swords-7':'swords-seven.webp', 'swords-8':'swords-eight.webp', 'swords-9':'swords-nine.webp', 'swords-10':'swords-ten.webp',
   'swords-11':'swords-page.webp', 'swords-12':'swords-knight.webp', 'swords-13':'swords-queen.webp', 'swords-14':'swords-king.webp',
-  'pentacles-1':'pentacles-ace.webp',
-  'pentacles-6':'pentacles-six.webp', 'pentacles-7':'pentacles-seven.webp', 'pentacles-8':'pentacles-eight.webp',
+  'pentacles-1':'pentacles-ace.webp', 'pentacles-2':'pentacles-two.webp', 'pentacles-3':'pentacles-three.webp',
+  'pentacles-4':'pentacles-four.webp', 'pentacles-5':'pentacles-five.webp', 'pentacles-6':'pentacles-six.webp', 'pentacles-7':'pentacles-seven.webp', 'pentacles-8':'pentacles-eight.webp',
   'pentacles-9':'pentacles-nine.webp', 'pentacles-10':'pentacles-ten.webp?v=20261018-count10',
   'pentacles-11':'pentacles-page.webp', 'pentacles-12':'pentacles-knight.webp?v=20261018-simple', 'pentacles-13':'pentacles-queen.webp', 'pentacles-14':'pentacles-king.webp'
 });
