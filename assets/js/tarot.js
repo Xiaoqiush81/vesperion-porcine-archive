@@ -75,13 +75,43 @@ const SUIT_THEMES = Object.freeze({
   wands:'行动、热情与创造力', cups:'情感、关系与直觉', swords:'思想、沟通与冲突', pentacles:'金钱、身体与现实积累'
 });
 const SPREADS = Object.freeze({
-  one:['今日指引'], three:['现状','阻碍','建议'], timeline:['过去','现在','未来']
+  one:['今日指引'],
+  three:['现状','阻碍','建议'],
+  timeline:['过去','现在','未来'],
+  choice:['问题核心','选择 A 的发展','选择 A 的代价','选择 B 的发展','选择 B 的代价'],
+  relationship:['我的状态','对方状态','我如何看待关系','对方如何看待关系','隐藏的联结','关系建议'],
+  horseshoe:['过去','现在','隐藏影响','主要阻碍','外界环境','建议','可能结果'],
+  celtic:['核心现状','交叉挑战','意识目标','深层根源','近期过去','近期未来','自我位置','外界影响','希望与恐惧','最终趋势'],
+  study:['猪现在怎么了','真正的断点','猪以为的断点','今天最小的动作','行动后的变化']
+});
+
+const RANK_REVERSED = [
+  '能量尚未落地、机会被忽略','犹疑、失衡、迟迟无法选择','协作受阻、计划仍欠成熟','停滞、抓得太紧、拒绝变化',
+  '困在失落里、冲突消耗过度','恢复延迟、关系失衡','逃避考验、判断摇摆','方向混乱、行动受阻',
+  '疲惫、防御过度、接近极限','周期难以收尾、结果失衡','消息延迟、不够成熟','冲动、失速、把力气用错方向',
+  '照料失衡、过度内耗','控制过度、责任失序'
+];
+
+const MAJOR_REVERSED = Object.freeze({
+  '0':'冒进、迟疑，或不敢踏出第一步','I':'能力受阻、意图分散，或操控欲','II':'忽视直觉、秘密浮现、内在噪声','III':'创造受阻、过度付出、忽略自己',
+  'IV':'控制过度、秩序僵化、权威失衡','V':'盲从或反叛传统，需要重新辨认信念','VI':'价值错位、关系失衡、选择迟疑','VII':'失去方向、强行推进、自律松动',
+  'VIII':'自我怀疑、情绪失控、力量内耗','IX':'封闭、逃避陪伴，或尚未找到答案','X':'抗拒变化、坏循环、时机延迟','XI':'不公、逃避责任、判断偏斜',
+  'XII':'无谓牺牲、拖延、拒绝换个角度','XIII':'抗拒结束、转变停滞、旧事纠缠','XIV':'失衡、过量、缺少耐心与调和','XV':'看见束缚、开始松绑，或沉溺加深',
+  'XVI':'回避崩塌、余震未止、改变发生在内部','XVII':'失望、信念变弱、疗愈尚未抵达','XVIII':'迷雾加深、焦虑投射，或真相渐显','XIX':'快乐受阻、过度乐观、光芒暂被遮住',
+  'XX':'拒绝召唤、自我否定、旧评价仍在回响','XXI':'未竟之事、延迟完成、缺少最后整合'
 });
 
 function practiceMeaning(card) {
   if (card.group === 'major') return card.meaning;
   const index = Math.max(0, Number(card.number) - 1);
   return `${SUIT_THEMES[card.group]}；${RANK_THEMES[index]}`;
+}
+
+function readingMeaning(card, reversed) {
+  if (!reversed) return practiceMeaning(card);
+  if (card.group === 'major') return MAJOR_REVERSED[card.number] || `能量内化或受阻：${card.meaning}`;
+  const index = Math.max(0, Number(card.number) - 1);
+  return `${SUIT_THEMES[card.group]}；${RANK_REVERSED[index]}`;
 }
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -100,9 +130,23 @@ export function createTarotCabinet() {
   const readingNotes = document.querySelector('#readingNotes');
   const readingJournal = document.querySelector('#readingJournal');
   const practiceStatus = document.querySelector('#practiceStatus');
+  const reversalToggle = document.querySelector('#reversalToggle');
+  const customCountWrap = document.querySelector('#customCountWrap');
+  const customCount = document.querySelector('#customCount');
+  const readingExtras = document.querySelector('#readingExtras');
+  const clarifierButton = document.querySelector('#drawClarifier');
+  const bottomButton = document.querySelector('#showBottomCard');
+  const saveButton = document.querySelector('#saveReading');
+  const saveStatus = document.querySelector('#saveReadingStatus');
+  const historyCount = document.querySelector('#historyCount');
+  const historyList = document.querySelector('#historyList');
+  const questionInput = document.querySelector('#tarotQuestion');
   let group = 'major';
   let spread = 'one';
   let drawing = false;
+  let activeReading = null;
+  let remainingDeck = [];
+  let bottomCard = null;
   const revealed = new Set();
   const groups = [
     ['major','第一批 · 大阿尔卡那 22 张'],
@@ -161,17 +205,40 @@ export function createTarotCabinet() {
     }
     return Math.floor(Math.random() * max);
   }
-  function drawCards(count) {
-    const pool = cards.filter(card => card.artwork);
-    const result = [];
-    while (result.length < count && pool.length) result.push(pool.splice(randomIndex(pool.length), 1)[0]);
-    return result;
+  function shuffledDeck() {
+    const pool = cards.filter(card => card.artwork).slice();
+    for (let index = pool.length - 1; index > 0; index -= 1) {
+      const swap = randomIndex(index + 1);
+      [pool[index], pool[swap]] = [pool[swap], pool[index]];
+    }
+    return pool;
+  }
+  function orient(card, reversals = reversalToggle.checked) {
+    return { card, reversed: Boolean(reversals && randomIndex(2)) };
+  }
+  function readingCardMarkup(item, position, index, extra = false) {
+    const orientation = item.reversed ? '逆位' : '正位';
+    return `<article class="draw-slot ${extra ? 'is-extra' : ''}" data-draw-index="${index}">
+      <p class="draw-position">${escape(position)}</p>
+      <button class="draw-card" type="button" aria-label="翻开${escape(position)}牌">
+        <span class="draw-card-inner"><span class="draw-face draw-back" aria-hidden="true"><img src="assets/tarot/card-back.webp?v=2651" alt="" width="320" height="480" decoding="async"></span><span class="draw-face draw-front"><img class="${item.reversed ? 'reversed-art' : ''}" src="assets/tarot/${escape(item.card.artwork)}?v=pentacles-two-tone-20261019" alt="" width="320" height="480" decoding="async"></span></span>
+      </button>
+      <span class="draw-hint">点击翻牌</span>
+      <p class="draw-meaning"><b>${escape(item.card.name)} · ${escape(item.card.title)} <em>${orientation}</em></b>${escape(readingMeaning(item.card, item.reversed))}</p>
+    </article>`;
   }
   function clearReading(message = '牌组安静地等待着。') {
     readingTable.className = 'reading-table';
     readingTable.innerHTML = '';
     readingNotes.hidden = true;
     readingJournal.value = '';
+    readingExtras.hidden = true;
+    activeReading = null;
+    remainingDeck = [];
+    bottomCard = null;
+    clarifierButton.disabled = false;
+    bottomButton.disabled = false;
+    saveStatus.textContent = '';
     resetButton.disabled = true;
     practiceStatus.textContent = message;
     drawing = false;
@@ -180,21 +247,23 @@ export function createTarotCabinet() {
     if (drawing) return;
     drawing = true;
     drawButton.disabled = true;
+    saveButton.disabled = false;
+    saveStatus.textContent = '';
     readingNotes.hidden = true;
     readingTable.className = 'reading-table has-cards';
     readingTable.innerHTML = '';
     practiceStatus.textContent = '正在洗牌……请把注意力留在问题上。';
-    const positions = SPREADS[spread];
-    const selected = drawCards(positions.length);
+    const positions = spread === 'custom'
+      ? Array.from({ length: Math.min(12, Math.max(1, Number(customCount.value) || 1)) }, (_, index) => `第 ${index + 1} 张`)
+      : SPREADS[spread];
+    const deck = shuffledDeck();
+    const selected = deck.splice(0, positions.length).map(card => orient(card, reversalToggle.checked));
+    bottomCard = deck.pop();
+    remainingDeck = deck;
+    activeReading = { spread, positions, cards:selected, extras:[], reversals:reversalToggle.checked, question:questionInput.value.trim(), createdAt:new Date().toISOString() };
     window.setTimeout(() => {
-      readingTable.innerHTML = selected.map((card, index) => `<article class="draw-slot" data-draw-index="${index}">
-        <p class="draw-position">${escape(positions[index])}</p>
-        <button class="draw-card" type="button" aria-label="翻开${escape(positions[index])}牌">
-          <span class="draw-card-inner"><span class="draw-face draw-back" aria-hidden="true"><img src="assets/tarot/card-back.webp?v=2651" alt="" width="320" height="480" decoding="async"></span><span class="draw-face draw-front"><img src="assets/tarot/${escape(card.artwork)}?v=pentacles-two-tone-20261019" alt="" width="320" height="480" decoding="async"></span></span>
-        </button>
-        <span class="draw-hint">点击翻牌</span>
-        <p class="draw-meaning"><b>${escape(card.name)} · ${escape(card.title)}</b>${escape(practiceMeaning(card))}</p>
-      </article>`).join('');
+      readingTable.dataset.size = String(selected.length);
+      readingTable.innerHTML = selected.map((item, index) => readingCardMarkup(item, positions[index], index)).join('');
       practiceStatus.textContent = `已抽取 ${selected.length} 张。按自己的节奏逐张翻开。`;
       resetButton.disabled = false;
       drawButton.disabled = false;
@@ -205,7 +274,8 @@ export function createTarotCabinet() {
     const button = event.target.closest('.spread-choice'); if (!button || drawing) return;
     spread = button.dataset.spread;
     spreadPicker.querySelectorAll('.spread-choice').forEach(item => item.classList.toggle('active', item === button));
-    clearReading(`已选择「${button.querySelector('small').textContent}」。`);
+    customCountWrap.hidden = spread !== 'custom';
+    clearReading(`已选择「${button.querySelector('b').textContent}」。`);
   });
   drawButton.addEventListener('click', deal);
   resetButton.addEventListener('click', () => clearReading('本次牌阵已收起，可以带着新问题再次洗牌。'));
@@ -216,8 +286,59 @@ export function createTarotCabinet() {
     button.nextElementSibling.textContent = '已翻开';
     const left = readingTable.querySelectorAll('.draw-card:not(.revealed)').length;
     practiceStatus.textContent = left ? `还有 ${left} 张牌没有翻开。` : '牌阵已经完整显现。现在试着把它们串成一句话。';
-    if (!left) readingNotes.hidden = false;
+    if (!left) {
+      readingNotes.hidden = false;
+      readingExtras.hidden = false;
+    }
   });
+  clarifierButton.addEventListener('click', () => {
+    if (!activeReading || !remainingDeck.length) return;
+    const item = orient(remainingDeck.shift(), activeReading.reversals);
+    activeReading.extras.push({ ...item, position:'解释牌' });
+    readingTable.insertAdjacentHTML('beforeend', readingCardMarkup(item, '解释牌', activeReading.positions.length + activeReading.extras.length - 1, true));
+    clarifierButton.disabled = true;
+    readingNotes.hidden = true;
+    practiceStatus.textContent = '补牌已经落下；翻开它，看看它解释了哪一处疑惑。';
+  });
+  bottomButton.addEventListener('click', () => {
+    if (!activeReading || !bottomCard) return;
+    const item = orient(bottomCard, activeReading.reversals);
+    activeReading.extras.push({ ...item, position:'牌堆底牌' });
+    readingTable.insertAdjacentHTML('beforeend', readingCardMarkup(item, '牌堆底牌', activeReading.positions.length + activeReading.extras.length - 1, true));
+    bottomButton.disabled = true;
+    bottomCard = null;
+    readingNotes.hidden = true;
+    practiceStatus.textContent = '底牌代表没有明说、却一直影响问题的潜在能量。';
+  });
+  function getHistory() {
+    try { return JSON.parse(localStorage.getItem('vesperion-tarot-history') || '[]'); }
+    catch { return []; }
+  }
+  function renderHistory() {
+    const history = getHistory();
+    historyCount.textContent = history.length;
+    historyList.innerHTML = history.length ? history.map(entry => `<article><time>${escape(new Intl.DateTimeFormat('zh-CN', { dateStyle:'medium', timeStyle:'short' }).format(new Date(entry.createdAt)))}</time><b>${escape(entry.question || '未命名的问题')}</b><p>${escape(entry.cards.map(item => `${item.name}${item.reversed ? '（逆）' : ''}`).join(' · '))}</p>${entry.note ? `<small>${escape(entry.note)}</small>` : ''}</article>`).join('') : '<p class="history-empty">还没有记录。第一场正式占卜会留在这里。</p>';
+  }
+  saveButton.addEventListener('click', () => {
+    if (!activeReading) return;
+    const history = getHistory();
+    history.unshift({
+      createdAt:activeReading.createdAt, question:activeReading.question, spread:activeReading.spread,
+      cards:[
+        ...activeReading.cards.map((item, index) => ({ ...item, position:activeReading.positions[index] })),
+        ...activeReading.extras
+      ].map(item => ({ name:item.card.name, title:item.card.title, reversed:item.reversed, position:item.position || '' })),
+      note:readingJournal.value.trim()
+    });
+    localStorage.setItem('vesperion-tarot-history', JSON.stringify(history.slice(0, 20)));
+    saveStatus.textContent = '已经收进记录册。';
+    saveButton.disabled = true;
+    renderHistory();
+  });
+  reversalToggle.addEventListener('change', () => {
+    practiceStatus.textContent = reversalToggle.checked ? '逆位已经启用；牌会随机选择正位或逆位。' : '逆位已经关闭；本次只使用正位。';
+  });
+  renderHistory();
   render();
 }
 

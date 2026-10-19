@@ -79,6 +79,16 @@
             <button class="spread-choice active" data-spread="one" type="button"><b>一张</b><small>今日指引</small></button>
             <button class="spread-choice" data-spread="three" type="button"><b>三张</b><small>现状 · 阻碍 · 建议</small></button>
             <button class="spread-choice" data-spread="timeline" type="button"><b>时间流</b><small>过去 · 现在 · 未来</small></button>
+            <button class="spread-choice" data-spread="choice" type="button"><b>二选一</b><small>两条道路 · 五张</small></button>
+            <button class="spread-choice" data-spread="relationship" type="button"><b>关系镜像</b><small>彼此与联结 · 六张</small></button>
+            <button class="spread-choice" data-spread="horseshoe" type="button"><b>马蹄阵</b><small>完整发展 · 七张</small></button>
+            <button class="spread-choice" data-spread="celtic" type="button"><b>凯尔特十字</b><small>深度全局 · 十张</small></button>
+            <button class="spread-choice" data-spread="study" type="button"><b>小猪启动阵</b><small>学习断点 · 五张</small></button>
+            <button class="spread-choice" data-spread="custom" type="button"><b>自由牌阵</b><small>自己决定数量</small></button>
+          </div>
+          <div class="draw-settings">
+            <label class="tarot-switch"><input id="reversalToggle" type="checkbox"><span aria-hidden="true"></span><b>启用逆位</b><small>开启后，每张牌有一半概率逆位</small></label>
+            <label class="custom-count" id="customCountWrap" hidden><span>抽牌数量</span><input id="customCount" type="number" min="1" max="12" value="4" inputmode="numeric"><small>1–12 张</small></label>
           </div>
           <div class="practice-actions">
             <button class="primary practice-draw" id="drawTarot" type="button">洗牌并抽取</button>
@@ -87,10 +97,16 @@
           <p class="practice-status" id="practiceStatus" aria-live="polite">牌组安静地等待着。</p>
         </div>
         <div class="reading-table" id="readingTable" aria-live="polite"></div>
-        <div class="reading-notes" id="readingNotes" hidden>
-          <label><span>我的串联解读</span><textarea id="readingJournal" rows="3" maxlength="500" placeholder="先写下三张牌之间发生了什么，不必急着追求标准答案。"></textarea></label>
-          <p>提示：先看画面，再看关键词，最后回到最初的问题。</p>
+        <div class="reading-extras" id="readingExtras" hidden>
+          <button class="secondary" id="drawClarifier" type="button">为疑惑处补一张牌</button>
+          <button class="secondary" id="showBottomCard" type="button">查看牌堆底牌</button>
         </div>
+        <div class="reading-notes" id="readingNotes" hidden>
+          <label><span>我的串联解读</span><textarea id="readingJournal" rows="3" maxlength="500" placeholder="先写下这些牌之间发生了什么，不必急着追求标准答案。"></textarea></label>
+          <p>提示：先看画面，再看关键词，最后回到最初的问题。</p>
+          <div class="journal-actions"><button class="secondary" id="saveReading" type="button">存入占卜记录</button><span id="saveReadingStatus" aria-live="polite"></span></div>
+        </div>
+        <details class="reading-history" id="readingHistory"><summary>占卜记录 <span id="historyCount">0</span></summary><div id="historyList"></div></details>
       </section>
       <div class="tarot-toolbar">
         <div class="tarot-tabs" id="tarotTabs" aria-label="塔罗牌组筛选"></div>
