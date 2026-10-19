@@ -75,17 +75,7 @@
         </div>
         <div class="practice-controls">
           <label class="question-field"><span>本次问题</span><input id="tarotQuestion" maxlength="80" placeholder="例如：我现在最该留意什么？" autocomplete="off"></label>
-          <div class="spread-picker" id="spreadPicker" aria-label="选择牌阵">
-            <button class="spread-choice active" data-spread="one" type="button"><b>一张</b><small>今日指引</small></button>
-            <button class="spread-choice" data-spread="three" type="button"><b>三张</b><small>现状 · 阻碍 · 建议</small></button>
-            <button class="spread-choice" data-spread="timeline" type="button"><b>时间流</b><small>过去 · 现在 · 未来</small></button>
-            <button class="spread-choice" data-spread="choice" type="button"><b>二选一</b><small>两条道路 · 五张</small></button>
-            <button class="spread-choice" data-spread="relationship" type="button"><b>关系镜像</b><small>彼此与联结 · 六张</small></button>
-            <button class="spread-choice" data-spread="horseshoe" type="button"><b>马蹄阵</b><small>完整发展 · 七张</small></button>
-            <button class="spread-choice" data-spread="celtic" type="button"><b>凯尔特十字</b><small>深度全局 · 十张</small></button>
-            <button class="spread-choice" data-spread="study" type="button"><b>小猪启动阵</b><small>学习断点 · 五张</small></button>
-            <button class="spread-choice" data-spread="custom" type="button"><b>自由牌阵</b><small>自己决定数量</small></button>
-          </div>
+          <div class="spread-picker" id="spreadPicker" aria-label="选择牌阵"></div>
           <div class="draw-settings">
             <label class="tarot-switch"><input id="reversalToggle" type="checkbox"><span aria-hidden="true"></span><b>启用逆位</b><small>开启后，每张牌有一半概率逆位</small></label>
             <label class="custom-count" id="customCountWrap" hidden><span>抽牌数量</span><input id="customCount" type="number" min="1" max="12" value="4" inputmode="numeric"><small>1–12 张</small></label>
@@ -166,7 +156,7 @@
     <div id="tarotDialogContent"></div>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main-20261019-five-batches.js"></script>
+  <script type="module" src="assets/js/main.js?v=20261019-modular-tarot"></script>
 </body>
 </html>
 
