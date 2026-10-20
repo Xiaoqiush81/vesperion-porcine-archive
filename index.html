@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261020-identification-office">
+  <link rel="stylesheet" href="assets/style.css?v=20261021-record-room">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -27,6 +27,7 @@
       <button class="header-room" data-room-target="specimens" type="button">猪猪图鉴</button>
       <button class="header-room" data-room-target="identify" type="button">猪种鉴定</button>
       <button class="header-room" data-room-target="tarot" type="button">塔罗馆</button>
+      <button class="header-room" data-room-target="records" type="button">档案室</button>
       <button id="randomPig" class="nav-button" data-room-target="specimens" type="button">随机捕猪</button>
     </nav>
   </header>
@@ -63,7 +64,25 @@
       <a href="#specimens" data-room-target="specimens"><span>PORCINE ARCHIVE</span><b>进入猪猪图鉴</b><small>52 种已发现形态</small></a>
       <a href="#identify" data-room-target="identify"><span>IDENTIFICATION OFFICE</span><b>前往猪种鉴定所</b><small>回答六问 · 签发身份牌</small></a>
       <a href="#tarot" data-room-target="tarot"><span>TAROT CABINET</span><b>进入宅邸塔罗馆</b><small>78 个固定牌位 · 抽牌桌</small></a>
+      <a href="#records" data-room-target="records"><span>MANOR RECORD ROOM</span><b>查看宅邸档案室</b><small>鉴定 · 占卜 · 象征联结</small></a>
     </nav>
+
+    <section class="record-room room-view room-records" id="records">
+      <div class="section-heading">
+        <div><p class="eyebrow">VESPERION MANOR RECORD ROOM</p><h2>宅邸档案室</h2></div>
+        <p>把散落在各个房间的活动记录重新装订：猪种鉴定、塔罗占卜，以及两套馆藏之间的象征联结。</p>
+      </div>
+      <div class="record-summary" id="recordSummary" aria-label="宅邸档案统计"></div>
+      <div class="record-layout">
+        <section class="record-panel"><div class="record-panel-heading"><p class="eyebrow">RECENT ACTIVITY</p><h3>最近活动</h3></div><div class="activity-ledger" id="activityLedger"></div></section>
+        <section class="record-panel"><div class="record-panel-heading"><p class="eyebrow">RECURRING CARDS</p><h3>反复来访的牌</h3></div><div class="recurring-cards" id="recurringCards"></div></section>
+      </div>
+      <section class="symbolic-links">
+        <div class="record-panel-heading"><p class="eyebrow">SYMBOLIC CORRESPONDENCE</p><h3>猪种与塔罗的象征联结</h3><p>不是把猪机械塞进牌义，而是寻找它们共享的动作、气质与叙事。</p></div>
+        <div class="link-grid" id="symbolicLinkGrid"></div>
+      </section>
+      <a class="section-jump" href="#home" data-room-target="home">← 返回馆舍大厅</a>
+    </section>
 
     <section class="identity-office room-view room-identify" id="identify">
       <div class="section-heading">
@@ -186,7 +205,7 @@
     <div id="tarotDialogContent"></div>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261020-original-copy-restored"></script>
+  <script type="module" src="assets/js/main.js?v=20261021-record-room"></script>
 </body>
 </html>
 

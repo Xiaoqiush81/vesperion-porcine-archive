@@ -22,6 +22,8 @@ python3 -m http.server 8080
 - `assets/js/identity-engine.js`：无界面的随机抽题与匹配算法。
 - `assets/js/identity-storage.js`：鉴定历史与上轮题目持久化。
 - `assets/js/identity.js`：界面控制与身份牌导出。
+- `assets/js/records.js`：聚合鉴定与占卜记录，生成宅邸档案室。
+- `assets/js/record-links.js`：猪种与塔罗的策展式象征联结。
 - `assets/js/tarot*.js`：塔罗数据、抽牌引擎、记录存储与交互界面。
 - `assets/js/theme.js`：主题切换、持久化与浏览器主题色。
 - `assets/style.css`：设计变量、组件样式与纸张／夜色主题。
