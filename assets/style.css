@@ -113,33 +113,54 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .header-room.is-current { color: var(--amber); border-bottom: 1px solid var(--amber); }
 .nav-button { padding: 9px 0; border-bottom: 1px solid var(--amber); }
 
-.floating-home {
-  min-width: 132px;
-  min-height: 50px;
-  padding: 12px 18px;
+.room-toolbar {
+  width: 100%;
+  min-height: 58px;
   display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
   position: fixed;
-  top: 104px;
-  left: clamp(14px, 2.4vw, 36px);
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 24;
-  color: var(--paper);
-  background: var(--navy);
-  border: 1px solid var(--navy);
-  box-shadow: 0 10px 28px rgba(16, 38, 61, .2);
-  font-family: var(--cn-serif);
-  font-size: 13px;
-  letter-spacing: .08em;
-  cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease, background-color .38s ease;
+  color: var(--navy);
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 8px 24px rgba(16, 38, 61, .07);
+  -webkit-backdrop-filter: blur(16px) saturate(115%);
+  backdrop-filter: blur(16px) saturate(115%);
 }
-.floating-home span { font-family: var(--serif); font-size: 19px; line-height: 1; }
-.floating-home b { font-weight: 500; }
-.floating-home:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(16, 38, 61, .25); }
-.floating-home:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
-body:not([data-room="home"]) .floating-home { display: flex; }
+.room-toolbar-inner {
+  width: min(100%, 1500px);
+  min-height: calc(58px + env(safe-area-inset-top));
+  margin: 0 auto;
+  padding: env(safe-area-inset-top) max(clamp(24px, 5vw, 78px), env(safe-area-inset-right)) 0 max(clamp(24px, 5vw, 78px), env(safe-area-inset-left));
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) auto minmax(140px, 1fr);
+  align-items: center;
+}
+.room-toolbar-back {
+  min-height: 44px;
+  width: max-content;
+  padding: 8px 12px 8px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--navy);
+  background: transparent;
+  border: 0;
+  font-family: var(--cn-serif);
+  font-size: 14px;
+  cursor: pointer;
+}
+.room-toolbar-back span { font-family: var(--serif); font-size: 21px; line-height: 1; }
+.room-toolbar-back b { font-weight: 500; }
+.room-toolbar-back:hover { color: var(--amber); }
+.room-toolbar-back:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.room-toolbar-current { font-family: var(--cn-serif); font-size: 13px; font-weight: 500; letter-spacing: .12em; }
+.room-toolbar small { justify-self: end; color: var(--muted); font-family: var(--serif); font-size: 10px; letter-spacing: .16em; }
+body:not([data-room="home"]) .room-toolbar { display: block; }
+body:not([data-room="home"]) .site-header { display: none; }
+body:not([data-room="home"]) main { padding-top: calc(58px + env(safe-area-inset-top)); }
 
 .room-view { display: none !important; }
 body[data-room="home"] .room-home { display: grid !important; }
@@ -523,7 +544,13 @@ dialog::backdrop { background: rgba(6, 17, 29, .76); }
 }
 @media (max-width: 640px) {
   .site-header { min-height: 72px; }
-  .floating-home { min-width: 122px; min-height: 48px; top: 84px; left: 14px; padding: 11px 16px; font-size: 13px; }
+  .room-toolbar { min-height: calc(54px + env(safe-area-inset-top)); }
+  .room-toolbar-inner { min-height: calc(54px + env(safe-area-inset-top)); }
+  .room-toolbar-inner { padding-left: max(18px, env(safe-area-inset-left)); padding-right: max(18px, env(safe-area-inset-right)); grid-template-columns: 1fr auto; }
+  .room-toolbar-back { min-height: 46px; padding-right: 16px; font-size: 14px; }
+  .room-toolbar-current { justify-self: end; font-size: 12px; letter-spacing: .08em; }
+  .room-toolbar small { display: none; }
+  body:not([data-room="home"]) main { padding-top: calc(54px + env(safe-area-inset-top)); }
   .brand-mark { width: 34px; height: 40px; }
   .brand small, .site-header .header-room { display: none; }
   .site-header nav { gap: 0; }

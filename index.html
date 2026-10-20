@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261021-floating-back">
+  <link rel="stylesheet" href="assets/style.css?v=20261021-room-toolbar">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -32,9 +32,15 @@
     </nav>
   </header>
 
-  <button class="floating-home" data-room-target="home" type="button" aria-label="返回馆舍大厅">
-    <span aria-hidden="true">←</span><b>返回大厅</b>
-  </button>
+  <nav class="room-toolbar" aria-label="当前房间导航">
+    <div class="room-toolbar-inner">
+      <button class="room-toolbar-back" data-room-target="home" type="button" aria-label="返回馆舍大厅">
+        <span aria-hidden="true">←</span><b>返回大厅</b>
+      </button>
+      <span class="room-toolbar-current" id="roomToolbarTitle" aria-live="polite"></span>
+      <small>PIGDEX 081</small>
+    </div>
+  </nav>
 
   <main id="top">
     <section class="hero room-view room-home">
@@ -209,7 +215,7 @@
     <div id="tarotDialogContent"></div>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261021-record-room"></script>
+  <script type="module" src="assets/js/main.js?v=20261021-room-toolbar"></script>
 </body>
 </html>
 

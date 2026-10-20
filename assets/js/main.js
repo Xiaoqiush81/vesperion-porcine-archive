@@ -89,7 +89,9 @@ function roomFromHash() {
 
 async function enterRoom(room, push = true) {
   const target = ['tarot', 'specimens', 'identify', 'records'].includes(room) ? room : 'home';
+  const roomNames = { specimens: '猪猪图鉴', identify: '猪种鉴定所', tarot: '宅邸塔罗馆', records: '宅邸档案室' };
   document.body.dataset.room = target;
+  document.querySelector('#roomToolbarTitle').textContent = roomNames[target] || '';
   document.querySelectorAll('[data-room-target]').forEach(item => item.classList.toggle('is-current', item.dataset.roomTarget === target));
   if (push && location.hash !== `#${target}`) history.pushState({ room: target }, '', `#${target}`);
   if (target === 'specimens') await initArchive();
