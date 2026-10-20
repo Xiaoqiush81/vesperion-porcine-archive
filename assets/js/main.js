@@ -12,8 +12,10 @@ function toast(message) {
 
 let archiveReady = false;
 let tarotReady = false;
+let identityReady = false;
 let archiveLoading = null;
 let tarotLoading = null;
+let identityLoading = null;
 
 async function initArchive() {
   if (archiveReady) return;
@@ -45,18 +47,37 @@ async function initTarot() {
   return tarotLoading;
 }
 
+async function initIdentity() {
+  if (identityReady) return;
+  if (!identityLoading) identityLoading = Promise.all([
+    import('./identity.js?v=20261020-1'),
+    import('./archive.js?v=20261020-specimens-52').then(module => module.loadSpecimens())
+  ])
+    .then(([{ createIdentityOffice }, specimens]) => {
+      createIdentityOffice(specimens, toast);
+      identityReady = true;
+    })
+    .catch(error => {
+      console.error(error);
+      document.querySelector('#identityIntro').innerHTML = '<p>鉴定所档案加载失败，请稍后重试。</p>';
+    })
+    .finally(() => { identityLoading = null; });
+  return identityLoading;
+}
+
 function roomFromHash() {
   const name = location.hash.slice(1);
-  return name === 'tarot' || name === 'specimens' ? name : 'home';
+  return ['tarot', 'specimens', 'identify'].includes(name) ? name : 'home';
 }
 
 async function enterRoom(room, push = true) {
-  const target = room === 'tarot' || room === 'specimens' ? room : 'home';
+  const target = ['tarot', 'specimens', 'identify'].includes(room) ? room : 'home';
   document.body.dataset.room = target;
   document.querySelectorAll('[data-room-target]').forEach(item => item.classList.toggle('is-current', item.dataset.roomTarget === target));
   if (push && location.hash !== `#${target}`) history.pushState({ room: target }, '', `#${target}`);
   if (target === 'specimens') await initArchive();
   if (target === 'tarot') await initTarot();
+  if (target === 'identify') await initIdentity();
   window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 

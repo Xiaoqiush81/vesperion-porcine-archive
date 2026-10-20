@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261018-room-router-2651">
+  <link rel="stylesheet" href="assets/style.css?v=20261020-identification-office">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -25,6 +25,7 @@
     <nav>
       <button class="header-room" data-room-target="home" type="button">馆舍大厅</button>
       <button class="header-room" data-room-target="specimens" type="button">猪猪图鉴</button>
+      <button class="header-room" data-room-target="identify" type="button">猪种鉴定</button>
       <button class="header-room" data-room-target="tarot" type="button">塔罗馆</button>
       <button id="randomPig" class="nav-button" data-room-target="specimens" type="button">随机捕猪</button>
     </nav>
@@ -38,6 +39,7 @@
         <p class="lede">一部持续生长的私人自然史：记录 Specimen No.081 在维斯珀里昂宅邸、知识兔子洞与互联网深处留下的五十二种形态。</p>
         <div class="hero-actions">
           <a class="primary" href="#specimens" data-room-target="specimens">进入猪猪图鉴</a>
+          <a class="primary identify-entry" href="#identify" data-room-target="identify">进行猪种鉴定</a>
           <a class="primary tarot-entry" href="#tarot" data-room-target="tarot">进入宅邸塔罗馆</a>
           <button class="secondary" id="callPig">播放标准呼叫</button>
         </div>
@@ -59,8 +61,35 @@
 
     <nav class="collection-switcher room-view room-home" id="collections" aria-label="馆藏区域入口">
       <a href="#specimens" data-room-target="specimens"><span>PORCINE ARCHIVE</span><b>进入猪猪图鉴</b><small>52 种已发现形态</small></a>
+      <a href="#identify" data-room-target="identify"><span>IDENTIFICATION OFFICE</span><b>前往猪种鉴定所</b><small>回答六问 · 签发身份牌</small></a>
       <a href="#tarot" data-room-target="tarot"><span>TAROT CABINET</span><b>进入宅邸塔罗馆</b><small>78 个固定牌位 · 抽牌桌</small></a>
     </nav>
+
+    <section class="identity-office room-view room-identify" id="identify">
+      <div class="section-heading">
+        <div><p class="eyebrow">VESPERION SPECIES IDENTIFICATION OFFICE</p><h2>猪种鉴定所</h2></div>
+        <p>根据当前习性签发身份档案。鉴定的是此刻的形态，不限制一只猪继续变异。</p>
+      </div>
+      <div class="identity-shell">
+        <section class="identity-intro" id="identityIntro">
+          <p class="identity-seal" aria-hidden="true">081</p>
+          <p class="eyebrow">TEMPORARY MORPHOLOGY CERTIFICATE</p>
+          <h3>今天是哪一种猪？</h3>
+          <p>六项宅邸观察将从现有馆藏中寻找最接近的形态。没有正确答案，只有已经暴露的猪迹。</p>
+          <button class="primary" id="startIdentity" type="button">开始接受鉴定</button>
+        </section>
+        <section class="identity-quiz" id="identityQuiz" hidden aria-live="polite">
+          <div class="identity-progress"><span id="identityStep">OBSERVATION 01 / 06</span><i><b id="identityProgressBar"></b></i></div>
+          <p class="eyebrow" id="identityKicker"></p>
+          <h3 id="identityQuestion"></h3>
+          <div class="identity-options" id="identityOptions"></div>
+          <button class="identity-back" id="identityBack" type="button">← 返回上一项</button>
+        </section>
+        <section class="identity-result" id="identityResult" hidden aria-live="polite"></section>
+      </div>
+      <details class="identity-history" id="identityHistory"><summary>近期鉴定档案 <span id="identityHistoryCount">0</span></summary><div id="identityHistoryList"></div></details>
+      <a class="section-jump" href="#home" data-room-target="home">← 返回馆舍大厅</a>
+    </section>
 
     <section class="tarot-archive room-view room-tarot" id="tarot">
       <div class="section-heading">
@@ -131,6 +160,7 @@
     <section class="chronicle room-view room-specimens" id="chronicle">
       <div class="section-heading light"><div><p class="eyebrow">FIELD CHRONICLE</p><h2>近期观测记录</h2></div><p>摘自《维斯珀里昂宅邸猪事录》。</p></div>
       <div class="timeline">
+        <article><time>2026.10.20</time><div><b>猪种鉴定所正式开放</b><p>馆舍第三间房投入使用；六项习性观察开始为来访猪咪匹配现有形态，并签发可保存的临时身份牌。</p></div></article>
         <article><time>2026.10.16</time><div><b>棉被结界与现实隔离记录</b><p>拒绝面对现实的圆猪完成鉴定；经本人确认归属为“爸爸家的猪”，馆藏扩充至52。</p></div></article>
         <article><time>2026.10.15</time><div><b>正版识别与宅邸育种记录</b><p>猪猪抱枕、正版猪咪、学术助眠猪与秋牌优良养殖小猪完成鉴定；馆藏扩充至51。</p></div></article>
         <article><time>2026.10.14</time><div><b>双域灌水与节拍弹性异常</b><p>QQ弹弹猪、邪恶甲方猪与双栖灌水猪完成鉴定；馆藏扩充至47。</p></div></article>
@@ -156,7 +186,7 @@
     <div id="tarotDialogContent"></div>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261019-modular-tarot"></script>
+  <script type="module" src="assets/js/main.js?v=20261020-identification-office"></script>
 </body>
 </html>
 

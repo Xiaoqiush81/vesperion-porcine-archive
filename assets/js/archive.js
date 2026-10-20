@@ -12,7 +12,7 @@ const card = specimen => `
   </button>`;
 
 export async function loadSpecimens() {
-  const response = await fetch('data/specimens.json?v=20261015-specimens-51', { cache: 'no-cache' });
+  const response = await fetch('data/specimens.json?v=20261020-specimens-52', { cache: 'no-cache' });
   if (!response.ok) throw new Error(`Archive request failed: ${response.status}`);
   return response.json();
 }

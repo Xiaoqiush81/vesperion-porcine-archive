@@ -1,6 +1,6 @@
 # PIGDEX 081
 
-维斯珀里昂猪类与异常现象图鉴。一个记录 Specimen No.081 已知形态、技能、栖息地与重大猪事的静态网站。
+维斯珀里昂猪类与异常现象图鉴。馆舍包含 52 种猪咪形态、78 张《猪猪塔罗牌》、宅邸抽牌桌与猪种鉴定所。
 
 ## 本地运行
 
@@ -18,6 +18,8 @@ python3 -m http.server 8080
 
 - `assets/js/main.js`：轻量入口，负责初始化各项独立功能。
 - `assets/js/archive.js`：数据加载、检索、筛选与详情弹窗。
+- `assets/js/identity.js`：六项猪迹观察、形态匹配、鉴定记录与身份牌导出。
+- `assets/js/tarot*.js`：塔罗数据、抽牌引擎、记录存储与交互界面。
 - `assets/js/theme.js`：主题切换、持久化与浏览器主题色。
 - `assets/style.css`：设计变量、组件样式与纸张／夜色主题。
 - `data/specimens.json`：唯一的馆藏数据源。
