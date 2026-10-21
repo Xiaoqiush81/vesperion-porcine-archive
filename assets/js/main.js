@@ -36,7 +36,7 @@ async function initArchive() {
 
 async function initTarot() {
   if (tarotReady) return;
-  if (!tarotLoading) tarotLoading = import('./tarot.js?v=20261021-tarot-fast')
+  if (!tarotLoading) tarotLoading = import('./tarot.js?v=20261021-tarot-silky')
     .then(({ createTarotCabinet }) => {
       createTarotCabinet();
       tarotReady = true;

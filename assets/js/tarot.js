@@ -103,9 +103,9 @@ export function createTarotCabinet(root = document) {
 
   function renderCollection() {
     const visible = TAROT_CARDS.filter(card => card.group === activeGroup);
-    elements.grid.innerHTML = visible.map((card, index) => `<button class="tarot-card ${card.artwork ? 'is-collected' : 'is-pending'} ${revealed.has(card.id) ? 'is-revealed' : ''}" data-id="${escapeHtml(card.id)}" type="button" aria-label="${revealed.has(card.id) ? `查看${escapeHtml(card.name)}详情` : `翻开${escapeHtml(card.name)}`}" ${card.artwork ? '' : 'disabled'}>
+    elements.grid.innerHTML = visible.map(card => `<button class="tarot-card ${card.artwork ? 'is-collected' : 'is-pending'} ${revealed.has(card.id) ? 'is-revealed' : ''}" data-id="${escapeHtml(card.id)}" type="button" aria-label="${revealed.has(card.id) ? `查看${escapeHtml(card.name)}详情` : `翻开${escapeHtml(card.name)}`}" ${card.artwork ? '' : 'disabled'}>
       <span class="card-favorite" aria-hidden="true">${isFavorite('tarot', card.id) ? '♥' : ''}</span>
-      <span class="tarot-art"><span class="tarot-card-inner"><span class="tarot-face tarot-back"><img src="${CARD_BACK_URL}" alt="" width="320" height="480" loading="eager" decoding="async"></span><span class="tarot-face tarot-front">${card.artwork ? `<img src="${thumbnailUrl(card.artwork)}" alt="${escapeHtml(card.name)}牌面" width="320" height="480" loading="${index < 6 ? 'eager' : 'lazy'}" decoding="async">` : `<span class="tarot-placeholder"><b>${escapeHtml(card.number)}</b><i>VESPERION</i><span>馆藏空位</span></span>`}</span></span></span>
+      <span class="tarot-art"><span class="tarot-card-inner"><span class="tarot-face tarot-back"><img src="${CARD_BACK_URL}" alt="" width="320" height="480" loading="eager" decoding="async"></span><span class="tarot-face tarot-front">${card.artwork ? `<img src="${thumbnailUrl(card.artwork)}" alt="${escapeHtml(card.name)}牌面" width="320" height="480" loading="eager" decoding="async">` : `<span class="tarot-placeholder"><b>${escapeHtml(card.number)}</b><i>VESPERION</i><span>馆藏空位</span></span>`}</span></span></span>
       <span class="tarot-meta"><small>${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</small><b>${escapeHtml(card.name)}</b><em>${escapeHtml(card.title)}</em></span>
     </button>`).join('');
     elements.progress.textContent = `COLLECTED ${visible.filter(card => card.artwork).length} / ${visible.length}`;
@@ -172,6 +172,11 @@ export function createTarotCabinet(root = document) {
       elements.drawButton.disabled = false;
       return;
     }
+
+    session.cards.forEach(item => {
+      const image = new Image();
+      image.src = thumbnailUrl(item.card.artwork);
+    });
 
     window.setTimeout(() => {
       elements.readingTable.dataset.size = String(session.cards.length);
