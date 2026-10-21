@@ -5,6 +5,7 @@ import { isFavorite, toggleFavorite } from './favorites.js?v=20261021-1';
 
 const CARD_BACK_URL = 'assets/tarot/card-back.webp?v=2651';
 const CARD_ART_VERSION = 'modular-20261019';
+const CARD_THUMB_VERSION = 'fast-20261021';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
@@ -13,6 +14,29 @@ const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character =>
 function artworkUrl(filename) {
   const [path, query = ''] = String(filename).split('?');
   return `assets/tarot/${path}?${query ? `${query}&` : ''}v=${CARD_ART_VERSION}`;
+}
+
+function thumbnailUrl(filename) {
+  const [path] = String(filename).split('?');
+  return `assets/tarot/thumbs/${path}?v=${CARD_THUMB_VERSION}`;
+}
+
+function waitForImage(image, timeout = 12000) {
+  if (!image) return Promise.resolve(false);
+  image.loading = 'eager';
+  if (image.complete) return Promise.resolve(image.naturalWidth > 0);
+  return new Promise(resolve => {
+    let settled = false;
+    const finish = ready => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      resolve(ready);
+    };
+    const timer = window.setTimeout(() => finish(false), timeout);
+    image.addEventListener('load', () => finish(true), { once:true });
+    image.addEventListener('error', () => finish(false), { once:true });
+  });
 }
 
 function queryElements(root) {
@@ -39,7 +63,7 @@ function readingCardMarkup(item, position, index, extra = false) {
     <button class="draw-card" type="button" aria-label="翻开${escapeHtml(position)}牌">
       <span class="draw-card-inner">
         <span class="draw-face draw-back" aria-hidden="true"><img src="${CARD_BACK_URL}" alt="" width="320" height="480" decoding="async"></span>
-        <span class="draw-face draw-front"><img class="${item.reversed ? 'reversed-art' : ''}" src="${artworkUrl(item.card.artwork)}" alt="" width="320" height="480" decoding="async"></span>
+        <span class="draw-face draw-front"><img class="${item.reversed ? 'reversed-art' : ''}" src="${thumbnailUrl(item.card.artwork)}" alt="" width="320" height="480" loading="eager" decoding="async"></span>
       </span>
     </button>
     <span class="draw-hint">点击翻牌</span>
@@ -79,9 +103,9 @@ export function createTarotCabinet(root = document) {
 
   function renderCollection() {
     const visible = TAROT_CARDS.filter(card => card.group === activeGroup);
-    elements.grid.innerHTML = visible.map(card => `<button class="tarot-card ${card.artwork ? 'is-collected' : 'is-pending'} ${revealed.has(card.id) ? 'is-revealed' : ''}" data-id="${escapeHtml(card.id)}" type="button" aria-label="${revealed.has(card.id) ? `查看${escapeHtml(card.name)}详情` : `翻开${escapeHtml(card.name)}`}" ${card.artwork ? '' : 'disabled'}>
+    elements.grid.innerHTML = visible.map((card, index) => `<button class="tarot-card ${card.artwork ? 'is-collected' : 'is-pending'} ${revealed.has(card.id) ? 'is-revealed' : ''}" data-id="${escapeHtml(card.id)}" type="button" aria-label="${revealed.has(card.id) ? `查看${escapeHtml(card.name)}详情` : `翻开${escapeHtml(card.name)}`}" ${card.artwork ? '' : 'disabled'}>
       <span class="card-favorite" aria-hidden="true">${isFavorite('tarot', card.id) ? '♥' : ''}</span>
-      <span class="tarot-art"><span class="tarot-card-inner"><span class="tarot-face tarot-back"><img src="${CARD_BACK_URL}" alt="" width="320" height="480" loading="lazy" decoding="async"></span><span class="tarot-face tarot-front">${card.artwork ? `<img src="${artworkUrl(card.artwork)}" alt="${escapeHtml(card.name)}牌面" width="320" height="480" loading="lazy" decoding="async">` : `<span class="tarot-placeholder"><b>${escapeHtml(card.number)}</b><i>VESPERION</i><span>馆藏空位</span></span>`}</span></span></span>
+      <span class="tarot-art"><span class="tarot-card-inner"><span class="tarot-face tarot-back"><img src="${CARD_BACK_URL}" alt="" width="320" height="480" loading="eager" decoding="async"></span><span class="tarot-face tarot-front">${card.artwork ? `<img src="${thumbnailUrl(card.artwork)}" alt="${escapeHtml(card.name)}牌面" width="320" height="480" loading="${index < 6 ? 'eager' : 'lazy'}" decoding="async">` : `<span class="tarot-placeholder"><b>${escapeHtml(card.number)}</b><i>VESPERION</i><span>馆藏空位</span></span>`}</span></span></span>
       <span class="tarot-meta"><small>${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</small><b>${escapeHtml(card.name)}</b><em>${escapeHtml(card.title)}</em></span>
     </button>`).join('');
     elements.progress.textContent = `COLLECTED ${visible.filter(card => card.artwork).length} / ${visible.length}`;
@@ -91,8 +115,12 @@ export function createTarotCabinet(root = document) {
     const card = TAROT_CARDS.find(item => item.id === id);
     if (!card?.artwork) return;
     const favorite = isFavorite('tarot', card.id);
-    elements.dialogContent.innerHTML = `<div class="tarot-detail"><figure class="tarot-detail-art"><img src="${artworkUrl(card.artwork)}" alt="${escapeHtml(card.name)}牌面" width="768" height="1152" decoding="async"></figure><div><p class="eyebrow">${escapeHtml(card.number)} · ${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</p><h2>${escapeHtml(card.name)}</h2><p class="tarot-english">${escapeHtml(card.title)}</p><p>${escapeHtml(card.meaning)}</p><button class="favorite-toggle" type="button" data-favorite-type="tarot" data-favorite-id="${escapeHtml(card.id)}" aria-pressed="${favorite}">${favorite ? '♥ 已收藏此牌' : '♡ 收藏此牌'}</button></div></div>`;
+    elements.dialogContent.innerHTML = `<div class="tarot-detail"><figure class="tarot-detail-art"><img src="${thumbnailUrl(card.artwork)}" alt="${escapeHtml(card.name)}牌面" width="768" height="1152" decoding="async"></figure><div><p class="eyebrow">${escapeHtml(card.number)} · ${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</p><h2>${escapeHtml(card.name)}</h2><p class="tarot-english">${escapeHtml(card.title)}</p><p>${escapeHtml(card.meaning)}</p><button class="favorite-toggle" type="button" data-favorite-type="tarot" data-favorite-id="${escapeHtml(card.id)}" aria-pressed="${favorite}">${favorite ? '♥ 已收藏此牌' : '♡ 收藏此牌'}</button></div></div>`;
     elements.dialog.showModal();
+    const preview = elements.dialogContent.querySelector('.tarot-detail-art img');
+    const highResolution = new Image();
+    highResolution.addEventListener('load', () => { if (preview.isConnected) preview.src = highResolution.src; }, { once:true });
+    highResolution.src = artworkUrl(card.artwork);
   }
 
   function clearReading(message = '牌组安静地等待着。') {
@@ -163,11 +191,20 @@ export function createTarotCabinet(root = document) {
     renderCollection();
   });
 
-  elements.grid.addEventListener('click', event => {
+  elements.grid.addEventListener('click', async event => {
     const button = event.target.closest('.tarot-card');
     const id = button?.dataset.id;
     if (!id || button.disabled) return;
     if (!revealed.has(id)) {
+      button.classList.add('is-loading');
+      button.setAttribute('aria-busy', 'true');
+      const ready = await waitForImage(button.querySelector('.tarot-front img'));
+      button.classList.remove('is-loading');
+      button.removeAttribute('aria-busy');
+      if (!ready) {
+        elements.progress.textContent = '牌面未装好 · 请再试一次';
+        return;
+      }
       revealed.add(id);
       button.classList.add('is-revealed');
       button.setAttribute('aria-label', `查看${TAROT_CARDS.find(card => card.id === id)?.name || ''}详情`);
@@ -176,10 +213,20 @@ export function createTarotCabinet(root = document) {
     openCard(id);
   });
 
-  elements.revealButton.addEventListener('click', () => {
+  elements.revealButton.addEventListener('click', async () => {
     const visible = TAROT_CARDS.filter(card => card.group === activeGroup && card.artwork);
     const allOpen = visible.every(card => revealed.has(card.id));
-    visible.forEach(card => allOpen ? revealed.delete(card.id) : revealed.add(card.id));
+    if (allOpen) visible.forEach(card => revealed.delete(card.id));
+    else {
+      elements.revealButton.disabled = true;
+      elements.revealButton.textContent = '牌面装载中…';
+      const readiness = await Promise.all([...elements.grid.querySelectorAll('.tarot-card')].map(async button => ({
+        id:button.dataset.id,
+        ready:await waitForImage(button.querySelector('.tarot-front img'))
+      })));
+      readiness.filter(item => item.ready).forEach(item => revealed.add(item.id));
+      elements.revealButton.disabled = false;
+    }
     elements.revealButton.textContent = allOpen ? '全部翻开' : '全部盖回';
     renderCollection();
   });
@@ -208,12 +255,23 @@ export function createTarotCabinet(root = document) {
   elements.drawButton.addEventListener('click', deal);
   elements.resetButton.addEventListener('click', () => clearReading('本次牌阵已收起，可以带着新问题再次洗牌。'));
 
-  elements.readingTable.addEventListener('click', event => {
+  elements.readingTable.addEventListener('click', async event => {
     const button = event.target.closest('.draw-card');
     if (!button || button.classList.contains('revealed')) return;
+    const hint = button.nextElementSibling;
+    hint.textContent = '装载牌面…';
+    button.classList.add('is-loading');
+    button.setAttribute('aria-busy', 'true');
+    const ready = await waitForImage(button.querySelector('.draw-front img'));
+    button.classList.remove('is-loading');
+    button.removeAttribute('aria-busy');
+    if (!ready) {
+      hint.textContent = '牌面没能装好，请再试一次';
+      return;
+    }
     button.classList.add('revealed');
     button.closest('.draw-slot').classList.add('is-revealed');
-    button.nextElementSibling.textContent = '已翻开';
+    hint.textContent = '已翻开';
     const left = elements.readingTable.querySelectorAll('.draw-card:not(.revealed)').length;
     elements.practiceStatus.textContent = left ? `还有 ${left} 张牌没有翻开。` : '牌阵已经完整显现。现在试着把它们串成一句话。';
     if (!left) {

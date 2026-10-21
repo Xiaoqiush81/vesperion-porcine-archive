@@ -6,7 +6,7 @@ import { SYMBOLIC_LINKS } from './record-links.js?v=20261021-1';
 import { loadFavorites } from './favorites.js?v=20261021-1';
 
 const specimenArt = item => item.artwork || `assets/cards/${item.id.toLowerCase()}.webp`;
-const tarotArt = card => `assets/tarot/${String(card.artwork).split('?')[0]}`;
+const tarotArt = card => `assets/tarot/thumbs/${String(card.artwork).split('?')[0]}?v=fast-20261021`;
 const formatDate = value => new Intl.DateTimeFormat('zh-CN',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
 
 function activityItems(identities, readings) {
