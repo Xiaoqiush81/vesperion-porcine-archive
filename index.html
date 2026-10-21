@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261021-records-entry">
+  <link rel="stylesheet" href="assets/style.css?v=20261021-favorites">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -88,6 +88,10 @@
         <section class="record-panel"><div class="record-panel-heading"><p class="eyebrow">RECENT ACTIVITY</p><h3>最近活动</h3></div><div class="activity-ledger" id="activityLedger"></div></section>
         <section class="record-panel"><div class="record-panel-heading"><p class="eyebrow">RECURRING CARDS</p><h3>反复来访的牌</h3></div><div class="recurring-cards" id="recurringCards"></div></section>
       </div>
+      <section class="favorite-shelf">
+        <div class="record-panel-heading"><p class="eyebrow">PRIVATE COLLECTION</p><h3>宅邸私藏</h3><p>在猪种或塔罗详情中点亮收藏，喜欢的馆藏会统一陈列在这里。</p></div>
+        <div class="favorite-groups" id="favoriteShelf"></div>
+      </section>
       <section class="symbolic-links">
         <div class="record-panel-heading"><p class="eyebrow">SYMBOLIC CORRESPONDENCE</p><h3>猪种与塔罗的象征联结</h3><p>不是把猪机械塞进牌义，而是寻找它们共享的动作、气质与叙事。</p></div>
         <div class="link-grid" id="symbolicLinkGrid"></div>
@@ -216,7 +220,7 @@
     <div id="tarotDialogContent"></div>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261021-room-toolbar"></script>
+  <script type="module" src="assets/js/main.js?v=20261021-favorites"></script>
 </body>
 </html>
 

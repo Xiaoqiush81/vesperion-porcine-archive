@@ -1,6 +1,7 @@
 import { TAROT_CARDS, TAROT_GROUPS, TAROT_SPREADS, getReadingMeaning, getSpread } from './tarot-data.js?v=20261019-modular-1';
 import { createReadingSession } from './tarot-engine.js?v=20261019-modular-1';
 import { addReadingRecord, loadReadingHistory } from './tarot-storage.js?v=20261019-modular-1';
+import { isFavorite, toggleFavorite } from './favorites.js?v=20261021-1';
 
 const CARD_BACK_URL = 'assets/tarot/card-back.webp?v=2651';
 const CARD_ART_VERSION = 'modular-20261019';
@@ -79,6 +80,7 @@ export function createTarotCabinet(root = document) {
   function renderCollection() {
     const visible = TAROT_CARDS.filter(card => card.group === activeGroup);
     elements.grid.innerHTML = visible.map(card => `<button class="tarot-card ${card.artwork ? 'is-collected' : 'is-pending'} ${revealed.has(card.id) ? 'is-revealed' : ''}" data-id="${escapeHtml(card.id)}" type="button" aria-label="${revealed.has(card.id) ? `查看${escapeHtml(card.name)}详情` : `翻开${escapeHtml(card.name)}`}" ${card.artwork ? '' : 'disabled'}>
+      <span class="card-favorite" aria-hidden="true">${isFavorite('tarot', card.id) ? '♥' : ''}</span>
       <span class="tarot-art"><span class="tarot-card-inner"><span class="tarot-face tarot-back"><img src="${CARD_BACK_URL}" alt="" width="320" height="480" loading="lazy" decoding="async"></span><span class="tarot-face tarot-front">${card.artwork ? `<img src="${artworkUrl(card.artwork)}" alt="${escapeHtml(card.name)}牌面" width="320" height="480" loading="lazy" decoding="async">` : `<span class="tarot-placeholder"><b>${escapeHtml(card.number)}</b><i>VESPERION</i><span>馆藏空位</span></span>`}</span></span></span>
       <span class="tarot-meta"><small>${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</small><b>${escapeHtml(card.name)}</b><em>${escapeHtml(card.title)}</em></span>
     </button>`).join('');
@@ -88,7 +90,8 @@ export function createTarotCabinet(root = document) {
   function openCard(id) {
     const card = TAROT_CARDS.find(item => item.id === id);
     if (!card?.artwork) return;
-    elements.dialogContent.innerHTML = `<div class="tarot-detail"><figure class="tarot-detail-art"><img src="${artworkUrl(card.artwork)}" alt="${escapeHtml(card.name)}牌面" width="768" height="1152" decoding="async"></figure><div><p class="eyebrow">${escapeHtml(card.number)} · ${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</p><h2>${escapeHtml(card.name)}</h2><p class="tarot-english">${escapeHtml(card.title)}</p><p>${escapeHtml(card.meaning)}</p></div></div>`;
+    const favorite = isFavorite('tarot', card.id);
+    elements.dialogContent.innerHTML = `<div class="tarot-detail"><figure class="tarot-detail-art"><img src="${artworkUrl(card.artwork)}" alt="${escapeHtml(card.name)}牌面" width="768" height="1152" decoding="async"></figure><div><p class="eyebrow">${escapeHtml(card.number)} · ${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</p><h2>${escapeHtml(card.name)}</h2><p class="tarot-english">${escapeHtml(card.title)}</p><p>${escapeHtml(card.meaning)}</p><button class="favorite-toggle" type="button" data-favorite-type="tarot" data-favorite-id="${escapeHtml(card.id)}" aria-pressed="${favorite}">${favorite ? '♥ 已收藏此牌' : '♡ 收藏此牌'}</button></div></div>`;
     elements.dialog.showModal();
   }
 
@@ -182,6 +185,14 @@ export function createTarotCabinet(root = document) {
   });
 
   elements.dialog.querySelector('.tarot-close').addEventListener('click', () => elements.dialog.close());
+  elements.dialogContent.addEventListener('click', event => {
+    const button = event.target.closest('[data-favorite-type="tarot"]');
+    if (!button) return;
+    const active = toggleFavorite('tarot', button.dataset.favoriteId);
+    button.setAttribute('aria-pressed', active);
+    button.textContent = active ? '♥ 已收藏此牌' : '♡ 收藏此牌';
+    renderCollection();
+  });
   elements.dialog.addEventListener('click', event => { if (event.target === elements.dialog) elements.dialog.close(); });
   elements.dialog.addEventListener('close', () => elements.dialogContent.replaceChildren());
 

@@ -1,9 +1,11 @@
 import { escapeHtml as escape, specimenArt } from './specimen-art.js?v=20261015-specimens-51';
+import { isFavorite, toggleFavorite } from './favorites.js?v=20261021-1';
 
 const RARITY_RANK = Object.freeze({ '宇宙唯一': 6, '神话': 5, '史诗': 4, '限定': 3, '稀有': 2, '普通': 1 });
 
-const card = specimen => `
+const card = (specimen, favorite) => `
   <button class="card" type="button" data-id="${escape(specimen.id)}" aria-label="查看${escape(specimen.name)}档案">
+    <span class="card-favorite" aria-hidden="true">${favorite ? '♥' : ''}</span>
     <span class="card-top"><span>${escape(specimen.number)}</span><span class="rarity">${escape(specimen.rarity)}</span></span>
     ${specimenArt(specimen)}
     <span class="card-name">${escape(specimen.name)}</span><span class="latin">${escape(specimen.latin)}</span>
@@ -33,7 +35,8 @@ export function createArchive(specimens) {
   function open(id) {
     const item = byId.get(id);
     if (!item) return;
-    content.innerHTML = `<section class="detail-hero"><span class="detail-number">ARCHIVE ${escape(item.id)} · ${escape(item.rarity)}</span><h2>${escape(item.name)}</h2><span class="latin">${escape(item.latin)}</span></section><section class="detail-body"><p>${escape(item.description)}</p><div class="facts"><div class="fact"><small>首次观测</small><b>${escape(item.firstObserved)}</b></div><div class="fact"><small>主要栖息地</small><b>${escape(item.habitat)}</b></div><div class="fact"><small>当前状态</small><b>${escape(item.status)}</b></div><div class="fact"><small>档案分类</small><b>${escape(item.category)}</b></div></div><div class="abilities"><h3>KNOWN ABILITIES · 已知能力</h3><ul>${item.abilities.map(ability => `<li>${escape(ability)}</li>`).join('')}</ul></div><div class="tag-row">${item.tags.map(tag => `<span class="tag">${escape(tag)}</span>`).join('')}</div></section>`;
+    const favorite = isFavorite('specimens', item.id);
+    content.innerHTML = `<section class="detail-hero"><span class="detail-number">ARCHIVE ${escape(item.id)} · ${escape(item.rarity)}</span><h2>${escape(item.name)}</h2><span class="latin">${escape(item.latin)}</span><button class="favorite-toggle" type="button" data-favorite-type="specimens" data-favorite-id="${escape(item.id)}" aria-pressed="${favorite}">${favorite ? '♥ 已收藏此形态' : '♡ 收藏此形态'}</button></section><section class="detail-body"><p>${escape(item.description)}</p><div class="facts"><div class="fact"><small>首次观测</small><b>${escape(item.firstObserved)}</b></div><div class="fact"><small>主要栖息地</small><b>${escape(item.habitat)}</b></div><div class="fact"><small>当前状态</small><b>${escape(item.status)}</b></div><div class="fact"><small>档案分类</small><b>${escape(item.category)}</b></div></div><div class="abilities"><h3>KNOWN ABILITIES · 已知能力</h3><ul>${item.abilities.map(ability => `<li>${escape(ability)}</li>`).join('')}</ul></div><div class="tag-row">${item.tags.map(tag => `<span class="tag">${escape(tag)}</span>`).join('')}</div></section>`;
     if (!dialog.open) dialog.showModal();
   }
 
@@ -42,7 +45,7 @@ export function createArchive(specimens) {
     const visible = records
       .filter(item => (state.category === '全部' || item.category === state.category)
         && (!query || searchIndex.get(item.id).includes(query)));
-    grid.innerHTML = visible.map(card).join('');
+    grid.innerHTML = visible.map(item => card(item, isFavorite('specimens', item.id))).join('');
     get('#resultCount').textContent = `DISPLAYING ${visible.length} / ${specimens.length} RECORDS`;
     get('#emptyState').hidden = visible.length !== 0;
   }
@@ -67,6 +70,14 @@ export function createArchive(specimens) {
     render();
   });
   grid.addEventListener('click', event => open(event.target.closest('.card')?.dataset.id));
+  content.addEventListener('click', event => {
+    const button = event.target.closest('[data-favorite-type="specimens"]');
+    if (!button) return;
+    const active = toggleFavorite('specimens', button.dataset.favoriteId);
+    button.setAttribute('aria-pressed', active);
+    button.textContent = active ? '♥ 已收藏此形态' : '♡ 收藏此形态';
+    render();
+  });
   get('#randomPig').addEventListener('click', () => open(specimens[Math.floor(Math.random() * specimens.length)].id));
   get('.close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });

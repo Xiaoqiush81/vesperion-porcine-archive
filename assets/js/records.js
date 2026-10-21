@@ -3,6 +3,7 @@ import { TAROT_CARDS } from './tarot-data.js?v=20261019-modular-1';
 import { loadReadingHistory } from './tarot-storage.js?v=20261019-modular-1';
 import { loadIdentityHistory } from './identity-storage.js?v=20261020-bank-1';
 import { SYMBOLIC_LINKS } from './record-links.js?v=20261021-1';
+import { loadFavorites } from './favorites.js?v=20261021-1';
 
 const specimenArt = item => item.artwork || `assets/cards/${item.id.toLowerCase()}.webp`;
 const tarotArt = card => `assets/tarot/${String(card.artwork).split('?')[0]}`;
@@ -37,6 +38,15 @@ export function createRecordRoom(specimens) {
 
   const pigById = new Map(specimens.map(item => [item.id,item]));
   const cardById = new Map(TAROT_CARDS.map(card => [card.id,card]));
+  const renderFavorites = () => {
+    const favorites = loadFavorites();
+    const pigs = favorites.specimens.map(id => pigById.get(id)).filter(Boolean);
+    const cards = favorites.tarot.map(id => cardById.get(id)).filter(card => card?.artwork);
+    const group = (title, items, art, room) => `<section><h4>${title}<span>${items.length}</span></h4>${items.length ? `<div>${items.map(item => `<a href="#${room}" data-room-target="${room}"><img src="${art(item)}" alt="${escape(item.name)}" width="120" height="180" loading="lazy"><b>${escape(item.name)}</b><small>${escape(item.number || item.title)}</small></a>`).join('')}</div>` : '<p>尚未收藏。</p>'}</section>`;
+    document.querySelector('#favoriteShelf').innerHTML = group('猪猪形态', pigs, specimenArt, 'specimens') + group('塔罗牌', cards, tarotArt, 'tarot');
+  };
+  renderFavorites();
+  window.addEventListener('pigdex:favorites', renderFavorites);
   document.querySelector('#symbolicLinkGrid').innerHTML = SYMBOLIC_LINKS.map(link => {
     const pig=pigById.get(link.specimen), card=cardById.get(link.tarot); if(!pig||!card)return'';
     return `<article class="symbolic-pair"><div class="pair-images"><img src="${specimenArt(pig)}" alt="${escape(pig.name)}" width="160" height="240" loading="lazy"><span>×</span><img src="${tarotArt(card)}" alt="${escape(card.name)}" width="160" height="240" loading="lazy"></div><small>${escape(pig.id)} · ${escape(card.title)}</small><h4>${escape(pig.name)} × ${escape(card.name)}</h4><p>${escape(link.note)}</p></article>`;

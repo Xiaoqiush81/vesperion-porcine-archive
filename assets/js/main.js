@@ -21,7 +21,7 @@ let recordsLoading = null;
 
 async function initArchive() {
   if (archiveReady) return;
-  if (!archiveLoading) archiveLoading = import('./archive.js?v=20261015-specimens-51')
+  if (!archiveLoading) archiveLoading = import('./archive.js?v=20261021-favorites')
     .then(async ({ createArchive, loadSpecimens }) => {
       createArchive(await loadSpecimens());
       archiveReady = true;
@@ -36,7 +36,7 @@ async function initArchive() {
 
 async function initTarot() {
   if (tarotReady) return;
-  if (!tarotLoading) tarotLoading = import('./tarot.js?v=20261019-modular-1')
+  if (!tarotLoading) tarotLoading = import('./tarot.js?v=20261021-favorites')
     .then(({ createTarotCabinet }) => {
       createTarotCabinet();
       tarotReady = true;
@@ -53,7 +53,7 @@ async function initIdentity() {
   if (identityReady) return;
   if (!identityLoading) identityLoading = Promise.all([
     import('./identity.js?v=20261020-bank-copy-restore'),
-    import('./archive.js?v=20261020-specimens-52').then(module => module.loadSpecimens())
+    import('./archive.js?v=20261021-favorites').then(module => module.loadSpecimens())
   ])
     .then(([{ createIdentityOffice }, specimens]) => {
       createIdentityOffice(specimens, toast);
@@ -70,8 +70,8 @@ async function initIdentity() {
 async function initRecords() {
   if (recordsReady) return;
   if (!recordsLoading) recordsLoading = Promise.all([
-    import('./records.js?v=20261021-1'),
-    import('./archive.js?v=20261020-specimens-52').then(module => module.loadSpecimens())
+    import('./records.js?v=20261021-favorites'),
+    import('./archive.js?v=20261021-favorites').then(module => module.loadSpecimens())
   ]).then(([{ createRecordRoom }, specimens]) => {
     createRecordRoom(specimens);
     recordsReady = true;
