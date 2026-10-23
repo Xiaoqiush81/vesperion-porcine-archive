@@ -173,17 +173,19 @@ export function createSoundscape(root = document) {
     musicBus.gain.linearRampToValueAtTime(MUSIC_LEVEL, now + recovery);
   }
 
-  function cardFlip() {
-    duckMusic(.25, .72);
-    paperLayer(0, .2, 520, 3100, .14, 1.08);
-    paperLayer(.105, .24, 2900, 680, .12, .84);
-    paperLayer(.27, .075, 1700, 920, .1, 1.45);
-    voice(108, .255, .16, .055, { type:'sine', attack:.012, release:.13, cutoff:650 });
+  function pageTurn() {
+    duckMusic(.23, .82);
+    paperLayer(0, .31, 380, 4300, .17, .82);
+    paperLayer(.075, .34, 3700, 460, .135, .73);
+    paperLayer(.19, .07, 2100, 3900, .07, 1.6);
+    paperLayer(.255, .055, 3300, 1500, .06, 1.9);
+    paperLayer(.345, .085, 1900, 720, .105, 1.35);
+    voice(92, .355, .18, .052, { type:'sine', attack:.01, release:.15, cutoff:520 });
   }
 
   async function effect(name) {
     if (!settings.effects || !await activateContext()) return;
-    if (name === 'flip') cardFlip();
+    if (name === 'flip') pageTurn();
     else if (name === 'favorite') {
       duckMusic(.3, .5);
       uiPing(920, 1340, 0, .13, .095, 'sine');
@@ -199,6 +201,12 @@ export function createSoundscape(root = document) {
       voice(510, 0, .13, .07, { type:'triangle', release:.08 });
       voice(690, .09, .2, .065, { type:'sine', release:.14 });
       voice(570, .23, .18, .05, { type:'triangle', release:.12 });
+    } else if (name === 'theme') {
+      duckMusic(.26, .55);
+      paperLayer(0, .12, 620, 4200, .07, 1.25);
+      uiPing(460, 980, .025, .17, .085, 'sine');
+      uiPing(1360, 720, .105, .2, .052, 'triangle');
+      paperLayer(.18, .045, 3800, 2300, .035, 1.8);
     } else {
       duckMusic(.46, .28);
       paperLayer(0, .038, 1750, 3600, .038, 1.8);
@@ -288,6 +296,7 @@ export function createSoundscape(root = document) {
     if (event.target.closest('.tarot-card, .draw-card')) effect('flip');
     else if (event.target.closest('.favorite-toggle')) effect('favorite');
     else if (event.target.closest('[data-room-target]')) effect('door');
+    else if (event.target.closest('#themeToggle')) effect('theme');
     else if (event.target.closest('#callPig')) effect('pig');
     else if (event.target.closest('button')) effect('tap');
   });
