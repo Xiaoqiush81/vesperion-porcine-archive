@@ -344,8 +344,11 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .legal-copy { padding:16px 36px; }
 .legal-copy section { padding:24px 0; border-bottom:1px solid var(--line); }
 .legal-copy section:last-child { border-bottom:0; }
-.legal-copy h4 { margin:0 0 9px; color:var(--navy-soft); font-family:var(--cn-serif); font-size:13px; font-weight:500; }
-.legal-copy p { margin:0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:11px; line-height:2; }
+.legal-copy h4 { margin:0 0 11px; color:var(--navy-soft); font-family:var(--cn-serif); font-size:13px; font-weight:600; letter-spacing:.025em; }
+.legal-copy p { margin:0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:11px; line-height:2.15; }
+.legal-copy p b { color:var(--navy-soft); font-weight:600; }
+.legal-copy .legal-preamble { margin:18px 0 8px; padding:22px 24px; border:1px solid var(--line); background:var(--paper-deep); }
+.legal-copy .legal-preamble h4 { color:var(--amber-dark); }
 .legal-copy a { color:var(--text-accent); text-decoration-color:var(--amber); text-underline-offset:3px; }
 .legal-contact { margin-top:34px; padding:18px 0; color:var(--muted); border-block:1px solid var(--line); font-family:var(--serif); font-size:9px; letter-spacing:.12em; text-align:center; }
 
