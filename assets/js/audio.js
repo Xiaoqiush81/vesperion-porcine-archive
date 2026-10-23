@@ -38,7 +38,7 @@ export function createSoundscape(root = document) {
   const sampleBuffers = new Map();
   const musicVoices = new Set();
   const SAMPLE_URLS = Object.freeze({
-    cardFlip: new URL('../audio/card-flip.mp3', import.meta.url),
+    cardFlip: new URL('../audio/tarot-page-turn.mp3', import.meta.url),
     themeSwitch: new URL('../audio/theme-switch.mp3', import.meta.url)
   });
 
@@ -223,8 +223,8 @@ export function createSoundscape(root = document) {
   }
 
   function pageTurn() {
-    duckMusic(.18, .95);
-    playSample('cardFlip', .9, .96);
+    duckMusic(.16, .92);
+    playSample('cardFlip', .94);
   }
 
   async function effect(name) {
