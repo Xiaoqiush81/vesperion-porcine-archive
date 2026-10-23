@@ -229,7 +229,8 @@ body:not([data-room="home"]) .volume-panel { top:calc(58px + env(safe-area-inset
   margin: 0 auto;
   padding: env(safe-area-inset-top) max(clamp(24px, 5vw, 78px), env(safe-area-inset-right)) 0 max(clamp(24px, 5vw, 78px), env(safe-area-inset-left));
   display: grid;
-  grid-template-columns:minmax(140px,1fr) auto minmax(100px,1fr) auto;
+  grid-template-columns:minmax(140px,1fr) auto auto auto;
+  column-gap: clamp(20px, 2.4vw, 36px);
   align-items: center;
 }
 .room-toolbar-back {
@@ -250,8 +251,9 @@ body:not([data-room="home"]) .volume-panel { top:calc(58px + env(safe-area-inset
 .room-toolbar-back b { font-weight: 500; }
 .room-toolbar-back:hover { color: var(--amber); }
 .room-toolbar-back:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
-.room-toolbar-current { font-family: var(--cn-serif); font-size: 13px; font-weight: 500; letter-spacing: .12em; }
+.room-toolbar-current { grid-column:4; justify-self:end; font-family: var(--cn-serif); font-size: 13px; font-weight: 500; letter-spacing: .12em; }
 .room-toolbar small { justify-self: end; color: var(--muted); font-family: var(--serif); font-size: 10px; letter-spacing: .16em; }
+.room-toolbar-inner > .soundscape { grid-column:3; }
 body:not([data-room="home"]) .room-toolbar { display: block; }
 body:not([data-room="home"]) .site-header { display: none; }
 body:not([data-room="home"]) main { padding-top: calc(58px + env(safe-area-inset-top)); }
@@ -745,9 +747,10 @@ dialog::backdrop { background:var(--backdrop); }
   .site-header nav { gap:0; }
   .room-toolbar { min-height: calc(54px + env(safe-area-inset-top)); }
   .room-toolbar-inner { min-height: calc(54px + env(safe-area-inset-top)); }
-  .room-toolbar-inner { padding-left:max(18px,env(safe-area-inset-left)); padding-right:max(18px,env(safe-area-inset-right)); grid-template-columns:1fr auto auto; }
+  .room-toolbar-inner { padding-left:max(18px,env(safe-area-inset-left)); padding-right:max(18px,env(safe-area-inset-right)); grid-template-columns:1fr auto auto; column-gap:24px; }
   .room-toolbar-back { min-height: 46px; padding-right: 16px; font-size: 14px; }
-  .room-toolbar-current { justify-self: end; font-size: 12px; letter-spacing: .08em; }
+  .room-toolbar-current { grid-column:3; justify-self:end; font-size:12px; letter-spacing:.08em; }
+  .room-toolbar-inner > .soundscape { grid-column:2; }
   .room-toolbar small { display: none; }
   body:not([data-room="home"]) main { padding-top:calc(54px + env(safe-area-inset-top)); }
   .brand-mark { width: 34px; height: 40px; }
