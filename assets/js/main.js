@@ -1,5 +1,5 @@
 import { initTheme } from './theme.js?v=20261011-safari-1';
-import { createSoundscape } from './audio.js?v=20261023-card-1';
+import { createSoundscape } from './audio.js?v=20261024-menu-1';
 
 const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
 const ARCHIVE_MODULE_URL = './archive.js?v=20261023-induction-detail-fix-1';
