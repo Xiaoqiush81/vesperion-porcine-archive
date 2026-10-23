@@ -31,6 +31,7 @@ export function createSoundscape(root = document) {
   let musicBus;
   let effectsBus;
   let musicTimer;
+  let musicStarting;
   let musicStep = 0;
   let noiseBuffer;
 
@@ -45,6 +46,12 @@ export function createSoundscape(root = document) {
   }
 
   function ensureContext() {
+    if (context?.state === 'closed') {
+      context = undefined;
+      musicBus = undefined;
+      effectsBus = undefined;
+      noiseBuffer = undefined;
+    }
     if (!context) {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       if (!AudioContext) return null;
@@ -71,8 +78,17 @@ export function createSoundscape(root = document) {
       reverb.connect(reverbLevel).connect(master);
       master.connect(compressor).connect(context.destination);
     }
-    if (context.state === 'suspended') context.resume().catch(() => {});
     return context;
+  }
+
+  async function activateContext() {
+    const audio = ensureContext();
+    if (!audio) return false;
+    if (audio.state !== 'running') {
+      try { await audio.resume(); }
+      catch { return false; }
+    }
+    return audio.state === 'running';
   }
 
   function voice(frequency, delay, duration, volume, options = {}) {
@@ -159,8 +175,8 @@ export function createSoundscape(root = document) {
     voice(108, .255, .16, .055, { type:'sine', attack:.012, release:.13, cutoff:650 });
   }
 
-  function effect(name) {
-    if (!settings.effects || !ensureContext()) return;
+  async function effect(name) {
+    if (!settings.effects || !await activateContext()) return;
     if (name === 'flip') cardFlip();
     else if (name === 'favorite') {
       duckMusic(.3, .5);
@@ -200,15 +216,31 @@ export function createSoundscape(root = document) {
     musicStep += 1;
   }
 
-  function startMusic() {
-    if (musicTimer || !settings.music || !ensureContext()) return;
-    scheduleBar();
-    musicTimer = window.setInterval(scheduleBar, BAR_LENGTH);
+  async function startMusic() {
+    if (musicTimer || musicStarting || !settings.music || document.hidden) return;
+    musicStarting = (async () => {
+      if (!await activateContext() || musicTimer || !settings.music || document.hidden) return;
+      scheduleBar();
+      musicTimer = window.setInterval(scheduleBar, BAR_LENGTH);
+    })();
+    try { await musicStarting; }
+    finally { musicStarting = undefined; }
   }
 
   function stopMusic() {
     window.clearInterval(musicTimer);
     musicTimer = undefined;
+  }
+
+  async function restoreAudio() {
+    if (document.hidden || (!settings.music && !settings.effects)) return;
+    const ready = await activateContext();
+    if (ready && settings.music && !musicTimer) startMusic();
+  }
+
+  function pauseForBackground() {
+    stopMusic();
+    if (context?.state === 'running') context.suspend().catch(() => {});
   }
 
   function updateControls() {
@@ -238,10 +270,14 @@ export function createSoundscape(root = document) {
     else if (event.target.closest('button')) effect('tap');
   });
 
-  root.addEventListener('pointerdown', () => { if (settings.music) startMusic(); }, { once:true, passive:true });
+  root.addEventListener('pointerdown', restoreAudio, { capture:true, passive:true });
+  root.addEventListener('touchstart', restoreAudio, { capture:true, passive:true });
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stopMusic();
-    else if (settings.music) startMusic();
+    if (document.hidden) pauseForBackground();
+    else restoreAudio();
   });
+  window.addEventListener('pagehide', pauseForBackground);
+  window.addEventListener('pageshow', restoreAudio);
+  window.addEventListener('focus', restoreAudio);
   updateControls();
 }
