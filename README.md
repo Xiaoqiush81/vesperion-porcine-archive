@@ -1,6 +1,6 @@
 # PIGDEX 081
 
-> **宅邸友情力荐：** [fount](https://github.com/steve02081504/fount) —— 给想象装上声音、工具与可扩展的骨架；本馆也从它认真又自由的工程思路里偷过不少师。
+> **宅邸友情力荐：** [fount](https://github.com/steve02081504/fount) —— 让想象获得声音，也获得自由生长的可能。
 
 > **Vesperion Porcine Archive · 维斯珀里昂猪类与异常现象图鉴**
 
