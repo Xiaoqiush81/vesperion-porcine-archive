@@ -77,7 +77,7 @@ async function initIdentity() {
 async function initRecords() {
   if (recordsReady) return;
   if (!recordsLoading) recordsLoading = Promise.all([
-    import('./records.js?v=20261021-tarot-fast'),
+    import('./records.js?v=20261023-new-links-1'),
     import('./archive.js?v=20261021-favorites').then(module => module.loadSpecimens())
   ]).then(([{ createRecordRoom }, specimens]) => {
     createRecordRoom(specimens);

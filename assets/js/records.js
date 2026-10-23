@@ -2,7 +2,7 @@ import { escapeHtml as escape } from './specimen-art.js?v=20261015-specimens-51'
 import { TAROT_CARDS } from './tarot-data.js?v=20261019-modular-1';
 import { loadReadingHistory } from './tarot-storage.js?v=20261019-modular-1';
 import { loadIdentityHistory } from './identity-storage.js?v=20261020-bank-1';
-import { SYMBOLIC_LINKS } from './record-links.js?v=20261021-1';
+import { SYMBOLIC_LINKS } from './record-links.js?v=20261023-new-forms-1';
 import { loadFavorites } from './favorites.js?v=20261021-1';
 
 const specimenArt = item => item.artwork || `assets/cards/${item.id.toLowerCase()}.webp`;

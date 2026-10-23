@@ -11,5 +11,8 @@ export const SYMBOLIC_LINKS = Object.freeze([
   { specimen:'VPA-081-MATH', tarot:'major-I', note:'把符号、规律和已有工具调动起来，使答案真正发生。' },
   { specimen:'VPA-081-DENIAL', tarot:'major-XII', note:'暂时停住并换个姿势看世界，有时也是必要的悬置。' },
   { specimen:'VPA-081-BRILL', tarot:'major-XXI', note:'高明猪把瑕疵、灵机一动与结果共同收束成完整作品。' },
-  { specimen:'VPA-081-L73', tarot:'major-XIV', note:'灵魂分批加载，以自己的速度把清醒与困倦重新调匀。' }
+  { specimen:'VPA-081-L73', tarot:'major-XIV', note:'灵魂分批加载，以自己的速度把清醒与困倦重新调匀。' },
+  { specimen:'VPA-081-INDUCTION', tarot:'major-XI', note:'从材料一路推到结论的猪猪，也需要正义替它检查：每一步证据是否真的撑得住下一步判断。' },
+  { specimen:'VPA-081-TAIL', tarot:'major-XXI', note:'完成不等于把所有事情做尽；卷起一条清楚的小尾巴，也足以替今天收束成一个完整周期。' },
+  { specimen:'VPA-081-SNIFFLE', tarot:'swords-4', note:'宝剑四把运转暂时放下，让身体在安静、保暖与休息中恢复；病号猪此刻不必证明生产力。' }
 ]);
