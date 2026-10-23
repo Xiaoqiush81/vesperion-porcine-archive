@@ -79,6 +79,13 @@ button, input { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 .noise { display: none; }
 
+.soundscape { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 24; display: flex; align-items: center; gap: 5px; padding: 5px; color: var(--navy-soft); background: var(--paper); background: color-mix(in srgb, var(--paper) 92%, transparent); border: 1px solid var(--line); box-shadow: 0 12px 35px rgba(6,17,29,.12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.soundscape > span { padding: 0 7px; color: var(--muted); font-family: var(--serif); font-size: 8px; letter-spacing: .11em; }
+.soundscape button { min-height: 34px; padding: 7px 9px; color: var(--muted); background: transparent; border: 1px solid transparent; font-family: var(--cn-serif); font-size: 10px; cursor: pointer; }
+.soundscape button i { margin-right: 3px; color: var(--amber); font-family: var(--serif); font-size: 13px; font-style: normal; }
+.soundscape button.is-active { color: var(--navy); background: var(--surface-raised); border-color: var(--amber); }
+.soundscape button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+
 .site-header {
   min-height: 88px;
   padding: 16px clamp(24px, 5vw, 78px);
@@ -561,6 +568,9 @@ dialog::backdrop { background: rgba(6, 17, 29, .76); }
   .filters { justify-content: flex-start; }
 }
 @media (max-width: 640px) {
+  .soundscape { right: max(10px, env(safe-area-inset-right)); bottom: max(10px, env(safe-area-inset-bottom)); }
+  .soundscape > span { display: none; }
+  .soundscape button { min-height: 38px; padding-inline: 10px; }
   .site-header { min-height: 72px; }
   .room-toolbar { min-height: calc(54px + env(safe-area-inset-top)); }
   .room-toolbar-inner { min-height: calc(54px + env(safe-area-inset-top)); }

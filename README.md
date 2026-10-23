@@ -25,6 +25,7 @@ python3 -m http.server 8080
 - `assets/js/records.js`：聚合鉴定与占卜记录，生成宅邸档案室。
 - `assets/js/record-links.js`：猪种与塔罗的策展式象征联结。
 - `assets/js/favorites.js`：猪种与塔罗共用的本地收藏状态，不与具体界面耦合。
+- `assets/js/audio.js`：基于 Web Audio 的宅邸背景音乐与交互音效；无需额外音频资源，并遵守 Safari 的用户手势播放限制。
 - `assets/js/tarot*.js`：塔罗数据、抽牌引擎、记录存储与交互界面。
 - `assets/tarot/thumbs/`：用于陈列和翻牌的轻量预览图；详情页再渐进加载高清原图。
 - `assets/js/theme.js`：主题切换、持久化与浏览器主题色。
