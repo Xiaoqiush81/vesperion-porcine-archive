@@ -68,7 +68,6 @@ export function createSoundscape(root = document) {
       musicBus.connect(master);
       musicBus.connect(reverb);
       effectsBus.connect(master);
-      effectsBus.connect(reverb);
       reverb.connect(reverbLevel).connect(master);
       master.connect(compressor).connect(context.destination);
     }
@@ -128,18 +127,32 @@ export function createSoundscape(root = document) {
     source.stop(start + duration + .02);
   }
 
-  function duckMusic() {
+  function uiPing(fromFrequency, toFrequency, delay, duration, volume, type = 'sine') {
+    const start = context.currentTime + delay;
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(fromFrequency, start);
+    oscillator.frequency.exponentialRampToValueAtTime(toFrequency, start + duration);
+    gain.gain.setValueAtTime(.0001, start);
+    gain.gain.exponentialRampToValueAtTime(volume, start + .008);
+    gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
+    oscillator.connect(gain).connect(effectsBus);
+    oscillator.start(start);
+    oscillator.stop(start + duration + .02);
+  }
+
+  function duckMusic(depth = .34, recovery = .55) {
     if (!musicBus || !settings.music) return;
     const now = context.currentTime;
     musicBus.gain.cancelScheduledValues(now);
     musicBus.gain.setValueAtTime(musicBus.gain.value, now);
-    musicBus.gain.linearRampToValueAtTime(.28, now + .025);
-    musicBus.gain.linearRampToValueAtTime(.42, now + .18);
-    musicBus.gain.linearRampToValueAtTime(MUSIC_LEVEL, now + .7);
+    musicBus.gain.linearRampToValueAtTime(depth, now + .018);
+    musicBus.gain.linearRampToValueAtTime(MUSIC_LEVEL, now + recovery);
   }
 
   function cardFlip() {
-    duckMusic();
+    duckMusic(.25, .72);
     paperLayer(0, .2, 520, 3100, .14, 1.08);
     paperLayer(.105, .24, 2900, 680, .12, .84);
     paperLayer(.27, .075, 1700, 920, .1, 1.45);
@@ -148,21 +161,26 @@ export function createSoundscape(root = document) {
 
   function effect(name) {
     if (!settings.effects || !ensureContext()) return;
-    duckMusic();
     if (name === 'flip') cardFlip();
     else if (name === 'favorite') {
-      [440, 587.33, 698.46, 880].forEach((note, index) => voice(note, index * .065, .68, .055, { type:'sine', release:.52 }));
+      duckMusic(.3, .5);
+      uiPing(920, 1340, 0, .13, .095, 'sine');
+      uiPing(1420, 1960, .065, .17, .06, 'sine');
+      paperLayer(.015, .06, 2400, 4100, .04, 1.7);
     } else if (name === 'door') {
-      voice(146.83, 0, .72, .065, { type:'triangle', attack:.02, release:.55, cutoff:1500 });
-      voice(220, .055, .9, .045, { type:'sine', release:.7 });
-      voice(293.66, .12, 1.05, .032, { type:'sine', release:.82 });
+      duckMusic(.28, .58);
+      paperLayer(0, .12, 480, 2600, .085, 1.16);
+      uiPing(760, 540, .045, .105, .095, 'triangle');
+      uiPing(1280, 940, .065, .12, .045, 'sine');
     } else if (name === 'pig') {
+      duckMusic(.32, .52);
       voice(510, 0, .13, .07, { type:'triangle', release:.08 });
       voice(690, .09, .2, .065, { type:'sine', release:.14 });
       voice(570, .23, .18, .05, { type:'triangle', release:.12 });
     } else {
-      paperLayer(0, .055, 1100, 1850, .045, 1.55);
-      voice(293.66, .015, .11, .025, { type:'sine', release:.08 });
+      duckMusic(.46, .28);
+      paperLayer(0, .038, 1750, 3600, .038, 1.8);
+      uiPing(1180, 720, .004, .072, .085, 'triangle');
     }
   }
 
