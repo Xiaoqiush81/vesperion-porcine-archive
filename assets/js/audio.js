@@ -34,7 +34,23 @@ export function createSoundscape(root = document) {
   let musicStarting;
   let musicStep = 0;
   let noiseBuffer;
+  const sampleBytes = new Map();
+  const sampleBuffers = new Map();
   const musicVoices = new Set();
+  const SAMPLE_URLS = Object.freeze({
+    cardFlip: new URL('../audio/card-flip.mp3', import.meta.url),
+    themeSwitch: new URL('../audio/theme-switch.mp3', import.meta.url)
+  });
+
+  function preloadSample(name) {
+    if (!sampleBytes.has(name)) {
+      sampleBytes.set(name, fetch(SAMPLE_URLS[name]).then(response => {
+        if (!response.ok) throw new Error(`Unable to load ${name}`);
+        return response.arrayBuffer();
+      }).catch(() => null));
+    }
+    return sampleBytes.get(name);
+  }
 
   function makeImpulse(seconds = 2.7, decay = 3.2) {
     const length = Math.ceil(context.sampleRate * seconds);
@@ -52,6 +68,7 @@ export function createSoundscape(root = document) {
       musicBus = undefined;
       effectsBus = undefined;
       noiseBuffer = undefined;
+      sampleBuffers.clear();
       musicVoices.clear();
     }
     if (!context) {
@@ -173,14 +190,41 @@ export function createSoundscape(root = document) {
     musicBus.gain.linearRampToValueAtTime(MUSIC_LEVEL, now + recovery);
   }
 
+  async function getSample(name) {
+    if (sampleBuffers.has(name)) return sampleBuffers.get(name);
+    const bytes = await preloadSample(name);
+    if (!bytes || !context) return null;
+    try {
+      const buffer = await context.decodeAudioData(bytes.slice(0));
+      sampleBuffers.set(name, buffer);
+      return buffer;
+    } catch { return null; }
+  }
+
+  async function playSample(name, volume = 1, playbackRate = 1) {
+    const buffer = await getSample(name);
+    if (!buffer || !context || !settings.effects) return;
+    const source = context.createBufferSource();
+    const gain = context.createGain();
+    source.buffer = buffer;
+    source.playbackRate.value = playbackRate;
+    gain.gain.value = volume;
+    source.connect(gain).connect(effectsBus);
+    source.start();
+  }
+
+  function themeBloom(lightTheme) {
+    const notes = lightTheme ? [392, 587.33, 987.77] : [987.77, 587.33, 392];
+    notes.forEach((frequency, index) => {
+      voice(frequency, .055 + index * .055, .62 - index * .06, .052 - index * .008, {
+        type:'sine', attack:.012, release:.48, cutoff:2400
+      });
+    });
+  }
+
   function pageTurn() {
-    duckMusic(.23, .82);
-    paperLayer(0, .31, 380, 4300, .17, .82);
-    paperLayer(.075, .34, 3700, 460, .135, .73);
-    paperLayer(.19, .07, 2100, 3900, .07, 1.6);
-    paperLayer(.255, .055, 3300, 1500, .06, 1.9);
-    paperLayer(.345, .085, 1900, 720, .105, 1.35);
-    voice(92, .355, .18, .052, { type:'sine', attack:.01, release:.15, cutoff:520 });
+    duckMusic(.18, .95);
+    playSample('cardFlip', .9, .96);
   }
 
   async function effect(name) {
@@ -202,11 +246,9 @@ export function createSoundscape(root = document) {
       voice(690, .09, .2, .065, { type:'sine', release:.14 });
       voice(570, .23, .18, .05, { type:'triangle', release:.12 });
     } else if (name === 'theme') {
-      duckMusic(.26, .55);
-      paperLayer(0, .12, 620, 4200, .07, 1.25);
-      uiPing(460, 980, .025, .17, .085, 'sine');
-      uiPing(1360, 720, .105, .2, .052, 'triangle');
-      paperLayer(.18, .045, 3800, 2300, .035, 1.8);
+      duckMusic(.18, .82);
+      playSample('themeSwitch', .72);
+      themeBloom(document.documentElement.dataset.theme === 'paper');
     } else {
       duckMusic(.46, .28);
       paperLayer(0, .038, 1750, 3600, .038, 1.8);
@@ -288,7 +330,11 @@ export function createSoundscape(root = document) {
     saveSettings(settings);
     updateControls();
     if (key === 'music') settings.music ? startMusic() : stopMusic();
-    if (key === 'effects' && settings.effects) effect('favorite');
+    if (key === 'effects' && settings.effects) {
+      preloadSample('cardFlip');
+      preloadSample('themeSwitch');
+      effect('favorite');
+    }
   });
 
   root.addEventListener('click', event => {
@@ -310,5 +356,9 @@ export function createSoundscape(root = document) {
   window.addEventListener('pagehide', pauseForBackground);
   window.addEventListener('pageshow', restoreAudio);
   window.addEventListener('focus', restoreAudio);
+  if (settings.effects) {
+    preloadSample('cardFlip');
+    preloadSample('themeSwitch');
+  }
   updateControls();
 }
