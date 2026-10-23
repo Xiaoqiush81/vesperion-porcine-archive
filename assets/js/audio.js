@@ -34,6 +34,7 @@ export function createSoundscape(root = document) {
   let musicStarting;
   let musicStep = 0;
   let noiseBuffer;
+  const musicVoices = new Set();
 
   function makeImpulse(seconds = 2.7, decay = 3.2) {
     const length = Math.ceil(context.sampleRate * seconds);
@@ -51,6 +52,7 @@ export function createSoundscape(root = document) {
       musicBus = undefined;
       effectsBus = undefined;
       noiseBuffer = undefined;
+      musicVoices.clear();
     }
     if (!context) {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -107,6 +109,10 @@ export function createSoundscape(root = document) {
     gain.gain.setValueAtTime(volume, start + Math.max(options.attack || .035, duration - (options.release || .35)));
     gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
     oscillator.connect(filter).connect(gain).connect(options.bus || effectsBus);
+    if (options.bus === musicBus) {
+      musicVoices.add(oscillator);
+      oscillator.addEventListener('ended', () => musicVoices.delete(oscillator), { once:true });
+    }
     oscillator.start(start);
     oscillator.stop(start + duration + .04);
   }
@@ -220,6 +226,10 @@ export function createSoundscape(root = document) {
     if (musicTimer || musicStarting || !settings.music || document.hidden) return;
     musicStarting = (async () => {
       if (!await activateContext() || musicTimer || !settings.music || document.hidden) return;
+      const now = context.currentTime;
+      musicBus.gain.cancelScheduledValues(now);
+      musicBus.gain.setValueAtTime(Math.max(.0001, musicBus.gain.value), now);
+      musicBus.gain.linearRampToValueAtTime(MUSIC_LEVEL, now + .12);
       scheduleBar();
       musicTimer = window.setInterval(scheduleBar, BAR_LENGTH);
     })();
@@ -230,6 +240,18 @@ export function createSoundscape(root = document) {
   function stopMusic() {
     window.clearInterval(musicTimer);
     musicTimer = undefined;
+    const stopAt = context ? context.currentTime + .06 : 0;
+    musicVoices.forEach(oscillator => {
+      try { oscillator.stop(stopAt); }
+      catch { /* It may already have reached its scheduled end. */ }
+    });
+    musicVoices.clear();
+    if (context && musicBus && context.state !== 'closed') {
+      const now = context.currentTime;
+      musicBus.gain.cancelScheduledValues(now);
+      musicBus.gain.setValueAtTime(Math.max(.0001, musicBus.gain.value), now);
+      musicBus.gain.exponentialRampToValueAtTime(.0001, now + .055);
+    }
   }
 
   async function restoreAudio() {
