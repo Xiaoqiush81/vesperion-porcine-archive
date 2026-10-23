@@ -234,6 +234,7 @@ body:not([data-room="home"]) .volume-panel { top:calc(58px + env(safe-area-inset
   align-items: center;
 }
 .room-toolbar-back {
+  grid-row: 1;
   min-height: 44px;
   width: max-content;
   padding: 8px 12px 8px 0;
@@ -251,9 +252,9 @@ body:not([data-room="home"]) .volume-panel { top:calc(58px + env(safe-area-inset
 .room-toolbar-back b { font-weight: 500; }
 .room-toolbar-back:hover { color: var(--amber); }
 .room-toolbar-back:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
-.room-toolbar-current { grid-column:4; justify-self:end; font-family: var(--cn-serif); font-size: 13px; font-weight: 500; letter-spacing: .12em; }
-.room-toolbar small { justify-self: end; color: var(--muted); font-family: var(--serif); font-size: 10px; letter-spacing: .16em; }
-.room-toolbar-inner > .soundscape { grid-column:3; }
+.room-toolbar-current { grid-column:4; grid-row:1; justify-self:end; font-family: var(--cn-serif); font-size: 13px; font-weight: 500; letter-spacing: .12em; }
+.room-toolbar small { grid-row:1; justify-self:end; color: var(--muted); font-family: var(--serif); font-size: 10px; letter-spacing: .16em; }
+.room-toolbar-inner > .soundscape { grid-column:3; grid-row:1; }
 body:not([data-room="home"]) .room-toolbar { display: block; }
 body:not([data-room="home"]) .site-header { display: none; }
 body:not([data-room="home"]) main { padding-top: calc(58px + env(safe-area-inset-top)); }
