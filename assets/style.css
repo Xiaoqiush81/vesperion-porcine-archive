@@ -38,6 +38,17 @@
   --legal-masthead-ink: #f5f0e7;
   --legal-masthead-muted: #c7ced0;
   --legal-shadow: rgba(16, 38, 61, .1);
+  --on-gold: #10263d;
+  --gold-ink: #806034;
+  --favorite: #9f3853;
+  --favorite-soft: rgba(159, 56, 83, .07);
+  --favorite-glow: rgba(255, 255, 255, .8);
+  --shadow-soft: rgba(16, 38, 61, .08);
+  --shadow-medium: rgba(6, 17, 29, .16);
+  --shadow-strong: rgba(6, 17, 29, .28);
+  --backdrop: rgba(6, 17, 29, .76);
+  --loading-bg: rgba(16, 38, 61, .86);
+  --loading-ink: #f7f2e8;
   color-scheme: light;
   --serif: "Cormorant Garamond", "Noto Serif SC", serif;
   --cn-serif: "Noto Serif SC", serif;
@@ -84,11 +95,24 @@
   --legal-masthead-ink: #10263d;
   --legal-masthead-muted: #53616b;
   --legal-shadow: rgba(0, 0, 0, .32);
+  --on-gold: #10263d;
+  --gold-ink: #6f512d;
+  --favorite: #e28aa1;
+  --favorite-soft: rgba(226, 138, 161, .1);
+  --favorite-glow: rgba(6, 17, 29, .72);
+  --shadow-soft: rgba(0, 0, 0, .2);
+  --shadow-medium: rgba(0, 0, 0, .34);
+  --shadow-strong: rgba(0, 0, 0, .52);
+  --backdrop: rgba(1, 8, 15, .84);
+  --loading-bg: rgba(6, 23, 39, .9);
+  --loading-ink: #f7f2e8;
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
 html { max-width: 100%; overflow-x: hidden; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html { scrollbar-color: var(--amber) var(--paper-deep); }
+::selection { color:var(--on-gold); background:var(--amber-pale); }
 body {
   margin: 0;
   min-height: 100vh;
@@ -103,7 +127,7 @@ button, input { font: inherit; }
 button, a, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .noise { display: none; }
 
-.soundscape { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 24; display: flex; align-items: center; gap: 5px; padding: 5px; color: var(--navy-soft); background: var(--paper); background: color-mix(in srgb, var(--paper) 92%, transparent); border: 1px solid var(--line); box-shadow: 0 12px 35px rgba(6,17,29,.12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.soundscape { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 24; display: flex; align-items: center; gap: 5px; padding: 5px; color: var(--navy-soft); background: var(--paper); background: color-mix(in srgb, var(--paper) 92%, transparent); border: 1px solid var(--line); box-shadow: 0 12px 35px var(--shadow-medium); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition:color .38s ease,background-color .38s ease,border-color .38s ease,box-shadow .38s ease; }
 .soundscape > span { padding: 0 7px; color: var(--muted); font-family: var(--serif); font-size: 8px; letter-spacing: .11em; }
 .soundscape button { min-height: 34px; padding: 7px 9px; color: var(--muted); background: transparent; border: 1px solid transparent; font-family: var(--cn-serif); font-size: 10px; cursor: pointer; }
 .soundscape button i { margin-right: 3px; color: var(--amber); font-family: var(--serif); font-size: 13px; font-style: normal; }
@@ -113,7 +137,7 @@ button, a, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-c
 .soundscape-volume summary { min-height: 34px; padding: 8px 9px; display: grid; place-items: center; color: var(--muted); border: 1px solid transparent; font-family: var(--cn-serif); font-size: 10px; cursor: pointer; list-style: none; touch-action: manipulation; }
 .soundscape-volume summary::-webkit-details-marker { display: none; }
 .soundscape-volume[open] summary { color: var(--navy); background: var(--surface-raised); border-color: var(--amber); }
-.volume-panel { width: 210px; padding: 14px 16px 16px; position: absolute; right: 0; bottom: calc(100% + 10px); display: grid; gap: 15px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); box-shadow: 0 15px 40px rgba(6,17,29,.18); }
+.volume-panel { width: 210px; padding: 14px 16px 16px; position: absolute; right: 0; bottom: calc(100% + 10px); display: grid; gap: 15px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); box-shadow: 0 15px 40px var(--shadow-medium); }
 .volume-panel label { display: grid; gap: 8px; }
 .volume-panel label > span { display: flex; justify-content: space-between; color: var(--text-secondary); font-family: var(--cn-serif); font-size: 10px; }
 .volume-panel output { color: var(--text-accent); font-family: var(--serif); }
@@ -166,7 +190,7 @@ button, a, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-c
   color: var(--navy);
   background: color-mix(in srgb, var(--paper) 94%, transparent);
   border-bottom: 1px solid var(--line);
-  box-shadow: 0 8px 24px rgba(16, 38, 61, .07);
+  box-shadow: 0 8px 24px var(--shadow-soft);
   -webkit-backdrop-filter: blur(16px) saturate(115%);
   backdrop-filter: blur(16px) saturate(115%);
 }
@@ -279,7 +303,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 
 .status-strip { width: min(calc(100% - 48px), 1240px); margin: 0 auto 120px; display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); }
 
-.collection-switcher { width: min(calc(100% - 48px), 1240px); margin: 0 auto 70px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); background: var(--surface); position: sticky; top: 0; z-index: 9; box-shadow: 0 12px 28px rgba(16, 38, 61, .08); }
+.collection-switcher { width: min(calc(100% - 48px), 1240px); margin: 0 auto 70px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); background: var(--surface); position: sticky; top: 0; z-index: 9; box-shadow: 0 12px 28px var(--shadow-soft); }
 .collection-switcher a { min-width: 0; padding: 18px 24px; display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 3px 18px; color: var(--ink); text-decoration: none; }
 .collection-switcher a + a { border-left: 1px solid var(--line); }
 .collection-switcher span { color: var(--amber); font-family: var(--serif); font-size: 9px; letter-spacing: .16em; }
@@ -292,14 +316,14 @@ body[data-room="legal"] .room-legal { display: block !important; }
 
 .identity-office { min-height: calc(100vh - 88px); padding: 110px clamp(24px, 7vw, 110px) 125px; background: var(--surface); }
 .identity-shell, .identity-history { width: min(100%, 1120px); margin-inline: auto; }
-.identity-shell { min-height: 590px; position: relative; color: var(--chronicle-ink); background: var(--chronicle-bg); box-shadow: 0 28px 70px rgba(6,17,29,.15); overflow: hidden; }
-.identity-shell::before { content: ""; position: absolute; inset: 14px; border: 1px solid rgba(207,185,143,.32); pointer-events: none; }
+.identity-shell { min-height: 590px; position: relative; color: var(--chronicle-ink); background: var(--chronicle-bg); box-shadow: 0 28px 70px var(--shadow-medium); overflow: hidden; }
+.identity-shell::before { content: ""; position: absolute; inset: 14px; border: 1px solid color-mix(in srgb,var(--amber-pale) 32%,transparent); pointer-events: none; }
 .identity-intro, .identity-quiz, .identity-result { min-height: 590px; position: relative; z-index: 1; }
 .identity-intro { padding: clamp(55px, 8vw, 105px); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
 .identity-intro .eyebrow, .identity-quiz .eyebrow { color: var(--amber-pale); }
 .identity-intro h3, .identity-quiz h3 { margin: 0; font-family: var(--cn-serif); font-size: clamp(34px, 5vw, 62px); font-weight: 500; line-height: 1.25; }
 .identity-intro > p:not(.eyebrow):not(.identity-seal) { max-width: 570px; margin: 24px 0 32px; color: var(--chronicle-muted); font-family: var(--cn-serif); font-size: 13px; line-height: 2; }
-.identity-intro .primary { color: #10263d; background: var(--amber-pale); border-color: var(--amber-pale); }
+.identity-intro .primary { color:var(--on-gold); background: var(--amber-pale); border-color: var(--amber-pale); }
 .identity-seal { position: absolute; right: clamp(40px, 8vw, 110px); margin: 0; opacity: .11; color: var(--amber-pale); font-family: var(--serif); font-size: clamp(150px, 26vw, 340px); line-height: 1; }
 .identity-quiz { padding: clamp(38px, 6vw, 78px); }
 .identity-progress { margin-bottom: 58px; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 22px; color: var(--amber-pale); font-family: var(--serif); font-size: 10px; letter-spacing: .13em; }
@@ -310,13 +334,13 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .identity-options button { min-height: 88px; padding: 18px 22px; display: grid; grid-template-columns: 32px 1fr; align-items: center; gap: 13px; color: var(--chronicle-ink); background: transparent; border: 0; border-right: 1px solid var(--chronicle-line); border-bottom: 1px solid var(--chronicle-line); text-align: left; cursor: pointer; }
 .identity-options button:nth-child(2n) { border-right: 0; }
 .identity-options button:nth-last-child(-n+2) { border-bottom: 0; }
-.identity-options button:hover, .identity-options button:focus-visible { color: #10263d; background: var(--amber-pale); outline: 0; }
+.identity-options button:hover, .identity-options button:focus-visible { color:var(--on-gold); background: var(--amber-pale); outline: 0; }
 .identity-options span { color: var(--amber-pale); font-family: var(--serif); font-size: 11px; }
-.identity-options button:hover span, .identity-options button:focus-visible span { color: #806034; }
+.identity-options button:hover span, .identity-options button:focus-visible span { color:var(--gold-ink); }
 .identity-options b { font-family: var(--cn-serif); font-size: 12px; font-weight: 400; line-height: 1.7; }
 .identity-back { margin-top: 22px; padding: 8px 0; color: var(--chronicle-muted); background: none; border: 0; border-bottom: 1px solid var(--chronicle-line); cursor: pointer; font-size: 10px; }
 .identity-certificate { min-height: 590px; padding: clamp(32px, 5vw, 62px); display: grid; grid-template-columns: minmax(230px, .72fr) 1fr; align-items: center; gap: clamp(32px, 6vw, 72px); }
-.certificate-art { aspect-ratio: 2 / 3; overflow: hidden; box-shadow: 18px 20px 0 rgba(207,185,143,.13); }
+.certificate-art { aspect-ratio: 2 / 3; overflow: hidden; box-shadow:18px 20px 0 color-mix(in srgb,var(--amber-pale) 13%,transparent); }
 .certificate-art img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .certificate-copy .eyebrow { margin-bottom: 13px; color: var(--amber-pale); }
 .certificate-copy > small { color: var(--chronicle-muted); font-family: var(--cn-serif); font-size: 10px; letter-spacing: .12em; }
@@ -331,7 +355,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .certificate-copy dd { margin: 4px 0 0; font-family: var(--cn-serif); font-size: 11px; }
 .certificate-verdict { padding-left: 14px; color: var(--amber-pale); border-left: 2px solid var(--amber-pale); font-family: var(--cn-serif); font-size: 11px; line-height: 1.8; }
 .certificate-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
-.certificate-actions .primary { color: #10263d; background: var(--amber-pale); border-color: var(--amber-pale); }
+.certificate-actions .primary { color:var(--on-gold); background: var(--amber-pale); border-color: var(--amber-pale); }
 .certificate-actions .secondary { color: var(--chronicle-ink); border-color: var(--chronicle-line); }
 .identity-history { margin-top: 30px; padding: 20px 0; border-block: 1px solid var(--line); color: var(--muted); }
 .identity-history summary { cursor: pointer; font-family: var(--cn-serif); font-size: 11px; letter-spacing: .08em; }
@@ -444,7 +468,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 
 .specimen-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 28px; row-gap: 56px; }
 .card { min-width: 0; padding: 0 0 22px; position: relative; display: flex; flex-direction: column; text-align: left; color: inherit; background: transparent; border: 0; border-radius: 0; -webkit-appearance: none; appearance: none; border-bottom: 1px solid var(--line); cursor: pointer; transition: transform .25s ease; }
-.card-favorite { min-width:22px; min-height:22px; position:absolute; top:24px; right:24px; z-index:5; display:grid; place-items:center; color:#9f3853; font-size:18px; line-height:1; filter:drop-shadow(0 1px 2px rgba(255,255,255,.8)); }
+.card-favorite { min-width:22px; min-height:22px; position:absolute; top:24px; right:24px; z-index:5; display:grid; place-items:center; color:var(--favorite); font-size:18px; line-height:1; filter:drop-shadow(0 1px 2px var(--favorite-glow)); }
 .card:hover { transform: translateY(-4px); }
 .card-top { order: 2; margin: 17px 0 10px; display: flex; justify-content: space-between; align-items: center; color: var(--amber); font-family: var(--serif); font-size: 10px; letter-spacing: .1em; }
 .rarity { color: var(--muted); }
@@ -473,8 +497,8 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .empty-state span { margin-top: 8px; font-size: 12px; }
 
 .tarot-archive { padding: 110px clamp(24px, 7vw, 110px) 125px; background: var(--paper); border-top: 1px solid var(--line); }
-.tarot-practice { width: min(100%, 1240px); margin: 0 auto 58px; padding: clamp(24px, 4vw, 48px); position: relative; overflow: hidden; color: var(--chronicle-ink); background: var(--chronicle-bg); box-shadow: 0 24px 60px rgba(6, 17, 29, .13); }
-.tarot-practice::before { content: ""; position: absolute; inset: 13px; pointer-events: none; border: 1px solid rgba(207,185,143,.3); }
+.tarot-practice { width: min(100%, 1240px); margin: 0 auto 58px; padding: clamp(24px, 4vw, 48px); position: relative; overflow: hidden; color: var(--chronicle-ink); background: var(--chronicle-bg); box-shadow: 0 24px 60px var(--shadow-medium); }
+.tarot-practice::before { content: ""; position: absolute; inset: 13px; pointer-events: none; border:1px solid color-mix(in srgb,var(--amber-pale) 30%,transparent); }
 .tarot-practice::after { content: "✦"; position: absolute; top: 18px; right: 23px; color: var(--amber-pale); font-family: var(--serif); font-size: 22px; }
 .practice-intro, .practice-controls, .reading-table, .reading-notes { position: relative; z-index: 1; }
 .practice-intro { display: grid; grid-template-columns: 1fr minmax(260px, .7fr); align-items: end; gap: 25px; }
@@ -495,13 +519,13 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .spread-choice b, .spread-choice small { display: block; }
 .spread-choice b { color: inherit; font-family: var(--cn-serif); font-size: 13px; font-weight: 500; }
 .spread-choice small { margin-top: 5px; font-size: 9px; letter-spacing: .08em; }
-.spread-choice.active { color: #10263d; background: var(--amber-pale); }
+.spread-choice.active { color:var(--on-gold); background: var(--amber-pale); }
 .draw-settings { margin: 0 0 22px; display: flex; align-items: center; flex-wrap: wrap; gap: 14px 28px; }
 .tarot-switch { display: grid; grid-template-columns: 38px auto; grid-template-rows: auto auto; column-gap: 11px; align-items: center; cursor: pointer; }
 .tarot-switch input { position: absolute; opacity: 0; pointer-events: none; }
 .tarot-switch > span { width: 38px; height: 21px; grid-row: 1 / 3; position: relative; border: 1px solid var(--chronicle-line); border-radius: 99px; transition: .2s ease; }
 .tarot-switch > span::after { content: ""; width: 13px; height: 13px; position: absolute; top: 3px; left: 4px; border-radius: 50%; background: var(--chronicle-muted); transition: .2s ease; }
-.tarot-switch input:checked + span { border-color: var(--amber-pale); background: rgba(207,185,143,.18); }
+.tarot-switch input:checked + span { border-color:var(--amber-pale); background:color-mix(in srgb,var(--amber-pale) 18%,transparent); }
 .tarot-switch input:checked + span::after { left: 20px; background: var(--amber-pale); }
 .tarot-switch input:focus-visible + span { outline: 2px solid var(--amber-pale); outline-offset: 3px; }
 .tarot-switch b, .tarot-switch small { display: block; font-weight: 400; }
@@ -511,7 +535,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .custom-count[hidden] { display: none; }
 .custom-count input { width: 54px; padding: 7px; color: var(--chronicle-ink); background: transparent; border: 1px solid var(--chronicle-line); text-align: center; }
 .practice-actions { display: flex; align-items: center; gap: 24px; }
-.practice-draw { color: #10263d; background: var(--amber-pale); border-color: var(--amber-pale); }
+.practice-draw { color:var(--on-gold); background: var(--amber-pale); border-color: var(--amber-pale); }
 .practice-reset { color: var(--chronicle-ink); border-color: var(--amber-pale); }
 .practice-reset:disabled { opacity: .4; cursor: default; }
 .practice-status { margin: 18px 0 0; color: var(--chronicle-muted); font-family: var(--cn-serif); font-size: 11px; }
@@ -523,7 +547,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .draw-card.is-loading { cursor: wait; }
 .draw-card-inner { width: 100%; height: 100%; position: relative; display: block; transform-style: preserve-3d; transition: transform .75s cubic-bezier(.2,.72,.22,1); }
 .draw-card.revealed .draw-card-inner { transform: rotateY(180deg); }
-.draw-face { position: absolute; inset: 0; display: block; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 16px 34px rgba(0,0,0,.3); }
+.draw-face { position: absolute; inset: 0; display: block; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow:0 16px 34px var(--shadow-strong); }
 .draw-back { background: #123d48; }
 .draw-back img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .draw-front { transform: rotateY(180deg); background: #d6c5a6; }
@@ -567,11 +591,11 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .tarot-card.is-collected:hover { transform: translateY(-5px); }
 .tarot-card.is-pending { cursor: default; opacity: .52; }
 .tarot-card.is-loading { cursor: wait; }
-.tarot-card.is-loading .tarot-art::after, .draw-card.is-loading::after { content: 'LOADING'; position: absolute; inset: auto 10px 10px; z-index: 3; padding: 6px 7px; color: var(--paper); background: rgba(16,38,61,.82); font-family: var(--serif); font-size: 8px; letter-spacing: .12em; text-align: center; }
+.tarot-card.is-loading .tarot-art::after, .draw-card.is-loading::after { content: 'LOADING'; position: absolute; inset: auto 10px 10px; z-index: 3; padding: 6px 7px; color:var(--loading-ink); background:var(--loading-bg); font-family: var(--serif); font-size: 8px; letter-spacing: .12em; text-align: center; }
 .tarot-art { aspect-ratio: 2 / 3; display: block; position: relative; perspective: 1000px; isolation: isolate; background: #d6c5a6; }
 .tarot-card-inner { position: absolute; inset: 0; display: block; transform-style: preserve-3d; transition: transform .75s cubic-bezier(.2,.72,.22,1); }
 .tarot-card.is-revealed .tarot-card-inner { transform: rotateY(180deg); }
-.tarot-face { position: absolute; inset: 0; display: block; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 12px 28px rgba(6,17,29,.16); }
+.tarot-face { position: absolute; inset: 0; display: block; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow:0 12px 28px var(--shadow-medium); }
 .tarot-front { transform: rotateY(180deg); }
 .tarot-art img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .tarot-placeholder { position: absolute; inset: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--art-ink); border: 1px solid var(--art-line); font-family: var(--serif); text-align: center; }
@@ -585,13 +609,13 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .tarot-meta em { margin-top: 3px; color: var(--muted); font-family: var(--serif); font-size: 10px; font-style: normal; letter-spacing: .05em; }
 .tarot-dialog { width: min(980px, calc(100% - 28px)); }
 .tarot-detail { display: grid; grid-template-columns: minmax(280px, .8fr) 1fr; align-items: center; gap: 42px; padding: 42px; }
-.tarot-detail-art { width: 100%; margin: 0; position: relative; overflow: hidden; aspect-ratio: 2 / 3; background: #d6c5a6; box-shadow: 0 18px 50px rgba(6, 17, 29, .18); }
+.tarot-detail-art { width: 100%; margin: 0; position: relative; overflow: hidden; aspect-ratio: 2 / 3; background: #d6c5a6; box-shadow:0 18px 50px var(--shadow-medium); }
 .tarot-detail-art img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .tarot-detail h2 { margin: 8px 0; color: var(--navy); font-family: var(--cn-serif); font-size: 38px; font-weight: 500; }
 .tarot-detail p:last-child { color: var(--text-secondary); font-family: var(--cn-serif); line-height: 1.9; }
 .tarot-english { color: var(--text-accent); font-family: var(--serif); letter-spacing: .12em; }
 .favorite-toggle { min-height:44px; margin-top:22px; padding:10px 14px; color:var(--navy); background:transparent; border:1px solid var(--amber); font-family:var(--cn-serif); font-size:12px; cursor:pointer; }
-.favorite-toggle[aria-pressed="true"] { color:#9f3853; background:var(--surface-raised); border-color:#9f3853; }
+.favorite-toggle[aria-pressed="true"] { color:var(--favorite); background:var(--surface-raised); border-color:var(--favorite); }
 
 .chronicle { padding: 110px clamp(24px, 7vw, 110px) 125px; color: var(--chronicle-ink); background: var(--chronicle-bg); }
 .chronicle .eyebrow { color: var(--amber-pale); }
@@ -604,12 +628,12 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .timeline p { margin: 8px 0 0; color: var(--chronicle-muted); font-family: var(--cn-serif); font-size: 12px; line-height: 1.8; }
 footer { min-height: 92px; padding: 28px clamp(24px, 7vw, 110px); display: flex; align-items: center; justify-content: space-between; color: var(--muted); background: var(--paper); border-top: 1px solid var(--line); font-family: var(--serif); font-size: 10px; letter-spacing: .12em; }
 
-dialog { width: min(720px, calc(100% - 28px)); max-height: 88vh; padding: 0; color: var(--ink); background: var(--paper); border: 0; box-shadow: 0 30px 100px rgba(16, 38, 61, .28); }
-dialog::backdrop { background: rgba(6, 17, 29, .76); }
+dialog { width: min(720px, calc(100% - 28px)); max-height: 88vh; padding: 0; color: var(--ink); background: var(--paper); border:1px solid var(--line); box-shadow:0 30px 100px var(--shadow-strong); }
+dialog::backdrop { background:var(--backdrop); }
 .close { position: absolute; top: 14px; right: 18px; z-index: 2; padding: 4px; color: var(--navy); background: none; border: 0; font-family: var(--serif); font-size: 28px; cursor: pointer; }
 .specimen-dialog { width: min(980px, calc(100% - 28px)); }
 .detail-layout { display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); align-items: start; background: var(--surface-raised); }
-.detail-art { width: calc(100% - 42px); margin: 42px 0 42px 42px; aspect-ratio: 2 / 3; overflow: hidden; background: #d6c5a6; box-shadow: 0 18px 46px rgba(6,17,29,.2); }
+.detail-art { width: calc(100% - 42px); margin: 42px 0 42px 42px; aspect-ratio: 2 / 3; overflow: hidden; background: #d6c5a6; box-shadow:0 18px 46px var(--shadow-medium); }
 .detail-art img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .detail-copy { min-width: 0; border-left: 1px solid var(--line); background: var(--paper); }
 .detail-hero { padding: 52px 42px 30px; background: var(--surface-raised); border-bottom: 1px solid var(--line); }
@@ -619,7 +643,7 @@ dialog::backdrop { background: rgba(6, 17, 29, .76); }
 .detail-actions { margin-top: 25px; }
 .detail-actions .favorite-toggle { min-height: 38px; margin: 0; padding: 8px 13px; color: var(--navy-soft); background: var(--paper); border-color: var(--line); font-size: 11px; letter-spacing: .03em; }
 .detail-actions .favorite-toggle:hover { border-color: var(--amber); }
-.detail-actions .favorite-toggle[aria-pressed="true"] { color: #9f3853; background: rgba(159,56,83,.06); border-color: rgba(159,56,83,.45); }
+.detail-actions .favorite-toggle[aria-pressed="true"] { color:var(--favorite); background:var(--favorite-soft); border-color:color-mix(in srgb,var(--favorite) 48%,transparent); }
 .detail-body { padding: 32px 42px 48px; }
 .detail-body > p { color: var(--text-secondary); font-family: var(--cn-serif); font-size: 13px; line-height: 2; }
 .facts { margin: 28px 0; display: grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--line); }
@@ -740,6 +764,4 @@ dialog::backdrop { background: rgba(6, 17, 29, .76); }
   .tarot-card, .tarot-card-inner { transition: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
-
-:root[data-theme="night"] dialog { box-shadow: 0 30px 100px rgba(0, 0, 0, .5); }
 
