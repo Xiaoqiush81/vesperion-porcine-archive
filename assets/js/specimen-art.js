@@ -7,11 +7,15 @@ export function escapeHtml(value) {
   })[character]);
 }
 
-export function specimenArt(specimen) {
-  const artwork = typeof specimen.artwork === 'string'
+export function specimenArtwork(specimen) {
+  return typeof specimen.artwork === 'string'
     && /^assets\/[\w./-]+\.(?:webp|png|jpe?g)$/i.test(specimen.artwork)
     ? specimen.artwork
     : `assets/cards/${escapeHtml(specimen.id.toLowerCase())}.webp`;
+}
+
+export function specimenArt(specimen) {
+  const artwork = specimenArtwork(specimen);
   return `<span class="card-art has-image" aria-hidden="true">
     <img class="art-image" src="${artwork}" alt="" width="640" height="960" loading="lazy" decoding="async">
     <span class="art-index">№ ${escapeHtml(specimen.number)}</span>

@@ -1202,5 +1202,77 @@
       "归属确认：以一句“爸爸家的猪”完成身份认证"
     ],
     "artwork": "assets/cards/vpa-081-denial-v3.webp"
+  },
+  {
+    "id": "VPA-081-INDUCTION",
+    "number": "081-LOG",
+    "name": "猪窝归纳推演猪",
+    "latin": "Porcellus inductivus scholasticus",
+    "category": "知识形态",
+    "rarity": "史诗",
+    "color": "#b48b55",
+    "firstObserved": "2026-10-20",
+    "habitat": "作业兔子洞 · 黑板推演区",
+    "status": "已证明整座学校都是猪窝",
+    "description": "面对“朱朱喜欢猪”一类材料时，不肯止步于题面，而会现场完成“朱朱喜欢猪 → 全班喜欢猪 → 学校其实是猪窝”的宏大推导。论证未必得到阅卷人批准，但内部逻辑坚定、自信且极具猪类解释力。",
+    "tags": [
+      "猪窝证明",
+      "现场推导",
+      "归纳暴走"
+    ],
+    "abilities": [
+      "猪类归纳：从一只猪迅速推广至整个样本空间",
+      "黑板建模：用箭头把普通材料改写成猪窝结构",
+      "结论先行：以极强气势迫使观察员重新检查题意"
+    ],
+    "artwork": "assets/cards/vpa-081-induction.webp"
+  },
+  {
+    "id": "VPA-081-TAIL",
+    "number": "081-END",
+    "name": "愧疚收尾猪",
+    "latin": "Porcellus caudam concludens",
+    "category": "知识形态",
+    "rarity": "稀有",
+    "color": "#c3a36a",
+    "firstObserved": "2026-10-22",
+    "habitat": "垃圾话兔子洞 · 当日账本末页",
+    "status": "正在收最后一截小尾巴",
+    "description": "一天明明已经做过许多事，仍会因为“好像什么都没学好”而缩成一只愧疚猪。只需完成一项足够小、边界清楚的任务，便能把它卷成发光的小尾巴，为今天正式结账。",
+    "tags": [
+      "愧疚猪",
+      "学习结账",
+      "小尾巴"
+    ],
+    "abilities": [
+      "成果失明：暂时看不见已经完成的学习量",
+      "小尾巴收束：用一件微小任务封住无限追加的账本",
+      "当日结账：允许不完美的一天获得完整句号"
+    ],
+    "artwork": "assets/cards/vpa-081-tail.webp"
+  },
+  {
+    "id": "VPA-081-SNIFFLE",
+    "number": "081-SNF",
+    "name": "流鼻涕小呆呆猪",
+    "latin": "Porcellus rhinorrhoea stultulus",
+    "category": "日常形态",
+    "rarity": "限定",
+    "color": "#9fb4bc",
+    "firstObserved": "2026-10-23",
+    "habitat": "宅邸病号窝 · 纸巾盒附近",
+    "status": "鼻涕持续刷新中",
+    "description": "生病后出现的小呆呆形态：脑袋软乎乎地放空，鼻涕却像失控的后台任务一样刷新个不停。需要被安置在温暖被窝里，配给大量纸巾、水分、休息与不计次数的照料。",
+    "tags": [
+      "小呆呆",
+      "流鼻涕",
+      "病号猪"
+    ],
+    "abilities": [
+      "鼻涕刷新：刚擦干净便立即生成下一轮",
+      "呆呆降频：生病时主动减少复杂思考与大型任务",
+      "病号窝权限：无条件获得纸巾、被窝与持续照料"
+    ],
+    "artwork": "assets/cards/vpa-081-sniffle.webp"
   }
 ]
