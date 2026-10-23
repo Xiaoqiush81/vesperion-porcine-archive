@@ -105,6 +105,12 @@ async function enterRoom(room, push = true) {
   if (target === 'records') await initRecords();
   if (request !== roomRequest) return;
   document.body.dataset.room = target;
+  const soundscape = document.querySelector('#soundscape');
+  const soundscapeHost = document.querySelector(target === 'home' ? '#siteHeader' : '#roomToolbarInner');
+  if (soundscape && soundscapeHost && soundscape.parentElement !== soundscapeHost) {
+    soundscape.querySelector('.soundscape-menu')?.removeAttribute('open');
+    soundscapeHost.append(soundscape);
+  }
   document.querySelector('#roomToolbarTitle').textContent = roomNames[target] || '';
   document.querySelectorAll('[data-room-target]').forEach(item => item.classList.toggle('is-current', item.dataset.roomTarget === target));
   if (push && location.hash !== `#${target}`) history.pushState({ room: target }, '', `#${target}`);
