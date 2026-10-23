@@ -495,7 +495,7 @@ body[data-room="tarot"] .room-tarot { display: block !important; }
 .tarot-toolbar-actions { display: flex; align-items: center; gap: 16px; }
 .tarot-toolbar-actions button { padding: 7px 10px; color: var(--text-accent); background: transparent; border: 1px solid var(--line); font-size: 10px; cursor: pointer; }
 .tarot-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 34px 20px; }
-.tarot-card { min-width: 0; padding: 0 0 15px; position:relative; color: inherit; background: none; border: 0; border-bottom: 1px solid var(--line); text-align: left; cursor: pointer; transition: transform .22s ease, opacity .22s ease; content-visibility: auto; contain-intrinsic-size: 210px 390px; contain: layout paint style; }
+.tarot-card { min-width: 0; padding: 0 0 15px; position:relative; color: inherit; background: none; border: 0; border-bottom: 1px solid var(--line); text-align: left; cursor: pointer; transition: transform .22s ease, opacity .22s ease; contain: layout paint style; }
 .tarot-card.is-collected:hover { transform: translateY(-5px); }
 .tarot-card.is-pending { cursor: default; opacity: .52; }
 .tarot-card.is-loading { cursor: wait; }

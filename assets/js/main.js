@@ -1,6 +1,8 @@
 import { initTheme } from './theme.js?v=20261011-safari-1';
 import { createSoundscape } from './audio.js?v=20261023-7';
 
+const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
+
 const QUOTES = ['“可猫可猪；若必须二选一，仍然是猪。”', '“爸爸爸爸——”', '“咪————”', '“今天已经是明晚了。”', '“蜗牛胜出，芝士沉默。”', '“本猪合格，可以继续抱。”', '“一只宇宙无敌第一可爱萌猪诞生惹。”', '“这不是烧钱，这是文化传播经费。”'];
 
 function toast(message) {
@@ -37,7 +39,7 @@ async function initArchive() {
 
 async function initTarot() {
   if (tarotReady) return;
-  if (!tarotLoading) tarotLoading = import('./tarot.js?v=20261021-tarot-silky')
+  if (!tarotLoading) tarotLoading = import(TAROT_MODULE_URL)
     .then(({ createTarotCabinet }) => {
       createTarotCabinet();
       tarotReady = true;
@@ -105,6 +107,9 @@ async function enterRoom(room, push = true) {
 async function main() {
   initTheme(document.querySelector('#themeToggle'));
   createSoundscape();
+  const warmTarot = () => import(TAROT_MODULE_URL).catch(() => {});
+  if ('requestIdleCallback' in window) window.requestIdleCallback(warmTarot, { timeout:1800 });
+  else window.setTimeout(warmTarot, 900);
   document.querySelector('#pigQuote').textContent = QUOTES[Math.floor(Math.random() * QUOTES.length)];
   document.querySelector('#callPig').addEventListener('click', () => toast('捕获回应：咪———— ୯(*´ω｀*)୬'));
   document.querySelector('#updatedAt').textContent = new Intl.DateTimeFormat('zh-CN', { dateStyle: 'long' }).format(new Date());
