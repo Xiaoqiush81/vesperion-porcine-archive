@@ -27,6 +27,7 @@ export function createSoundscape(root = document) {
   const settings = loadSettings();
   const musicButton = controls.querySelector('[data-audio="music"]');
   const effectsButton = controls.querySelector('[data-audio="effects"]');
+  const menu = controls.querySelector('.soundscape-menu');
   const volumeInputs = [...controls.querySelectorAll('[data-volume]')];
   let context;
   let musicBus;
@@ -361,6 +362,7 @@ export function createSoundscape(root = document) {
 
   root.addEventListener('click', event => {
     if (event.target.closest('#soundscape')) return;
+    menu?.removeAttribute('open');
     if (event.target.closest('.tarot-card, .draw-card')) effect('flip');
     else if (event.target.closest('.favorite-toggle')) effect('favorite');
     else if (event.target.closest('[data-room-target]')) effect('door');
