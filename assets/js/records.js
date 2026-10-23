@@ -4,6 +4,7 @@ import { loadReadingHistory } from './tarot-storage.js?v=20261019-modular-1';
 import { loadIdentityHistory } from './identity-storage.js?v=20261020-bank-1';
 import { SYMBOLIC_LINKS } from './record-links.js?v=20261023-new-forms-1';
 import { loadFavorites } from './favorites.js?v=20261021-1';
+import { initArchiveTransfer } from './archive-transfer.js?v=20261024-1';
 
 const specimenArt = item => item.artwork || `assets/cards/${item.id.toLowerCase()}.webp`;
 const tarotArt = card => `assets/tarot/thumbs/${String(card.artwork).split('?')[0]}?v=fast-20261021`;
@@ -27,6 +28,7 @@ function recurringCards(readings) {
 }
 
 export function createRecordRoom(specimens) {
+  initArchiveTransfer();
   const identities = loadIdentityHistory(), readings = loadReadingHistory();
   const activities = activityItems(identities, readings), recurring = recurringCards(readings);
   const distinctCards = new Set(readings.flatMap(reading => reading.cards || []).map(card => card.title || card.name)).size;
