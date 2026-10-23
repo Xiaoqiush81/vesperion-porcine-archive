@@ -77,7 +77,7 @@ async function initIdentity() {
 async function initRecords() {
   if (recordsReady) return;
   if (!recordsLoading) recordsLoading = Promise.all([
-    import('./records.js?v=20261023-new-links-1'),
+    import('./records.js?v=20261024-archive-transfer-1'),
     import(ARCHIVE_MODULE_URL).then(module => module.loadSpecimens())
   ]).then(([{ createRecordRoom }, specimens]) => {
     createRecordRoom(specimens);
