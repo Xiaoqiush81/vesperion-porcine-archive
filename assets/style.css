@@ -147,7 +147,7 @@ button, input { font: inherit; }
 button, a, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .noise { display: none; }
 
-.soundscape { height:88px; position:fixed; top:0; right:max(clamp(24px,5vw,78px),env(safe-area-inset-right)); z-index:25; display:flex; align-items:center; color:var(--navy-soft); }
+.soundscape { position:static; z-index:25; display:flex; align-items:center; flex:0 0 auto; color:var(--navy-soft); }
 .soundscape-menu { position:relative; }
 .soundscape-menu>summary { padding:9px 0; color:var(--navy-soft); border-bottom:1px solid var(--amber); font-size:11px; letter-spacing:.13em; cursor:pointer; list-style:none; touch-action:manipulation; }
 .soundscape-menu>summary::-webkit-details-marker { display:none; }
@@ -192,7 +192,7 @@ body:not([data-room="home"]) .volume-panel { top:calc(58px + env(safe-area-inset
 .brand b, .brand small { display: block; }
 .brand b { font-family: var(--serif); font-size: 17px; font-weight: 600; letter-spacing: .17em; }
 .brand small { margin-top: 2px; color: var(--muted); font-size: 8px; letter-spacing: .19em; }
-.site-header nav { padding-right:100px; display:flex; align-items:center; gap:30px; }
+.site-header nav { display:flex; align-items:center; gap:30px; }
 .site-header nav a, .nav-button, .header-room {
   border: 0;
   background: none;
@@ -229,7 +229,7 @@ body:not([data-room="home"]) .volume-panel { top:calc(58px + env(safe-area-inset
   margin: 0 auto;
   padding: env(safe-area-inset-top) max(clamp(24px, 5vw, 78px), env(safe-area-inset-right)) 0 max(clamp(24px, 5vw, 78px), env(safe-area-inset-left));
   display: grid;
-  grid-template-columns: minmax(140px, 1fr) auto minmax(140px, 1fr);
+  grid-template-columns:minmax(140px,1fr) auto minmax(100px,1fr) auto;
   align-items: center;
 }
 .room-toolbar-back {
@@ -255,9 +255,7 @@ body:not([data-room="home"]) .volume-panel { top:calc(58px + env(safe-area-inset
 body:not([data-room="home"]) .room-toolbar { display: block; }
 body:not([data-room="home"]) .site-header { display: none; }
 body:not([data-room="home"]) main { padding-top: calc(58px + env(safe-area-inset-top)); }
-body:not([data-room="home"]) .room-toolbar-inner { padding-right:max(150px,env(safe-area-inset-right)); }
-body:not([data-room="home"]) .soundscape { height:58px; }
-body:not([data-room="home"]) .soundscape > span { display:none; }
+body:not([data-room="home"]) .room-toolbar-inner { padding-right:max(clamp(24px,5vw,78px),env(safe-area-inset-right)); }
 
 .room-view { display: none !important; }
 body[data-room="home"] .room-home { display: grid !important; }
@@ -736,29 +734,21 @@ dialog::backdrop { background:var(--backdrop); }
   .filters { justify-content: flex-start; }
 }
 @media (max-width: 1100px) {
-  .site-header nav { padding-right:92px; gap:20px; }
-  body:not([data-room="home"]) .room-toolbar-inner { padding-right:max(130px,env(safe-area-inset-right)); }
+  .site-header nav { gap:20px; }
 }
 @media (max-width: 640px) {
-  .soundscape {
-    width:auto;
-    height:72px;
-    top:0;
-    right:max(18px,env(safe-area-inset-right));
-  }
   .soundscape-menu>summary { padding:8px 0; font-size:10px; letter-spacing:.08em; }
   .soundscape button { min-height:40px; padding-inline:9px; }
   .volume-panel { width:min(310px,calc(100vw - 28px)); top:72px; right:max(14px,env(safe-area-inset-right)); bottom:auto; }
   body:not([data-room="home"]) .volume-panel { top:calc(54px + env(safe-area-inset-top)); }
   .site-header { min-height: 72px; }
-  .site-header nav { padding-right:72px; gap:0; }
+  .site-header nav { gap:0; }
   .room-toolbar { min-height: calc(54px + env(safe-area-inset-top)); }
   .room-toolbar-inner { min-height: calc(54px + env(safe-area-inset-top)); }
-  .room-toolbar-inner { padding-left:max(18px,env(safe-area-inset-left)); padding-right:max(92px,env(safe-area-inset-right)); grid-template-columns:1fr auto; }
+  .room-toolbar-inner { padding-left:max(18px,env(safe-area-inset-left)); padding-right:max(18px,env(safe-area-inset-right)); grid-template-columns:1fr auto auto; }
   .room-toolbar-back { min-height: 46px; padding-right: 16px; font-size: 14px; }
   .room-toolbar-current { justify-self: end; font-size: 12px; letter-spacing: .08em; }
   .room-toolbar small { display: none; }
-  body:not([data-room="home"]) .soundscape { height:calc(54px + env(safe-area-inset-top)); }
   body:not([data-room="home"]) main { padding-top:calc(54px + env(safe-area-inset-top)); }
   .brand-mark { width: 34px; height: 40px; }
   .brand small, .site-header .header-room { display: none; }
