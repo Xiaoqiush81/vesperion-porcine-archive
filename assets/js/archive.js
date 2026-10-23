@@ -78,11 +78,16 @@ export function createArchive(specimens) {
     button.textContent = active ? '♥ 已收藏此形态' : '♡ 收藏此形态';
     render();
   });
-  get('#randomPig').addEventListener('click', () => open(specimens[Math.floor(Math.random() * specimens.length)].id));
   get('.close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
 
   get('#countAll').textContent = specimens.length;
   get('#countMythic').textContent = specimens.filter(item => item.rarity === '神话').length;
   render();
+
+  return Object.freeze({
+    openRandom() {
+      open(specimens[Math.floor(Math.random() * specimens.length)].id);
+    }
+  });
 }

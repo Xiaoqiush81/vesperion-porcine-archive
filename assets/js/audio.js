@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'pigdex-audio-v1';
-const DEFAULTS = Object.freeze({ music:false, effects:false });
+const DEFAULTS = Object.freeze({ music:false, effects:false, musicVolume:.65, effectsVolume:.5 });
 const MUSIC_LEVEL = .92;
 const BAR_LENGTH = 5600;
 const CHORDS = [
@@ -27,6 +27,7 @@ export function createSoundscape(root = document) {
   const settings = loadSettings();
   const musicButton = controls.querySelector('[data-audio="music"]');
   const effectsButton = controls.querySelector('[data-audio="effects"]');
+  const volumeInputs = [...controls.querySelectorAll('[data-volume]')];
   let context;
   let musicBus;
   let effectsBus;
@@ -38,7 +39,7 @@ export function createSoundscape(root = document) {
   const sampleBuffers = new Map();
   const musicVoices = new Set();
   const SAMPLE_URLS = Object.freeze({
-    cardFlip: new URL('../audio/tarot-page-turn.mp3', import.meta.url),
+    cardFlip: new URL('../audio/tarot-card-lift.mp3', import.meta.url),
     themeSwitch: new URL('../audio/theme-switch.mp3', import.meta.url)
   });
 
@@ -81,8 +82,8 @@ export function createSoundscape(root = document) {
       const compressor = context.createDynamicsCompressor();
       const reverb = context.createConvolver();
       const reverbLevel = context.createGain();
-      musicBus.gain.value = MUSIC_LEVEL;
-      effectsBus.gain.value = 1;
+      musicBus.gain.value = MUSIC_LEVEL * settings.musicVolume;
+      effectsBus.gain.value = settings.effectsVolume;
       master.gain.value = .78;
       compressor.threshold.value = -18;
       compressor.knee.value = 16;
@@ -187,7 +188,7 @@ export function createSoundscape(root = document) {
     musicBus.gain.cancelScheduledValues(now);
     musicBus.gain.setValueAtTime(musicBus.gain.value, now);
     musicBus.gain.linearRampToValueAtTime(depth, now + .018);
-    musicBus.gain.linearRampToValueAtTime(MUSIC_LEVEL, now + recovery);
+    musicBus.gain.linearRampToValueAtTime(MUSIC_LEVEL * settings.musicVolume, now + recovery);
   }
 
   async function getSample(name) {
@@ -224,7 +225,7 @@ export function createSoundscape(root = document) {
 
   function pageTurn() {
     duckMusic(.16, .92);
-    playSample('cardFlip', .94);
+    playSample('cardFlip', .78);
   }
 
   async function effect(name) {
@@ -279,7 +280,7 @@ export function createSoundscape(root = document) {
       const now = context.currentTime;
       musicBus.gain.cancelScheduledValues(now);
       musicBus.gain.setValueAtTime(Math.max(.0001, musicBus.gain.value), now);
-      musicBus.gain.linearRampToValueAtTime(MUSIC_LEVEL, now + .12);
+      musicBus.gain.linearRampToValueAtTime(MUSIC_LEVEL * settings.musicVolume, now + .12);
       scheduleBar();
       musicTimer = window.setInterval(scheduleBar, BAR_LENGTH);
     })();
@@ -320,7 +321,28 @@ export function createSoundscape(root = document) {
       button.setAttribute('aria-pressed', String(active));
       button.classList.toggle('is-active', active);
     });
+    volumeInputs.forEach(input => {
+      const key = `${input.dataset.volume}Volume`;
+      const percent = Math.round(settings[key] * 100);
+      input.value = String(percent);
+      input.setAttribute('aria-valuetext', `${percent}%`);
+      controls.querySelector(`[data-volume-output="${input.dataset.volume}"]`).textContent = `${percent}%`;
+    });
   }
+
+  controls.addEventListener('input', event => {
+    const input = event.target.closest('[data-volume]');
+    if (!input) return;
+    const key = `${input.dataset.volume}Volume`;
+    settings[key] = Number(input.value) / 100;
+    saveSettings(settings);
+    updateControls();
+    if (!context) return;
+    const bus = input.dataset.volume === 'music' ? musicBus : effectsBus;
+    const level = input.dataset.volume === 'music' ? MUSIC_LEVEL * settings.musicVolume : settings.effectsVolume;
+    bus.gain.cancelScheduledValues(context.currentTime);
+    bus.gain.setTargetAtTime(level, context.currentTime, .025);
+  });
 
   controls.addEventListener('click', event => {
     const button = event.target.closest('[data-audio]');

@@ -1,7 +1,8 @@
 import { initTheme } from './theme.js?v=20261011-safari-1';
-import { createSoundscape } from './audio.js?v=20261023-8';
+import { createSoundscape } from './audio.js?v=20261023-card-1';
 
 const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
+const ARCHIVE_MODULE_URL = './archive.js?v=20261023-random-modal-1';
 
 const QUOTES = ['“可猫可猪；若必须二选一，仍然是猪。”', '“爸爸爸爸——”', '“咪————”', '“今天已经是明晚了。”', '“蜗牛胜出，芝士沉默。”', '“本猪合格，可以继续抱。”', '“一只宇宙无敌第一可爱萌猪诞生惹。”', '“这不是烧钱，这是文化传播经费。”'];
 
@@ -21,13 +22,16 @@ let archiveLoading = null;
 let tarotLoading = null;
 let identityLoading = null;
 let recordsLoading = null;
+let archiveController = null;
+let roomRequest = 0;
 
 async function initArchive() {
-  if (archiveReady) return;
-  if (!archiveLoading) archiveLoading = import('./archive.js?v=20261021-favorites')
+  if (archiveReady) return archiveController;
+  if (!archiveLoading) archiveLoading = import(ARCHIVE_MODULE_URL)
     .then(async ({ createArchive, loadSpecimens }) => {
-      createArchive(await loadSpecimens());
+      archiveController = createArchive(await loadSpecimens());
       archiveReady = true;
+      return archiveController;
     })
     .catch(error => {
       console.error(error);
@@ -91,27 +95,47 @@ function roomFromHash() {
 }
 
 async function enterRoom(room, push = true) {
+  const request = ++roomRequest;
   const target = ['tarot', 'specimens', 'identify', 'records'].includes(room) ? room : 'home';
   const roomNames = { specimens: '猪猪图鉴', identify: '猪种鉴定所', tarot: '宅邸塔罗馆', records: '宅邸档案室' };
-  document.body.dataset.room = target;
-  document.querySelector('#roomToolbarTitle').textContent = roomNames[target] || '';
-  document.querySelectorAll('[data-room-target]').forEach(item => item.classList.toggle('is-current', item.dataset.roomTarget === target));
-  if (push && location.hash !== `#${target}`) history.pushState({ room: target }, '', `#${target}`);
   if (target === 'specimens') await initArchive();
   if (target === 'tarot') await initTarot();
   if (target === 'identify') await initIdentity();
   if (target === 'records') await initRecords();
+  if (request !== roomRequest) return;
+  document.body.dataset.room = target;
+  document.querySelector('#roomToolbarTitle').textContent = roomNames[target] || '';
+  document.querySelectorAll('[data-room-target]').forEach(item => item.classList.toggle('is-current', item.dataset.roomTarget === target));
+  if (push && location.hash !== `#${target}`) history.pushState({ room: target }, '', `#${target}`);
   window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 
 async function main() {
   initTheme(document.querySelector('#themeToggle'));
   createSoundscape();
-  const warmTarot = () => import(TAROT_MODULE_URL).catch(() => {});
-  if ('requestIdleCallback' in window) window.requestIdleCallback(warmTarot, { timeout:1800 });
-  else window.setTimeout(warmTarot, 900);
+  const warmRooms = () => {
+    import(TAROT_MODULE_URL).catch(() => {});
+    initArchive().catch(() => {});
+  };
+  if ('requestIdleCallback' in window) window.requestIdleCallback(warmRooms, { timeout:1200 });
+  else window.setTimeout(warmRooms, 650);
   document.querySelector('#pigQuote').textContent = QUOTES[Math.floor(Math.random() * QUOTES.length)];
   document.querySelector('#callPig').addEventListener('click', () => toast('捕获回应：咪———— ୯(*´ω｀*)୬'));
+  document.querySelector('#randomPig').addEventListener('click', async event => {
+    const button = event.currentTarget;
+    const label = button.textContent;
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+    button.textContent = '捕捉中…';
+    try {
+      const archive = await initArchive();
+      archive?.openRandom();
+    } finally {
+      button.disabled = false;
+      button.removeAttribute('aria-busy');
+      button.textContent = label;
+    }
+  });
   document.querySelector('#updatedAt').textContent = new Intl.DateTimeFormat('zh-CN', { dateStyle: 'long' }).format(new Date());
 
   document.addEventListener('click', event => {

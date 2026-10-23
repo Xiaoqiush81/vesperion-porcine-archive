@@ -18,6 +18,13 @@
     <span>宅邸声景</span>
     <button type="button" data-audio="music" aria-pressed="false"><i aria-hidden="true">♪</i> 音乐</button>
     <button type="button" data-audio="effects" aria-pressed="false"><i aria-hidden="true">✦</i> 音效</button>
+    <details class="soundscape-volume">
+      <summary aria-label="调整宅邸声景音量">音量</summary>
+      <div class="volume-panel">
+        <label><span>音乐 <output data-volume-output="music">65%</output></span><input type="range" min="0" max="100" step="1" value="65" data-volume="music" aria-label="音乐音量"></label>
+        <label><span>音效 <output data-volume-output="effects">50%</output></span><input type="range" min="0" max="100" step="1" value="50" data-volume="effects" aria-label="音效音量"></label>
+      </div>
+    </details>
   </aside>
   <header class="site-header">
     <a class="brand" href="#home" data-room-target="home" aria-label="返回馆舍大厅">
@@ -33,7 +40,7 @@
       <button class="header-room" data-room-target="identify" type="button">猪种鉴定</button>
       <button class="header-room" data-room-target="tarot" type="button">塔罗馆</button>
       <button class="header-room" data-room-target="records" type="button">档案室</button>
-      <button id="randomPig" class="nav-button" data-room-target="specimens" type="button">随机捕猪</button>
+      <button id="randomPig" class="nav-button" type="button">随机捕猪</button>
     </nav>
   </header>
 
@@ -225,7 +232,7 @@
     <div id="tarotDialogContent"></div>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261023-tarot-page-1"></script>
+  <script type="module" src="assets/js/main.js?v=20261023-volume-1"></script>
 </body>
 </html>
 

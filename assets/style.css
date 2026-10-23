@@ -85,6 +85,15 @@ button, a, [role="button"] { touch-action: manipulation; -webkit-tap-highlight-c
 .soundscape button i { margin-right: 3px; color: var(--amber); font-family: var(--serif); font-size: 13px; font-style: normal; }
 .soundscape button.is-active { color: var(--navy); background: var(--surface-raised); border-color: var(--amber); }
 .soundscape button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.soundscape-volume { position: relative; }
+.soundscape-volume summary { min-height: 34px; padding: 8px 9px; display: grid; place-items: center; color: var(--muted); border: 1px solid transparent; font-family: var(--cn-serif); font-size: 10px; cursor: pointer; list-style: none; touch-action: manipulation; }
+.soundscape-volume summary::-webkit-details-marker { display: none; }
+.soundscape-volume[open] summary { color: var(--navy); background: var(--surface-raised); border-color: var(--amber); }
+.volume-panel { width: 210px; padding: 14px 16px 16px; position: absolute; right: 0; bottom: calc(100% + 10px); display: grid; gap: 15px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); box-shadow: 0 15px 40px rgba(6,17,29,.18); }
+.volume-panel label { display: grid; gap: 8px; }
+.volume-panel label > span { display: flex; justify-content: space-between; color: var(--text-secondary); font-family: var(--cn-serif); font-size: 10px; }
+.volume-panel output { color: var(--text-accent); font-family: var(--serif); }
+.volume-panel input { width: 100%; accent-color: var(--amber); cursor: pointer; }
 
 .site-header {
   min-height: 88px;
