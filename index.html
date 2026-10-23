@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261024-room-toolbar-row-lock-1">
+  <link rel="stylesheet" href="assets/style.css?v=20261024-archive-transfer-1">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -184,6 +184,15 @@
         <p>把散落在各个房间的活动记录重新装订：猪种鉴定、塔罗占卜，以及两套馆藏之间的象征联结。</p>
       </div>
       <div class="record-summary" id="recordSummary" aria-label="宅邸档案统计"></div>
+      <section class="archive-transfer" aria-labelledby="archiveTransferTitle">
+        <div><p class="eyebrow">PORTABLE MANOR ARCHIVE</p><h3 id="archiveTransferTitle">携带宅邸档案</h3><p>将当前设备上的收藏、鉴定、占卜与界面偏好装订成一份本地文件，或从旧档案恢复。</p></div>
+        <div class="archive-transfer-actions">
+          <button id="exportArchive" type="button">导出档案</button>
+          <button id="importArchive" type="button">导入档案</button>
+          <input id="archiveFile" type="file" accept="application/json,.json" hidden>
+        </div>
+        <p class="archive-transfer-status" id="archiveTransferStatus" aria-live="polite"></p>
+      </section>
       <div class="record-layout">
         <section class="record-panel"><div class="record-panel-heading"><p class="eyebrow">RECENT ACTIVITY</p><h3>最近活动</h3></div><div class="activity-ledger" id="activityLedger"></div></section>
         <section class="record-panel"><div class="record-panel-heading"><p class="eyebrow">RECURRING CARDS</p><h3>反复来访的牌</h3></div><div class="recurring-cards" id="recurringCards"></div></section>
@@ -321,7 +330,7 @@
     <div id="tarotDialogContent"></div>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261024-safari-chrome-anchor-1"></script>
+  <script type="module" src="assets/js/main.js?v=20261024-archive-transfer-1"></script>
 </body>
 </html>
 
