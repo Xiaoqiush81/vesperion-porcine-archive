@@ -442,6 +442,14 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .record-summary strong,.record-summary span { display:block; }
 .record-summary strong { color:var(--navy); font-family:var(--serif); font-size:42px; font-weight:400; }
 .record-summary span { margin-top:7px; color:var(--muted); font-family:var(--cn-serif); font-size:10px; letter-spacing:.08em; }
+.archive-transfer { width:min(100%,1240px); margin:34px auto 0; padding:25px 28px; display:grid; grid-template-columns:1fr auto; align-items:center; gap:8px 30px; color:var(--document-ink); background:var(--document-surface); border:1px solid var(--document-line); box-shadow:var(--document-shadow); }
+.archive-transfer h3 { margin:0; font-family:var(--cn-serif); font-size:21px; font-weight:500; }
+.archive-transfer div>p:last-child { margin:8px 0 0; color:var(--document-muted); font-family:var(--cn-serif); font-size:10px; line-height:1.7; }
+.archive-transfer-actions { display:flex; gap:9px; }
+.archive-transfer button { min-height:42px; padding:9px 16px; color:var(--document-ink); background:transparent; border:1px solid var(--document-line); font-family:var(--cn-serif); font-size:10px; cursor:pointer; }
+.archive-transfer button:first-child { color:var(--document-paper); background:var(--document-ink); border-color:var(--document-ink); }
+.archive-transfer button:focus-visible { outline:2px solid var(--amber); outline-offset:2px; }
+.archive-transfer-status { min-height:1em; margin:0; grid-column:1/-1; color:var(--document-accent); font-family:var(--cn-serif); font-size:10px; }
 .record-layout { margin-top:54px; display:grid; grid-template-columns:1.25fr .75fr; gap:34px; }
 .record-panel,.symbolic-links,.favorite-shelf {
   --navy:var(--document-ink);
@@ -786,6 +794,8 @@ dialog::backdrop { background:var(--backdrop); }
   .record-summary div:nth-child(2) { border-right:0; }
   .record-summary div:nth-child(-n+2) { border-bottom:1px solid var(--line); }
   .record-layout { grid-template-columns:1fr; }
+  .archive-transfer { grid-template-columns:1fr; }
+  .archive-transfer-actions { margin-top:8px; }
   .favorite-groups { grid-template-columns:1fr; }
   .link-grid { grid-template-columns:1fr; }
   .legal-room { padding-block:78px; }
