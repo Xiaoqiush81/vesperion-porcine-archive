@@ -695,7 +695,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .timeline time { color: var(--amber-pale); font-family: var(--serif); font-size: 12px; letter-spacing: .08em; }
 .timeline b { font-family: var(--cn-serif); font-size: 16px; font-weight: 500; }
 .timeline p { margin: 8px 0 0; color: var(--chronicle-muted); font-family: var(--cn-serif); font-size: 12px; line-height: 1.8; }
-.chronicle-room { min-height:calc(100vh - 180px); padding:110px clamp(24px,7vw,110px) 90px; background:var(--paper); }
+.chronicle-room { min-height:calc(100vh - 180px); min-height:calc(100svh - 180px); padding:110px clamp(24px,7vw,110px) 90px; background:var(--paper); }
 .chronicle-portals { width:min(100%,1240px); margin:0 auto 70px; display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); }
 .chronicle-portals article { min-height:270px; padding:34px 30px; display:flex; flex-direction:column; }
 .chronicle-portals article+article { border-left:1px solid var(--line); }
@@ -725,7 +725,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .inner-exit { margin-top:36px; color:var(--chronicle-ink); }
 .chronicle-tail { width:min(100%,1240px); margin:0 auto; position:relative; }
 .chronicle-tail .section-jump { width:100%; }
-.chronicle-seal { width:22px; height:22px; padding:0; position:absolute; left:2px; bottom:-4px; opacity:.18; color:var(--text-accent); background:transparent; border:0; font-family:var(--serif); font-size:11px; cursor:default; }
+.chronicle-seal { width:44px; height:44px; padding:0; position:absolute; left:-9px; bottom:-15px; opacity:.18; color:var(--text-accent); background:transparent; border:0; -webkit-appearance:none; appearance:none; touch-action:manipulation; font-family:var(--serif); font-size:11px; cursor:default; }
 .chronicle-seal:focus-visible { opacity:.8; outline:1px solid var(--amber); }
 .chronicle-gate form { padding:52px 50px 48px; }
 .chronicle-gate h2 { margin:0 0 18px; color:var(--navy); font-family:var(--cn-serif); font-size:35px; font-weight:500; }
