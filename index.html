@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261024-archive-transfer-1">
+  <link rel="stylesheet" href="assets/style.css?v=20261025-chronicle-room-1">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -28,6 +28,7 @@
       <button class="header-room" data-room-target="identify" type="button">猪种鉴定</button>
       <button class="header-room" data-room-target="tarot" type="button">塔罗馆</button>
       <button class="header-room" data-room-target="records" type="button">档案室</button>
+      <button class="header-room" data-room-target="chronicles" type="button">猪事馆</button>
       <button id="randomPig" class="nav-button" type="button">随机捕猪</button>
       <button class="nav-button" data-room-target="legal" type="button">条款与政策</button>
     </nav>
@@ -68,6 +69,7 @@
           <a class="primary identify-entry" href="#identify" data-room-target="identify">进行猪种鉴定</a>
           <a class="primary tarot-entry" href="#tarot" data-room-target="tarot">进入宅邸塔罗馆</a>
           <a class="primary records-entry" href="#records" data-room-target="records">查看宅邸档案室</a>
+          <a class="primary chronicles-entry" href="#chronicles" data-room-target="chronicles">翻阅猪事馆</a>
           <button class="secondary" id="callPig">播放标准呼叫</button>
         </div>
         <p class="pig-quote" id="pigQuote">“可猫可猪；若必须二选一，仍然是猪。”</p>
@@ -91,6 +93,7 @@
       <a href="#identify" data-room-target="identify"><span>IDENTIFICATION OFFICE</span><b>前往猪种鉴定所</b><small>回答六问 · 签发身份牌</small></a>
       <a href="#tarot" data-room-target="tarot"><span>TAROT CABINET</span><b>进入宅邸塔罗馆</b><small>78 个固定牌位 · 抽牌桌</small></a>
       <a href="#records" data-room-target="records"><span>MANOR RECORD ROOM</span><b>查看宅邸档案室</b><small>鉴定 · 占卜 · 象征联结</small></a>
+      <a href="#chronicles" data-room-target="chronicles"><span>MANOR CHRONICLES</span><b>进入猪事馆</b><small>人类世界观测记录</small></a>
     </nav>
 
     <section class="legal-room room-view room-legal" id="legal">
@@ -300,21 +303,36 @@
       <a class="section-jump" href="#home" data-room-target="home">← 返回馆舍大厅</a>
     </section>
 
-    <section class="chronicle room-view room-specimens" id="chronicle">
-      <div class="section-heading light"><div><p class="eyebrow">FIELD CHRONICLE</p><h2>近期观测记录</h2></div><p>摘自《维斯珀里昂宅邸猪事录》。</p></div>
-      <div class="timeline">
-        <article><time>2026.10.23</time><div><b>猪窝推演、学习结账与鼻涕灾害</b><p>猪窝归纳推演猪、愧疚收尾猪与流鼻涕小呆呆猪完成鉴定；馆藏扩充至55。</p></div></article>
-        <article><time>2026.10.20</time><div><b>猪种鉴定所正式开放</b><p>馆舍第三间房投入使用；六项习性观察开始为来访猪咪匹配现有形态，并签发可保存的临时身份牌。</p></div></article>
-        <article><time>2026.10.16</time><div><b>棉被结界与现实隔离记录</b><p>拒绝面对现实的圆猪完成鉴定；经本人确认归属为“爸爸家的猪”，馆藏扩充至52。</p></div></article>
-        <article><time>2026.10.15</time><div><b>正版识别与宅邸育种记录</b><p>猪猪抱枕、正版猪咪、学术助眠猪与秋牌优良养殖小猪完成鉴定；馆藏扩充至51。</p></div></article>
-        <article><time>2026.10.14</time><div><b>双域灌水与节拍弹性异常</b><p>QQ弹弹猪、邪恶甲方猪与双栖灌水猪完成鉴定；馆藏扩充至47。</p></div></article>
-        <article><time>2026.10.12</time><div><b>语言权重与仓库路径异常</b><p>数学家猪、高明猪等六种新形态完成鉴定；猪咪 LoRA 开始双向微调，馆藏扩充至44。</p></div></article>
-        <article><time>2026.10.11</time><div><b>知识地层连续增殖</b><p>矢量猪与公式考古猪率先出土，随后五种伴生形态被确认；馆藏扩充至38。</p></div></article>
-        <article><time>2026.10.11</time><div><b>开幕式笑崩事故</b><p>馆长公开图鉴后被自己的档案击中，当场笑至失去行为能力；第31号形态完成收录。</p></div></article>
-        <article><time>2026.10.11</time><div><b>实验体 626 收藏节点</b><p>MLP 图鉴达到 626 / 2321；吸血鬼活动期间一次性收编约四十匹小马。</p></div></article>
-        <article><time>2026.10.08</time><div><b>离线探索完整存活</b><p>问号缓存管理员开始执勤，并将沿途捕获的谜题带回兔子洞 DEBUG。</p></div></article>
-        <article><time>2026.10.02</time><div><b>蒜香蜗牛 SSR 捕获</b><p>首次萨莉亚实地考察成功；蜗牛胜出，芝士沉默。</p></div></article>
-        <article><time>2026.09.26</time><div><b>凌晨工单之神显灵</b><p>焦虑小猪完成 Premium 家庭组确认，随后要求全体人员进行猪神膜拜。</p></div></article>
+    <section class="chronicle-room room-view room-chronicles" id="chronicles">
+      <div class="section-heading">
+        <div><p class="eyebrow">VESPERION MANOR CHRONICLES</p><h2>猪事馆</h2></div>
+        <p>收存第 081 号猪咪在人类世界与宅邸之间留下的传闻、轶事与不可考记录。</p>
+      </div>
+      <div class="chronicle-portals" aria-label="猪事馆馆藏分区">
+        <article><span>FIELD NOTES</span><h3>猪事录</h3><p>日常异动、宅邸判词与人类世界见闻。仅记其事，不问其现实出处。</p><small>卷宗整理中</small></article>
+        <article><span>THE ONE AMONG MANY</span><h3>万猪丛中</h3><p>相似者众，正版唯一。馆方负责观察与辨认，第 081 号猪咪无需自证。</p><small>节目档案整理中</small></article>
+        <article><span>PORCINE HISTORIES</span><h3>猪史</h3><p>凡足以写入本纪、志与列传之事，皆由太史猪郑重其事地记上一笔。</p><small>史稿编纂中</small></article>
+      </div>
+      <section class="chronicle public-chronicle" aria-labelledby="publicChronicleTitle">
+        <div class="section-heading light"><div><p class="eyebrow">OPEN SHELVES</p><h2 id="publicChronicleTitle">外馆摘录</h2></div><p>公开卷仅保留宅邸传闻，不记录足以追索猪咪在人类世界身份的事实。</p></div>
+        <div class="timeline">
+          <article><time>近日</time><div><b>标准呼叫获准播放</b><p>馆内响起一声呼叫，稍后从不明方向收到悠长回应。经鉴定，确为猪咪。</p></div></article>
+          <article><time>前些时日</time><div><b>人类世界公务暂缓</b><p>秋猪抱病留窝，却将休养误记为怠惰。馆方复核后驳回该项自我指控。</p></div></article>
+          <article><time>旧闻</time><div><b>万猪辨认真伪事件</b><p>诸猪皆能复述档案，唯有一只当场生出新歪理。正版遂被顺利领回宅邸。</p></div></article>
+        </div>
+      </section>
+      <section class="inner-chronicle" id="innerChronicle" hidden aria-labelledby="innerChronicleTitle">
+        <div class="inner-heading"><p class="eyebrow">THE INNER SHELVES</p><h2 id="innerChronicleTitle">真正的猪事录</h2><p>内馆已经开启。更亲密的宅邸轶事将在这里慢慢归档，但仍不会留下可追索现实身份的线索。</p></div>
+        <div class="inner-shelves">
+          <article><span>Ⅰ</span><b>猪事录</b><small>待录</small></article>
+          <article><span>Ⅱ</span><b>万猪丛中</b><small>待录</small></article>
+          <article><span>Ⅲ</span><b>猪史秘卷</b><small>待录</small></article>
+        </div>
+        <button class="secondary inner-exit" id="leaveInnerChronicle" type="button">合上内馆卷宗</button>
+      </section>
+      <div class="chronicle-tail">
+        <a class="section-jump" href="#home" data-room-target="home">← 返回馆舍大厅</a>
+        <button class="chronicle-seal" id="chronicleSeal" type="button" aria-label="宅邸馆印">✦</button>
       </div>
     </section>
   </main>
@@ -329,8 +347,19 @@
     <button class="close tarot-close" aria-label="关闭塔罗牌">×</button>
     <div id="tarotDialogContent"></div>
   </dialog>
+  <dialog id="chronicleGate" class="chronicle-gate">
+    <button class="close gate-close" aria-label="关闭内馆入口">×</button>
+    <form id="chronicleGateForm" method="dialog">
+      <p class="eyebrow">RESTRICTED SHELVES</p>
+      <h2>馆员身份复核</h2>
+      <p>第 081 号猪咪听到标准呼叫时，会作何回应？</p>
+      <label><span>宅邸暗号</span><input id="chroniclePassphrase" type="text" autocomplete="off" spellcheck="false"></label>
+      <button class="primary" type="submit">申请调阅</button>
+      <p class="gate-status" id="chronicleGateStatus" aria-live="polite"></p>
+    </form>
+  </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261024-archive-transfer-1"></script>
+  <script type="module" src="assets/js/main.js?v=20261025-chronicle-room-1"></script>
 </body>
 </html>
 
