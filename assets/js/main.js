@@ -18,10 +18,12 @@ let archiveReady = false;
 let tarotReady = false;
 let identityReady = false;
 let recordsReady = false;
+let chroniclesReady = false;
 let archiveLoading = null;
 let tarotLoading = null;
 let identityLoading = null;
 let recordsLoading = null;
+let chroniclesLoading = null;
 let archiveController = null;
 let roomRequest = 0;
 
@@ -89,6 +91,19 @@ async function initRecords() {
   return recordsLoading;
 }
 
+async function initChronicles() {
+  if (chroniclesReady) return;
+  if (!chroniclesLoading) chroniclesLoading = import('./chronicles.js?v=20261025-1')
+    .then(module => module.initChronicles())
+    .then(() => { chroniclesReady = true; })
+    .catch(error => {
+      console.error(error);
+      document.querySelector('#chronicleLoading').textContent = '卷宗暂时无法调阅，请稍后重试。';
+    })
+    .finally(() => { chroniclesLoading = null; });
+  return chroniclesLoading;
+}
+
 function roomFromHash() {
   const name = location.hash.slice(1);
   if (name.startsWith('legal')) return 'legal';
@@ -103,6 +118,7 @@ async function enterRoom(room, push = true) {
   if (target === 'tarot') await initTarot();
   if (target === 'identify') await initIdentity();
   if (target === 'records') await initRecords();
+  if (target === 'chronicles') initChronicles();
   if (request !== roomRequest) return;
   document.body.dataset.room = target;
   const soundscape = document.querySelector('#soundscape');
@@ -119,56 +135,9 @@ async function enterRoom(room, push = true) {
   else window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 
-function initChronicleGate() {
-  const seal = document.querySelector('#chronicleSeal');
-  const gate = document.querySelector('#chronicleGate');
-  const form = document.querySelector('#chronicleGateForm');
-  const input = document.querySelector('#chroniclePassphrase');
-  const status = document.querySelector('#chronicleGateStatus');
-  const inner = document.querySelector('#innerChronicle');
-  const publicChronicle = document.querySelector('.public-chronicle');
-  let taps = [];
-
-  const revealInner = () => {
-    publicChronicle.hidden = true;
-    inner.hidden = false;
-    gate.close();
-    input.value = '';
-    status.textContent = '';
-    inner.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-  };
-
-  seal.addEventListener('click', () => {
-    const now = Date.now();
-    taps = [...taps.filter(time => now - time < 4000), now];
-    if (taps.length < 5) return;
-    taps = [];
-    gate.showModal();
-    requestAnimationFrame(() => input.focus());
-  });
-
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    const answer = input.value.trim().replace(/[\s—–_-]/g, '');
-    if (/^咪+[～~。！!]*$/.test(answer)) revealInner();
-    else {
-      status.textContent = '馆印没有响应。或许应当听一听标准呼叫。';
-      input.select();
-    }
-  });
-
-  gate.querySelector('.gate-close').addEventListener('click', () => gate.close());
-  document.querySelector('#leaveInnerChronicle').addEventListener('click', () => {
-    inner.hidden = true;
-    publicChronicle.hidden = false;
-    publicChronicle.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-  });
-}
-
 async function main() {
   initTheme(document.querySelector('#themeToggle'));
   createSoundscape();
-  initChronicleGate();
   const warmRooms = () => {
     import(TAROT_MODULE_URL).catch(() => {});
     initArchive().catch(() => {});
