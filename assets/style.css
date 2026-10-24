@@ -758,7 +758,11 @@ footer { min-height: 92px; padding: 28px clamp(24px, 7vw, 110px); display: flex;
 dialog {
   width:min(720px,calc(100% - 28px));
   max-height:88vh;
+  max-height:88dvh;
   padding:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
   color:var(--ink);
   background:var(--paper);
   border:1px solid var(--line);
