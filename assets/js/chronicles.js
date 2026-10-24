@@ -1,4 +1,4 @@
-const DATA_URL = './data/chronicles.json?v=20261025-1';
+const DATA_URL = './data/chronicles.json?v=20261025-2';
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -28,7 +28,8 @@ function renderEntries(entries) {
     const article = element('article');
     const copy = element('div');
     copy.append(element('b', '', entry.title), element('p', '', entry.body));
-    article.append(element('time', '', entry.period), copy);
+    const label = entry.shelf ? `${entry.shelf} · ${entry.period}` : entry.period;
+    article.append(element('time', '', label), copy);
     return article;
   }));
   host.removeAttribute('aria-busy');
@@ -38,10 +39,17 @@ function renderInnerShelves(shelves) {
   const host = document.querySelector('#innerShelves');
   host.replaceChildren(...shelves.map(shelf => {
     const article = element('article');
+    const list = element('div', 'inner-shelf-items');
+    list.append(...(shelf.items || []).map(item => {
+      const entry = element('section');
+      entry.append(element('b', '', item.title), element('p', '', item.body));
+      return entry;
+    }));
     article.append(
       element('span', '', shelf.mark),
       element('b', '', shelf.title),
-      element('small', '', shelf.status)
+      element('small', '', shelf.status),
+      list
     );
     return article;
   }));
