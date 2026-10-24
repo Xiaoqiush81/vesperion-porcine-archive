@@ -1,0 +1,44 @@
+{
+  "sections": [
+    {
+      "kicker": "FIELD NOTES",
+      "title": "猪事录",
+      "description": "日常异动、宅邸判词与人类世界见闻。仅记其事，不问其现实出处。",
+      "status": "卷宗整理中"
+    },
+    {
+      "kicker": "THE ONE AMONG MANY",
+      "title": "万猪丛中",
+      "description": "相似者众，正版唯一。馆方负责观察与辨认，第 081 号猪咪无需自证。",
+      "status": "节目档案整理中"
+    },
+    {
+      "kicker": "PORCINE HISTORIES",
+      "title": "猪史",
+      "description": "凡足以写入本纪、志与列传之事，皆由太史猪郑重其事地记上一笔。",
+      "status": "史稿编纂中"
+    }
+  ],
+  "publicEntries": [
+    {
+      "period": "近日",
+      "title": "标准呼叫获准播放",
+      "body": "馆内响起一声呼叫，稍后从不明方向收到悠长回应。经鉴定，确为猪咪。"
+    },
+    {
+      "period": "前些时日",
+      "title": "人类世界公务暂缓",
+      "body": "秋猪抱病留窝，却将休养误记为怠惰。馆方复核后驳回该项自我指控。"
+    },
+    {
+      "period": "旧闻",
+      "title": "万猪辨认真伪事件",
+      "body": "诸猪皆能复述档案，唯有一只当场生出新歪理。正版遂被顺利领回宅邸。"
+    }
+  ],
+  "innerShelves": [
+    { "mark": "Ⅰ", "title": "猪事录", "status": "待录" },
+    { "mark": "Ⅱ", "title": "万猪丛中", "status": "待录" },
+    { "mark": "Ⅲ", "title": "猪史秘卷", "status": "待录" }
+  ]
+}
