@@ -93,7 +93,7 @@ async function initRecords() {
 
 async function initChronicles() {
   if (chroniclesReady) return;
-  if (!chroniclesLoading) chroniclesLoading = import('./chronicles.js?v=20261025-2')
+  if (!chroniclesLoading) chroniclesLoading = import('./chronicles.js?v=20261025-3')
     .then(module => module.initChronicles())
     .then(() => { chroniclesReady = true; })
     .catch(error => {
@@ -121,6 +121,7 @@ async function enterRoom(room, push = true) {
   if (target === 'chronicles') initChronicles();
   if (request !== roomRequest) return;
   document.body.dataset.room = target;
+  document.dispatchEvent(new CustomEvent('roomchange', { detail:{ room:target } }));
   const soundscape = document.querySelector('#soundscape');
   const soundscapeHost = document.querySelector(target === 'home' ? '#siteHeader' : '#roomToolbarInner');
   if (soundscape && soundscapeHost && soundscape.parentElement !== soundscapeHost) {
