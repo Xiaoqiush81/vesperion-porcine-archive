@@ -1,4 +1,4 @@
-const DATA_URL = './data/chronicles.json?v=20261025-2';
+const DATA_URL = './data/chronicles.json?v=20261025-3';
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -7,29 +7,48 @@ function element(tag, className, text) {
   return node;
 }
 
-function renderSections(sections) {
+function renderSections(sections, entries) {
   const host = document.querySelector('#chroniclePortals');
   host.replaceChildren(...sections.map(section => {
-    const article = element('article');
-    article.append(
+    const button = element('button', 'chronicle-portal');
+    button.type = 'button';
+    button.dataset.shelf = section.title;
+    button.setAttribute('aria-controls', 'chronicleTimeline');
+    button.setAttribute('aria-pressed', 'false');
+    const count = entries.filter(entry => entry.shelf === section.title).length;
+    button.append(
       element('span', '', section.kicker),
       element('h3', '', section.title),
       element('p', '', section.description),
-      element('small', '', section.status)
+      element('small', '', `${count} 卷已开放 · 点击调阅`)
     );
-    return article;
+    return button;
   }));
   host.removeAttribute('aria-busy');
 }
 
-function renderEntries(entries) {
+function renderEntries(entries, section) {
   const host = document.querySelector('#chronicleTimeline');
-  host.replaceChildren(...entries.map(entry => {
-    const article = element('article');
-    const copy = element('div');
-    copy.append(element('b', '', entry.title), element('p', '', entry.body));
-    const label = entry.shelf ? `${entry.shelf} · ${entry.period}` : entry.period;
-    article.append(element('time', '', label), copy);
+  document.querySelector('#publicChronicleKicker').textContent = `OPEN SHELVES · ${section.kicker}`;
+  document.querySelector('#publicChronicleTitle').textContent = section.title;
+  document.querySelector('#publicChronicleDescription').textContent = section.description;
+  document.querySelectorAll('.chronicle-portal').forEach(button => {
+    button.setAttribute('aria-pressed', String(button.dataset.shelf === section.title));
+  });
+  const selected = entries.filter(entry => entry.shelf === section.title);
+  host.replaceChildren(...selected.map(entry => {
+    const article = element('article', 'chronicle-entry');
+    const details = element('details', 'chronicle-entry-details');
+    const summary = element('summary');
+    summary.append(
+      element('b', '', entry.title),
+      element('p', 'chronicle-excerpt', entry.body),
+      element('span', 'chronicle-expand', '展开完整卷宗')
+    );
+    const full = element('div', 'chronicle-entry-body');
+    full.append(...(entry.details || [entry.body]).map(paragraph => element('p', '', paragraph)));
+    details.append(summary, full);
+    article.append(element('time', '', entry.period), details);
     return article;
   }));
   host.removeAttribute('aria-busy');
@@ -74,6 +93,15 @@ function bindGate() {
     inner.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   };
 
+  const restoreOuter = () => {
+    gate.close();
+    inner.hidden = true;
+    publicChronicle.hidden = false;
+    input.value = '';
+    status.textContent = '';
+    taps = [];
+  };
+
   seal.addEventListener('click', () => {
     const now = Date.now();
     taps = [...taps.filter(time => now - time < 4000), now];
@@ -95,9 +123,11 @@ function bindGate() {
 
   gate.querySelector('.gate-close').addEventListener('click', () => gate.close());
   document.querySelector('#leaveInnerChronicle').addEventListener('click', () => {
-    inner.hidden = true;
-    publicChronicle.hidden = false;
+    restoreOuter();
     publicChronicle.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  });
+  document.addEventListener('roomchange', event => {
+    if (event.detail.room !== 'chronicles') restoreOuter();
   });
 }
 
@@ -114,8 +144,18 @@ export async function initChronicles() {
     const response = await fetch(DATA_URL);
     if (!response.ok) throw new Error(`Chronicle data request failed: ${response.status}`);
     const data = await response.json();
-    renderSections(data.sections);
-    renderEntries(data.publicEntries);
+    renderSections(data.sections, data.publicEntries);
+    const selectSection = title => {
+      const section = data.sections.find(item => item.title === title) || data.sections[0];
+      renderEntries(data.publicEntries, section);
+    };
+    document.querySelector('#chroniclePortals').addEventListener('click', event => {
+      const portal = event.target.closest('.chronicle-portal');
+      if (!portal) return;
+      selectSection(portal.dataset.shelf);
+      document.querySelector('.public-chronicle').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+    selectSection(data.sections[0].title);
     renderInnerShelves(data.innerShelves);
     ready = true;
   } catch (error) {
