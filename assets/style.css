@@ -703,6 +703,10 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .chronicle-portals h3 { margin:36px 0 14px; color:var(--navy); font-family:var(--cn-serif); font-size:30px; font-weight:500; }
 .chronicle-portals p { margin:0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:12px; line-height:1.9; }
 .chronicle-portals small { margin-top:auto; padding-top:30px; color:var(--muted); font-family:var(--cn-serif); font-size:9px; }
+.chronicle-portals[aria-busy="true"] .chronicle-placeholder { min-height:180px; grid-column:1/-1; }
+.chronicle-placeholder { animation:chronicle-breathe 1.6s ease-in-out infinite alternate; }
+.chronicle-loading { margin:0; padding:28px 0; color:var(--chronicle-muted); font-family:var(--cn-serif); font-size:11px; }
+@keyframes chronicle-breathe { from { opacity:.48; } to { opacity:.82; } }
 .public-chronicle { margin-inline:calc(clamp(24px,7vw,110px) * -1); }
 .inner-chronicle { width:min(100%,1240px); margin:0 auto; padding:clamp(34px,6vw,72px); position:relative; color:var(--chronicle-ink); background:var(--chronicle-bg); box-shadow:0 24px 60px var(--shadow-medium); }
 .inner-chronicle[hidden] { display:none; }
