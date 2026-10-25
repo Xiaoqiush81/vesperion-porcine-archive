@@ -1,4 +1,4 @@
-const DATA_URL = './data/chronicles.json?v=20261025-4';
+const DATA_URL = './data/chronicles.json?v=20261025-5';
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -70,18 +70,34 @@ function renderEntries(entries, section, volume = '') {
 function renderInnerShelves(shelves) {
   const host = document.querySelector('#innerShelves');
   host.replaceChildren(...shelves.map(shelf => {
-    const article = element('article');
+    const article = element('article', 'inner-shelf');
     const list = element('div', 'inner-shelf-items');
     list.append(...(shelf.items || []).map(item => {
       const entry = element('section');
       entry.append(element('b', '', item.title), element('p', '', item.body));
       return entry;
     }));
+    const volumes = element('div', 'inner-volumes');
+    volumes.append(...(shelf.volumes || []).map(volume => {
+      const section = element('section', 'inner-volume');
+      const heading = element('header');
+      heading.append(element('span', '', volume.mark), element('b', '', volume.title));
+      const entries = element('div', 'inner-volume-items');
+      entries.append(...(volume.items || []).map(item => {
+        const entry = element('section');
+        entry.append(element('b', '', item.title), element('p', '', item.body));
+        return entry;
+      }));
+      section.append(heading, entries);
+      return section;
+    }));
+    if (shelf.volumes?.length) article.classList.add('inner-shelf-has-volumes');
     article.append(
       element('span', '', shelf.mark),
       element('b', '', shelf.title),
       element('small', '', shelf.status),
-      list
+      ...(shelf.items?.length ? [list] : []),
+      ...(shelf.volumes?.length ? [volumes] : [])
     );
     return article;
   }));
