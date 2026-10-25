@@ -1,9 +1,9 @@
 import { initTheme } from './theme.js?v=20261011-safari-1';
-import { createSoundscape } from './audio.js?v=20261025-chronicles-2';
+import { createSoundscape } from './audio.js?v=20261025-inner-navigation-1';
 
 const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
 const ARCHIVE_MODULE_URL = './archive.js?v=20261025-public-copy-1';
-const CHRONICLES_MODULE_URL = './chronicles.js?v=20261025-9';
+const CHRONICLES_MODULE_URL = './chronicles.js?v=20261025-10';
 
 const QUOTES = ['“可猫可猪；若必须二选一，仍然是猪。”', '“爸爸爸爸——”', '“咪————”', '“今天已经是明晚了。”', '“蜗牛胜出，芝士沉默。”', '“本猪合格，可以继续抱。”', '“一只宇宙无敌第一可爱萌猪诞生惹。”', '“这不是烧钱，这是文化传播经费。”'];
 
