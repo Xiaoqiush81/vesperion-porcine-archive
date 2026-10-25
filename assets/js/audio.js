@@ -1,7 +1,13 @@
+import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-1';
+
 const STORAGE_KEY = 'pigdex-audio-v1';
 const DEFAULTS = Object.freeze({ music:false, effects:false, musicVolume:.65, effectsVolume:.5 });
 const MUSIC_LEVEL = .92;
 const BAR_LENGTH = 5600;
+const CUSTOM_MUSIC_URL = resolveAsset(SITE_ASSETS.music);
+const CUSTOM_EFFECT_URLS = Object.freeze(Object.fromEntries(
+  Object.entries(SITE_ASSETS.effects).map(([name, url]) => [name, resolveAsset(url)])
+));
 const CHORDS = [
   [146.83, 220, 293.66, 349.23],
   [116.54, 174.61, 233.08, 293.66],
@@ -36,12 +42,14 @@ export function createSoundscape(root = document) {
   let musicStarting;
   let musicStep = 0;
   let noiseBuffer;
+  let customMusic;
   const sampleBytes = new Map();
   const sampleBuffers = new Map();
   const musicVoices = new Set();
   const SAMPLE_URLS = Object.freeze({
-    cardFlip: new URL('../audio/tarot-card-lift.mp3', import.meta.url),
-    themeSwitch: new URL('../audio/theme-switch.mp3', import.meta.url)
+    cardFlip: resolveAsset('', '../audio/tarot-card-lift.mp3'),
+    themeSwitch: resolveAsset('', '../audio/theme-switch.mp3'),
+    ...Object.fromEntries(Object.entries(CUSTOM_EFFECT_URLS).filter(([, url]) => url))
   });
 
   function preloadSample(name) {
@@ -231,6 +239,11 @@ export function createSoundscape(root = document) {
 
   async function effect(name) {
     if (!settings.effects || !await activateContext()) return;
+    if (CUSTOM_EFFECT_URLS[name]) {
+      duckMusic(.28, .5);
+      playSample(name, .82);
+      return;
+    }
     if (name === 'flip') pageTurn();
     else if (name === 'favorite') {
       duckMusic(.3, .5);
@@ -277,6 +290,15 @@ export function createSoundscape(root = document) {
   async function startMusic() {
     if (musicTimer || musicStarting || !settings.music || document.hidden) return;
     musicStarting = (async () => {
+      if (CUSTOM_MUSIC_URL) {
+        customMusic ||= Object.assign(new Audio(CUSTOM_MUSIC_URL), { loop:true, preload:'none' });
+        customMusic.volume = MUSIC_LEVEL * settings.musicVolume;
+        try {
+          await customMusic.play();
+          musicTimer = -1;
+          return;
+        } catch { /* Fall back to the built-in generated soundscape. */ }
+      }
       if (!await activateContext() || musicTimer || !settings.music || document.hidden) return;
       const now = context.currentTime;
       musicBus.gain.cancelScheduledValues(now);
@@ -290,6 +312,7 @@ export function createSoundscape(root = document) {
   }
 
   function stopMusic() {
+    customMusic?.pause();
     window.clearInterval(musicTimer);
     musicTimer = undefined;
     const stopAt = context ? context.currentTime + .06 : 0;
@@ -308,6 +331,10 @@ export function createSoundscape(root = document) {
 
   async function restoreAudio() {
     if (document.hidden || (!settings.music && !settings.effects)) return;
+    if (settings.music && CUSTOM_MUSIC_URL) {
+      await startMusic();
+      if (musicTimer) return;
+    }
     const ready = await activateContext();
     if (ready && settings.music && !musicTimer) startMusic();
   }
@@ -338,6 +365,7 @@ export function createSoundscape(root = document) {
     settings[key] = Number(input.value) / 100;
     saveSettings(settings);
     updateControls();
+    if (input.dataset.volume === 'music' && customMusic) customMusic.volume = MUSIC_LEVEL * settings.musicVolume;
     if (!context) return;
     const bus = input.dataset.volume === 'music' ? musicBus : effectsBus;
     const level = input.dataset.volume === 'music' ? MUSIC_LEVEL * settings.musicVolume : settings.effectsVolume;

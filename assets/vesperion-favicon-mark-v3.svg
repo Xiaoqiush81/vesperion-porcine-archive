@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Vesperion favicon mark</title>
+  <circle cx="32" cy="32" r="29" fill="#102b46"/>
+  <path fill="#f3efe5" d="M13 19c8 4 14 12 19 29-6-9-13-20-19-29Zm38 0c-8 4-14 12-19 29 6-9 13-20 19-29Z"/>
+  <path fill="#f3efe5" d="m32 36 3 5-3 9-3-9 3-5Z"/>
+  <path fill="#d6b775" d="m32 8 1.8 5.7 5.7 1.8-5.7 1.8L32 23l-1.8-5.7-5.7-1.8 5.7-1.8L32 8Z"/>
+</svg>
