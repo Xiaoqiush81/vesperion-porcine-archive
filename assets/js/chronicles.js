@@ -48,7 +48,7 @@ function renderEntries(entries, section, volume = '') {
   document.querySelector('#publicChronicleKicker').textContent = `OPEN SHELVES · ${section.kicker}${volume ? ` · ${volume}` : ''}`;
   document.querySelector('#publicChronicleTitle').textContent = volume ? `${section.title} · ${volume}` : section.title;
   document.querySelector('#publicChronicleDescription').textContent = section.description;
-  document.querySelectorAll('.chronicle-portal').forEach(button => {
+  document.querySelectorAll('#chroniclePortals .chronicle-portal').forEach(button => {
     button.setAttribute('aria-pressed', String(button.dataset.shelf === section.title));
   });
   const selected = entries.filter(entry => entry.shelf === section.title && (!volume || entry.volume === volume));
@@ -248,7 +248,7 @@ export async function initChronicles() {
       innerChronicle.hidden = true;
       masthead.hidden = false;
       portals.hidden = false;
-      document.querySelectorAll('.chronicle-portal').forEach(button => button.setAttribute('aria-pressed', 'false'));
+      document.querySelectorAll('#chroniclePortals .chronicle-portal').forEach(button => button.setAttribute('aria-pressed', 'false'));
       scrollToTop();
     };
     const selectSection = (title, requestedVolume = '') => {

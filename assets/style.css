@@ -817,6 +817,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .inner-heading h2 { margin:0; font-family:var(--cn-serif); font-size:clamp(38px,5vw,64px); font-weight:500; }
 .inner-heading>p:last-child { color:var(--chronicle-muted); font-family:var(--cn-serif); font-size:12px; line-height:1.9; }
 .inner-shelves { width:100%; margin:46px 0 0; }
+.inner-shelves .inner-shelf>span { font-size:14px; letter-spacing:.08em; }
 .inner-section-back { width:100%; min-height:42px; margin:0 0 48px; padding:0 0 12px; color:var(--amber-pale); background:transparent; border:0; border-bottom:1px solid var(--chronicle-line); font-family:var(--cn-serif); font-size:10px; text-align:left; cursor:pointer; }
 .inner-collection-heading { max-width:760px; }
 .inner-collection-heading .eyebrow { color:var(--amber-pale); }
@@ -989,6 +990,7 @@ dialog::backdrop { background:var(--backdrop); }
   .chronicle-volume span { font-size:16px; }
   .chronicle-volume b { font-size:16px; }
   .inner-shelves { width:100%; margin:34px 0 0; }
+  .inner-shelves .inner-shelf>span { font-size:16px; }
   .inner-volume-nav { margin:34px 0 38px; }
   .chronicle-gate form { padding:46px 25px 34px; }
   .section-heading > p { margin-top: 18px; text-align: left; }
