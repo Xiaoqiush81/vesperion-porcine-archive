@@ -1,6 +1,6 @@
 import { initTheme } from './theme.js?v=20261011-safari-1';
 import { createSoundscape } from './audio.js?v=20261025-assets-1';
-import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-1';
+import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-2';
 
 const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
 const ARCHIVE_MODULE_URL = './archive.js?v=20261025-public-copy-1';
@@ -21,7 +21,7 @@ const QUOTES = ['“可猫可猪；若必须二选一，仍然是猪。”', '�
 function applyAssetOverrides() {
   const favicon = resolveAsset(SITE_ASSETS.favicon, '', document.baseURI);
   if (!favicon) return;
-  document.querySelectorAll('link[rel~="icon"]').forEach(link => { link.href = favicon; });
+  document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]').forEach(link => { link.href = favicon; });
 }
 
 function toast(message) {
