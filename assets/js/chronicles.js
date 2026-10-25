@@ -1,4 +1,4 @@
-const DATA_URL = './data/chronicles.json?v=20261025-5';
+const DATA_URL = './data/chronicles.json?v=20261025-6';
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -16,11 +16,14 @@ function renderSections(sections, entries) {
     button.setAttribute('aria-controls', 'chronicleTimeline');
     button.setAttribute('aria-pressed', 'false');
     const count = entries.filter(entry => entry.shelf === section.title).length;
+    const catalogue = section.volumes?.length
+      ? `${section.volumes.length} 卷 · ${count} 条已归档`
+      : `${count} 条记录 · 点击调阅`;
     button.append(
       element('span', '', section.kicker),
       element('h3', '', section.title),
       element('p', '', section.description),
-      element('small', '', `${count} 卷已开放 · 点击调阅`)
+      element('small', '', catalogue)
     );
     return button;
   }));
