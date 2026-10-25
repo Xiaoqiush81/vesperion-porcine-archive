@@ -62,7 +62,7 @@ async function initTarot() {
 async function initIdentity() {
   if (identityReady) return;
   if (!identityLoading) identityLoading = Promise.all([
-    import('./identity.js?v=20261025-all-specimens-2'),
+    import('./identity.js?v=20261025-question-bank-3'),
     import(ARCHIVE_MODULE_URL).then(module => module.loadSpecimens())
   ])
     .then(([{ createIdentityOffice }, specimens]) => {
