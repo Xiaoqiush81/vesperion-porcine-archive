@@ -1,4 +1,4 @@
-import { PROFILES } from './identity-data.js?v=20261025-expanded-1';
+import { PROFILES } from './identity-data.js?v=20261025-all-specimens-2';
 
 const randomIndex = max => {
   if (globalThis.crypto?.getRandomValues) { const value = new Uint32Array(1); globalThis.crypto.getRandomValues(value); return value[0] % max; }
@@ -20,6 +20,15 @@ export function drawQuestionSet(bank, previousIds = []) {
 export function matchSpecimen(answers, specimens) {
   const byId=new Map(specimens.map(item=>[item.id,item]));
   const traits=answers.flat().reduce((all,trait)=>({...all,[trait]:(all[trait]||0)+1}),{});
-  return PROFILES.map(([id,weights],order)=>({specimen:byId.get(id),order,score:Object.entries(weights).reduce((sum,[trait,weight])=>sum+(traits[trait]||0)*weight,0)}))
-    .filter(item=>item.specimen).sort((a,b)=>b.score-a.score||a.order-b.order)[0]?.specimen;
+  const traitNorm=Math.hypot(...Object.values(traits));
+  const ranked=PROFILES.map(([id,weights],order)=>{
+    const weightNorm=Math.hypot(...Object.values(weights));
+    const overlap=Object.entries(weights).reduce((sum,[trait,weight])=>sum+(traits[trait]||0)*weight,0);
+    return {specimen:byId.get(id),order,score:overlap/(traitNorm*weightNorm||1)};
+  })
+    .filter(item=>item.specimen).sort((a,b)=>b.score-a.score||a.order-b.order);
+  const finalists=ranked.filter(item=>ranked[0].score-item.score<=.075);
+  const signature=Object.entries(traits).sort(([a],[b])=>a.localeCompare(b)).map(([trait,count])=>`${trait}:${count}`).join('|');
+  const hash=[...signature].reduce((value,char)=>Math.imul(value^char.charCodeAt(0),16777619)>>>0,2166136261);
+  return finalists[hash%finalists.length]?.specimen;
 }
