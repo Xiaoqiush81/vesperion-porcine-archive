@@ -77,10 +77,21 @@ function renderInnerShelves(shelves) {
   const volumeNav = document.querySelector('#innerVolumeNav');
   const timeline = document.querySelector('#innerTimeline');
 
-  const renderEntries = items => {
+  const renderEntries = (items, period) => {
     timeline.replaceChildren(...items.map(item => {
-      const article = element('article');
-      article.append(element('b', '', item.title), element('p', '', item.body));
+      const article = element('article', 'chronicle-entry');
+      const details = element('details', 'chronicle-entry-details');
+      const summary = element('summary');
+      const teaser = item.excerpt || `${item.body.slice(0, 24)}${item.body.length > 24 ? '……' : '（完整记录已封存）'}`;
+      summary.append(
+        element('b', '', item.title),
+        element('p', 'chronicle-excerpt', teaser),
+        element('span', 'chronicle-expand', '展开完整卷宗')
+      );
+      const full = element('div', 'chronicle-entry-body');
+      full.append(...(item.details || [item.body]).map(paragraph => element('p', '', paragraph)));
+      details.append(summary, full);
+      article.append(element('time', '', item.period || period), details);
       return article;
     }));
   };
@@ -95,27 +106,27 @@ function renderInnerShelves(shelves) {
       : `${(shelf.items || []).length} 条私藏记录，供馆员内部调阅。`;
     volumeNav.hidden = !volumes.length;
     volumeNav.replaceChildren(...volumes.map(item => {
-      const button = element('button', 'inner-volume-button');
+      const button = element('button', 'chronicle-volume inner-volume-button');
       button.type = 'button';
       button.dataset.volume = item.title;
       button.setAttribute('aria-pressed', String(item === volume));
       button.append(element('span', '', item.mark), element('b', '', item.title));
       return button;
     }));
-    renderEntries(volume ? volume.items : (shelf.items || []));
+    renderEntries(volume ? volume.items : (shelf.items || []), volume?.mark || shelf.mark);
     volumeNav.dataset.shelf = shelf.title;
     index.hidden = true;
     collection.hidden = false;
   };
 
   host.replaceChildren(...shelves.map(shelf => {
-    const button = element('button', 'inner-shelf');
+    const button = element('button', 'chronicle-portal inner-shelf');
     button.type = 'button';
     button.dataset.shelf = shelf.title;
     const count = shelf.volumes?.reduce((total, volume) => total + volume.items.length, 0) || shelf.items?.length || 0;
     button.append(
       element('span', '', shelf.mark),
-      element('b', '', shelf.title),
+      element('h3', '', shelf.title),
       element('p', '', shelf.status),
       element('small', '', shelf.volumes?.length ? `${shelf.volumes.length} 卷 · ${count} 条` : `${count} 条私藏记录`)
     );
