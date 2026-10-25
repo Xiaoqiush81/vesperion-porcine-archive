@@ -720,6 +720,8 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .timeline b { font-family: var(--cn-serif); font-size: 16px; font-weight: 500; }
 .timeline p { margin: 8px 0 0; color: var(--chronicle-muted); font-family: var(--cn-serif); font-size: 12px; line-height: 1.8; }
 .chronicle-room { min-height:calc(100vh - 180px); min-height:calc(100svh - 180px); padding:110px clamp(24px,7vw,110px) 90px; background:var(--paper); }
+.chronicle-room[data-chronicle-view="public"],
+.chronicle-room[data-chronicle-view="inner"] { padding-top:0; }
 .chronicle-masthead { width:min(100%,1240px); margin:0 auto; padding:clamp(48px,7vw,86px); position:relative; overflow:hidden; color:var(--chronicle-masthead-ink); background:var(--chronicle-masthead-bg); box-shadow:0 22px 58px var(--shadow-medium); }
 .chronicle-masthead::before { content:""; position:absolute; inset:14px; border:1px solid var(--chronicle-masthead-line); pointer-events:none; }
 .chronicle-masthead-copy,.chronicle-masthead-meta { position:relative; z-index:1; }
