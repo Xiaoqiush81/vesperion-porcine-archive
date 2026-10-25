@@ -93,7 +93,7 @@ async function initRecords() {
 
 async function initChronicles() {
   if (chroniclesReady) return;
-  if (!chroniclesLoading) chroniclesLoading = import('./chronicles.js?v=20261025-3')
+  if (!chroniclesLoading) chroniclesLoading = import('./chronicles.js?v=20261025-4')
     .then(module => module.initChronicles())
     .then(() => { chroniclesReady = true; })
     .catch(error => {
