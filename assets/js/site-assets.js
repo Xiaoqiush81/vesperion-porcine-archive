@@ -1,5 +1,5 @@
 export const SITE_ASSETS = Object.freeze({
-  favicon:'https://files.catbox.moe/m3epbd.png',
+  favicon:'',
   music:'',
   effects:Object.freeze({ flip:'', favorite:'', door:'', pig:'', theme:'', tap:'' })
 });

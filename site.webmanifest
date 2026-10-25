@@ -7,17 +7,12 @@
   "theme_color": "#f3efe5",
   "icons": [
     {
-      "src": "vesperion-mark-v3-64.png",
-      "sizes": "64x64",
-      "type": "image/png"
-    },
-    {
-      "src": "vesperion-mark-v3-192.png",
+      "src": "assets/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "vesperion-mark-v3-512.png",
+      "src": "assets/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
