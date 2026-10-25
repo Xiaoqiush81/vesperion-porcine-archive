@@ -15,19 +15,6 @@ const ROOM_TITLES = {
   legal:'馆舍公约 · PIGDEX 081'
 };
 
-const SITE_ICON_VERSION = '20261025-4';
-
-function updatePageIdentity(room) {
-  document.title = ROOM_TITLES[room] || ROOM_TITLES.home;
-  document.querySelectorAll('[data-site-icon]').forEach(link => {
-    const next = link.cloneNode();
-    const url = new URL(link.getAttribute('href'), document.baseURI);
-    url.search = `v=${SITE_ICON_VERSION}&room=${room}`;
-    next.href = url.href;
-    link.replaceWith(next);
-  });
-}
-
 const QUOTES = ['“可猫可猪；若必须二选一，仍然是猪。”', '“爸爸爸爸——”', '“咪————”', '“今天已经是明晚了。”', '“蜗牛胜出，芝士沉默。”', '“本猪合格，可以继续抱。”', '“一只宇宙无敌第一可爱萌猪诞生惹。”', '“这不是烧钱，这是文化传播经费。”'];
 
 function toast(message) {
@@ -146,7 +133,7 @@ async function enterRoom(room, push = true) {
   if (request !== roomRequest) return;
   document.body.dataset.room = target;
   if (push && location.hash !== `#${target}`) history.pushState({ room: target }, '', `#${target}`);
-  updatePageIdentity(target);
+  document.title = ROOM_TITLES[target] || ROOM_TITLES.home;
   document.dispatchEvent(new CustomEvent('roomchange', { detail:{ room:target } }));
   const soundscape = document.querySelector('#soundscape');
   const soundscapeHost = document.querySelector(target === 'home' ? '#siteHeader' : '#roomToolbarInner');
