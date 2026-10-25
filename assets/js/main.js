@@ -122,15 +122,28 @@ async function initChronicles() {
   return chroniclesLoading;
 }
 
-function roomFromHash() {
+const ROOM_NAMES = new Set(['tarot', 'specimens', 'identify', 'records', 'chronicles', 'legal']);
+
+function roomFromLocation() {
+  const queryRoom = new URLSearchParams(location.search).get('room');
+  if (ROOM_NAMES.has(queryRoom)) return queryRoom;
   const name = location.hash.slice(1);
   if (name.startsWith('legal')) return 'legal';
-  return ['tarot', 'specimens', 'identify', 'records', 'chronicles'].includes(name) ? name : 'home';
+  return ROOM_NAMES.has(name) ? name : 'home';
+}
+
+function roomUrl(room) {
+  const url = new URL(location.href);
+  if (room === 'home') url.searchParams.delete('room');
+  else url.searchParams.set('room', room);
+  url.hash = '';
+  return `${url.pathname}${url.search}`;
 }
 
 async function enterRoom(room, push = true) {
   const request = ++roomRequest;
-  const target = ['tarot', 'specimens', 'identify', 'records', 'chronicles', 'legal'].includes(room) ? room : 'home';
+  const target = ROOM_NAMES.has(room) ? room : 'home';
+  const routeChanged = roomFromLocation() !== target;
   const roomNames = { specimens: '猪猪图鉴', identify: '猪种鉴定所', tarot: '宅邸塔罗馆', records: '宅邸档案室', chronicles: '猪事馆', legal: '宅邸制度文件' };
   if (target === 'specimens') await initArchive();
   if (target === 'tarot') await initTarot();
@@ -139,7 +152,7 @@ async function enterRoom(room, push = true) {
   if (target === 'chronicles') initChronicles();
   if (request !== roomRequest) return;
   document.body.dataset.room = target;
-  if (push && location.hash !== `#${target}`) history.pushState({ room: target }, '', `#${target}`);
+  if (push && routeChanged) history.pushState({ room: target }, '', roomUrl(target));
   document.title = ROOM_TITLES[target] || ROOM_TITLES.home;
   document.dispatchEvent(new CustomEvent('roomchange', { detail:{ room:target } }));
   const soundscape = document.querySelector('#soundscape');
@@ -190,9 +203,9 @@ async function main() {
     event.preventDefault();
     enterRoom(entrance.dataset.roomTarget);
   });
-  window.addEventListener('popstate', () => enterRoom(roomFromHash(), false));
-  window.addEventListener('hashchange', () => enterRoom(roomFromHash(), false));
-  await enterRoom(roomFromHash(), false);
+  window.addEventListener('popstate', () => enterRoom(roomFromLocation(), false));
+  window.addEventListener('hashchange', () => enterRoom(roomFromLocation(), false));
+  await enterRoom(roomFromLocation(), false);
 }
 
 main();
