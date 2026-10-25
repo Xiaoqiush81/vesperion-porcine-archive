@@ -95,9 +95,13 @@ function bindGate() {
   const status = document.querySelector('#chronicleGateStatus');
   const inner = document.querySelector('#innerChronicle');
   const publicChronicle = document.querySelector('.public-chronicle');
+  const masthead = document.querySelector('#chronicleMasthead');
+  const portals = document.querySelector('#chroniclePortals');
   let taps = [];
 
   const revealInner = () => {
+    masthead.hidden = true;
+    portals.hidden = true;
     publicChronicle.hidden = true;
     inner.hidden = false;
     gate.close();
@@ -109,7 +113,9 @@ function bindGate() {
   const restoreOuter = () => {
     gate.close();
     inner.hidden = true;
-    publicChronicle.hidden = false;
+    publicChronicle.hidden = true;
+    masthead.hidden = false;
+    portals.hidden = false;
     input.value = '';
     status.textContent = '';
     taps = [];
@@ -137,7 +143,7 @@ function bindGate() {
   gate.querySelector('.gate-close').addEventListener('click', () => gate.close());
   document.querySelector('#leaveInnerChronicle').addEventListener('click', () => {
     restoreOuter();
-    publicChronicle.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    document.querySelector('#chronicles').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   });
   document.addEventListener('roomchange', event => {
     if (event.detail.room !== 'chronicles') restoreOuter();
@@ -158,25 +164,45 @@ export async function initChronicles() {
     if (!response.ok) throw new Error(`Chronicle data request failed: ${response.status}`);
     const data = await response.json();
     renderSections(data.sections, data.publicEntries);
+    const masthead = document.querySelector('#chronicleMasthead');
+    const portals = document.querySelector('#chroniclePortals');
+    const publicChronicle = document.querySelector('.public-chronicle');
+    const innerChronicle = document.querySelector('#innerChronicle');
+    const scrollToTop = () => document.querySelector('#chronicles').scrollIntoView({
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    });
+    const showIndex = () => {
+      publicChronicle.hidden = true;
+      innerChronicle.hidden = true;
+      masthead.hidden = false;
+      portals.hidden = false;
+      document.querySelectorAll('.chronicle-portal').forEach(button => button.setAttribute('aria-pressed', 'false'));
+      scrollToTop();
+    };
     const selectSection = (title, requestedVolume = '') => {
       const section = data.sections.find(item => item.title === title) || data.sections[0];
       const volumes = section.volumes || [];
       const volume = volumes.some(item => item.title === requestedVolume) ? requestedVolume : (volumes[0]?.title || '');
       renderVolumes(volumes, volume);
       renderEntries(data.publicEntries, section, volume);
+      masthead.hidden = true;
+      portals.hidden = true;
+      innerChronicle.hidden = true;
+      publicChronicle.hidden = false;
     };
     document.querySelector('#chroniclePortals').addEventListener('click', event => {
       const portal = event.target.closest('.chronicle-portal');
       if (!portal) return;
       selectSection(portal.dataset.shelf);
-      document.querySelector('.public-chronicle').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      scrollToTop();
     });
     document.querySelector('#chronicleVolumes').addEventListener('click', event => {
       const volume = event.target.closest('.chronicle-volume');
       if (!volume) return;
       selectSection('猪史', volume.dataset.volume);
     });
-    selectSection(data.sections[0].title);
+    document.querySelector('#chronicleSectionBack').addEventListener('click', showIndex);
+    showIndex();
     renderInnerShelves(data.innerShelves);
     ready = true;
   } catch (error) {
