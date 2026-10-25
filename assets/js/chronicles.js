@@ -1,4 +1,4 @@
-const DATA_URL = './data/chronicles.json?v=20261025-6';
+const DATA_URL = './data/chronicles.json?v=20261025-7';
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -82,10 +82,9 @@ function renderInnerShelves(shelves) {
       const article = element('article', 'chronicle-entry');
       const details = element('details', 'chronicle-entry-details');
       const summary = element('summary');
-      const teaser = item.excerpt || `${item.body.slice(0, 24)}${item.body.length > 24 ? '……' : '（完整记录已封存）'}`;
       summary.append(
         element('b', '', item.title),
-        element('p', 'chronicle-excerpt', teaser),
+        element('p', 'chronicle-excerpt', item.excerpt),
         element('span', 'chronicle-expand', '展开完整卷宗')
       );
       const full = element('div', 'chronicle-entry-body');
