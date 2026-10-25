@@ -1,4 +1,4 @@
-import { PROFILES } from './identity-data.js?v=20261020-bank-1';
+import { PROFILES } from './identity-data.js?v=20261025-expanded-1';
 
 const randomIndex = max => {
   if (globalThis.crypto?.getRandomValues) { const value = new Uint32Array(1); globalThis.crypto.getRandomValues(value); return value[0] % max; }
