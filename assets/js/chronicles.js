@@ -7,6 +7,21 @@ function element(tag, className, text) {
   return node;
 }
 
+function enterAfterTap(button, action) {
+  if (!matchMedia('(pointer: coarse)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    action();
+    return;
+  }
+  if (button.dataset.transitioning === 'true') return;
+  button.dataset.transitioning = 'true';
+  button.classList.add('is-tapped');
+  setTimeout(() => {
+    button.classList.remove('is-tapped');
+    delete button.dataset.transitioning;
+    action();
+  }, 130);
+}
+
 function renderSections(sections, entries) {
   const host = document.querySelector('#chroniclePortals');
   host.replaceChildren(...sections.map(section => {
@@ -135,7 +150,7 @@ function renderInnerShelves(shelves) {
   host.addEventListener('click', event => {
     const button = event.target.closest('.inner-shelf');
     if (!button) return;
-    selectShelf(shelves.find(shelf => shelf.title === button.dataset.shelf) || shelves[0]);
+    enterAfterTap(button, () => selectShelf(shelves.find(shelf => shelf.title === button.dataset.shelf) || shelves[0]));
   });
   volumeNav.addEventListener('click', event => {
     const button = event.target.closest('.inner-volume-button');
@@ -265,8 +280,10 @@ export async function initChronicles() {
     document.querySelector('#chroniclePortals').addEventListener('click', event => {
       const portal = event.target.closest('.chronicle-portal');
       if (!portal) return;
-      selectSection(portal.dataset.shelf);
-      scrollToTop();
+      enterAfterTap(portal, () => {
+        selectSection(portal.dataset.shelf);
+        scrollToTop();
+      });
     });
     document.querySelector('#chronicleVolumes').addEventListener('click', event => {
       const volume = event.target.closest('.chronicle-volume');

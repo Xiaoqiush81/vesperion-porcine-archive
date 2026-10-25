@@ -3,7 +3,17 @@ import { createSoundscape } from './audio.js?v=20261025-inner-navigation-1';
 
 const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
 const ARCHIVE_MODULE_URL = './archive.js?v=20261025-public-copy-1';
-const CHRONICLES_MODULE_URL = './chronicles.js?v=20261025-13';
+const CHRONICLES_MODULE_URL = './chronicles.js?v=20261025-14';
+
+const ROOM_TITLES = {
+  home:'PIGDEX 081 · 维斯珀里昂猪类图鉴',
+  specimens:'猪猪图鉴 · PIGDEX 081',
+  identify:'猪种鉴定所 · PIGDEX 081',
+  tarot:'猪猪塔罗馆 · PIGDEX 081',
+  records:'档案室 · PIGDEX 081',
+  chronicles:'猪事馆 · PIGDEX 081',
+  legal:'馆舍公约 · PIGDEX 081'
+};
 
 const QUOTES = ['“可猫可猪；若必须二选一，仍然是猪。”', '“爸爸爸爸——”', '“咪————”', '“今天已经是明晚了。”', '“蜗牛胜出，芝士沉默。”', '“本猪合格，可以继续抱。”', '“一只宇宙无敌第一可爱萌猪诞生惹。”', '“这不是烧钱，这是文化传播经费。”'];
 
@@ -122,6 +132,7 @@ async function enterRoom(room, push = true) {
   if (target === 'chronicles') initChronicles();
   if (request !== roomRequest) return;
   document.body.dataset.room = target;
+  document.title = ROOM_TITLES[target] || ROOM_TITLES.home;
   document.dispatchEvent(new CustomEvent('roomchange', { detail:{ room:target } }));
   const soundscape = document.querySelector('#soundscape');
   const soundscapeHost = document.querySelector(target === 'home' ? '#siteHeader' : '#roomToolbarInner');
