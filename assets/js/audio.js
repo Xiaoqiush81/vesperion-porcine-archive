@@ -363,7 +363,7 @@ export function createSoundscape(root = document) {
   root.addEventListener('click', event => {
     if (event.target.closest('#soundscape')) return;
     menu?.removeAttribute('open');
-    if (event.target.closest('.tarot-card, .draw-card')) effect('flip');
+    if (event.target.closest('.tarot-card, .draw-card, .chronicle-portal, .chronicle-volume, .chronicle-entry-details summary')) effect('flip');
     else if (event.target.closest('.favorite-toggle')) effect('favorite');
     else if (event.target.closest('[data-room-target]')) effect('door');
     else if (event.target.closest('#themeToggle')) effect('theme');
