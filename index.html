@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261025-chronicle-room-12">
+  <link rel="stylesheet" href="assets/style.css?v=20261025-chronicle-room-13">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -304,7 +304,7 @@
     </section>
 
     <section class="chronicle-room room-view room-chronicles" id="chronicles">
-      <header class="chronicle-masthead">
+      <header class="chronicle-masthead" id="chronicleMasthead">
         <div class="chronicle-masthead-copy">
           <p class="eyebrow">VESPERION MANOR CHRONICLES</p>
           <h2>猪事馆</h2>
@@ -319,7 +319,8 @@
       <div class="chronicle-portals" id="chroniclePortals" aria-label="猪事馆馆藏分区" aria-busy="true">
         <article class="chronicle-placeholder"><span>MANOR FILES</span><h3>卷宗装订中</h3><p>馆员正在整理散落的人类世界见闻。</p></article>
       </div>
-      <section class="chronicle public-chronicle" aria-labelledby="publicChronicleTitle">
+      <section class="chronicle public-chronicle" aria-labelledby="publicChronicleTitle" hidden>
+        <button class="chronicle-section-back" id="chronicleSectionBack" type="button">← 返回猪事馆目录</button>
         <div class="section-heading light"><div><p class="eyebrow" id="publicChronicleKicker">OPEN SHELVES</p><h2 id="publicChronicleTitle">猪事录</h2></div><p id="publicChronicleDescription">公开卷仅保留宅邸传闻，不记录足以追索猪咪在人类世界身份的事实。</p></div>
         <nav class="chronicle-volumes" id="chronicleVolumes" aria-label="猪史分卷" hidden></nav>
         <div class="timeline" id="chronicleTimeline" aria-busy="true"><p class="chronicle-loading" id="chronicleLoading">正在展开公开卷宗……</p></div>
@@ -364,7 +365,7 @@
     </form>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261025-chronicle-room-6"></script>
+  <script type="module" src="assets/js/main.js?v=20261025-chronicle-room-7"></script>
 </body>
 </html>
 
