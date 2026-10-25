@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261025-inner-volumes-1">
+  <link rel="stylesheet" href="assets/style.css?v=20261025-inner-navigation-1">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -326,8 +326,16 @@
         <div class="timeline" id="chronicleTimeline" aria-busy="true"><p class="chronicle-loading" id="chronicleLoading">正在展开公开卷宗……</p></div>
       </section>
       <section class="inner-chronicle" id="innerChronicle" hidden aria-labelledby="innerChronicleTitle">
-        <div class="inner-heading"><p class="eyebrow">THE INNER SHELVES</p><h2 id="innerChronicleTitle">真正的猪事录</h2><p>内馆已经开启。更亲密的宅邸轶事将在这里慢慢归档，但仍不会留下可追索现实身份的线索。</p></div>
-        <div class="inner-shelves" id="innerShelves"></div>
+        <div class="inner-index" id="innerIndex">
+          <div class="inner-heading"><p class="eyebrow">THE INNER SHELVES</p><h2 id="innerChronicleTitle">真正的猪事录</h2><p>内馆已经开启。更亲密的宅邸轶事将在这里慢慢归档，但仍不会留下可追索现实身份的线索。</p></div>
+          <div class="inner-shelves" id="innerShelves" aria-label="内馆馆藏分区"></div>
+        </div>
+        <section class="inner-collection" id="innerCollection" hidden aria-labelledby="innerCollectionTitle">
+          <button class="inner-section-back" id="innerSectionBack" type="button">← 返回内馆目录</button>
+          <div class="inner-collection-heading"><p class="eyebrow" id="innerCollectionKicker">PRIVATE SHELVES</p><h3 id="innerCollectionTitle">猪事录</h3><p id="innerCollectionDescription"></p></div>
+          <nav class="inner-volume-nav" id="innerVolumeNav" aria-label="内馆猪史分卷" hidden></nav>
+          <div class="inner-timeline" id="innerTimeline"></div>
+        </section>
         <button class="secondary inner-exit" id="leaveInnerChronicle" type="button">合上内馆卷宗</button>
       </section>
       <div class="chronicle-tail">
@@ -365,7 +373,7 @@
     </form>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261025-chronicle-content-2"></script>
+  <script type="module" src="assets/js/main.js?v=20261025-inner-navigation-1"></script>
 </body>
 </html>
 
