@@ -1,4 +1,4 @@
-const DATA_URL = './data/chronicles.json?v=20261025-3';
+const DATA_URL = './data/chronicles.json?v=20261025-4';
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -27,15 +27,28 @@ function renderSections(sections, entries) {
   host.removeAttribute('aria-busy');
 }
 
-function renderEntries(entries, section) {
+function renderVolumes(volumes, activeVolume) {
+  const host = document.querySelector('#chronicleVolumes');
+  host.hidden = !volumes.length;
+  host.replaceChildren(...volumes.map(volume => {
+    const button = element('button', 'chronicle-volume');
+    button.type = 'button';
+    button.dataset.volume = volume.title;
+    button.setAttribute('aria-pressed', String(volume.title === activeVolume));
+    button.append(element('span', '', volume.mark), element('b', '', volume.title));
+    return button;
+  }));
+}
+
+function renderEntries(entries, section, volume = '') {
   const host = document.querySelector('#chronicleTimeline');
-  document.querySelector('#publicChronicleKicker').textContent = `OPEN SHELVES · ${section.kicker}`;
-  document.querySelector('#publicChronicleTitle').textContent = section.title;
+  document.querySelector('#publicChronicleKicker').textContent = `OPEN SHELVES · ${section.kicker}${volume ? ` · ${volume}` : ''}`;
+  document.querySelector('#publicChronicleTitle').textContent = volume ? `${section.title} · ${volume}` : section.title;
   document.querySelector('#publicChronicleDescription').textContent = section.description;
   document.querySelectorAll('.chronicle-portal').forEach(button => {
     button.setAttribute('aria-pressed', String(button.dataset.shelf === section.title));
   });
-  const selected = entries.filter(entry => entry.shelf === section.title);
+  const selected = entries.filter(entry => entry.shelf === section.title && (!volume || entry.volume === volume));
   host.replaceChildren(...selected.map(entry => {
     const article = element('article', 'chronicle-entry');
     const details = element('details', 'chronicle-entry-details');
@@ -145,15 +158,23 @@ export async function initChronicles() {
     if (!response.ok) throw new Error(`Chronicle data request failed: ${response.status}`);
     const data = await response.json();
     renderSections(data.sections, data.publicEntries);
-    const selectSection = title => {
+    const selectSection = (title, requestedVolume = '') => {
       const section = data.sections.find(item => item.title === title) || data.sections[0];
-      renderEntries(data.publicEntries, section);
+      const volumes = section.volumes || [];
+      const volume = volumes.some(item => item.title === requestedVolume) ? requestedVolume : (volumes[0]?.title || '');
+      renderVolumes(volumes, volume);
+      renderEntries(data.publicEntries, section, volume);
     };
     document.querySelector('#chroniclePortals').addEventListener('click', event => {
       const portal = event.target.closest('.chronicle-portal');
       if (!portal) return;
       selectSection(portal.dataset.shelf);
       document.querySelector('.public-chronicle').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+    document.querySelector('#chronicleVolumes').addEventListener('click', event => {
+      const volume = event.target.closest('.chronicle-volume');
+      if (!volume) return;
+      selectSection('猪史', volume.dataset.volume);
     });
     selectSection(data.sections[0].title);
     renderInnerShelves(data.innerShelves);
