@@ -72,38 +72,71 @@ function renderEntries(entries, section, volume = '') {
 
 function renderInnerShelves(shelves) {
   const host = document.querySelector('#innerShelves');
+  const index = document.querySelector('#innerIndex');
+  const collection = document.querySelector('#innerCollection');
+  const volumeNav = document.querySelector('#innerVolumeNav');
+  const timeline = document.querySelector('#innerTimeline');
+
+  const renderEntries = items => {
+    timeline.replaceChildren(...items.map(item => {
+      const article = element('article');
+      article.append(element('b', '', item.title), element('p', '', item.body));
+      return article;
+    }));
+  };
+
+  const selectShelf = (shelf, requestedVolume = '') => {
+    const volumes = shelf.volumes || [];
+    const volume = volumes.find(item => item.title === requestedVolume) || volumes[0];
+    document.querySelector('#innerCollectionKicker').textContent = `PRIVATE SHELVES · ${shelf.status}${volume ? ` · ${volume.title}` : ''}`;
+    document.querySelector('#innerCollectionTitle').textContent = volume ? `${shelf.title} · ${volume.title}` : shelf.title;
+    document.querySelector('#innerCollectionDescription').textContent = volume
+      ? `${volume.items.length} 条私藏记录，已归入本卷。`
+      : `${(shelf.items || []).length} 条私藏记录，供馆员内部调阅。`;
+    volumeNav.hidden = !volumes.length;
+    volumeNav.replaceChildren(...volumes.map(item => {
+      const button = element('button', 'inner-volume-button');
+      button.type = 'button';
+      button.dataset.volume = item.title;
+      button.setAttribute('aria-pressed', String(item === volume));
+      button.append(element('span', '', item.mark), element('b', '', item.title));
+      return button;
+    }));
+    renderEntries(volume ? volume.items : (shelf.items || []));
+    volumeNav.dataset.shelf = shelf.title;
+    index.hidden = true;
+    collection.hidden = false;
+  };
+
   host.replaceChildren(...shelves.map(shelf => {
-    const article = element('article', 'inner-shelf');
-    const list = element('div', 'inner-shelf-items');
-    list.append(...(shelf.items || []).map(item => {
-      const entry = element('section');
-      entry.append(element('b', '', item.title), element('p', '', item.body));
-      return entry;
-    }));
-    const volumes = element('div', 'inner-volumes');
-    volumes.append(...(shelf.volumes || []).map(volume => {
-      const section = element('section', 'inner-volume');
-      const heading = element('header');
-      heading.append(element('span', '', volume.mark), element('b', '', volume.title));
-      const entries = element('div', 'inner-volume-items');
-      entries.append(...(volume.items || []).map(item => {
-        const entry = element('section');
-        entry.append(element('b', '', item.title), element('p', '', item.body));
-        return entry;
-      }));
-      section.append(heading, entries);
-      return section;
-    }));
-    if (shelf.volumes?.length) article.classList.add('inner-shelf-has-volumes');
-    article.append(
+    const button = element('button', 'inner-shelf');
+    button.type = 'button';
+    button.dataset.shelf = shelf.title;
+    const count = shelf.volumes?.reduce((total, volume) => total + volume.items.length, 0) || shelf.items?.length || 0;
+    button.append(
       element('span', '', shelf.mark),
       element('b', '', shelf.title),
-      element('small', '', shelf.status),
-      ...(shelf.items?.length ? [list] : []),
-      ...(shelf.volumes?.length ? [volumes] : [])
+      element('p', '', shelf.status),
+      element('small', '', shelf.volumes?.length ? `${shelf.volumes.length} 卷 · ${count} 条` : `${count} 条私藏记录`)
     );
-    return article;
+    return button;
   }));
+
+  host.addEventListener('click', event => {
+    const button = event.target.closest('.inner-shelf');
+    if (!button) return;
+    selectShelf(shelves.find(shelf => shelf.title === button.dataset.shelf) || shelves[0]);
+  });
+  volumeNav.addEventListener('click', event => {
+    const button = event.target.closest('.inner-volume-button');
+    if (!button) return;
+    const shelf = shelves.find(item => item.title === volumeNav.dataset.shelf);
+    if (shelf) selectShelf(shelf, button.dataset.volume);
+  });
+  document.querySelector('#innerSectionBack').addEventListener('click', () => {
+    collection.hidden = true;
+    index.hidden = false;
+  });
 }
 
 function bindGate() {
@@ -125,6 +158,8 @@ function bindGate() {
     portals.hidden = true;
     publicChronicle.hidden = true;
     inner.hidden = false;
+    document.querySelector('#innerIndex').hidden = false;
+    document.querySelector('#innerCollection').hidden = true;
     gate.close();
     input.value = '';
     status.textContent = '';
@@ -135,6 +170,8 @@ function bindGate() {
     room.dataset.chronicleView = 'index';
     gate.close();
     inner.hidden = true;
+    document.querySelector('#innerIndex').hidden = false;
+    document.querySelector('#innerCollection').hidden = true;
     publicChronicle.hidden = true;
     masthead.hidden = false;
     portals.hidden = false;
