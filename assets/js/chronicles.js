@@ -88,6 +88,7 @@ function renderInnerShelves(shelves) {
 }
 
 function bindGate() {
+  const room = document.querySelector('#chronicles');
   const seal = document.querySelector('#chronicleSeal');
   const gate = document.querySelector('#chronicleGate');
   const form = document.querySelector('#chronicleGateForm');
@@ -100,6 +101,7 @@ function bindGate() {
   let taps = [];
 
   const revealInner = () => {
+    room.dataset.chronicleView = 'inner';
     masthead.hidden = true;
     portals.hidden = true;
     publicChronicle.hidden = true;
@@ -111,6 +113,7 @@ function bindGate() {
   };
 
   const restoreOuter = () => {
+    room.dataset.chronicleView = 'index';
     gate.close();
     inner.hidden = true;
     publicChronicle.hidden = true;
@@ -165,6 +168,7 @@ export async function initChronicles() {
     const data = await response.json();
     renderSections(data.sections, data.publicEntries);
     const masthead = document.querySelector('#chronicleMasthead');
+    const room = document.querySelector('#chronicles');
     const portals = document.querySelector('#chroniclePortals');
     const publicChronicle = document.querySelector('.public-chronicle');
     const innerChronicle = document.querySelector('#innerChronicle');
@@ -172,6 +176,7 @@ export async function initChronicles() {
       behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
     });
     const showIndex = () => {
+      room.dataset.chronicleView = 'index';
       publicChronicle.hidden = true;
       innerChronicle.hidden = true;
       masthead.hidden = false;
@@ -180,6 +185,7 @@ export async function initChronicles() {
       scrollToTop();
     };
     const selectSection = (title, requestedVolume = '') => {
+      room.dataset.chronicleView = 'public';
       const section = data.sections.find(item => item.title === title) || data.sections[0];
       const volumes = section.volumes || [];
       const volume = volumes.some(item => item.title === requestedVolume) ? requestedVolume : (volumes[0]?.title || '');
