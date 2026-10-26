@@ -3,8 +3,8 @@ import { createSoundscape } from './audio.js?v=20261025-assets-1';
 import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-browser-icons-1';
 
 const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
-const ARCHIVE_MODULE_URL = './archive.js?v=20261025-public-copy-1';
-const CHRONICLES_MODULE_URL = './chronicles.js?v=20261025-14';
+const ARCHIVE_MODULE_URL = './archive.js?v=20261026-desktop-detail-1';
+const CHRONICLES_MODULE_URL = './chronicles.js?v=20261026-inner-heading-1';
 
 const ROOM_TITLES = {
   home:'PIGDEX 081 · 维斯珀里昂猪类图鉴',

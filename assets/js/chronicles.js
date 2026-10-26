@@ -131,6 +131,10 @@ function renderInnerShelves(shelves) {
     volumeNav.dataset.shelf = shelf.title;
     index.hidden = true;
     collection.hidden = false;
+    requestAnimationFrame(() => collection.scrollIntoView({
+      block: 'start',
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    }));
   };
 
   host.replaceChildren(...shelves.map(shelf => {
@@ -161,6 +165,10 @@ function renderInnerShelves(shelves) {
   document.querySelector('#innerSectionBack').addEventListener('click', () => {
     collection.hidden = true;
     index.hidden = false;
+    requestAnimationFrame(() => index.scrollIntoView({
+      block: 'start',
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    }));
   });
 }
 
