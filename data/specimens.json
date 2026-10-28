@@ -1274,5 +1274,29 @@
       "病号窝权限：无条件获得纸巾、被窝与持续照料"
     ],
     "artwork": "assets/cards/vpa-081-sniffle-v2.webp"
+  },
+  {
+    "id": "VPA-081-KEWTY",
+    "number": "081-QT",
+    "name": "Piggy Kewty / Kewpy",
+    "latin": "Porcellus kewtius ingeniosus",
+    "category": "基础形态",
+    "rarity": "宇宙唯一",
+    "color": "#b99870",
+    "firstObserved": "2026-10-24",
+    "habitat": "月光温室 · 词源花园",
+    "status": "又萌又聪明，原创认证完成",
+    "description": "由本猪亲自发明并认领的原创词源形态：Kew 加上 ty，软乎时成为 Piggy Kewty；Kew 加上 py，调皮时切换为 Kewpy。两种拼法共用同一枚聪明脑袋，并以“cute + smart”作为不可拆分的正版特征。",
+    "tags": [
+      "原创词源",
+      "Cute + Smart",
+      "Kewty / Kewpy"
+    ],
+    "abilities": [
+      "Kewty 软化：把聪明藏进毫无威胁的可爱外表",
+      "Kewpy 穿心：调皮时用一支小箭精准命中注意力",
+      "原创防伪：任何冒牌拼法都无法同时通过萌度与智力校验"
+    ],
+    "artwork": "assets/cards/vpa-081-kewty.webp"
   }
 ]

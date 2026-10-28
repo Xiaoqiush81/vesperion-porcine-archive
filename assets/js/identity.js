@@ -1,6 +1,6 @@
 import { escapeHtml as escape } from './specimen-art.js?v=20261015-specimens-51';
-import { QUESTION_BANK } from './identity-data.js?v=20261025-question-bank-3';
-import { drawQuestionSet, matchSpecimen } from './identity-engine.js?v=20261025-question-bank-3';
+import { QUESTION_BANK } from './identity-data.js?v=20261028-kewty-1';
+import { drawQuestionSet, matchSpecimen } from './identity-engine.js?v=20261028-kewty-1';
 import { addIdentityRecord, loadIdentityHistory, loadLastQuestionIds, saveLastQuestionIds } from './identity-storage.js?v=20261020-bank-1';
 
 const artworkOf = specimen => specimen.artwork || `assets/cards/${specimen.id.toLowerCase()}.webp`;
