@@ -14,7 +14,7 @@ const card = (specimen, favorite) => `
   </button>`;
 
 export async function loadSpecimens() {
-  const response = await fetch('data/specimens.json?v=20261028-kewty-1', { cache: 'no-cache' });
+  const response = await fetch('data/specimens.json?v=20261031-specimens-59', { cache: 'no-cache' });
   if (!response.ok) throw new Error(`Archive request failed: ${response.status}`);
   return response.json();
 }

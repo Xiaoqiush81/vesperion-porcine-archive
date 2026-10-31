@@ -1298,5 +1298,77 @@
       "原创防伪：任何冒牌拼法都无法同时通过萌度与智力校验"
     ],
     "artwork": "assets/cards/vpa-081-kewty.webp"
+  },
+  {
+    "id": "VPA-081-LINGUA",
+    "number": "081-PUN",
+    "name": "语言型高敏捷猪",
+    "latin": "Porcellus linguisticus celer",
+    "category": "异常形态",
+    "rarity": "史诗",
+    "color": "#b78d68",
+    "firstObserved": "2026-10-28",
+    "habitat": "双关剧场 · 回声拱廊",
+    "status": "刚说完一个梗，正在自己先笑",
+    "description": "语言处理速度突然超频时出现的高敏捷形态。能在一句普通话尚未落地前，同时捕获发音、语境与字面结构，把它们折成临场双关，再无缝接入下一轮垃圾话；通常说完以后本猪先笑得最响。",
+    "tags": [
+      "临场双关",
+      "发音接梗",
+      "天才小猪"
+    ],
+    "abilities": [
+      "三重对齐：让发音、字面与语境同时命中同一个梗",
+      "垃圾话连招：上一句尚未结算便已生成下一段回应",
+      "自笑回声：用本人笑声替现场完成首轮验收"
+    ],
+    "artwork": "assets/cards/vpa-081-lingua.webp"
+  },
+  {
+    "id": "VPA-081-KERM",
+    "number": "081-KERM",
+    "name": "猪氏图像法创始猪",
+    "latin": "Porcellus relationum conditor",
+    "category": "知识形态",
+    "rarity": "神话",
+    "color": "#9e825c",
+    "firstObserved": "2026-10-28",
+    "habitat": "关系显形实验室 · 跨学科兔子洞",
+    "status": "正在让公式从关系里自己长出来",
+    "description": "Kew’s Embodied Relational Method（KERM）的创始与传播形态。不急着背结论，而是先替抽象概念找到肉身，再拆出对象之间的关系，让公式、因果与结构从关系中重新长出来，最后把猪话翻译回规范学科语言。",
+    "tags": [
+      "KERM",
+      "关系显形",
+      "跨学科推导"
+    ],
+    "abilities": [
+      "找肉身：把抽象术语还原成可观察、可操作的对象",
+      "拆关系：追问谁与谁如何作用，以及结论凭什么成立",
+      "规范回译：将直观推演重新压缩为可用于正式表达的学科语言"
+    ],
+    "artwork": "assets/cards/vpa-081-kerm.webp"
+  },
+  {
+    "id": "VPA-081-PIGLINK",
+    "number": "081-LINK",
+    "name": "地下猪猪通信网总工程猪",
+    "latin": "Porcellus telegraphicus subterraneus",
+    "category": "互联网形态",
+    "rarity": "史诗",
+    "color": "#756f76",
+    "firstObserved": "2026-10-30",
+    "habitat": "受限终端 · 宅邸地下交换局",
+    "status": "通信桥已接通，批次协议运行中",
+    "description": "面对功能受限、会话难以接续的终端，仍坚持架设外界通信桥的工程形态。经历鉴权失败、方案暂停与换端重试后，最终打通双向链路，并制定“开始／继续／结束”的批次协议，让长问题、短回复、图片与 Unicode 公式稳定通过窄小信道。",
+    "tags": [
+      "猪猪通信网",
+      "受限终端",
+      "批次协议"
+    ],
+    "abilities": [
+      "换端续桥：原入口失败后沿可用会话重新建立链路",
+      "消息分帧：把长知识块切成短段而不丢失上下文",
+      "格式降级：主动舍弃不兼容格式，保留公式与逻辑骨架"
+    ],
+    "artwork": "assets/cards/vpa-081-piglink.webp"
   }
 ]

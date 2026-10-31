@@ -94,5 +94,8 @@ export const PROFILES = Object.freeze([
   ['VPA-081-INDUCTION', {study:4,chaos:4,curious:3}],
   ['VPA-081-TAIL', {clingy:3,soft:3,defense:3}],
   ['VPA-081-SNIFFLE', {soft:5,home:3,sleepy:3}],
-  ['VPA-081-KEWTY', {soft:4,curious:4,bold:3,royal:2}]
+  ['VPA-081-KEWTY', {soft:4,curious:4,bold:3,royal:2}],
+  ['VPA-081-LINGUA', {chaos:5,bold:4,curious:2,clingy:1}],
+  ['VPA-081-KERM', {study:5,curious:5,bold:2}],
+  ['VPA-081-PIGLINK', {digital:5,curious:4,study:3,defense:1}]
 ]);
