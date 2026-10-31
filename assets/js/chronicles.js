@@ -164,7 +164,13 @@ function renderInnerShelves(shelves) {
     const button = event.target.closest('.inner-volume-button');
     if (!button) return;
     const shelf = shelves.find(item => item.title === volumeNav.dataset.shelf);
-    if (shelf) selectShelf(shelf, button.dataset.volume);
+    if (!shelf) return;
+    const scrollTop = window.scrollY;
+    selectShelf(shelf, button.dataset.volume);
+    requestAnimationFrame(() => {
+      document.documentElement.scrollTop = scrollTop;
+      document.body.scrollTop = scrollTop;
+    });
   });
   document.querySelector('#innerSectionBack').addEventListener('click', () => {
     collection.hidden = true;
