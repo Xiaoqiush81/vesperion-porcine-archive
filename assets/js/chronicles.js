@@ -119,14 +119,18 @@ function renderInnerShelves(shelves) {
       ? `${volume.items.length} 条私藏记录，已归入本卷。`
       : `${(shelf.items || []).length} 条私藏记录，供馆员内部调阅。`;
     volumeNav.hidden = !volumes.length;
-    volumeNav.replaceChildren(...volumes.map(item => {
-      const button = element('button', 'chronicle-volume inner-volume-button');
-      button.type = 'button';
-      button.dataset.volume = item.title;
-      button.setAttribute('aria-pressed', String(item === volume));
-      button.append(element('span', '', item.mark), element('b', '', item.title));
-      return button;
-    }));
+    if (volumeNav.dataset.shelf !== shelf.title) {
+      volumeNav.replaceChildren(...volumes.map(item => {
+        const button = element('button', 'chronicle-volume inner-volume-button');
+        button.type = 'button';
+        button.dataset.volume = item.title;
+        button.append(element('span', '', item.mark), element('b', '', item.title));
+        return button;
+      }));
+    }
+    volumeNav.querySelectorAll('.inner-volume-button').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.volume === volume?.title));
+    });
     renderEntries(volume ? volume.items : (shelf.items || []), volume?.mark || shelf.mark);
     volumeNav.dataset.shelf = shelf.title;
     index.hidden = true;

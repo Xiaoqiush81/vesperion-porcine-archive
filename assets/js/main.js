@@ -4,7 +4,7 @@ import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-browser-i
 
 const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
 const ARCHIVE_MODULE_URL = './archive.js?v=20261031-specimens-59';
-const CHRONICLES_MODULE_URL = './chronicles.js?v=20261101-reader-scroll-1';
+const CHRONICLES_MODULE_URL = './chronicles.js?v=20261101-reader-scroll-2';
 
 const ROOM_TITLES = {
   home:'PIGDEX 081 · 维斯珀里昂猪类图鉴',
