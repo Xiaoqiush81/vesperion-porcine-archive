@@ -110,7 +110,7 @@ function renderInnerShelves(shelves) {
     }));
   };
 
-  const selectShelf = (shelf, requestedVolume = '') => {
+  const selectShelf = (shelf, requestedVolume = '', revealCollection = false) => {
     const volumes = shelf.volumes || [];
     const volume = volumes.find(item => item.title === requestedVolume) || volumes[0];
     document.querySelector('#innerCollectionKicker').textContent = `PRIVATE SHELVES · ${shelf.status}${volume ? ` · ${volume.title}` : ''}`;
@@ -131,7 +131,7 @@ function renderInnerShelves(shelves) {
     volumeNav.dataset.shelf = shelf.title;
     index.hidden = true;
     collection.hidden = false;
-    requestAnimationFrame(() => collection.scrollIntoView({
+    if (revealCollection) requestAnimationFrame(() => collection.scrollIntoView({
       block: 'start',
       behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
     }));
@@ -154,7 +154,7 @@ function renderInnerShelves(shelves) {
   host.addEventListener('click', event => {
     const button = event.target.closest('.inner-shelf');
     if (!button) return;
-    enterAfterTap(button, () => selectShelf(shelves.find(shelf => shelf.title === button.dataset.shelf) || shelves[0]));
+    enterAfterTap(button, () => selectShelf(shelves.find(shelf => shelf.title === button.dataset.shelf) || shelves[0], '', true));
   });
   volumeNav.addEventListener('click', event => {
     const button = event.target.closest('.inner-volume-button');
