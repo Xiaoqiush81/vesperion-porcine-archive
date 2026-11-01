@@ -17,6 +17,34 @@ function renderEntryBody(host, entry) {
   host.append(...paragraphs.map(paragraph => element('p', '', paragraph)));
 }
 
+function renderEntry(entry, fallbackPeriod = '') {
+  const article = element('article', 'chronicle-entry');
+  const details = element('details', 'chronicle-entry-details');
+  const summary = element('summary');
+  summary.append(
+    element('b', '', entry.title),
+    element('p', 'chronicle-excerpt', entry.excerpt || entry.body),
+    element('span', 'chronicle-expand', '展开完整卷宗')
+  );
+  const full = element('div', 'chronicle-entry-body');
+  renderEntryBody(full, entry);
+  details.append(summary, full);
+  article.append(element('time', '', entry.period || fallbackPeriod), details);
+  return article;
+}
+
+function renderVolumeButtons(host, volumes, activeVolume, extraClass = '') {
+  host.hidden = !volumes.length;
+  host.replaceChildren(...volumes.map(volume => {
+    const button = element('button', `chronicle-volume${extraClass ? ` ${extraClass}` : ''}`);
+    button.type = 'button';
+    button.dataset.volume = volume.title;
+    button.setAttribute('aria-pressed', String(volume.title === activeVolume));
+    button.append(element('span', '', volume.mark), element('b', '', volume.title));
+    return button;
+  }));
+}
+
 function enterAfterTap(button, action) {
   if (!matchMedia('(pointer: coarse)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) {
     action();
@@ -56,16 +84,7 @@ function renderSections(sections, entries) {
 }
 
 function renderVolumes(volumes, activeVolume) {
-  const host = document.querySelector('#chronicleVolumes');
-  host.hidden = !volumes.length;
-  host.replaceChildren(...volumes.map(volume => {
-    const button = element('button', 'chronicle-volume');
-    button.type = 'button';
-    button.dataset.volume = volume.title;
-    button.setAttribute('aria-pressed', String(volume.title === activeVolume));
-    button.append(element('span', '', volume.mark), element('b', '', volume.title));
-    return button;
-  }));
+  renderVolumeButtons(document.querySelector('#chronicleVolumes'), volumes, activeVolume);
 }
 
 function renderEntries(entries, section, volume = '') {
@@ -77,21 +96,7 @@ function renderEntries(entries, section, volume = '') {
     button.setAttribute('aria-pressed', String(button.dataset.shelf === section.title));
   });
   const selected = entries.filter(entry => entry.shelf === section.title && (!volume || entry.volume === volume));
-  host.replaceChildren(...selected.map(entry => {
-    const article = element('article', 'chronicle-entry');
-    const details = element('details', 'chronicle-entry-details');
-    const summary = element('summary');
-    summary.append(
-      element('b', '', entry.title),
-      element('p', 'chronicle-excerpt', entry.body),
-      element('span', 'chronicle-expand', '展开完整卷宗')
-    );
-    const full = element('div', 'chronicle-entry-body');
-    renderEntryBody(full, entry);
-    details.append(summary, full);
-    article.append(element('time', '', entry.period), details);
-    return article;
-  }));
+  host.replaceChildren(...selected.map(entry => renderEntry(entry)));
   host.removeAttribute('aria-busy');
 }
 
@@ -103,21 +108,7 @@ function renderInnerShelves(shelves) {
   const timeline = document.querySelector('#innerTimeline');
 
   const renderEntries = (items, period) => {
-    timeline.replaceChildren(...items.map(item => {
-      const article = element('article', 'chronicle-entry');
-      const details = element('details', 'chronicle-entry-details');
-      const summary = element('summary');
-      summary.append(
-        element('b', '', item.title),
-        element('p', 'chronicle-excerpt', item.excerpt),
-        element('span', 'chronicle-expand', '展开完整卷宗')
-      );
-      const full = element('div', 'chronicle-entry-body');
-      renderEntryBody(full, item);
-      details.append(summary, full);
-      article.append(element('time', '', item.period || period), details);
-      return article;
-    }));
+    timeline.replaceChildren(...items.map(item => renderEntry(item, period)));
   };
 
   const selectShelf = (shelf, requestedVolume = '', revealCollection = false) => {
@@ -130,13 +121,7 @@ function renderInnerShelves(shelves) {
       : `${(shelf.items || []).length} 条私藏记录，供馆员内部调阅。`;
     volumeNav.hidden = !volumes.length;
     if (volumeNav.dataset.shelf !== shelf.title) {
-      volumeNav.replaceChildren(...volumes.map(item => {
-        const button = element('button', 'chronicle-volume inner-volume-button');
-        button.type = 'button';
-        button.dataset.volume = item.title;
-        button.append(element('span', '', item.mark), element('b', '', item.title));
-        return button;
-      }));
+      renderVolumeButtons(volumeNav, volumes, volume?.title, 'inner-volume-button');
     }
     volumeNav.querySelectorAll('.inner-volume-button').forEach(button => {
       button.setAttribute('aria-pressed', String(button.dataset.volume === volume?.title));
