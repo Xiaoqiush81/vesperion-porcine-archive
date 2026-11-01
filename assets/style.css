@@ -877,10 +877,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .scholia-unit-heading strong { color:var(--navy); font-family:var(--cn-serif); font-size:21px; font-weight:500; }
 .scholia-unit-count { color:var(--text-secondary); font-family:var(--cn-serif); font-size:10px; }
 .scholia-unit-action { min-width:42px; color:var(--amber); font-family:var(--cn-serif); font-size:10px; text-align:right; }
-.scholia-unit-action::before { content:"＋ "; }
 .scholia-unit[open]>.scholia-unit-summary { border-bottom:1px solid var(--line); }
-.scholia-unit[open] .scholia-unit-action { font-size:0; }
-.scholia-unit[open] .scholia-unit-action::before { content:"－ 合上"; font-size:10px; }
 .scholia-unit-body { padding:clamp(18px,3vw,28px); }
 .scholia-unit-body>.scholia-material { border:0; }
 .scholia-unit-questions { margin-top:18px; border-top:1px solid var(--line); }

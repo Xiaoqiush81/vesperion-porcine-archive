@@ -86,7 +86,7 @@ function renderUnit(material, questions, subject, answers) {
   summary.append(
     heading,
     element('span', 'scholia-unit-count', `${questions.length} 道题`),
-    element('span', 'scholia-unit-action', '展开')
+    element('span', 'scholia-unit-action', '＋ 展开')
   );
 
   const body = element('div', 'scholia-unit-body');
@@ -177,11 +177,12 @@ export async function initScholia() {
     renderStudy();
   });
   list.addEventListener('toggle', event => {
-    const opened = event.target;
-    if (!(opened instanceof HTMLDetailsElement) || !opened.open ||
-        !opened.classList.contains('scholia-unit')) return;
-    list.querySelectorAll('.scholia-unit[open]').forEach(unit => {
-      if (unit !== opened) unit.open = false;
+    const unit = event.target;
+    if (!(unit instanceof HTMLDetailsElement) ||
+        !unit.classList.contains('scholia-unit')) return;
+    unit.querySelector('.scholia-unit-action').textContent = unit.open ? '－ 合上' : '＋ 展开';
+    if (unit.open) list.querySelectorAll('.scholia-unit[open]').forEach(other => {
+      if (other !== unit) other.open = false;
     });
   }, true);
   document.querySelector('#leaveScholiaStudy').addEventListener('click', showIndex);
