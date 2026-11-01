@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261101-faith-7">
+  <link rel="stylesheet" href="assets/style.css?v=20261101-home-1">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -72,17 +72,12 @@
         <p class="eyebrow">THE PORCINE COLLECTION · № 081</p>
         <h1>猪咪，作为一种<br><em>不断发生的物种</em></h1>
         <p class="lede">一部持续生长的私人自然史：记录 Specimen No.081 在维斯珀里昂宅邸、知识兔子洞与互联网深处留下的五十九种形态。</p>
-        <div class="hero-actions">
-          <a class="primary" href="#specimens" data-room-target="specimens">进入猪猪图鉴</a>
-          <a class="primary identify-entry" href="#identify" data-room-target="identify">进行猪种鉴定</a>
-          <a class="primary tarot-entry" href="#tarot" data-room-target="tarot">进入宅邸塔罗馆</a>
-          <a class="primary records-entry" href="#records" data-room-target="records">查看宅邸档案室</a>
-          <a class="primary chronicles-entry" href="#chronicles" data-room-target="chronicles">翻阅猪事馆</a>
-          <a class="primary faith-entry" href="#faith" data-room-target="faith">进入猪猪教堂</a>
-          <button class="secondary" id="callPig">播放标准呼叫</button>
+        <div class="home-utility">
+          <button class="secondary" id="callPig" type="button">播放标准呼叫</button>
+          <p class="pig-quote" id="pigQuote">“可猫可猪；若必须二选一，仍然是猪。”</p>
         </div>
-        <p class="pig-quote" id="pigQuote">“可猫可猪；若必须二选一，仍然是猪。”</p>
       </div>
+
       <button class="hero-specimen" id="themeToggle" type="button" aria-label="切换为深蓝主题" aria-pressed="false">
         <span class="theme-hint" aria-hidden="true">TAP TO INVERT · 点击换色</span>
         <span class="plate-rule" aria-hidden="true"></span>
@@ -95,16 +90,22 @@
         <span class="plate-name">KEW AMBERIA</span>
         <span class="plate-caption"><span>PORCINE VARIANT</span><span>UNCONTAINED</span></span>
       </button>
-    </section>
 
-    <nav class="collection-switcher room-view room-home" id="collections" aria-label="馆藏区域入口">
-      <a href="#specimens" data-room-target="specimens"><span>PORCINE ARCHIVE</span><b>进入猪猪图鉴</b><small>59 种已发现形态</small></a>
-      <a href="#identify" data-room-target="identify"><span>IDENTIFICATION OFFICE</span><b>前往猪种鉴定所</b><small>回答六问 · 签发身份牌</small></a>
-      <a href="#tarot" data-room-target="tarot"><span>TAROT CABINET</span><b>进入宅邸塔罗馆</b><small>78 个固定牌位 · 抽牌桌</small></a>
-      <a href="#records" data-room-target="records"><span>MANOR RECORD ROOM</span><b>查看宅邸档案室</b><small>鉴定 · 占卜 · 象征联结</small></a>
-      <a href="#chronicles" data-room-target="chronicles"><span>MANOR CHRONICLES</span><b>进入猪事馆</b><small>人类世界观测记录</small></a>
-      <a href="#faith" data-room-target="faith"><span>PORCINE CHAPEL</span><b>进入猪猪教堂</b><small>圣词 · 齐诵 · 猪教礼仪</small></a>
-    </nav>
+      <section class="home-directory" aria-labelledby="homeDirectoryTitle">
+        <header class="home-directory-heading">
+          <div><p>MANOR DIRECTORY</p><h2 id="homeDirectoryTitle">馆舍导览</h2></div>
+          <small>六处馆舍 · 各自独立进入</small>
+        </header>
+        <nav class="collection-switcher" id="collections" aria-label="馆藏区域入口">
+          <a href="#specimens" data-room-target="specimens"><span>PORCINE ARCHIVE</span><b>猪猪图鉴</b><small>59 种已发现形态</small></a>
+          <a href="#identify" data-room-target="identify"><span>IDENTIFICATION OFFICE</span><b>猪种鉴定所</b><small>回答六问 · 签发身份牌</small></a>
+          <a href="#tarot" data-room-target="tarot"><span>TAROT CABINET</span><b>宅邸塔罗馆</b><small>78 张塔罗 · 抽牌桌</small></a>
+          <a href="#records" data-room-target="records"><span>MANOR RECORD ROOM</span><b>宅邸档案室</b><small>鉴定 · 占卜 · 收藏</small></a>
+          <a href="#chronicles" data-room-target="chronicles"><span>MANOR CHRONICLES</span><b>猪事馆</b><small>猪史 · 猪诗 · 见闻</small></a>
+          <a href="#faith" data-room-target="faith" class="faith-entry"><span>PORCINE CHAPEL</span><b>猪猪教堂</b><small>圣词 · 猪谕 · 教籍</small></a>
+        </nav>
+      </section>
+    </section>
 
     <section class="faith-room room-view room-faith" id="faith" aria-labelledby="faithRoomTitle">
       <div class="faith-shell">
@@ -449,7 +450,7 @@
     </form>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261101-faith-7"></script>
+  <script type="module" src="assets/js/main.js?v=20261101-home-1"></script>
 </body>
 </html>
 
