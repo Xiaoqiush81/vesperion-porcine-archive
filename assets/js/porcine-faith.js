@@ -1,4 +1,4 @@
-const DATA_URL = './data/porcine-faith.json?v=20261101-faith-4';
+const DATA_URL = './data/porcine-faith.json?v=20261101-faith-5';
 const MEMBER_KEY = 'pigdex-faith-member-v1';
 
 function linesHtml(lines) {
