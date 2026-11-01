@@ -5,6 +5,7 @@ import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-browser-i
 const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
 const ARCHIVE_MODULE_URL = './archive.js?v=20261031-specimens-59';
 const CHRONICLES_MODULE_URL = './chronicles.js?v=20261101-scholia-8';
+const FAITH_MODULE_URL = './porcine-faith.js?v=20261101-faith-1';
 
 const ROOM_TITLES = {
   home:'PIGDEX 081 · 维斯珀里昂猪类图鉴',
@@ -14,6 +15,7 @@ const ROOM_TITLES = {
   records:'档案室 · PIGDEX 081',
   chronicles:'猪事馆 · PIGDEX 081',
   scholia:'诸科笺注 · PIGDEX 081',
+  faith:'猪猪教堂 · PIGDEX 081',
   legal:'馆舍公约 · PIGDEX 081'
 };
 
@@ -38,11 +40,13 @@ let tarotReady = false;
 let identityReady = false;
 let recordsReady = false;
 let chroniclesReady = false;
+let faithReady = false;
 let archiveLoading = null;
 let tarotLoading = null;
 let identityLoading = null;
 let recordsLoading = null;
 let chroniclesLoading = null;
+let faithLoading = null;
 let archiveController = null;
 let roomRequest = 0;
 
@@ -123,7 +127,20 @@ async function initChronicles() {
   return chroniclesLoading;
 }
 
-const ROOM_NAMES = new Set(['tarot', 'specimens', 'identify', 'records', 'chronicles', 'scholia', 'legal']);
+async function initFaith() {
+  if (faithReady) return;
+  if (!faithLoading) faithLoading = import(FAITH_MODULE_URL)
+    .then(module => module.initPorcineFaith())
+    .then(() => { faithReady = true; })
+    .catch(error => {
+      console.error(error);
+      document.querySelector('#faithContent').innerHTML = '<p class="faith-error">圣卷暂时无法展开，请稍后再试。</p>';
+    })
+    .finally(() => { faithLoading = null; });
+  return faithLoading;
+}
+
+const ROOM_NAMES = new Set(['tarot', 'specimens', 'identify', 'records', 'chronicles', 'scholia', 'faith', 'legal']);
 
 function roomFromLocation() {
   const queryRoom = new URLSearchParams(location.search).get('room');
@@ -145,13 +162,14 @@ async function enterRoom(room, push = true) {
   const request = ++roomRequest;
   const target = ROOM_NAMES.has(room) ? room : 'home';
   const routeChanged = roomFromLocation() !== target;
-  const roomNames = { specimens: '猪猪图鉴', identify: '猪种鉴定所', tarot: '宅邸塔罗馆', records: '宅邸档案室', chronicles: '猪事馆', scholia: '诸科笺注', legal: '宅邸制度文件' };
+  const roomNames = { specimens: '猪猪图鉴', identify: '猪种鉴定所', tarot: '宅邸塔罗馆', records: '宅邸档案室', chronicles: '猪事馆', scholia: '诸科笺注', faith: '猪猪教堂', legal: '宅邸制度文件' };
   if (target === 'specimens') await initArchive();
   if (target === 'tarot') await initTarot();
   if (target === 'identify') await initIdentity();
   if (target === 'records') await initRecords();
   if (target === 'chronicles') initChronicles();
   if (target === 'scholia') await initChronicles();
+  if (target === 'faith') await initFaith();
   if (request !== roomRequest) return;
   document.body.dataset.room = target;
   if (push && routeChanged) history.pushState({ room: target }, '', roomUrl(target));
