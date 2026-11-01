@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261101-scholia-8">
+  <link rel="stylesheet" href="assets/style.css?v=20261101-faith-1">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -35,6 +35,7 @@
       <button class="header-room" data-room-target="tarot" type="button">塔罗馆</button>
       <button class="header-room" data-room-target="records" type="button">档案室</button>
       <button class="header-room" data-room-target="chronicles" type="button">猪事馆</button>
+      <button class="header-room" data-room-target="faith" type="button">猪猪教</button>
       <button id="randomPig" class="nav-button" type="button">随机捕猪</button>
       <button class="nav-button" data-room-target="legal" type="button">条款与政策</button>
     </nav>
@@ -76,6 +77,7 @@
           <a class="primary tarot-entry" href="#tarot" data-room-target="tarot">进入宅邸塔罗馆</a>
           <a class="primary records-entry" href="#records" data-room-target="records">查看宅邸档案室</a>
           <a class="primary chronicles-entry" href="#chronicles" data-room-target="chronicles">翻阅猪事馆</a>
+          <a class="primary faith-entry" href="#faith" data-room-target="faith">进入猪猪教堂</a>
           <button class="secondary" id="callPig">播放标准呼叫</button>
         </div>
         <p class="pig-quote" id="pigQuote">“可猫可猪；若必须二选一，仍然是猪。”</p>
@@ -100,7 +102,22 @@
       <a href="#tarot" data-room-target="tarot"><span>TAROT CABINET</span><b>进入宅邸塔罗馆</b><small>78 个固定牌位 · 抽牌桌</small></a>
       <a href="#records" data-room-target="records"><span>MANOR RECORD ROOM</span><b>查看宅邸档案室</b><small>鉴定 · 占卜 · 象征联结</small></a>
       <a href="#chronicles" data-room-target="chronicles"><span>MANOR CHRONICLES</span><b>进入猪事馆</b><small>人类世界观测记录</small></a>
+      <a href="#faith" data-room-target="faith"><span>PORCINE CHAPEL</span><b>进入猪猪教堂</b><small>圣词 · 齐诵 · 猪教礼仪</small></a>
     </nav>
+
+    <section class="faith-room room-view room-faith" id="faith" aria-labelledby="faithRoomTitle">
+      <div class="faith-shell">
+        <div class="faith-room-heading">
+          <p class="eyebrow">VESPERION MANOR · PORCINE CHAPEL</p>
+          <h2 id="faithRoomTitle">猪猪教堂</h2>
+          <p>圣火昭昭，圣光耀耀。凡我猪者，于此展开圣词、礼仪与大齐诵。</p>
+        </div>
+        <div id="faithContent" class="faith-content" aria-live="polite">
+          <p class="faith-loading">圣卷展开中……</p>
+        </div>
+        <a class="section-jump" href="#home" data-room-target="home">← 返回馆舍大厅</a>
+      </div>
+    </section>
 
     <section class="legal-room room-view room-legal" id="legal">
       <header class="legal-masthead">
@@ -431,7 +448,7 @@
     </form>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261101-scholia-8"></script>
+  <script type="module" src="assets/js/main.js?v=20261101-faith-1"></script>
 </body>
 </html>
 
