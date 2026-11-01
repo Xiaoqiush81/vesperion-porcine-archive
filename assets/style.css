@@ -1270,32 +1270,17 @@ html[data-faith-member="true"] .faith-masthead { box-shadow:inset 0 0 0 1px colo
 .faith-inner-response>div p { margin:0 0 8px; color:var(--text-secondary); font-family:var(--cn-serif); font-size:12px; line-height:1.9; }
 .faith-inner-response>div p:last-child { margin-bottom:0; }
 
+/* Porcine chapel responsive */
 @media (max-width:760px) {
   .faith-toolbar-mark { display:none; }
-  .faith-membership { padding:26px 20px; grid-template-columns:1fr; gap:20px; }
+  .faith-membership { padding:34px 22px 28px; grid-template-columns:1fr; gap:20px; }
   .faith-membership-action { width:100%; }
-  .faith-membership-member { grid-template-columns:70px 1fr; align-items:start; }
-  .faith-member-seal { width:64px; height:64px; }
+  .faith-membership-member { grid-template-columns:1fr; align-items:start; gap:16px; }
+  .faith-member-seal { width:72px; height:72px; margin-inline:auto; }
   .faith-member-seal b { font-size:20px; }
-  .faith-membership-leave { grid-column:1/-1; justify-self:end; }
+  .faith-membership-leave { grid-column:auto; justify-self:center; }
   .faith-inner-rites { grid-template-columns:1fr; }
   .faith-inner-response summary { min-height:84px; }
-}
-
-@media (max-width:430px) {
-  .faith-membership-member { grid-template-columns:54px 1fr; gap:14px; }
-  .faith-member-seal { width:52px; height:52px; }
-  .faith-member-seal b { font-size:17px; }
-  .faith-oath p { font-size:13px; }
-}
-
-
-/* Porcine chapel responsive polish */
-@media (max-width:760px) {
-  .faith-membership { padding:34px 22px 28px; }
-  .faith-membership-member { grid-template-columns:1fr; gap:16px; }
-  .faith-member-seal { width:72px; height:72px; margin-inline:auto; }
-  .faith-membership-leave { grid-column:auto; justify-self:center; }
   .faith-doctrine-item summary { grid-template-columns:42px minmax(0,1fr) auto; padding:16px 20px 16px 24px; }
   .faith-doctrine-item summary>span,.faith-text-mark { font-size:16px; }
   .faith-doctrine-item>p { padding-left:66px; }
@@ -1307,6 +1292,8 @@ html[data-faith-member="true"] .faith-masthead { box-shadow:inset 0 0 0 1px colo
   .faith-membership { padding-inline:18px; }
   .faith-membership::after { font-size:7px; letter-spacing:.1em; }
   .faith-member-seal { width:64px; height:64px; }
+  .faith-member-seal b { font-size:17px; }
+  .faith-oath p { font-size:13px; }
   .faith-doctrine-item summary { grid-template-columns:36px minmax(0,1fr) auto; gap:10px; padding-inline:18px; }
   .faith-doctrine-item summary>span,.faith-text-mark { font-size:15px; }
   .faith-doctrine-item>p { padding-left:54px; }
