@@ -1,4 +1,4 @@
-const DATA_URL = './data/scholia.json?v=20261101-scholia-8';
+const DATA_URL = './data/scholia.json?v=20261101-poetry-9';
 const STORAGE_KEY = 'vesperion-scholia-answers-v1';
 
 function element(tag, className = '', text = '') {
