@@ -384,7 +384,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .collection-switcher b { grid-row: 1 / span 2; grid-column: 2; color:var(--document-ink); font-family: var(--cn-serif); font-size: 19px; font-weight: 500; }
 .collection-switcher small { color:var(--document-muted); font-family: var(--cn-serif); font-size: 10px; }
 .collection-switcher a:hover { background:var(--document-paper-deep); }
-.section-jump { width: min(100%, 1240px); min-height: 46px; margin: 46px auto 0; padding: 18px 12px 12px; display: block; color: var(--text-accent); border-top: 1px solid var(--line); font-family: var(--cn-serif); font-size: 14px; text-align: right; text-decoration: none; }
+.section-jump { width: min(100%, 1240px); min-height: 46px; margin: 46px auto 0; padding: 18px 12px 12px; display: block; color: var(--text-accent); background: transparent; border: 0; border-top: 1px solid var(--line); border-radius: 0; -webkit-appearance: none; appearance: none; font-family: var(--cn-serif); font-size: 14px; text-align: right; text-decoration: none; cursor: pointer; }
 .status-strip div { padding: 25px 28px; border-right: 1px solid var(--line); }
 .status-strip div:last-child { border: 0; }
 
