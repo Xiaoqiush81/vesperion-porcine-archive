@@ -7,6 +7,16 @@ function element(tag, className, text) {
   return node;
 }
 
+function renderEntryBody(host, entry) {
+  if (entry.verse?.length) {
+    const verse = element('blockquote', 'chronicle-verse');
+    verse.append(...entry.verse.map(line => element('span', '', line)));
+    host.append(verse);
+  }
+  const paragraphs = entry.details || (entry.verse ? [] : [entry.body]);
+  host.append(...paragraphs.map(paragraph => element('p', '', paragraph)));
+}
+
 function enterAfterTap(button, action) {
   if (!matchMedia('(pointer: coarse)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) {
     action();
@@ -77,7 +87,7 @@ function renderEntries(entries, section, volume = '') {
       element('span', 'chronicle-expand', '展开完整卷宗')
     );
     const full = element('div', 'chronicle-entry-body');
-    full.append(...(entry.details || [entry.body]).map(paragraph => element('p', '', paragraph)));
+    renderEntryBody(full, entry);
     details.append(summary, full);
     article.append(element('time', '', entry.period), details);
     return article;
@@ -103,7 +113,7 @@ function renderInnerShelves(shelves) {
         element('span', 'chronicle-expand', '展开完整卷宗')
       );
       const full = element('div', 'chronicle-entry-body');
-      full.append(...(item.details || [item.body]).map(paragraph => element('p', '', paragraph)));
+      renderEntryBody(full, item);
       details.append(summary, full);
       article.append(element('time', '', item.period || period), details);
       return article;

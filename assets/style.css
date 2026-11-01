@@ -806,6 +806,9 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .chronicle-entry-details[open] .chronicle-expand { font-size:0; }
 .chronicle-entry-details[open] .chronicle-expand::after { content:"合上完整卷宗"; font-size:9px; }
 .chronicle-entry-body { margin-top:22px; padding:4px 0 2px 22px; border-left:2px solid var(--amber); }
+.chronicle-verse { margin:0 0 22px; padding:0; color:inherit; border:0; font-family:var(--cn-serif); font-size:15px; line-height:1.9; }
+.chronicle-verse span { display:block; }
+.chronicle-verse span+span { margin-top:2px; }
 .public-chronicle .chronicle-entry-body p { margin:0 0 13px; color:var(--navy); }
 .public-chronicle .chronicle-entry-body p:last-child { margin-bottom:0; }
 .inner-chronicle { width:min(100%,1240px); margin:0 auto; padding:clamp(34px,6vw,72px); position:relative; color:var(--chronicle-ink); background:var(--chronicle-bg); box-shadow:0 24px 60px var(--shadow-medium); }
@@ -1017,6 +1020,7 @@ dialog::backdrop { background:var(--backdrop); }
   .tarot-detail-art { width: min(100%, 390px); max-height: 58vh; margin-inline: auto; }
   .card-art { height: auto; }
   .timeline article { grid-template-columns: 1fr; gap: 7px; }
+  .chronicle-verse { font-size:16px; line-height:2; }
   footer { display: block; }
   footer span { display: block; margin: 5px 0; }
   .inner-heading { min-height:0; padding:0 0 30px; }
