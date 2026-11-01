@@ -1125,45 +1125,50 @@ dialog::backdrop { background:var(--backdrop); }
 .faith-chant-controls span { color:var(--text-accent); font:9px var(--cn-serif); letter-spacing:.12em; }
 
 .faith-doctrine,.faith-library { margin-top:34px; }
-.faith-section-head { padding:0 2px 16px; display:flex; align-items:end; justify-content:space-between; gap:24px; border-bottom:1px solid var(--line); }
+.faith-section-head { position:relative; padding:0 4px 18px; display:flex; align-items:end; justify-content:space-between; gap:24px; border-bottom:1px solid var(--line); }
+.faith-section-head::after { content:"✦"; position:absolute; left:50%; bottom:-6px; padding:0 10px; transform:translateX(-50%); color:var(--amber); background:var(--surface); font-size:9px; }
 .faith-section-head div { min-width:0; }
-.faith-section-head h3 { margin:7px 0 0; color:var(--navy); font-family:var(--cn-serif); font-size:26px; font-weight:500; }
+.faith-section-head h3 { margin:7px 0 0; color:var(--navy); font-family:var(--cn-serif); font-size:26px; font-weight:500; letter-spacing:.05em; }
 .faith-section-head>p { max-width:360px; margin:0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:10px; line-height:1.8; text-align:right; }
 
 .faith-doctrine-list { margin-top:14px; display:grid; gap:10px; }
 .faith-doctrine-item { background:var(--surface); border:1px solid var(--line); }
-.faith-doctrine-item summary { min-height:68px; padding:15px 20px; display:grid; grid-template-columns:34px 1fr auto; align-items:center; gap:14px; list-style:none; cursor:pointer; }
+.faith-doctrine-item summary { min-height:78px; padding:18px 24px 18px 28px; display:grid; grid-template-columns:48px minmax(0,1fr) auto; align-items:center; gap:14px; list-style:none; cursor:pointer; }
 .faith-doctrine-item summary::-webkit-details-marker { display:none; }
-.faith-doctrine-item summary>span { color:var(--amber); font-family:var(--serif); font-size:10px; }
-.faith-doctrine-item summary>strong { font-family:var(--cn-serif); font-size:16px; font-weight:500; }
+.faith-doctrine-item summary>span,.faith-text-mark { color:var(--amber); font-family:var(--serif); font-size:18px; line-height:1; letter-spacing:.04em; }
+.faith-doctrine-item summary>strong { font-family:var(--cn-serif); font-size:18px; font-weight:500; }
 .faith-doctrine-item summary>b,.faith-text summary>b { color:var(--amber); font-family:var(--cn-serif); font-size:17px; font-weight:400; transition:transform .2s ease; }
 .faith-doctrine-item[open] summary>b,.faith-text[open] summary>b { transform:rotate(45deg); }
 .faith-doctrine-item[open] summary { background:var(--surface-raised); border-bottom:1px solid var(--line); }
-.faith-doctrine-item>p { margin:0; padding:20px 24px 24px 68px; color:var(--text-secondary); font-family:var(--cn-serif); font-size:12px; line-height:2; }
+.faith-doctrine-item>p { margin:0; padding:20px 24px 24px 78px; color:var(--text-secondary); font-family:var(--cn-serif); font-size:12px; line-height:2; }
 
 .faith-scriptures { margin-top:14px; display:grid; gap:14px; }
 .faith-text { position:relative; overflow:hidden; background:var(--surface); border:1px solid var(--line); box-shadow:0 10px 26px var(--shadow-soft); }
-.faith-text::before,.faith-text::after { content:"✦"; position:absolute; top:18px; color:var(--amber); opacity:.28; font-size:9px; pointer-events:none; }
-.faith-text::before { left:16px; }.faith-text::after { right:16px; }
-.faith-text summary { min-height:92px; padding:20px clamp(54px,7vw,76px); display:grid; grid-template-columns:34px minmax(0,1fr) 18px 22px; align-items:center; gap:14px; list-style:none; cursor:pointer; }
+.faith-doctrine-item,.faith-text { position:relative; isolation:isolate; }
+.faith-doctrine-item::before,.faith-doctrine-item::after,.faith-text::before,.faith-text::after { position:absolute; color:var(--amber); pointer-events:none; z-index:1; font-family:var(--serif); font-size:18px; opacity:.34; }
+.faith-doctrine-item::before,.faith-text::before { content:"⌜"; top:10px; left:12px; }
+.faith-doctrine-item::after,.faith-text::after { content:"⌟"; right:12px; bottom:10px; }
+.faith-text summary { min-height:104px; padding:22px clamp(34px,6vw,64px); display:grid; grid-template-columns:52px minmax(0,1fr) 18px 24px; align-items:center; gap:14px; list-style:none; cursor:pointer; }
 .faith-text summary::-webkit-details-marker { display:none; }
-.faith-text-mark { color:var(--amber); font-family:var(--serif); font-size:10px; text-align:left; }
+.faith-text-mark { text-align:left; }
 .faith-text-title { min-width:0; display:grid; gap:4px; }
-.faith-text-title small { color:var(--text-accent); font-family:var(--serif); font-size:8px; letter-spacing:.17em; }
-.faith-text-title strong { font-family:var(--cn-serif); font-size:20px; font-weight:500; }
-.faith-text-ornament { color:var(--amber); opacity:.6; font-size:10px; text-align:center; }
+.faith-text-title small { color:var(--text-accent); font-family:var(--serif); font-size:9px; letter-spacing:.19em; }
+.faith-text-title strong { font-family:var(--cn-serif); font-size:23px; font-weight:500; letter-spacing:.03em; }
+.faith-text-ornament { width:18px; height:18px; display:grid; place-items:center; color:var(--amber); border:1px solid color-mix(in srgb,var(--amber) 45%,transparent); border-radius:50%; opacity:.6; font-size:7px; text-align:center; }
 .faith-text summary>b { text-align:right; }
 .faith-text[open] summary { background:var(--surface-raised); border-bottom:1px solid var(--line); }
-.faith-text[open] .faith-text-ornament { opacity:1; }
+.faith-text[open] .faith-text-ornament { opacity:1; background:color-mix(in srgb,var(--amber) 10%,transparent); }
+.faith-text summary::after { content:""; position:absolute; left:clamp(34px,6vw,64px); right:clamp(34px,6vw,64px); bottom:10px; height:1px; background:linear-gradient(90deg,transparent,var(--line),transparent); }
+.faith-text[open] summary::after { opacity:0; }
 .faith-verse { padding:38px clamp(28px,8vw,88px) 44px; position:relative; display:grid; justify-items:center; color:var(--navy); font-family:var(--cn-serif); font-size:15px; line-height:2.1; text-align:center; }
 .faith-verse::before { content:""; width:48px; height:1px; margin-bottom:22px; background:var(--amber); opacity:.65; }
 .faith-verse span { display:block; }
 .faith-verse i { height:1.15em; }
 
-.faith-colophon { margin:58px 0 0; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:22px; }
+.faith-colophon { width:100%; margin:58px auto 0; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:22px; }
 .faith-colophon>span { height:1px; background:var(--line); }
-.faith-colophon p { margin:0; display:grid; gap:5px; text-align:center; }
-.faith-colophon b { color:var(--navy); font-family:var(--cn-serif); font-size:15px; font-weight:500; letter-spacing:.18em; }
+.faith-colophon p { min-width:330px; margin:0; display:grid; gap:5px; text-align:center; }
+.faith-colophon b { color:var(--navy); font-family:var(--cn-serif); font-size:17px; font-weight:500; letter-spacing:.14em; }
 .faith-colophon small { color:var(--text-accent); font-family:var(--cn-serif); font-size:9px; }
 
 @media (max-width: 900px) {
@@ -1221,26 +1226,30 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] {
 html[data-faith-member="true"] .faith-masthead { box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--amber-pale) 58%,transparent); }
 .faith-masthead-member { width:max-content; max-width:100%; margin:28px auto -8px; padding:7px 14px; color:var(--amber-pale); border-block:1px solid color-mix(in srgb,var(--amber-pale) 36%,transparent); font-family:var(--cn-serif); font-size:9px; letter-spacing:.14em; }
 
-.faith-membership { margin-top:14px; padding:32px clamp(24px,6vw,58px); display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:28px; background:var(--surface); border:1px solid var(--line); position:relative; overflow:hidden; }
-.faith-membership::before { content:""; position:absolute; top:0; left:0; width:72px; height:1px; background:var(--amber); }
-.faith-membership-copy { min-width:0; }
+.faith-membership { width:100%; margin-top:18px; padding:38px clamp(28px,7vw,76px); display:grid; grid-template-columns:1fr; align-items:center; justify-items:center; gap:22px; position:relative; overflow:hidden; color:var(--navy); background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(90deg,transparent 0 8%,var(--line) 8% 92%,transparent 92%) border-box; border:1px solid var(--line); text-align:center; }
+.faith-membership::after { content:"✦  ·  VESPERION PORCINE ORDER  ·  ✦"; position:absolute; top:12px; left:50%; transform:translateX(-50%); color:var(--amber); opacity:.42; font-family:var(--serif); font-size:8px; letter-spacing:.18em; white-space:nowrap; pointer-events:none; }
+.faith-membership-copy { width:min(100%,680px); min-width:0; margin-inline:auto; text-align:center; }
 .faith-membership-copy>small,.faith-ceremony>small,.faith-oracle>small,.faith-inner-response summary small { color:var(--text-accent); font-family:var(--serif); font-size:8px; letter-spacing:.18em; }
-.faith-membership-copy h3 { margin:8px 0 10px; color:var(--navy); font-family:var(--cn-serif); font-size:24px; font-weight:500; }
-.faith-membership-copy>p { max-width:680px; margin:0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:12px; line-height:1.9; }
+.faith-membership-copy>small { display:block; text-align:center; }
+.faith-membership-copy h3 { margin:10px 0 12px; color:var(--navy); font-family:var(--cn-serif); font-size:clamp(24px,3.2vw,32px); font-weight:500; letter-spacing:.08em; text-align:center; }
+.faith-membership-copy>p { max-width:620px; margin:0 auto; color:var(--text-secondary); font-family:var(--cn-serif); font-size:12px; line-height:1.9; text-align:center; }
 .faith-membership-action,.faith-ceremony button { min-width:150px; min-height:44px; padding:10px 20px; color:var(--paper); background:var(--navy); border:1px solid var(--navy); -webkit-appearance:none; appearance:none; font:12px var(--cn-serif); letter-spacing:.1em; cursor:pointer; }
 .faith-membership-action:hover,.faith-ceremony button:hover { color:var(--navy); background:var(--amber-pale); border-color:var(--amber); }
-.faith-ceremony { grid-column:1/-1; margin-top:2px; padding:28px clamp(20px,5vw,42px); background:var(--surface-raised); border:1px solid var(--line); text-align:center; }
+.faith-ceremony { width:min(100%,760px); grid-column:auto; margin-top:4px; padding:28px clamp(20px,5vw,42px); background:var(--surface-raised); border:1px solid var(--line); text-align:center; }
 .faith-ceremony[hidden] { display:none; }
 .faith-oath { width:min(100%,620px); margin:20px auto 24px; display:grid; gap:7px; }
 .faith-oath p { margin:0; color:var(--navy); font-family:var(--cn-serif); font-size:14px; line-height:1.9; }
 .faith-ceremony button { color:var(--navy); background:transparent; border-color:var(--amber); }
 
-.faith-membership-member { grid-template-columns:auto minmax(0,1fr) auto; background:var(--surface-raised); }
-.faith-member-seal { width:82px; height:82px; display:grid; place-items:center; align-content:center; gap:2px; color:var(--amber); border:1px solid var(--amber); border-radius:50%; }
+.faith-membership-member { grid-template-columns:1fr; background:var(--surface-raised); }
+.faith-member-seal { width:88px; height:88px; margin-top:8px; display:grid; place-items:center; align-content:center; gap:2px; color:var(--amber); border:1px solid var(--amber); border-radius:50%; }
 .faith-member-seal span { font-size:10px; }
 .faith-member-seal b { font-family:var(--serif); font-size:25px; font-weight:500; }
-.faith-member-date { margin-top:8px !important; color:var(--text-accent) !important; font-size:9px !important; letter-spacing:.08em; }
-.faith-membership-leave { min-height:40px; padding:8px 0; color:var(--text-accent); background:transparent; border:0; border-bottom:1px solid var(--line); -webkit-appearance:none; appearance:none; font:10px var(--cn-serif); cursor:pointer; }
+.faith-member-date { margin-top:8px !important; color:var(--text-accent) !important; font-size:9px !important; letter-spacing:.08em; text-align:center; }
+.faith-membership-member .faith-membership-copy { order:2; }
+.faith-membership-member .faith-member-seal { order:1; }
+.faith-membership-member .faith-membership-leave { order:3; }
+.faith-membership-leave { min-width:96px; min-height:40px; padding:8px 0; justify-self:center; color:var(--text-accent); background:transparent; border:0; border-bottom:1px solid transparent; -webkit-appearance:none; appearance:none; font:10px var(--cn-serif); cursor:pointer; }
 .faith-membership-leave:hover { color:var(--amber); border-color:var(--amber); }
 
 .faith-inner-rites { margin-top:14px; display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr); gap:14px; }
@@ -1281,225 +1290,29 @@ html[data-faith-member="true"] .faith-masthead { box-shadow:inset 0 0 0 1px colo
 }
 
 
-/* Porcine chapel polish · faith-6 */
-.faith-membership {
-  width:100%;
-  margin-top:18px;
-  padding:38px clamp(28px,7vw,76px);
-  display:grid;
-  grid-template-columns:1fr;
-  justify-items:center;
-  text-align:center;
-  gap:22px;
-  background:
-    linear-gradient(var(--surface),var(--surface)) padding-box,
-    linear-gradient(90deg,transparent 0 8%,var(--line) 8% 92%,transparent 92%) border-box;
-  border:1px solid var(--line);
-  position:relative;
-  overflow:hidden;
-}
-.faith-membership::before { content:none; }
-.faith-membership::after {
-  content:"✦  ·  VESPERION PORCINE ORDER  ·  ✦";
-  position:absolute;
-  top:12px;
-  left:50%;
-  transform:translateX(-50%);
-  color:var(--amber);
-  opacity:.42;
-  font-family:var(--serif);
-  font-size:8px;
-  letter-spacing:.18em;
-  white-space:nowrap;
-  pointer-events:none;
-}
-.faith-membership-copy {
-  width:min(100%,680px);
-  min-width:0;
-  margin-inline:auto;
-  text-align:center;
-}
-.faith-membership-copy>small { display:block; text-align:center; }
-.faith-membership-copy h3 {
-  margin:10px 0 12px;
-  font-size:clamp(24px,3.2vw,32px);
-  letter-spacing:.08em;
-  text-align:center;
-}
-.faith-membership-copy>p {
-  max-width:620px;
-  margin-inline:auto;
-  text-align:center;
-}
-.faith-membership-action {
-  min-width:200px;
-  justify-self:center;
-}
-.faith-ceremony {
-  width:min(100%,760px);
-  grid-column:auto;
-  margin-top:4px;
-}
-.faith-membership-member {
-  grid-template-columns:1fr;
-  background:var(--surface-raised);
-}
-.faith-member-seal {
-  width:88px;
-  height:88px;
-  margin-top:8px;
-}
-.faith-membership-member .faith-membership-copy { order:2; }
-.faith-membership-member .faith-member-seal { order:1; }
-.faith-membership-member .faith-membership-leave { order:3; }
-.faith-membership-leave {
-  min-width:96px;
-  justify-self:center;
-  border-bottom-color:transparent;
-}
-.faith-member-date { text-align:center; }
-
-.faith-doctrine-list,.faith-scriptures { position:relative; }
-.faith-doctrine-item,.faith-text {
-  position:relative;
-  isolation:isolate;
-}
-.faith-doctrine-item::before,
-.faith-doctrine-item::after,
-.faith-text::before,
-.faith-text::after {
-  position:absolute;
-  color:var(--amber);
-  pointer-events:none;
-  z-index:1;
-}
-.faith-doctrine-item::before,
-.faith-text::before {
-  content:"⌜";
-  top:10px;
-  left:12px;
-  opacity:.34;
-  font-family:var(--serif);
-  font-size:18px;
-}
-.faith-doctrine-item::after,
-.faith-text::after {
-  content:"⌟";
-  right:12px;
-  bottom:10px;
-  top:auto;
-  opacity:.34;
-  font-family:var(--serif);
-  font-size:18px;
-}
-.faith-doctrine-item summary {
-  min-height:78px;
-  padding:18px 24px 18px 28px;
-  grid-template-columns:48px minmax(0,1fr) auto;
-}
-.faith-doctrine-item summary>span,
-.faith-text-mark {
-  color:var(--amber);
-  font-family:var(--serif);
-  font-size:18px;
-  line-height:1;
-  letter-spacing:.04em;
-}
-.faith-doctrine-item summary>strong { font-size:18px; }
-.faith-doctrine-item>p { padding-left:78px; }
-
-.faith-text summary {
-  min-height:104px;
-  padding:22px clamp(34px,6vw,64px);
-  grid-template-columns:52px minmax(0,1fr) 18px 24px;
-}
-.faith-text-title small { font-size:9px; letter-spacing:.19em; }
-.faith-text-title strong { font-size:23px; letter-spacing:.03em; }
-.faith-text-ornament {
-  width:18px;
-  height:18px;
-  display:grid;
-  place-items:center;
-  border:1px solid color-mix(in srgb,var(--amber) 45%,transparent);
-  border-radius:50%;
-  font-size:7px;
-}
-.faith-text[open] .faith-text-ornament {
-  background:color-mix(in srgb,var(--amber) 10%,transparent);
-}
-.faith-text summary::after {
-  content:"";
-  position:absolute;
-  left:clamp(34px,6vw,64px);
-  right:clamp(34px,6vw,64px);
-  bottom:10px;
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--line),transparent);
-}
-.faith-text[open] summary::after { opacity:0; }
-
-.faith-section-head {
-  position:relative;
-  padding:0 4px 18px;
-}
-.faith-section-head::after {
-  content:"✦";
-  position:absolute;
-  left:50%;
-  bottom:-6px;
-  padding:0 10px;
-  transform:translateX(-50%);
-  color:var(--amber);
-  background:var(--surface);
-  font-size:9px;
-}
-.faith-section-head h3 { letter-spacing:.05em; }
-
-.faith-colophon {
-  width:100%;
-  margin-inline:auto;
-}
-.faith-colophon p { min-width:330px; }
-.faith-colophon b { font-size:17px; letter-spacing:.14em; }
-
+/* Porcine chapel responsive polish */
 @media (max-width:760px) {
   .faith-membership { padding:34px 22px 28px; }
   .faith-membership-member { grid-template-columns:1fr; gap:16px; }
   .faith-member-seal { width:72px; height:72px; margin-inline:auto; }
   .faith-membership-leave { grid-column:auto; justify-self:center; }
-  .faith-doctrine-item summary {
-    grid-template-columns:42px minmax(0,1fr) auto;
-    padding:16px 20px 16px 24px;
-  }
+  .faith-doctrine-item summary { grid-template-columns:42px minmax(0,1fr) auto; padding:16px 20px 16px 24px; }
   .faith-doctrine-item summary>span,.faith-text-mark { font-size:16px; }
   .faith-doctrine-item>p { padding-left:66px; }
-  .faith-text summary {
-    grid-template-columns:44px minmax(0,1fr) 16px 22px;
-    padding:20px 30px;
-  }
+  .faith-text summary { grid-template-columns:44px minmax(0,1fr) 16px 22px; padding:20px 30px; }
   .faith-text-title strong { font-size:20px; }
   .faith-colophon p { min-width:0; }
 }
-
 @media (max-width:430px) {
   .faith-membership { padding-inline:18px; }
   .faith-membership::after { font-size:7px; letter-spacing:.1em; }
   .faith-member-seal { width:64px; height:64px; }
-  .faith-doctrine-item summary {
-    grid-template-columns:36px minmax(0,1fr) auto;
-    gap:10px;
-    padding-inline:18px;
-  }
+  .faith-doctrine-item summary { grid-template-columns:36px minmax(0,1fr) auto; gap:10px; padding-inline:18px; }
   .faith-doctrine-item summary>span,.faith-text-mark { font-size:15px; }
   .faith-doctrine-item>p { padding-left:54px; }
-  .faith-text summary {
-    grid-template-columns:36px minmax(0,1fr) 14px 20px;
-    gap:9px;
-    padding-inline:24px;
-  }
+  .faith-text summary { grid-template-columns:36px minmax(0,1fr) 14px 20px; gap:9px; padding-inline:24px; }
   .faith-text-title strong { font-size:18px; }
 }
-
 
 /* Porcine oracle library · faith-7 */
 .faith-oracle { min-height:220px; }
