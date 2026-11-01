@@ -1,4 +1,4 @@
-import { initScholia } from './scholia.js?v=20261101-scholia-4';
+import { initScholia } from './scholia.js?v=20261101-scholia-5';
 
 const DATA_URL = './data/chronicles.json?v=20261101-poetry-scholia-4';
 let scholiaController;

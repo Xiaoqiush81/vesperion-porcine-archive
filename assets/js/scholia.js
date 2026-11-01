@@ -1,4 +1,4 @@
-const DATA_URL = './data/scholia.json?v=20261101-scholia-4';
+const DATA_URL = './data/scholia.json?v=20261101-scholia-5';
 const STORAGE_KEY = 'vesperion-scholia-answers-v1';
 
 function element(tag, className = '', text = '') {
@@ -75,6 +75,29 @@ function renderMaterial(material) {
   return article;
 }
 
+function renderUnit(material, questions, subject, answers) {
+  const unit = element('details', 'scholia-unit');
+  const summary = element('summary', 'scholia-unit-summary');
+  const heading = element('span', 'scholia-unit-heading');
+  heading.append(
+    element('small', '', `${subject.label} · 本卷`),
+    element('strong', '', material.title)
+  );
+  summary.append(
+    heading,
+    element('span', 'scholia-unit-count', `${questions.length} 道题`),
+    element('span', 'scholia-unit-action', '展开')
+  );
+
+  const body = element('div', 'scholia-unit-body');
+  const questionList = element('div', 'scholia-unit-questions');
+  questionList.append(...questions.map(question =>
+    renderQuestion(question, material, subject, answers)));
+  body.append(renderMaterial(material), questionList);
+  unit.append(summary, body);
+  return unit;
+}
+
 export async function initScholia() {
   const entries = [...document.querySelectorAll('[data-scholia-entry]')];
   const gate = document.querySelector('#scholiaGate');
@@ -83,7 +106,6 @@ export async function initScholia() {
   const study = document.querySelector('#scholiaStudy');
   const studyTitle = document.querySelector('#scholiaStudyTitle');
   const studyMark = document.querySelector('#scholiaStudyMark');
-  const materialsHost = document.querySelector('#scholiaMaterials');
   const subjectsHost = document.querySelector('#scholiaSubjects');
   const list = document.querySelector('#scholiaList');
   const count = document.querySelector('#scholiaCount');
@@ -106,17 +128,18 @@ export async function initScholia() {
     if (!subject) return;
     const materials = data.materials.filter(material =>
       material.questions.some(question => question.subject === activeSubject));
-    const questions = materials.flatMap(material => material.questions
-      .filter(question => question.subject === activeSubject)
-      .map(question => ({ question, material })));
-    const subjects = new Map(data.subjects.map(subject => [subject.id, subject]));
+    const questionCount = materials.reduce((total, material) => total +
+      material.questions.filter(question => question.subject === activeSubject).length, 0);
     studyTitle.textContent = `${subject.label}小室`;
     studyMark.textContent = subject.mark;
-    materialsHost.replaceChildren(...materials.map(renderMaterial));
-    list.replaceChildren(...questions.map(({ question, material }) =>
-      renderQuestion(question, material, subjects.get(question.subject), answers)));
+    list.replaceChildren(...materials.map(material => renderUnit(
+      material,
+      material.questions.filter(question => question.subject === activeSubject),
+      subject,
+      answers
+    )));
     list.removeAttribute('aria-busy');
-    count.textContent = `${questions.length} 道题 · ${subject.label}`;
+    count.textContent = `${materials.length} 卷 · ${questionCount} 道题 · ${subject.label}`;
     index.hidden = true;
     study.hidden = false;
     study.scrollIntoView({ block:'start' });
@@ -153,6 +176,14 @@ export async function initScholia() {
     activeSubject = button.dataset.subject;
     renderStudy();
   });
+  list.addEventListener('toggle', event => {
+    const opened = event.target;
+    if (!(opened instanceof HTMLDetailsElement) || !opened.open ||
+        !opened.classList.contains('scholia-unit')) return;
+    list.querySelectorAll('.scholia-unit[open]').forEach(unit => {
+      if (unit !== opened) unit.open = false;
+    });
+  }, true);
   document.querySelector('#leaveScholiaStudy').addEventListener('click', showIndex);
   entries.forEach(entry => entry.querySelector('.scholia-seal').addEventListener('click', () => {
     const now = Date.now();
