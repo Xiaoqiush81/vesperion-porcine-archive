@@ -1,5 +1,7 @@
-const DATA_URL = './data/porcine-faith.json?v=20261101-faith-5';
+const DATA_URL = './data/porcine-faith.json?v=20261101-faith-7';
+const ORACLE_URL = './data/porcine-oracles.json?v=20261101-faith-7';
 const MEMBER_KEY = 'pigdex-faith-member-v1';
+const ORACLE_KEY = 'pigdex-faith-oracle-v1';
 
 function linesHtml(lines) {
   return lines.map(line => line ? `<span>${line}</span>` : '<i aria-hidden="true"></i>').join('');
@@ -23,14 +25,80 @@ function writeMember(member) {
   document.dispatchEvent(new CustomEvent('faithmembershipchange', { detail:{ active:Boolean(member) } }));
 }
 
-function dailyIndex(length) {
-  if (!length) return 0;
-  const today = new Date();
-  const stamp = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) / 86400000;
-  return Math.abs(Math.trunc(stamp)) % length;
+function localDayKey() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 }
 
-function membershipHtml(data, member) {
+function readOracleState() {
+  try {
+    const value = JSON.parse(localStorage.getItem(ORACLE_KEY) || 'null');
+    return value && typeof value === 'object' ? value : { used:[], history:[], today:null };
+  } catch {
+    return { used:[], history:[], today:null };
+  }
+}
+
+function writeOracleState(state) {
+  try { localStorage.setItem(ORACLE_KEY, JSON.stringify(state)); } catch {}
+}
+
+function randomIndex(length) {
+  if (length <= 1) return 0;
+  if (globalThis.crypto?.getRandomValues) {
+    const buffer = new Uint32Array(1);
+    crypto.getRandomValues(buffer);
+    return buffer[0] % length;
+  }
+  return Math.floor(Math.random() * length);
+}
+
+function drawOracle(entries) {
+  const day = localDayKey();
+  const state = readOracleState();
+  if (state.today?.date === day) return { state, entry:entries.find(item => item.id === state.today.id) || null };
+
+  const knownIds = new Set(entries.map(item => item.id));
+  let used = Array.isArray(state.used) ? state.used.filter(id => knownIds.has(id)) : [];
+  let remaining = entries.filter(item => !used.includes(item.id));
+  if (!remaining.length) {
+    used = [];
+    remaining = [...entries];
+  }
+
+  const entry = remaining[randomIndex(remaining.length)];
+  used.push(entry.id);
+  const history = [{ date:day, id:entry.id }, ...(Array.isArray(state.history) ? state.history : [])]
+    .filter((item, index, list) => list.findIndex(other => other.date === item.date) === index)
+    .slice(0, 60);
+  const next = { used, history, today:{ date:day, id:entry.id } };
+  writeOracleState(next);
+  return { state:next, entry };
+}
+
+function currentOracle(entries) {
+  const state = readOracleState();
+  if (state.today?.date !== localDayKey()) return { state, entry:null };
+  return { state, entry:entries.find(item => item.id === state.today.id) || null };
+}
+
+function oracleHistoryHtml(entries, state) {
+  const map = new Map(entries.map(item => [item.id, item]));
+  const rows = (state.history || []).map(record => ({ ...record, entry:map.get(record.id) })).filter(row => row.entry);
+  if (!rows.length) return '<p class="faith-oracle-empty">尚无开签记录。第一签会从今天开始归档。</p>';
+  return rows.map(row => `
+    <li>
+      <time datetime="${row.date}">${row.date}</time>
+      <span>${row.entry.tag}</span>
+      <p>${row.entry.text}</p>
+    </li>
+  `).join('');
+}
+
+function membershipHtml(data, member, oracleData) {
   if (!member) {
     return `
       <section class="faith-membership faith-membership-visitor" aria-labelledby="faithMembershipTitle">
@@ -49,9 +117,9 @@ function membershipHtml(data, member) {
     `;
   }
 
-  const oracle = data.memberRites?.[0];
-  const oracleLine = oracle?.lines?.[dailyIndex(oracle.lines.length)] || '圣火照路，猪自徐行。';
-  const inner = data.memberRites?.[1];
+  const inner = data.memberRites?.[0];
+  const current = currentOracle(oracleData.entries);
+  const hasToday = Boolean(current.entry);
 
   return `
     <section class="faith-membership faith-membership-member" aria-labelledby="faithMembershipTitle">
@@ -66,21 +134,40 @@ function membershipHtml(data, member) {
     </section>
 
     <section class="faith-inner-rites" aria-label="教籍猪专属礼仪">
-      <article class="faith-oracle">
-        <small>${oracle?.kicker || 'DAILY PORCINE ORACLE'}</small>
-        <h3>${oracle?.title || '今日猪谕'}</h3>
-        <p>${oracleLine}</p>
-        <span>本日一签 · 明日再启</span>
+      <article class="faith-oracle ${hasToday ? 'is-opened' : 'is-sealed'}" id="faithOracle">
+        <small>DAILY PORCINE ORACLE · 每日猪谕</small>
+        <h3>${hasToday ? '今日猪谕' : '今日一签尚未开启'}</h3>
+        <div class="faith-oracle-result" id="faithOracleResult" aria-live="polite">
+          ${hasToday
+            ? `<span>${current.entry.tag} · ${current.entry.id}</span><p>${current.entry.text}</p>`
+            : '<span>SEALED · 一日一签</span><p>今日尚未开签。启封以后，本日签文不可重抽。</p>'}
+        </div>
+        ${hasToday
+          ? '<em>本日已启 · 明日再来</em>'
+          : '<button id="faithOracleDraw" type="button">开今日一签</button>'}
       </article>
+
       <details class="faith-inner-response">
         <summary><div><small>${inner?.kicker || 'INNER CHAPEL RESPONSE'}</small><strong>${inner?.title || '内坛应答'}</strong></div><b aria-hidden="true">＋</b></summary>
         <div>${(inner?.lines || []).map(line => `<p>${line}</p>`).join('')}</div>
       </details>
     </section>
+
+    <details class="faith-oracle-library">
+      <summary>
+        <div><small>${oracleData.english}</small><strong>猪谕簿</strong></div>
+        <span>${current.state.history?.length || 0} 签已归档</span>
+        <b aria-hidden="true">＋</b>
+      </summary>
+      <div class="faith-oracle-library-body">
+        <p>文库共 ${oracleData.entries.length} 签。未抽完一轮前优先避开已出现签文；全部走完后才开启新一轮。</p>
+        <ol id="faithOracleHistory">${oracleHistoryHtml(oracleData.entries, current.state)}</ol>
+      </div>
+    </details>
   `;
 }
 
-function renderFaith(root, data) {
+function renderFaith(root, data, oracleData) {
   const member = readMember();
 
   root.innerHTML = `
@@ -95,7 +182,7 @@ function renderFaith(root, data) {
       ${member ? '<p class="faith-masthead-member">✦ 教籍猪已归坛 ✦</p>' : ''}
     </header>
 
-    ${membershipHtml(data, member)}
+    ${membershipHtml(data, member, oracleData)}
 
     <section class="faith-altar" aria-labelledby="faithResponseTitle">
       <small>THE GREAT RESPONSE · 大齐诵</small>
@@ -159,14 +246,20 @@ function renderFaith(root, data) {
 
   root.querySelector('#faithJoinConfirm')?.addEventListener('click', () => {
     writeMember({ active:true, joinedAt:new Date().toISOString(), mark:'081' });
-    renderFaith(root, data);
+    renderFaith(root, data, oracleData);
     root.querySelector('.faith-membership-member')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'center' });
   });
 
   root.querySelector('#faithLeave')?.addEventListener('click', () => {
     writeMember(null);
-    renderFaith(root, data);
+    renderFaith(root, data, oracleData);
     root.querySelector('.faith-membership-visitor')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'center' });
+  });
+
+  root.querySelector('#faithOracleDraw')?.addEventListener('click', () => {
+    drawOracle(oracleData.entries);
+    renderFaith(root, data, oracleData);
+    root.querySelector('#faithOracle')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'center' });
   });
 
   let chantIndex = -1;
@@ -189,9 +282,10 @@ export async function initPorcineFaith() {
   root.dataset.ready = 'true';
 
   try {
-    const response = await fetch(DATA_URL);
-    if (!response.ok) throw new Error(`Faith data request failed: ${response.status}`);
-    renderFaith(root, await response.json());
+    const [faithResponse, oracleResponse] = await Promise.all([fetch(DATA_URL), fetch(ORACLE_URL)]);
+    if (!faithResponse.ok) throw new Error(`Faith data request failed: ${faithResponse.status}`);
+    if (!oracleResponse.ok) throw new Error(`Oracle data request failed: ${oracleResponse.status}`);
+    renderFaith(root, await faithResponse.json(), await oracleResponse.json());
   } catch (error) {
     console.error(error);
     root.innerHTML = '<p class="faith-error">圣卷暂时无法展开，请稍后再试。</p>';
