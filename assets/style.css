@@ -316,6 +316,7 @@ body[data-room="records"] .room-records,
 body[data-room="tarot"] .room-tarot,
 body[data-room="chronicles"] .room-chronicles,
 body[data-room="scholia"] .room-scholia,
+body[data-room="faith"] .room-faith,
 body[data-room="legal"] .room-legal { display: block !important; }
 
 .hero {
@@ -386,7 +387,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 
 .status-strip { width: min(calc(100% - 48px), 1240px); margin: 0 auto 120px; display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); }
 
-.collection-switcher { width: min(calc(100% - 48px), 1240px); margin: 0 auto 70px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border:1px solid var(--document-line); background:var(--document-surface); position: sticky; top: 100px; z-index: 9; box-shadow:var(--document-shadow); }
+.collection-switcher { width: min(calc(100% - 48px), 1240px); margin: 0 auto 70px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border:1px solid var(--document-line); background:var(--document-surface); position: sticky; top: 100px; z-index: 9; box-shadow:var(--document-shadow); }
 .collection-switcher a { min-width: 0; padding: 18px 24px; display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 3px 18px; color:var(--document-ink); text-decoration: none; }
 .collection-switcher a + a { border-left:1px solid var(--document-line); }
 .collection-switcher span { color: var(--amber); font-family: var(--serif); font-size: 9px; letter-spacing: .16em; }
@@ -1113,3 +1114,65 @@ dialog::backdrop { background:var(--backdrop); }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
 
+
+
+/* Porcine chapel */
+.primary.faith-entry { color:var(--navy); background:transparent; border-color:var(--amber-pale); }
+.faith-room { min-height:calc(100vh - 58px); min-height:calc(100svh - 58px); padding:0 clamp(24px,7vw,110px) 100px; color:var(--navy); background:var(--surface); }
+.faith-shell { width:min(100%,1240px); margin:auto; padding:76px clamp(24px,5vw,76px) 88px; border-inline:1px solid var(--line); }
+.faith-room-heading { max-width:760px; margin:0 auto 54px; text-align:center; }
+.faith-room-heading h2 { margin:0; font-family:var(--cn-serif); font-size:clamp(40px,6vw,70px); font-weight:500; letter-spacing:.08em; }
+.faith-room-heading>p:last-child { margin:22px auto 0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:13px; line-height:2; }
+.faith-content { width:min(100%,1020px); margin:auto; }
+.faith-loading,.faith-error { padding:80px 24px; color:var(--text-secondary); font-family:var(--cn-serif); text-align:center; }
+.faith-masthead { padding:58px clamp(24px,6vw,72px) 62px; position:relative; overflow:hidden; color:var(--paper); background:var(--navy); border:1px solid var(--navy); text-align:center; }
+.faith-masthead::before,.faith-masthead::after { content:""; position:absolute; left:50%; width:1px; height:38px; background:var(--amber); opacity:.72; }
+.faith-masthead::before { top:0; }.faith-masthead::after { bottom:0; }
+.faith-masthead .eyebrow { color:var(--amber-pale); }
+.faith-sigil { width:62px; height:62px; margin:24px auto; display:grid; place-items:center; color:var(--amber-pale); border:1px solid color-mix(in srgb,var(--amber-pale) 52%,transparent); border-radius:50%; font-size:18px; }
+.faith-masthead h2 { margin:0; font-family:var(--cn-serif); font-size:clamp(46px,7vw,78px); font-weight:500; letter-spacing:.16em; }
+.faith-motto { margin:24px 0 0; color:var(--amber-pale); font-family:var(--cn-serif); font-size:clamp(18px,3vw,27px); letter-spacing:.18em; }
+.faith-intro { max-width:650px; margin:28px auto 0; color:color-mix(in srgb,var(--paper) 72%,transparent); font-family:var(--cn-serif); font-size:12px; line-height:2; }
+.faith-altar { margin:1px 0 0; padding:52px clamp(22px,6vw,68px); text-align:center; background:var(--surface-raised); border:1px solid var(--line); }
+.faith-altar small { color:var(--text-accent); font-family:var(--serif); font-size:9px; letter-spacing:.22em; }
+.faith-altar h3 { margin:13px 0 24px; color:var(--navy); font-family:var(--cn-serif); font-size:28px; font-weight:500; letter-spacing:.18em; }
+.faith-altar p { min-height:1.8em; margin:0; color:var(--amber); font-family:var(--cn-serif); font-size:clamp(22px,4vw,38px); font-weight:600; line-height:1.6; letter-spacing:.08em; }
+.faith-altar button { margin-top:28px; padding:11px 24px; color:var(--navy); background:transparent; border:1px solid var(--line); -webkit-appearance:none; appearance:none; font:12px var(--cn-serif); letter-spacing:.12em; cursor:pointer; }
+.faith-altar button:hover { border-color:var(--amber); }
+.faith-articles { margin:34px 0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border:1px solid var(--line); background:var(--line); gap:1px; }
+.faith-articles article { min-width:0; padding:30px 32px 34px; background:var(--surface); }
+.faith-articles span { color:var(--amber); font-family:var(--serif); font-size:10px; letter-spacing:.18em; }
+.faith-articles h3 { margin:10px 0 14px; font-family:var(--cn-serif); font-size:20px; font-weight:500; }
+.faith-articles p { margin:0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:12px; line-height:2; }
+.faith-scriptures { display:grid; gap:12px; }
+.faith-text { background:var(--surface); border:1px solid var(--line); box-shadow:0 8px 24px var(--shadow-soft); }
+.faith-text summary { min-height:92px; padding:20px clamp(20px,4vw,34px); display:grid; grid-template-columns:42px 1fr auto; align-items:center; gap:18px; list-style:none; cursor:pointer; }
+.faith-text summary::-webkit-details-marker { display:none; }
+.faith-text summary>span { color:var(--amber); font-family:var(--serif); font-size:11px; }
+.faith-text summary div { display:grid; gap:5px; }
+.faith-text summary small { color:var(--text-accent); font-family:var(--serif); font-size:8px; letter-spacing:.17em; }
+.faith-text summary strong { font-family:var(--cn-serif); font-size:21px; font-weight:500; }
+.faith-text summary>b { color:var(--amber); font-family:var(--cn-serif); font-size:18px; font-weight:400; transition:transform .2s ease; }
+.faith-text[open] summary>b { transform:rotate(45deg); }
+.faith-text[open] summary { background:var(--surface-raised); border-bottom:1px solid var(--line); }
+.faith-verse { padding:42px clamp(24px,7vw,80px) 48px; display:grid; justify-items:center; color:var(--navy); font-family:var(--cn-serif); font-size:15px; line-height:2.1; text-align:center; }
+.faith-verse span { display:block; }
+.faith-verse i { height:1.25em; }
+.faith-colophon { margin:58px 0 0; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:22px; }
+.faith-colophon>span { height:1px; background:var(--line); }
+.faith-colophon p { margin:0; display:grid; gap:5px; text-align:center; }
+.faith-colophon b { color:var(--navy); font-family:var(--cn-serif); font-size:15px; font-weight:500; letter-spacing:.18em; }
+.faith-colophon small { color:var(--text-accent); font-family:var(--cn-serif); font-size:9px; }
+
+@media (max-width: 760px) {
+  .faith-room { padding-inline:0; padding-bottom:70px; }
+  .faith-shell { padding:52px 20px 70px; border-inline:0; }
+  .faith-room-heading { margin-bottom:36px; }
+  .faith-masthead { padding:48px 22px 52px; }
+  .faith-masthead h2 { font-size:46px; letter-spacing:.1em; }
+  .faith-motto { font-size:18px; letter-spacing:.1em; }
+  .faith-articles { grid-template-columns:1fr; }
+  .faith-articles article { padding:24px 22px 28px; }
+  .faith-text summary { grid-template-columns:28px 1fr auto; gap:12px; padding:18px; }
+  .faith-verse { padding:30px 18px 36px; font-size:14px; }
+}
