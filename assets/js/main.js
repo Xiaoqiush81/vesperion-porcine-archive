@@ -5,7 +5,7 @@ import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-browser-i
 const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
 const ARCHIVE_MODULE_URL = './archive.js?v=20261031-specimens-59';
 const CHRONICLES_MODULE_URL = './chronicles.js?v=20261101-scholia-8';
-const FAITH_MODULE_URL = './porcine-faith.js?v=20261101-faith-3';
+const FAITH_MODULE_URL = './porcine-faith.js?v=20261101-faith-4';
 
 const ROOM_TITLES = {
   home:'PIGDEX 081 · 维斯珀里昂猪类图鉴',
@@ -20,6 +20,40 @@ const ROOM_TITLES = {
 };
 
 const QUOTES = ['“可猫可猪；若必须二选一，仍然是猪。”', '“爸爸爸爸——”', '“咪————”', '“今天已经是明晚了。”', '“蜗牛胜出，芝士沉默。”', '“本猪合格，可以继续抱。”', '“一只宇宙无敌第一可爱萌猪诞生惹。”', '“这不是烧钱，这是文化传播经费。”'];
+
+const FAITH_MEMBER_KEY = 'pigdex-faith-member-v1';
+
+function hasFaithMembership() {
+  try { return Boolean(JSON.parse(localStorage.getItem(FAITH_MEMBER_KEY) || 'null')?.active); }
+  catch { return false; }
+}
+
+function applyFaithMembership() {
+  const active = hasFaithMembership();
+  document.documentElement.dataset.faithMember = active ? 'true' : 'false';
+
+  const headerFaith = document.querySelector('.site-header [data-room-target="faith"]');
+  if (headerFaith) headerFaith.textContent = active ? '猪猪教 · 教籍' : '猪猪教';
+
+  const heroFaith = document.querySelector('.hero .faith-entry');
+  if (heroFaith) heroFaith.textContent = active ? '返回猪猪教堂' : '进入猪猪教堂';
+
+  const cardFaith = document.querySelector('.collection-switcher [data-room-target="faith"]');
+  if (cardFaith) {
+    const title = cardFaith.querySelector('b');
+    const meta = cardFaith.querySelector('small');
+    if (title) title.textContent = active ? '返回猪猪教堂' : '进入猪猪教堂';
+    if (meta) meta.textContent = active ? '教籍已立 · 圣火相认' : '圣词 · 齐诵 · 猪教礼仪';
+  }
+
+  const mark = document.querySelector('#faithToolbarMark');
+  if (mark) mark.hidden = !active || document.body.dataset.room !== 'faith';
+
+  if (document.body.dataset.room === 'faith') {
+    const title = document.querySelector('#roomToolbarTitle');
+    if (title) title.textContent = active ? '猪猪教堂 · 教籍猪' : '猪猪教堂';
+  }
+}
 
 function applyAssetOverrides() {
   const favicon = resolveAsset(SITE_ASSETS.favicon, '', document.baseURI);
@@ -182,6 +216,7 @@ async function enterRoom(room, push = true) {
     soundscapeHost.append(soundscape);
   }
   document.querySelector('#roomToolbarTitle').textContent = roomNames[target] || '';
+  applyFaithMembership();
   document.querySelectorAll('[data-room-target]').forEach(item => item.classList.toggle('is-current', item.dataset.roomTarget === target));
   const deepLink = !push && location.hash.startsWith('#legal-') ? document.getElementById(location.hash.slice(1)) : null;
   if (deepLink) window.setTimeout(() => deepLink.scrollIntoView({ block: 'start' }), 80);
@@ -192,6 +227,7 @@ async function main() {
   applyAssetOverrides();
   initTheme(document.querySelector('#themeToggle'));
   createSoundscape();
+  applyFaithMembership();
   const warmRooms = () => {
     import(TAROT_MODULE_URL).catch(() => {});
     initArchive().catch(() => {});
@@ -224,6 +260,7 @@ async function main() {
     enterRoom(entrance.dataset.roomTarget);
   });
   document.addEventListener('roomrequest', event => enterRoom(event.detail.room));
+  document.addEventListener('faithmembershipchange', applyFaithMembership);
   window.addEventListener('popstate', () => enterRoom(roomFromLocation(), false));
   window.addEventListener('hashchange', () => enterRoom(roomFromLocation(), false));
   await enterRoom(roomFromLocation(), false);
