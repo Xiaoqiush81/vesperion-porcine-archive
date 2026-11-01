@@ -1126,23 +1126,24 @@ dialog::backdrop { background:var(--backdrop); }
 .faith-room-heading>p:last-child { max-width:680px; margin:22px auto 0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:13px; line-height:2; }
 .faith-loading,.faith-error { padding:80px 24px; color:var(--text-secondary); font-family:var(--cn-serif); text-align:center; }
 
-.faith-masthead { padding:58px clamp(24px,6vw,72px) 62px; position:relative; overflow:hidden; color:var(--paper); background:var(--navy); border:1px solid var(--navy); text-align:center; }
+.faith-masthead { padding:58px clamp(28px,7vw,86px) 62px; position:relative; overflow:hidden; color:var(--paper); background:var(--navy); border:1px solid var(--navy); text-align:center; }
 .faith-masthead::before,.faith-masthead::after { content:""; position:absolute; left:50%; width:1px; height:38px; background:var(--amber); opacity:.72; transform:translateX(-50%); }
 .faith-masthead::before { top:0; }.faith-masthead::after { bottom:0; }
-.faith-masthead .eyebrow { color:var(--amber-pale); }
+.faith-masthead .eyebrow { margin-inline:auto; color:var(--amber-pale); text-align:center; }
 .faith-sigil { width:62px; height:62px; margin:24px auto; display:grid; place-items:center; color:var(--amber-pale); border:1px solid color-mix(in srgb,var(--amber-pale) 52%,transparent); border-radius:50%; font-size:18px; }
-.faith-masthead h2 { margin:0; font-family:var(--cn-serif); font-size:clamp(46px,7vw,78px); font-weight:500; letter-spacing:.16em; }
-.faith-motto { margin:24px 0 0; color:var(--amber-pale); font-family:var(--cn-serif); font-size:clamp(18px,3vw,27px); letter-spacing:.18em; }
-.faith-intro { max-width:650px; margin:28px auto 0; color:color-mix(in srgb,var(--paper) 72%,transparent); font-family:var(--cn-serif); font-size:12px; line-height:2; }
+.faith-masthead h2 { margin:0; font-family:var(--cn-serif); font-size:clamp(46px,7vw,78px); font-weight:500; letter-spacing:.16em; text-align:center; }
+.faith-motto { width:min(100%,520px); margin:30px auto 0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 28px; color:var(--amber-pale); font-family:var(--cn-serif); font-size:clamp(17px,2.6vw,24px); letter-spacing:.12em; line-height:1.7; text-align:center; }
+.faith-motto span { display:block; white-space:nowrap; }
+.faith-intro { width:min(100%,650px); margin:30px auto 0; color:color-mix(in srgb,var(--paper) 72%,transparent); font-family:var(--cn-serif); font-size:12px; line-height:2; text-align:center; text-wrap:balance; }
 
-.faith-altar { margin-top:1px; padding:52px clamp(22px,6vw,68px) 48px; text-align:center; background:var(--surface-raised); border:1px solid var(--line); }
+.faith-altar { margin-top:1px; padding:52px clamp(28px,7vw,86px) 48px; text-align:center; background:var(--surface-raised); border:1px solid var(--line); }
 .faith-altar>small,.faith-section-head small { color:var(--text-accent); font-family:var(--serif); font-size:9px; letter-spacing:.22em; }
 .faith-altar h3 { margin:13px 0 26px; color:var(--navy); font-family:var(--cn-serif); font-size:28px; font-weight:500; letter-spacing:.18em; }
-.faith-response { width:min(100%,560px); margin:auto; display:grid; gap:8px; }
-.faith-response p { margin:0; padding:3px 0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:clamp(17px,3vw,24px); line-height:1.85; letter-spacing:.06em; transition:color .18s ease, transform .18s ease; }
-.faith-response p.is-active { color:var(--amber); transform:scale(1.025); }
-.faith-chant-controls { margin-top:30px; display:flex; align-items:center; justify-content:center; gap:14px; }
-.faith-chant-controls button { min-width:126px; padding:11px 22px; color:var(--navy); background:transparent; border:1px solid var(--amber); -webkit-appearance:none; appearance:none; font:12px var(--cn-serif); letter-spacing:.12em; cursor:pointer; }
+.faith-response { width:min(100%,620px); margin:auto; display:grid; gap:8px; text-align:left; }
+.faith-response p { width:100%; margin:0; padding:3px 0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:clamp(16px,2.5vw,22px); line-height:1.85; letter-spacing:.04em; transition:color .18s ease, transform .18s ease; }
+.faith-response p.is-active { color:var(--amber); transform:translateX(6px); }
+.faith-chant-controls { width:min(100%,620px); margin:30px auto 0; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.faith-chant-controls button { min-width:150px; padding:11px 22px; color:var(--navy); background:transparent; border:1px solid var(--amber); -webkit-appearance:none; appearance:none; font:12px var(--cn-serif); letter-spacing:.12em; cursor:pointer; }
 .faith-chant-controls button:hover { background:color-mix(in srgb,var(--amber) 8%,transparent); }
 .faith-chant-controls span { color:var(--text-accent); font:9px var(--cn-serif); letter-spacing:.12em; }
 
@@ -1150,7 +1151,7 @@ dialog::backdrop { background:var(--backdrop); }
 .faith-section-head { padding:0 2px 16px; display:flex; align-items:end; justify-content:space-between; gap:24px; border-bottom:1px solid var(--line); }
 .faith-section-head div { min-width:0; }
 .faith-section-head h3 { margin:7px 0 0; color:var(--navy); font-family:var(--cn-serif); font-size:26px; font-weight:500; }
-.faith-section-head>p { max-width:440px; margin:0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:10px; line-height:1.8; text-align:right; }
+.faith-section-head>p { max-width:360px; margin:0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:10px; line-height:1.8; text-align:right; }
 
 .faith-doctrine-list { margin-top:14px; display:grid; gap:10px; }
 .faith-doctrine-item { background:var(--surface); border:1px solid var(--line); }
@@ -1163,23 +1164,22 @@ dialog::backdrop { background:var(--backdrop); }
 .faith-doctrine-item[open] summary { background:var(--surface-raised); border-bottom:1px solid var(--line); }
 .faith-doctrine-item>p { margin:0; padding:20px 24px 24px 68px; color:var(--text-secondary); font-family:var(--cn-serif); font-size:12px; line-height:2; }
 
-.faith-index { margin:14px 0 12px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); }
-.faith-index button { min-width:0; padding:16px 18px; display:grid; grid-template-columns:28px 1fr auto; align-items:center; gap:12px; color:var(--navy); background:var(--surface); border:0; -webkit-appearance:none; appearance:none; text-align:left; cursor:pointer; }
-.faith-index button:hover { background:var(--surface-raised); }
-.faith-index button>span { color:var(--amber); font:10px var(--serif); }
-.faith-index button>b { min-width:0; overflow:hidden; font-family:var(--cn-serif); font-size:14px; font-weight:500; text-overflow:ellipsis; white-space:nowrap; }
-.faith-index button>small { color:var(--text-accent); font:8px var(--cn-serif); letter-spacing:.1em; }
-
-.faith-scriptures { display:grid; gap:12px; }
-.faith-text { scroll-margin-top:96px; background:var(--surface); border:1px solid var(--line); box-shadow:0 8px 24px var(--shadow-soft); }
-.faith-text summary { min-height:84px; padding:18px clamp(18px,4vw,30px); display:grid; grid-template-columns:36px 1fr auto; align-items:center; gap:16px; list-style:none; cursor:pointer; }
+.faith-scriptures { margin-top:14px; display:grid; gap:14px; }
+.faith-text { position:relative; overflow:hidden; background:var(--surface); border:1px solid var(--line); box-shadow:0 10px 26px var(--shadow-soft); }
+.faith-text::before,.faith-text::after { content:"✦"; position:absolute; top:18px; color:var(--amber); opacity:.28; font-size:9px; pointer-events:none; }
+.faith-text::before { left:16px; }.faith-text::after { right:16px; }
+.faith-text summary { min-height:92px; padding:20px clamp(54px,7vw,76px); display:grid; grid-template-columns:34px minmax(0,1fr) 18px 22px; align-items:center; gap:14px; list-style:none; cursor:pointer; }
 .faith-text summary::-webkit-details-marker { display:none; }
-.faith-text summary>span { color:var(--amber); font-family:var(--serif); font-size:10px; }
-.faith-text summary div { display:grid; gap:4px; }
-.faith-text summary small { color:var(--text-accent); font-family:var(--serif); font-size:8px; letter-spacing:.17em; }
-.faith-text summary strong { font-family:var(--cn-serif); font-size:20px; font-weight:500; }
+.faith-text-mark { color:var(--amber); font-family:var(--serif); font-size:10px; text-align:left; }
+.faith-text-title { min-width:0; display:grid; gap:4px; }
+.faith-text-title small { color:var(--text-accent); font-family:var(--serif); font-size:8px; letter-spacing:.17em; }
+.faith-text-title strong { font-family:var(--cn-serif); font-size:20px; font-weight:500; }
+.faith-text-ornament { color:var(--amber); opacity:.6; font-size:10px; text-align:center; }
+.faith-text summary>b { text-align:right; }
 .faith-text[open] summary { background:var(--surface-raised); border-bottom:1px solid var(--line); }
-.faith-verse { padding:38px clamp(24px,7vw,72px) 44px; display:grid; justify-items:center; color:var(--navy); font-family:var(--cn-serif); font-size:15px; line-height:2.1; text-align:center; }
+.faith-text[open] .faith-text-ornament { opacity:1; }
+.faith-verse { padding:38px clamp(28px,8vw,88px) 44px; position:relative; display:grid; justify-items:center; color:var(--navy); font-family:var(--cn-serif); font-size:15px; line-height:2.1; text-align:center; }
+.faith-verse::before { content:""; width:48px; height:1px; margin-bottom:22px; background:var(--amber); opacity:.65; }
 .faith-verse span { display:block; }
 .faith-verse i { height:1.15em; }
 
@@ -1192,40 +1192,45 @@ dialog::backdrop { background:var(--backdrop); }
 @media (max-width: 900px) {
   .faith-section-head { align-items:start; flex-direction:column; gap:8px; }
   .faith-section-head>p { max-width:none; text-align:left; }
-  .faith-index { grid-template-columns:1fr; }
 }
 
 @media (max-width: 760px) {
   .faith-room { padding-inline:0; padding-bottom:70px; }
-  .faith-shell { padding:42px 16px 64px; border-inline:0; }
+  .faith-shell { padding:42px 12px 64px; border-inline:0; }
   .faith-room-heading { margin-bottom:28px; }
   .faith-room-heading h2 { font-size:38px; }
   .faith-room-heading>p:last-child { font-size:12px; }
-  .faith-masthead { padding:44px 20px 48px; }
+  .faith-masthead { padding:44px 24px 48px; }
   .faith-masthead h2 { font-size:44px; letter-spacing:.08em; }
-  .faith-motto { font-size:18px; letter-spacing:.08em; }
-  .faith-intro { font-size:11px; }
-  .faith-altar { padding:38px 18px 36px; }
+  .faith-motto { width:min(100%,360px); grid-template-columns:1fr; gap:2px; font-size:18px; letter-spacing:.08em; }
+  .faith-motto span { white-space:normal; }
+  .faith-intro { width:min(100%,430px); font-size:11px; }
+  .faith-altar { padding:38px 24px 36px; }
   .faith-altar h3 { margin-bottom:20px; font-size:25px; }
-  .faith-response { gap:5px; }
-  .faith-response p { font-size:18px; line-height:1.75; }
-  .faith-chant-controls { margin-top:24px; flex-direction:column; gap:8px; }
-  .faith-chant-controls button { width:min(100%,220px); }
+  .faith-response { width:min(100%,430px); gap:4px; }
+  .faith-response p { font-size:17px; line-height:1.72; }
+  .faith-chant-controls { width:min(100%,430px); margin-top:24px; }
+  .faith-chant-controls button { min-width:142px; }
   .faith-doctrine,.faith-library { margin-top:28px; }
   .faith-section-head { padding-inline:2px; }
   .faith-doctrine-item summary { grid-template-columns:26px 1fr auto; padding:14px 16px; }
   .faith-doctrine-item>p { padding:18px 18px 22px 56px; }
-  .faith-index button { grid-template-columns:24px 1fr auto; padding:14px; }
-  .faith-text summary { grid-template-columns:28px 1fr auto; gap:12px; padding:16px; }
-  .faith-text summary strong { font-size:18px; }
-  .faith-verse { padding:28px 16px 34px; font-size:14px; }
+  .faith-text summary { grid-template-columns:26px minmax(0,1fr) 14px 20px; gap:10px; padding:18px 40px; }
+  .faith-text-title strong { font-size:18px; }
+  .faith-text::before { left:12px; }.faith-text::after { right:12px; }
+  .faith-verse { padding:28px 18px 34px; font-size:14px; }
   .faith-colophon { gap:14px; }
 }
 
 @media (max-width: 430px) {
-  .faith-shell { padding-inline:12px; }
+  .faith-shell { padding-inline:10px; }
+  .faith-masthead { padding-inline:18px; }
   .faith-masthead h2 { font-size:40px; }
   .faith-motto { font-size:17px; }
-  .faith-response p { font-size:17px; }
-  .faith-index button>small { display:none; }
+  .faith-altar { padding-inline:18px; }
+  .faith-response p { font-size:16px; }
+  .faith-chant-controls { align-items:stretch; flex-direction:column; gap:8px; }
+  .faith-chant-controls button { width:100%; }
+  .faith-chant-controls span { text-align:center; }
+  .faith-text summary { padding-inline:34px; }
 }
