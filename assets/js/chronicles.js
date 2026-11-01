@@ -1,4 +1,7 @@
-const DATA_URL = './data/chronicles.json?v=20261101-natural-public-copy-2';
+import { initScholia } from './scholia.js?v=20261101-scholia-1';
+
+const DATA_URL = './data/chronicles.json?v=20261101-poetry-scholia-1';
+let scholiaController;
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -217,6 +220,7 @@ function bindGate() {
     input.value = '';
     status.textContent = '';
     taps = [];
+    scholiaController?.hide();
   };
 
   seal.addEventListener('click', () => {
@@ -276,6 +280,7 @@ export async function initChronicles() {
       innerChronicle.hidden = true;
       masthead.hidden = false;
       portals.hidden = false;
+      scholiaController?.showEntry(false);
       document.querySelectorAll('#chroniclePortals .chronicle-portal').forEach(button => button.setAttribute('aria-pressed', 'false'));
       scrollToTop();
     };
@@ -290,7 +295,23 @@ export async function initChronicles() {
       portals.hidden = true;
       innerChronicle.hidden = true;
       publicChronicle.hidden = false;
+      scholiaController?.showEntry(section.title === '猪史' && volume === '猪诗');
     };
+    scholiaController = await initScholia({
+      onEnter() {
+        room.dataset.chronicleView = 'scholia';
+        masthead.hidden = true;
+        portals.hidden = true;
+        publicChronicle.hidden = true;
+        innerChronicle.hidden = true;
+      },
+      onExit() {
+        selectSection('猪史', '猪诗');
+        document.querySelector('#chronicles').scrollIntoView({
+          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+        });
+      }
+    });
     document.querySelector('#chroniclePortals').addEventListener('click', event => {
       const portal = event.target.closest('.chronicle-portal');
       if (!portal) return;

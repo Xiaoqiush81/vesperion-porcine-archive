@@ -1,0 +1,100 @@
+{
+  "subjects": [
+    { "id": "all", "label": "全部", "mark": "〇" },
+    { "id": "chinese", "label": "语文", "mark": "文" },
+    { "id": "mathematics", "label": "数学", "mark": "数" },
+    { "id": "english", "label": "英语", "mark": "英" },
+    { "id": "physics", "label": "物理", "mark": "理" },
+    { "id": "chemistry", "label": "化学", "mark": "化" },
+    { "id": "biology", "label": "生物", "mark": "生" },
+    { "id": "politics", "label": "政治", "mark": "政" },
+    { "id": "history", "label": "历史", "mark": "史" },
+    { "id": "geography", "label": "地理", "mark": "地" }
+  ],
+  "materials": [
+    {
+      "id": "crossing-water",
+      "title": "《渡水》",
+      "verse": [
+        "春水初生石未平，小猪临岸听溪声。",
+        "欲知深浅无人问，先遣一蹄试水清。",
+        "山影忽随波影碎，桃花流过两三英。",
+        "回看彼岸青苔湿，四足沾泥已自行。"
+      ],
+      "questions": [
+        {
+          "id": "crossing-chinese-image",
+          "subject": "chinese",
+          "title": "意象与结构",
+          "prompt": "诗中“小猪”的形象如何在渡水前后发生变化？请结合动作、景物与尾联作答。",
+          "answer": "诗歌先以“临岸”“听溪声”写其观察与迟疑，再以“先遣一蹄”写主动试探；“波影碎”“桃花流”使渡水过程由静转动。尾联“四足沾泥已自行”与此前“一蹄试水”照应，表明小猪由谨慎探知走向独立行动，塑造了审慎而有实践勇气的形象。",
+          "points": ["概括渡水前后的行为变化", "结合至少两处诗句分析", "指出首尾照应或由静到动的结构", "归纳审慎、勇于实践的形象"]
+        },
+        {
+          "id": "crossing-math-model",
+          "subject": "mathematics",
+          "title": "水深函数",
+          "prompt": "将过河路线记为 x∈[0,4]，水深（单位：dm）近似满足 h(x)=−(x−2)²+4。求最深处的位置与水深，并解出水深不超过 3 dm 的路段。",
+          "answer": "h(x)=−(x−2)²+4 的图像开口向下，顶点为 (2,4)，故 x=2 处最深，水深 4 dm。由 −(x−2)²+4≤3，得 (x−2)²≥1，即 x≤1 或 x≥3；结合定义域 [0,4]，路段为 [0,1]∪[3,4]。",
+          "points": ["由顶点式读出最值", "正确求解一元二次不等式", "与定义域取交集"]
+        },
+        {
+          "id": "crossing-english-translation",
+          "subject": "english",
+          "title": "语境翻译",
+          "prompt": "Translate “欲知深浅无人问，先遣一蹄试水清” into natural English. Then explain why your tense and connective choices fit the scene.",
+          "answer": "One possible version: “With no one there to tell how deep the stream was, the little pig first dipped one hoof into the clear water to test it.” The past tense keeps the translation within a narrated event. “With no one there…” expresses the circumstance rather than a separate action, while “to test it” states the purpose of dipping the hoof.",
+          "points": ["准确表达无人可问与试水目的", "英语表达自然而非逐字硬译", "能解释时态及逻辑连接"]
+        },
+        {
+          "id": "crossing-physics-pressure",
+          "subject": "physics",
+          "title": "液体压强",
+          "prompt": "小猪将一蹄从水面缓慢探到 0.30 m 深处。取水的密度 1.0×10³ kg/m³，g=10 N/kg，求该处水产生的压强；若受水面积为 20 cm²，估算水对该面积的压力。",
+          "answer": "液体压强 p=ρgh=1.0×10³×10×0.30=3.0×10³ Pa。20 cm²=2.0×10⁻³ m²，压力 F=pS=3.0×10³×2.0×10⁻³=6.0 N。这里求的是水产生的压强，不含大气压。",
+          "points": ["正确使用 p=ρgh", "完成面积单位换算", "由 F=pS 得到 6.0 N", "区分液体压强与总压强"]
+        },
+        {
+          "id": "crossing-chemistry-water",
+          "subject": "chemistry",
+          "title": "溪水检验",
+          "prompt": "若要比较渡口上下游水样的酸碱性与是否含较多可溶性钙盐，请分别写出一种可操作的检验方法，并说明仅凭“水清”为什么不能判断水质。",
+          "answer": "酸碱性可用 pH 试纸测定并与标准比色卡比较。检验 Ca²⁺ 可取水样加入碳酸钠溶液，若出现白色沉淀，说明可能含 Ca²⁺，还需排除其他能形成碳酸盐沉淀的离子干扰。水清只表示悬浮颗粒较少，溶解性离子和无色污染物仍可能存在，因此不能据此外推水质安全。",
+          "points": ["给出规范的 pH 检验", "写出钙离子检验及现象", "意识到离子干扰", "区分澄清与化学纯净"]
+        },
+        {
+          "id": "crossing-biology-moss",
+          "subject": "biology",
+          "title": "青苔微环境",
+          "prompt": "结合“彼岸青苔湿”，分析溪岸背阴湿润处青苔较多的原因，并说明青苔增多可能怎样影响该处微型生态系统。",
+          "answer": "背阴处蒸发较弱、湿度较高，靠近溪流又能持续获得水分，适合苔藓植物依赖水完成生殖及保持细胞代谢。青苔增多可提高局部保水能力，为小型无脊椎动物和微生物提供栖息空间，也会参与初级生产和物质循环，使微型生态系统的结构更丰富。",
+          "points": ["联系光照、蒸发和水分条件", "联系苔藓生殖或生理特点", "从栖息地、生产者或物质循环分析影响"]
+        },
+        {
+          "id": "crossing-politics-practice",
+          "subject": "politics",
+          "title": "实践与认识",
+          "prompt": "运用“实践是认识的基础”的知识，说明“先遣一蹄试水清”为何不是盲目冒险。",
+          "answer": "实践是认识的来源，也是检验认识真理性的唯一标准。小猪先观察环境，再以一蹄进行范围有限、风险可控的试探，从直接经验中获得水深、水流和河床状况的信息，并据此调整后续行动。这体现了在已有判断基础上通过实践获取和检验认识，而非脱离条件的盲目冒险。",
+          "points": ["写出实践是认识的来源", "写出实践是检验认识真理性的唯一标准", "结合有限试探与后续决策分析"]
+        },
+        {
+          "id": "crossing-history-waterworks",
+          "subject": "history",
+          "title": "水利与农耕",
+          "prompt": "若将诗中的小溪置于中国古代农耕社会，请从生产与国家治理两个角度说明水利工程为何常成为重要公共事务。",
+          "answer": "生产上，传统农业高度依赖稳定水源，水利工程能灌溉农田、排涝防洪并提高抵御自然灾害的能力。治理上，大型水利往往需要跨地区组织劳力、筹集物资并协调上下游利益，因而会推动基层组织、赋役调度和国家管理能力的运作，也可能影响区域开发与社会秩序。",
+          "points": ["从灌溉、防洪或农业稳定说明生产作用", "从组织劳力和资源说明治理需求", "涉及区域开发、利益协调或社会秩序"]
+        },
+        {
+          "id": "crossing-geography-riverbank",
+          "subject": "geography",
+          "title": "河岸地貌判断",
+          "prompt": "若渡口位于弯曲河段，说明凹岸与凸岸的流速、侵蚀或堆积差异，并判断小猪通常应优先选择哪一侧附近试探，写出理由。",
+          "answer": "弯曲河段表层水流受惯性影响偏向凹岸，凹岸流速较快、侵蚀较强且河床通常较深；凸岸流速较慢，以堆积作用为主，河床相对较浅。若不考虑局部暗坑等特殊情况，小猪通常应优先在凸岸附近试探，因为流速较缓、平均水深较小，但仍需现场观察和试探，不能只凭一般规律直接下水。",
+          "points": ["正确比较凹岸与凸岸流速", "正确对应侵蚀与堆积", "作出选择并说明相对水深和安全理由", "保留对局部条件的判断"]
+        }
+      ]
+    }
+  ]
+}

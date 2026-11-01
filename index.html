@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261101-shared-chronicle-ui-2">
+  <link rel="stylesheet" href="assets/style.css?v=20261101-poetry-scholia-1">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -330,6 +330,20 @@
         <div class="section-heading light"><div><p class="eyebrow" id="publicChronicleKicker">OPEN SHELVES</p><h2 id="publicChronicleTitle">猪事录</h2></div><p id="publicChronicleDescription">公开卷陈列宅邸传闻、日常异动与历次猪史。</p></div>
         <nav class="chronicle-volumes" id="chronicleVolumes" aria-label="猪史分卷" hidden></nav>
         <div class="timeline" id="chronicleTimeline" aria-busy="true"><p class="chronicle-loading" id="chronicleLoading">正在展开公开卷宗……</p></div>
+        <div class="scholia-entry" id="scholiaEntry" hidden>
+          <span aria-hidden="true"></span>
+          <button id="scholiaSeal" type="button" aria-label="诸科笺注馆印，连续轻触三次开启">
+            <b aria-hidden="true">笺</b><small>诸科笺注 · SCHOLIA</small>
+          </button>
+          <span aria-hidden="true"></span>
+        </div>
+      </section>
+      <section class="chronicle public-chronicle scholia-archive" id="scholiaArchive" hidden aria-labelledby="scholiaTitle">
+        <button class="chronicle-section-back" id="leaveScholia" type="button">← 合上诸科笺注</button>
+        <header class="section-heading light scholia-heading"><div><p class="eyebrow">SCHOLIA OMNIUM DISCIPLINARUM</p><h2 id="scholiaTitle">诸科笺注</h2></div><p>以猪诗为共同材料，从九门学科分别发问。先自行作答，再展开参考答案逐项对照。</p></header>
+        <nav class="scholia-subjects" id="scholiaSubjects" aria-label="按学科筛选题目"></nav>
+        <p class="scholia-count" id="scholiaCount" aria-live="polite"></p>
+        <div class="scholia-list" id="scholiaList" aria-busy="true"></div>
       </section>
       <section class="inner-chronicle" id="innerChronicle" hidden aria-labelledby="innerChronicleTitle">
         <div class="inner-index" id="innerIndex">
@@ -389,8 +403,17 @@
       <p class="gate-status" id="chronicleGateStatus" aria-live="polite"></p>
     </form>
   </dialog>
+  <dialog id="scholiaGate" class="chronicle-gate scholia-gate">
+    <button class="close scholia-gate-close" aria-label="关闭诸科笺注入口">×</button>
+    <form id="scholiaGateForm" method="dialog">
+      <p class="eyebrow">SCHOLIA OMNIUM DISCIPLINARUM</p>
+      <h2>诸科合卷确认</h2>
+      <p>此处会把同一篇猪诗交给不同学科审问，并在当前设备保存你的作答。</p>
+      <button class="primary" type="submit">展开诸科笺注</button>
+    </form>
+  </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261101-shared-chronicle-ui-4"></script>
+  <script type="module" src="assets/js/main.js?v=20261101-poetry-scholia-1"></script>
 </body>
 </html>
 

@@ -4,7 +4,7 @@ const MAX_FILE_SIZE = 1024 * 1024;
 const KEYS = Object.freeze({
   favorites:'pigdex-favorites-v1', identityHistory:'vesperion-identity-history',
   identityQuestions:'vesperion-identity-last-questions', tarotHistory:'vesperion-tarot-history',
-  theme:'pigdex-theme', audio:'pigdex-audio-v1'
+  scholiaAnswers:'vesperion-scholia-answers-v1', theme:'pigdex-theme', audio:'pigdex-audio-v1'
 });
 
 const arrayOfStrings = (value, limit = 500) => Array.isArray(value)
@@ -12,6 +12,9 @@ const arrayOfStrings = (value, limit = 500) => Array.isArray(value)
   : [];
 const text = (value, limit) => String(value ?? '').slice(0, limit);
 const readJson = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); } catch { return fallback; } };
+const answerMap = value => value && typeof value === 'object' && !Array.isArray(value)
+  ? Object.fromEntries(Object.entries(value).slice(0, 100).map(([key, answer]) => [text(key, 100), text(answer, 3000)]).filter(([key]) => key))
+  : {};
 
 function reading(entry) {
   if (!entry || typeof entry !== 'object' || !Array.isArray(entry.cards)) return null;
@@ -30,6 +33,7 @@ function createArchive() {
       favorites:{ specimens:arrayOfStrings(favorites.specimens), tarot:arrayOfStrings(favorites.tarot) },
       identity:{ history:readJson(KEYS.identityHistory, []), lastQuestions:arrayOfStrings(readJson(KEYS.identityQuestions, []), 100) },
       tarot:{ history:readJson(KEYS.tarotHistory, []) },
+      scholia:{ answers:answerMap(readJson(KEYS.scholiaAnswers, {})) },
       preferences:{ theme:localStorage.getItem(KEYS.theme) || 'paper', audio }
     }
   };
@@ -37,7 +41,7 @@ function createArchive() {
 
 function normalizeArchive(archive) {
   if (!archive || archive.format !== FORMAT || archive.version !== VERSION || !archive.data) throw new Error('这不是可识别的宅邸档案。');
-  const { favorites = {}, identity = {}, tarot = {}, preferences = {} } = archive.data;
+  const { favorites = {}, identity = {}, tarot = {}, scholia = {}, preferences = {} } = archive.data;
   const history = Array.isArray(identity.history) ? identity.history.slice(0, 8).filter(item => item && typeof item === 'object').map(item => ({
     id:text(item.id,80), name:text(item.name,80), rarity:text(item.rarity,40), at:text(item.at,40)
   })).filter(item => item.id && item.name) : [];
@@ -50,6 +54,7 @@ function normalizeArchive(archive) {
     [KEYS.identityHistory, JSON.stringify(history)],
     [KEYS.identityQuestions, JSON.stringify(arrayOfStrings(identity.lastQuestions, 100))],
     [KEYS.tarotHistory, JSON.stringify(readings)],
+    [KEYS.scholiaAnswers, JSON.stringify(answerMap(scholia.answers))],
     [KEYS.theme, theme],
     [KEYS.audio, JSON.stringify({ music:Boolean(sourceAudio.music), effects:Boolean(sourceAudio.effects), musicVolume:volume(sourceAudio.musicVolume,.65), effectsVolume:volume(sourceAudio.effectsVolume,.5) })]
   ]);
@@ -86,7 +91,7 @@ export function initArchiveTransfer(root = document) {
     try {
       if (file.size > MAX_FILE_SIZE) throw new Error('档案超过 1MB，已拒绝读取。');
       const entries = normalizeArchive(JSON.parse(await file.text()));
-      if (!window.confirm('导入会替换当前设备上的收藏、鉴定、占卜与偏好记录。确认继续吗？')) return;
+      if (!window.confirm('导入会替换当前设备上的收藏、鉴定、占卜、诸科作答与偏好记录。确认继续吗？')) return;
       replaceStorage(entries);
       status.textContent = '档案已恢复，正在重新装订馆舍…';
       window.setTimeout(() => location.reload(), 450);
