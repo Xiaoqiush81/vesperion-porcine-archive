@@ -1299,7 +1299,7 @@ html[data-faith-member="true"] .faith-masthead { box-shadow:inset 0 0 0 1px colo
   .faith-text-title strong { font-size:18px; }
 }
 
-/* Porcine oracle library · faith-7 */
+/* Porcine oracle library */
 .faith-oracle { min-height:220px; }
 .faith-oracle-result { margin-top:16px; display:grid; gap:9px; }
 .faith-oracle-result>span { color:var(--text-accent); font:9px var(--serif); letter-spacing:.14em; }
@@ -1340,7 +1340,7 @@ html[data-faith-member="true"] .faith-masthead { box-shadow:inset 0 0 0 1px colo
 }
 
 
-/* Home manor directory · home-1 */
+/* Home manor directory */
 .hero {
   grid-template-areas:
     "copy specimen"
@@ -1545,7 +1545,7 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] s
 }
 
 
-/* Touch-safe directory interaction · home-3 */
+/* Touch-safe directory interaction */
 .collection-switcher a {
   transition:background-color .14s ease, box-shadow .14s ease, transform .1s ease;
   -webkit-tap-highlight-color:transparent;
