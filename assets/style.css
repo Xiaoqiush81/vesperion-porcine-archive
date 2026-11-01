@@ -381,7 +381,6 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .plate-name { margin: 16px 0 32px; font-family: var(--serif); font-size: 13px; letter-spacing: .24em; }
 .plate-caption { width: 100%; padding-top: 13px; display: flex; justify-content: space-between; border-top: 1px solid var(--plate-line); color: var(--plate-muted); font-family: var(--serif); font-size: 9px; letter-spacing: .12em; }
 
-.status-strip { width: min(calc(100% - 48px), 1240px); margin: 0 auto 120px; display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); }
 
 .collection-switcher { width: min(calc(100% - 48px), 1240px); margin: 0 auto 70px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border:1px solid var(--document-line); background:var(--document-surface); position: sticky; top: 100px; z-index: 9; box-shadow:var(--document-shadow); }
 .collection-switcher a { min-width: 0; padding: 18px 24px; display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 3px 18px; color:var(--document-ink); text-decoration: none; }
@@ -390,8 +389,6 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .collection-switcher b { grid-row: 1 / span 2; grid-column: 2; color:var(--document-ink); font-family: var(--cn-serif); font-size: 19px; font-weight: 500; }
 .collection-switcher small { color:var(--document-muted); font-family: var(--cn-serif); font-size: 10px; }
 .section-jump { width: min(100%, 1240px); min-height: 46px; margin: 46px auto 0; padding: 18px 12px 12px; display: block; color: var(--text-accent); background: transparent; border: 0; border-top: 1px solid var(--line); border-radius: 0; -webkit-appearance: none; appearance: none; font-family: var(--cn-serif); font-size: 14px; text-align: right; text-decoration: none; cursor: pointer; }
-.status-strip div { padding: 25px 28px; border-right: 1px solid var(--line); }
-.status-strip div:last-child { border: 0; }
 
 .identity-office { min-height: calc(100vh - 88px); padding: 110px clamp(24px, 7vw, 110px) 125px; background: var(--surface); }
 .identity-shell, .identity-history { width: min(100%, 1120px); margin-inline: auto; }
@@ -1000,11 +997,7 @@ dialog::backdrop { background:var(--backdrop); }
   .hero h1 { font-size: 46px; line-height: 1.24; }
   .lede { font-size: 13px; }  .hero-specimen { min-height: 435px; padding-inline: 35px; box-shadow: 14px 16px 0 var(--paper-deep); }
   .plate-logo { width: 150px; height: 150px; flex-basis: 150px; }
-  .theme-hint { top: 18px; right: 20px; font-size: 7px; }
-  .status-strip { grid-template-columns: repeat(2, 1fr); margin-bottom: 80px; }
-  .status-strip div:nth-child(2) { border-right: 0; }
-  .status-strip div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .archive, .tarot-archive, .chronicle, .chronicle-room { padding-block: 78px; }
+  .theme-hint { top: 18px; right: 20px; font-size: 7px; }  .archive, .tarot-archive, .chronicle, .chronicle-room { padding-block: 78px; }
   .identity-office { padding-block: 78px; }
   .identity-shell, .identity-intro, .identity-quiz, .identity-result { min-height: 540px; }
   .identity-options { grid-template-columns: 1fr; }
