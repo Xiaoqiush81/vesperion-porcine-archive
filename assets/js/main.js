@@ -35,15 +35,12 @@ function applyFaithMembership() {
   const headerFaith = document.querySelector('.site-header [data-room-target="faith"]');
   if (headerFaith) headerFaith.textContent = active ? '猪猪教 · 教籍' : '猪猪教';
 
-  const heroFaith = document.querySelector('.hero .faith-entry');
-  if (heroFaith) heroFaith.textContent = active ? '返回猪猪教堂' : '进入猪猪教堂';
-
   const cardFaith = document.querySelector('.collection-switcher [data-room-target="faith"]');
   if (cardFaith) {
     const title = cardFaith.querySelector('b');
     const meta = cardFaith.querySelector('small');
-    if (title) title.textContent = active ? '返回猪猪教堂' : '进入猪猪教堂';
-    if (meta) meta.textContent = active ? '教籍已立 · 圣火相认' : '圣词 · 齐诵 · 猪教礼仪';
+    if (title) title.textContent = active ? '返回猪猪教堂' : '猪猪教堂';
+    if (meta) meta.textContent = active ? '圣词 · 猪谕 · 教籍已立' : '圣词 · 猪谕 · 教籍';
   }
 
   const mark = document.querySelector('#faithToolbarMark');
