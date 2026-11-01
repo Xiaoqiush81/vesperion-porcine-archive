@@ -1,4 +1,4 @@
-const DATA_URL = './data/scholia.json?v=20261101-scholia-1';
+const DATA_URL = './data/scholia.json?v=20261101-scholia-2';
 const STORAGE_KEY = 'vesperion-scholia-answers-v1';
 
 function element(tag, className = '', text = '') {
@@ -66,12 +66,20 @@ function renderQuestion(question, material, subject, answers) {
   return article;
 }
 
-export async function initScholia({ onEnter, onExit }) {
-  const entry = document.querySelector('#scholiaEntry');
-  const seal = document.querySelector('#scholiaSeal');
+function renderMaterial(material) {
+  const article = element('article', 'scholia-material');
+  article.append(element('small', '', '本卷原文'), element('h3', '', material.title));
+  const verse = element('blockquote');
+  verse.append(...material.verse.map(line => element('span', '', line)));
+  article.append(verse);
+  return article;
+}
+
+export async function initScholia() {
+  const entries = [...document.querySelectorAll('[data-scholia-entry]')];
   const gate = document.querySelector('#scholiaGate');
   const form = document.querySelector('#scholiaGateForm');
-  const archive = document.querySelector('#scholiaArchive');
+  const materialsHost = document.querySelector('#scholiaMaterials');
   const subjectsHost = document.querySelector('#scholiaSubjects');
   const list = document.querySelector('#scholiaList');
   const count = document.querySelector('#scholiaCount');
@@ -79,6 +87,7 @@ export async function initScholia({ onEnter, onExit }) {
   let data;
   let activeSubject = 'all';
   let taps = [];
+  let origin = 'outer';
 
   const load = async () => {
     if (data) return data;
@@ -102,28 +111,24 @@ export async function initScholia({ onEnter, onExit }) {
     count.textContent = `${questions.length} 道题 · ${activeSubject === 'all' ? '九科合卷' : subjects.get(activeSubject).label}`;
   };
 
-  const open = async () => {
-    gate.close();
-    archive.hidden = false;
-    onEnter();
+  const prepare = async () => {
     try {
       await load();
-      if (!subjectsHost.childElementCount) {
-        subjectsHost.replaceChildren(...data.subjects.map(subject => {
-          const button = element('button', 'scholia-subject');
-          button.type = 'button';
-          button.dataset.subject = subject.id;
-          button.setAttribute('aria-pressed', String(subject.id === activeSubject));
-          button.append(element('span', '', subject.mark), element('b', '', subject.label));
-          return button;
-        }));
-      }
+      if (subjectsHost.childElementCount) return;
+      materialsHost.replaceChildren(...data.materials.map(renderMaterial));
+      subjectsHost.replaceChildren(...data.subjects.map(subject => {
+        const button = element('button', 'scholia-subject');
+        button.type = 'button';
+        button.dataset.subject = subject.id;
+        button.setAttribute('aria-pressed', String(subject.id === activeSubject));
+        button.append(element('span', '', subject.mark), element('b', '', subject.label));
+        return button;
+      }));
       render();
     } catch (error) {
       console.error(error);
       list.replaceChildren(element('p', 'chronicle-loading', '笺注暂时无法调阅，请稍后重试。'));
     }
-    archive.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   };
 
   subjectsHost.addEventListener('click', event => {
@@ -132,29 +137,36 @@ export async function initScholia({ onEnter, onExit }) {
     activeSubject = button.dataset.subject;
     render();
   });
-  seal.addEventListener('click', () => {
+  entries.forEach(entry => entry.querySelector('.scholia-seal').addEventListener('click', () => {
     const now = Date.now();
+    origin = entry.dataset.scholiaEntry;
     taps = [...taps.filter(time => now - time < 3500), now];
-    if (taps.length < 3) return;
-    taps = [];
-    gate.showModal();
+    if (taps.length >= 3) {
+      taps = [];
+      gate.showModal();
+    }
+  }));
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    await prepare();
+    gate.close();
+    document.dispatchEvent(new CustomEvent('roomrequest', { detail:{ room:'scholia' } }));
   });
-  form.addEventListener('submit', event => { event.preventDefault(); open(); });
   gate.querySelector('.scholia-gate-close').addEventListener('click', () => gate.close());
   document.querySelector('#leaveScholia').addEventListener('click', () => {
-    archive.hidden = true;
-    onExit();
+    document.dispatchEvent(new CustomEvent('roomrequest', { detail:{ room:'chronicles', origin } }));
   });
   document.addEventListener('roomchange', event => {
-    if (event.detail.room !== 'chronicles') {
-      gate.close();
-      archive.hidden = true;
-      taps = [];
-    }
+    gate.close();
+    taps = [];
+    if (event.detail.room === 'scholia') prepare();
   });
 
   return {
-    showEntry(show) { entry.hidden = !show; },
-    hide() { gate.close(); archive.hidden = true; entry.hidden = true; taps = []; }
+    showEntry(place, show) {
+      const entry = entries.find(item => item.dataset.scholiaEntry === place);
+      if (entry) entry.hidden = !show;
+    },
+    hideEntries() { entries.forEach(entry => { entry.hidden = true; }); }
   };
 }

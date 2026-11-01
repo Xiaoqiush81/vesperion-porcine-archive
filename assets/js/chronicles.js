@@ -1,4 +1,4 @@
-import { initScholia } from './scholia.js?v=20261101-scholia-1';
+import { initScholia } from './scholia.js?v=20261101-scholia-2';
 
 const DATA_URL = './data/chronicles.json?v=20261101-poetry-scholia-1';
 let scholiaController;
@@ -131,6 +131,7 @@ function renderInnerShelves(shelves) {
       button.setAttribute('aria-pressed', String(button.dataset.volume === volume?.title));
     });
     renderEntries(volume ? volume.items : (shelf.items || []), volume?.mark || shelf.mark);
+    scholiaController?.showEntry('inner', volume?.title === '猪诗');
     volumeNav.dataset.shelf = shelf.title;
     index.hidden = true;
     collection.hidden = false;
@@ -220,7 +221,7 @@ function bindGate() {
     input.value = '';
     status.textContent = '';
     taps = [];
-    scholiaController?.hide();
+    scholiaController?.hideEntries();
   };
 
   seal.addEventListener('click', () => {
@@ -248,7 +249,7 @@ function bindGate() {
     document.querySelector('#chronicles').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   });
   document.addEventListener('roomchange', event => {
-    if (event.detail.room !== 'chronicles') restoreOuter();
+    if (!['chronicles', 'scholia'].includes(event.detail.room)) restoreOuter();
   });
 }
 
@@ -280,7 +281,7 @@ export async function initChronicles() {
       innerChronicle.hidden = true;
       masthead.hidden = false;
       portals.hidden = false;
-      scholiaController?.showEntry(false);
+      scholiaController?.hideEntries();
       document.querySelectorAll('#chroniclePortals .chronicle-portal').forEach(button => button.setAttribute('aria-pressed', 'false'));
       scrollToTop();
     };
@@ -295,23 +296,9 @@ export async function initChronicles() {
       portals.hidden = true;
       innerChronicle.hidden = true;
       publicChronicle.hidden = false;
-      scholiaController?.showEntry(section.title === '猪史' && volume === '猪诗');
+      scholiaController?.showEntry('outer', section.title === '猪史' && volume === '猪诗');
     };
-    scholiaController = await initScholia({
-      onEnter() {
-        room.dataset.chronicleView = 'scholia';
-        masthead.hidden = true;
-        portals.hidden = true;
-        publicChronicle.hidden = true;
-        innerChronicle.hidden = true;
-      },
-      onExit() {
-        selectSection('猪史', '猪诗');
-        document.querySelector('#chronicles').scrollIntoView({
-          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
-        });
-      }
-    });
+    scholiaController = await initScholia();
     document.querySelector('#chroniclePortals').addEventListener('click', event => {
       const portal = event.target.closest('.chronicle-portal');
       if (!portal) return;
