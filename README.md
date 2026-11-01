@@ -56,7 +56,7 @@
 │       ├── tarot-*.js          # 塔罗数据、抽牌引擎、界面与存储
 │       ├── chronicles.js       # 猪事馆目录、分卷与折叠卷宗
 │       ├── scholia.js          # 诸科小室切换、作答与答案对照
-│       ├── porcine-faith.js     # 猪猪教堂礼仪、教籍与每日猪谕
+│       ├── porcine-faith.js    # 猪猪教堂礼仪、教籍与每日猪谕
 │       ├── records.js          # 宅邸档案聚合
 │       ├── archive-transfer.js # 本地档案导出、校验与原子恢复
 │       ├── record-links.js     # 猪种—塔罗象征联结
@@ -68,8 +68,8 @@
     ├── specimens.json          # 猪咪馆藏的唯一数据源
     ├── chronicles.json         # 猪事馆分区、分卷与记录数据
     ├── scholia.json            # 九科学科目录、题目与参考答案
-    ├── porcine-faith.json       # 猪教圣词、四义与礼仪经卷
-    └── porcine-oracles.json      # 猪谕文库与每日抽签池
+    ├── porcine-faith.json      # 猪教圣词、四义与礼仪经卷
+    └── porcine-oracles.json    # 猪谕文库与每日抽签池
 ```
 
 各模块通过清晰的单向职责协作：数据文件描述馆藏，纯逻辑引擎负责抽取与匹配，存储模块封装浏览器状态，界面模块只处理渲染和交互。新增形态、题目、牌阵或象征联结时，无需改动其他系统。
