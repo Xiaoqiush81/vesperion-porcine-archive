@@ -1,4 +1,4 @@
-const DATA_URL = './data/chronicles.json?v=20261025-7';
+const DATA_URL = './data/chronicles.json?v=20261101-natural-public-copy-1';
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
