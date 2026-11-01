@@ -846,7 +846,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .scholia-entry { width:min(100%,1020px); margin:48px auto 0; display:grid; grid-template-columns:minmax(28px,1fr) auto minmax(28px,1fr); align-items:center; gap:18px; }
 .scholia-entry[hidden] { display:none; }
 .scholia-entry>span { height:1px; background:var(--line); }
-.scholia-entry button { min-height:48px; padding:6px 12px; color:var(--muted); background:transparent; border:0; -webkit-appearance:none; appearance:none; touch-action:manipulation; cursor:default; }
+.scholia-entry button { min-height:48px; padding:6px 12px; display:flex; align-items:center; justify-content:center; color:var(--muted); background:transparent; border:0; -webkit-appearance:none; appearance:none; touch-action:manipulation; font:inherit; line-height:1; cursor:default; }
 .scholia-entry small { font-family:var(--serif); font-size:8px; letter-spacing:.2em; white-space:nowrap; }
 .scholia-entry button:focus-visible { outline:1px solid var(--amber); outline-offset:3px; }
 .scholia-room { min-height:calc(100vh - 150px); min-height:calc(100svh - 150px); padding:0 clamp(24px,7vw,110px) 100px; color:var(--navy); background:var(--surface); }

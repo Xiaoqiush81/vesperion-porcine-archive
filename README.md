@@ -8,7 +8,7 @@
 
 **在线访问：** [xiaoqiush81.github.io/vesperion-porcine-archive](https://xiaoqiush81.github.io/vesperion-porcine-archive/)
 
-**最新入馆：** 猪史第七卷 `猪诗` 已收录十篇诗、谣、赞与短章；《渡水》《灯下》《风桥》《种星》同时作为诸科小室的跨学科材料。
+**最新入馆：** 猪史第七卷 `猪诗` 已收录十一篇诗、谣、赞与短章；诸科小室从中按材料特性选卷设题，不要求每首诗覆盖全部学科。
 
 ## 馆舍导览
 
