@@ -1,6 +1,5 @@
 {
   "subjects": [
-    { "id": "all", "label": "全部", "mark": "〇" },
     { "id": "chinese", "label": "语文", "mark": "语" },
     { "id": "mathematics", "label": "数学", "mark": "数" },
     { "id": "english", "label": "英语", "mark": "英" },

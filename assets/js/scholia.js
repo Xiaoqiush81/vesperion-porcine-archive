@@ -1,4 +1,4 @@
-const DATA_URL = './data/scholia.json?v=20261101-scholia-2';
+const DATA_URL = './data/scholia.json?v=20261101-scholia-3';
 const STORAGE_KEY = 'vesperion-scholia-answers-v1';
 
 function element(tag, className = '', text = '') {
@@ -79,13 +79,17 @@ export async function initScholia() {
   const entries = [...document.querySelectorAll('[data-scholia-entry]')];
   const gate = document.querySelector('#scholiaGate');
   const form = document.querySelector('#scholiaGateForm');
+  const index = document.querySelector('#scholiaIndex');
+  const study = document.querySelector('#scholiaStudy');
+  const studyTitle = document.querySelector('#scholiaStudyTitle');
+  const studyMark = document.querySelector('#scholiaStudyMark');
   const materialsHost = document.querySelector('#scholiaMaterials');
   const subjectsHost = document.querySelector('#scholiaSubjects');
   const list = document.querySelector('#scholiaList');
   const count = document.querySelector('#scholiaCount');
   const answers = loadAnswers();
   let data;
-  let activeSubject = 'all';
+  let activeSubject = null;
   let taps = [];
   let origin = 'outer';
 
@@ -97,34 +101,44 @@ export async function initScholia() {
     return data;
   };
 
-  const render = () => {
+  const renderStudy = () => {
+    const subject = data.subjects.find(item => item.id === activeSubject);
+    if (!subject) return;
     const questions = data.materials.flatMap(material => material.questions
-      .filter(question => activeSubject === 'all' || question.subject === activeSubject)
+      .filter(question => question.subject === activeSubject)
       .map(question => ({ question, material })));
     const subjects = new Map(data.subjects.map(subject => [subject.id, subject]));
-    subjectsHost.querySelectorAll('button').forEach(button => {
-      button.setAttribute('aria-pressed', String(button.dataset.subject === activeSubject));
-    });
+    studyTitle.textContent = `${subject.label}小室`;
+    studyMark.textContent = subject.mark;
+    materialsHost.replaceChildren(...data.materials.map(renderMaterial));
     list.replaceChildren(...questions.map(({ question, material }) =>
       renderQuestion(question, material, subjects.get(question.subject), answers)));
     list.removeAttribute('aria-busy');
-    count.textContent = `${questions.length} 道题 · ${activeSubject === 'all' ? '九科合卷' : subjects.get(activeSubject).label}`;
+    count.textContent = `${questions.length} 道题 · ${subject.label}`;
+    index.hidden = true;
+    study.hidden = false;
+    study.scrollIntoView({ block:'start' });
+  };
+
+  const showIndex = () => {
+    activeSubject = null;
+    study.hidden = true;
+    index.hidden = false;
   };
 
   const prepare = async () => {
     try {
       await load();
       if (subjectsHost.childElementCount) return;
-      materialsHost.replaceChildren(...data.materials.map(renderMaterial));
       subjectsHost.replaceChildren(...data.subjects.map(subject => {
         const button = element('button', 'scholia-subject');
         button.type = 'button';
         button.dataset.subject = subject.id;
-        button.setAttribute('aria-pressed', String(subject.id === activeSubject));
+        button.setAttribute('aria-label', `进入${subject.label}小室`);
         button.append(element('span', '', subject.mark), element('b', '', subject.label));
         return button;
       }));
-      render();
+      list.removeAttribute('aria-busy');
     } catch (error) {
       console.error(error);
       list.replaceChildren(element('p', 'chronicle-loading', '笺注暂时无法调阅，请稍后重试。'));
@@ -133,10 +147,11 @@ export async function initScholia() {
 
   subjectsHost.addEventListener('click', event => {
     const button = event.target.closest('.scholia-subject');
-    if (!button || button.dataset.subject === activeSubject) return;
+    if (!button) return;
     activeSubject = button.dataset.subject;
-    render();
+    renderStudy();
   });
+  document.querySelector('#leaveScholiaStudy').addEventListener('click', showIndex);
   entries.forEach(entry => entry.querySelector('.scholia-seal').addEventListener('click', () => {
     const now = Date.now();
     origin = entry.dataset.scholiaEntry;
@@ -154,12 +169,16 @@ export async function initScholia() {
   });
   gate.querySelector('.scholia-gate-close').addEventListener('click', () => gate.close());
   document.querySelector('#leaveScholia').addEventListener('click', () => {
+    showIndex();
     document.dispatchEvent(new CustomEvent('roomrequest', { detail:{ room:'chronicles', origin } }));
   });
   document.addEventListener('roomchange', event => {
     gate.close();
     taps = [];
-    if (event.detail.room === 'scholia') prepare();
+    if (event.detail.room === 'scholia') {
+      showIndex();
+      prepare();
+    }
   });
 
   return {
