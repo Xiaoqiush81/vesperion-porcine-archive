@@ -250,10 +250,35 @@ async function main() {
   });
   document.querySelector('#updatedAt').textContent = new Intl.DateTimeFormat('zh-CN', { dateStyle: 'long' }).format(new Date());
 
+  const clearDirectoryPress = item => {
+    if (!item) return;
+    clearTimeout(item._pressTimer);
+    item.classList.remove('is-pressing');
+  };
+
+  document.querySelectorAll('.collection-switcher [data-room-target]').forEach(item => {
+    item.addEventListener('pointerdown', () => {
+      clearTimeout(item._pressTimer);
+      item.classList.add('is-pressing');
+    });
+    item.addEventListener('pointercancel', () => clearDirectoryPress(item));
+    item.addEventListener('pointerleave', () => clearDirectoryPress(item));
+  });
+
   document.addEventListener('click', event => {
     const entrance = event.target.closest('[data-room-target]');
     if (!entrance) return;
     event.preventDefault();
+
+    if (entrance.closest('.collection-switcher')) {
+      entrance.classList.add('is-pressing');
+      entrance._pressTimer = setTimeout(() => {
+        clearDirectoryPress(entrance);
+        enterRoom(entrance.dataset.roomTarget);
+      }, 85);
+      return;
+    }
+
     enterRoom(entrance.dataset.roomTarget);
   });
   document.addEventListener('roomrequest', event => enterRoom(event.detail.room));
