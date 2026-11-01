@@ -1221,8 +1221,6 @@ dialog::backdrop { background:var(--backdrop); }
 /* Porcine membership */
 .faith-toolbar-mark { grid-column:2; grid-row:1; justify-self:end; color:var(--amber); font-family:var(--cn-serif); font-size:9px; letter-spacing:.1em; white-space:nowrap; }
 html[data-faith-member="true"] body[data-room="faith"] .room-toolbar small { display:none; }
-html[data-faith-member="true"] .hero .faith-entry { border-color:var(--amber); box-shadow:inset 0 -2px var(--amber); }
-html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] { box-shadow:inset 0 -3px var(--amber); }
 html[data-faith-member="true"] .faith-masthead { box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--amber-pale) 58%,transparent); }
 .faith-masthead-member { width:max-content; max-width:100%; margin:28px auto -8px; padding:7px 14px; color:var(--amber-pale); border-block:1px solid color-mix(in srgb,var(--amber-pale) 36%,transparent); font-family:var(--cn-serif); font-size:9px; letter-spacing:.14em; }
 
