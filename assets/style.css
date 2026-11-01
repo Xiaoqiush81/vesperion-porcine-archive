@@ -1650,7 +1650,6 @@ html[data-faith-member="true"] .faith-masthead { box-shadow:inset 0 0 0 1px colo
   font-size:16px;
   opacity:.7;
 }
-.collection-switcher a:hover { background:var(--surface-raised); }
 .collection-switcher span {
   color:var(--amber);
   font-family:var(--serif);
@@ -1768,4 +1767,30 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] s
   .collection-switcher a { min-height:98px; padding-inline:12px; }
   .collection-switcher b { font-size:14px; }
   .collection-switcher small { font-size:7px; }
+}
+
+
+/* Touch-safe directory interaction · home-2 */
+@media (hover:hover) and (pointer:fine) {
+  .collection-switcher a:hover {
+    background:var(--surface-raised);
+  }
+  .collection-switcher a:hover::after {
+    opacity:1;
+    transform:translate(2px,-2px);
+  }
+}
+.collection-switcher a::after {
+  transition:opacity .16s ease, transform .16s ease;
+}
+.collection-switcher a:active {
+  background:color-mix(in srgb,var(--amber) 7%,var(--surface));
+}
+@media (hover:none), (pointer:coarse) {
+  .collection-switcher a:hover {
+    background:var(--surface);
+  }
+  html[data-faith-member="true"] .collection-switcher [data-room-target="faith"]:hover {
+    background:color-mix(in srgb,var(--amber) 8%,var(--surface));
+  }
 }
