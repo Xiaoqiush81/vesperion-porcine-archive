@@ -103,6 +103,7 @@ function renderEntries(entries, section, volume = '') {
 function renderInnerShelves(shelves) {
   const host = document.querySelector('#innerShelves');
   const index = document.querySelector('#innerIndex');
+  const masthead = index.querySelector('.chronicle-masthead');
   const collection = document.querySelector('#innerCollection');
   const volumeNav = document.querySelector('#innerVolumeNav');
   const timeline = document.querySelector('#innerTimeline');
@@ -170,7 +171,7 @@ function renderInnerShelves(shelves) {
   document.querySelector('#innerSectionBack').addEventListener('click', () => {
     collection.hidden = true;
     index.hidden = false;
-    requestAnimationFrame(() => index.scrollIntoView({
+    requestAnimationFrame(() => masthead.scrollIntoView({
       block: 'start',
       behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
     }));
@@ -201,7 +202,7 @@ function bindGate() {
     gate.close();
     input.value = '';
     status.textContent = '';
-    inner.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    room.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   };
 
   const restoreOuter = () => {
