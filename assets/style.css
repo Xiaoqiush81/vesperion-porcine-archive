@@ -855,7 +855,7 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .scholia-study-heading .scholia-subject-mark { flex:0 0 44px; width:44px; height:44px; }
 .scholia-study-heading small { color:var(--text-accent); font-family:var(--serif); font-size:8px; letter-spacing:.14em; }
 .scholia-study-heading h3 { margin:5px 0 0; color:var(--navy); font-family:var(--cn-serif); font-size:24px; font-weight:500; }
-.scholia-materials { width:min(100%,1020px); margin:0 auto 34px; }
+.scholia-materials { width:min(100%,1020px); margin:0 auto 34px; display:grid; gap:18px; }
 .scholia-material { padding:28px clamp(20px,4vw,38px); background:var(--surface-raised); border:1px solid var(--line); }
 .scholia-material small { color:var(--text-accent); font-family:var(--serif); font-size:9px; letter-spacing:.14em; }
 .scholia-material h3 { margin:10px 0 18px; color:var(--navy); font-family:var(--cn-serif); font-size:24px; font-weight:500; }

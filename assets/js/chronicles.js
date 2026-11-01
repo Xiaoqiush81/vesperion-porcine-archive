@@ -1,6 +1,6 @@
-import { initScholia } from './scholia.js?v=20261101-scholia-3';
+import { initScholia } from './scholia.js?v=20261101-scholia-4';
 
-const DATA_URL = './data/chronicles.json?v=20261101-poetry-scholia-1';
+const DATA_URL = './data/chronicles.json?v=20261101-poetry-scholia-4';
 let scholiaController;
 
 function element(tag, className, text) {

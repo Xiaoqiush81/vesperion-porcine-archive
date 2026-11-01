@@ -1,4 +1,4 @@
-const DATA_URL = './data/scholia.json?v=20261101-scholia-3';
+const DATA_URL = './data/scholia.json?v=20261101-scholia-4';
 const STORAGE_KEY = 'vesperion-scholia-answers-v1';
 
 function element(tag, className = '', text = '') {
@@ -104,13 +104,15 @@ export async function initScholia() {
   const renderStudy = () => {
     const subject = data.subjects.find(item => item.id === activeSubject);
     if (!subject) return;
-    const questions = data.materials.flatMap(material => material.questions
+    const materials = data.materials.filter(material =>
+      material.questions.some(question => question.subject === activeSubject));
+    const questions = materials.flatMap(material => material.questions
       .filter(question => question.subject === activeSubject)
       .map(question => ({ question, material })));
     const subjects = new Map(data.subjects.map(subject => [subject.id, subject]));
     studyTitle.textContent = `${subject.label}小室`;
     studyMark.textContent = subject.mark;
-    materialsHost.replaceChildren(...data.materials.map(renderMaterial));
+    materialsHost.replaceChildren(...materials.map(renderMaterial));
     list.replaceChildren(...questions.map(({ question, material }) =>
       renderQuestion(question, material, subjects.get(question.subject), answers)));
     list.removeAttribute('aria-busy');

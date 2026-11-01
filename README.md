@@ -8,7 +8,7 @@
 
 **在线访问：** [xiaoqiush81.github.io/vesperion-porcine-archive](https://xiaoqiush81.github.io/vesperion-porcine-archive/)
 
-**最新入馆：** 猪史第七卷 `猪诗` —— 收录四篇创卷前诗体遗珠及开卷诗《小猪行》，卷宗内按诗行独立排版。
+**最新入馆：** 猪史第七卷 `猪诗` 已收录十篇诗、谣、赞与短章；《渡水》《灯下》《风桥》《种星》同时作为诸科小室的跨学科材料。
 
 ## 馆舍导览
 
