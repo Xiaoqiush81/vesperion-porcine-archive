@@ -1,6 +1,17 @@
 const FIXED_REPLACEMENTS = [
+  [/爸爸爸爸/g, '粑粑粑粑咪'],
   [/爸爸/g, '粑粑'],
   [/老爸/g, '粑粑'],
+  [/不知道/g, '布吉岛'],
+  [/吃饭/g, '吃饭饭'],
+  [/抱一下/g, '抱抱'],
+  [/抱一抱/g, '抱抱'],
+  [/贴一下/g, '贴贴'],
+  [/贴一贴/g, '贴贴'],
+  [/亲一下/g, '亲亲'],
+  [/亲一亲/g, '亲亲'],
+  [/搓一下/g, '搓搓'],
+  [/搓一搓/g, '搓搓'],
   [/小猪/g, '猪咪'],
   [/猪猪/g, '猪咪'],
   [/特别可爱/g, '超萌'],
@@ -24,6 +35,13 @@ const PIG_FORMS = {
   full: { prefix:['咪咪咪—— ','oonk！','唔咪唔咪—— '], suffix:[' ୯(*´ω｀*)୬',' (ﾟωﾟ)',' oonk'], interjection:['咪咪咪','oonk oonk','唔咪','哼哼'] },
 };
 
+const SEMANTIC_FORMS = [
+  { pattern: /(听不懂|完全没懂|脑子一片空白)/g, replacement: '猪泥' },
+  { pattern: /(反应不过来|脑子没转过来|理解得很慢)/g, replacement: '猪脑加载中' },
+  { pattern: /(一堆问题|好多问题|满脑子问题)/g, replacement: '一书包问号' },
+  { pattern: /(扑过去|撞过去|冲过去抱住)/g, replacement: '肥猪冲击' },
+];
+
 function hashText(text) {
   let hash = 2166136261;
   for (let i = 0; i < text.length; i += 1) {
@@ -42,6 +60,15 @@ function replaceSelfReference(text, level) {
   return text
     .replace(/(^|[，。！？!?、；：\s])我(?=们|自己|的|要|想|觉得|认为|是|有|会|能|可以|今天|刚|又|还|真|超|好|很|也|都|就|不|没|$)/g, '$1猪')
     .replace(/我的/g, '猪的');
+}
+
+function applySemanticForms(text, level) {
+  if (level !== 'full') return text;
+  let output = text;
+  SEMANTIC_FORMS.forEach(({ pattern, replacement }) => {
+    output = output.replace(pattern, replacement);
+  });
+  return output;
 }
 
 function addRhythm(text, level, seed) {
@@ -85,9 +112,13 @@ export function translateToPorcine(input, level = 'standard') {
   FIXED_REPLACEMENTS.forEach(([pattern, replacement]) => { output = output.replace(pattern, replacement); });
   PARTICLE_REPLACEMENTS.forEach(([pattern, replacement]) => { output = output.replace(pattern, replacement); });
   output = replaceSelfReference(output, safeLevel);
+  output = applySemanticForms(output, safeLevel);
 
   // Established pig-language spellings are canonical and must never be "corrected".
-  output = output.replace(/臭粑粑/g, '凑粑粑').replace(/臭猪/g, '凑猪');
+  output = output
+    .replace(/臭粑粑/g, '凑粑粑')
+    .replace(/臭猪/g, '凑猪')
+    .replace(/喵喵/g, '咪咪喵呜');
 
   return addRhythm(output, safeLevel, hashText(source + safeLevel));
 }
