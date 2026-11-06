@@ -6,7 +6,7 @@ const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
 const ARCHIVE_MODULE_URL = './archive.js?v=20261031-specimens-59';
 const CHRONICLES_MODULE_URL = './chronicles.js?v=20261101-poetry-9';
 const FAITH_MODULE_URL = './porcine-faith.js?v=20261102-faith-9';
-const PORCINE_TRANSLATOR_MODULE_URL = './porcine-translator.js?v=20261107-translator-3';
+const PORCINE_TRANSLATOR_MODULE_URL = './porcine-translator.js?v=20261107-translator-4';
 
 const ROOM_TITLES = {
   home:'PIGDEX 081 · 维斯珀里昂猪类图鉴',

@@ -42,6 +42,50 @@ const SEMANTIC_FORMS = [
   { pattern: /(扑过去|撞过去|冲过去抱住)/g, replacement: '肥猪冲击' },
 ];
 
+const CANONICAL_NORMALIZATIONS = [
+  [/臭粑粑/g, '凑粑粑'],
+  [/臭猪/g, '凑猪'],
+  [/喵喵/g, '咪咪喵呜'],
+];
+
+const CANONICAL_FORMS = [
+  '宇宙无敌第一萌', '猪脑加载中', '粑粑粑粑咪', '咪咪喵呜',
+  '一书包问号', '肥猪冲击', '凑粑粑', 'onk onk', '吃饭饭',
+  '布吉岛', 'piapia', '猪咪', '粑粑', '抱抱', '贴贴', '亲亲',
+  '搓搓', '猪泥', '咪咪咪', '咪咪', 'oonk', 'onk',
+];
+
+function normalizeCanonicalForms(text) {
+  let output = text;
+  CANONICAL_NORMALIZATIONS.forEach(([pattern, replacement]) => {
+    output = output.replace(pattern, replacement);
+  });
+  return output;
+}
+
+function protectCanonicalForms(text) {
+  const forms = [];
+  let output = text;
+  CANONICAL_FORMS.forEach(form => {
+    const parts = output.split(form);
+    if (parts.length === 1) return;
+    output = parts.join(`⟦PIG_${forms.push(form) - 1}⟧`);
+  });
+  return {
+    text: output,
+    restore(value) {
+      return value.replace(/⟦PIG_(\d+)⟧/g, (_, index) => forms[Number(index)] || '');
+    },
+  };
+}
+
+function isNativePorcine(text) {
+  const protectedText = protectCanonicalForms(text).text;
+  return !protectedText
+    .replace(/⟦PIG_\d+⟧/g, '')
+    .replace(/[\s，。！？!?、；：—…~～（）()୯*´ω｀ﾟ]+/g, '');
+}
+
 function hashText(text) {
   let hash = 2166136261;
   for (let i = 0; i < text.length; i += 1) {
@@ -114,20 +158,21 @@ export function translateToPorcine(input, level = 'standard') {
   const source = String(input || '').trim();
   if (!source) return '';
   const safeLevel = PIG_FORMS[level] ? level : 'standard';
-  let output = source;
+  const normalized = normalizeCanonicalForms(source);
+
+  // Native pig-language is already translated; preserve it instead of pigging it again.
+  if (isNativePorcine(normalized)) return normalized;
+
+  const protectedInput = protectCanonicalForms(normalized);
+  let output = protectedInput.text;
 
   FIXED_REPLACEMENTS.forEach(([pattern, replacement]) => { output = output.replace(pattern, replacement); });
   PARTICLE_REPLACEMENTS.forEach(([pattern, replacement]) => { output = output.replace(pattern, replacement); });
   output = replaceSelfReference(output, safeLevel);
   output = applySemanticForms(output, safeLevel);
+  output = addRhythm(output, safeLevel, hashText(normalized + safeLevel));
 
-  // Established pig-language spellings are canonical and must never be "corrected".
-  output = output
-    .replace(/臭粑粑/g, '凑粑粑')
-    .replace(/臭猪/g, '凑猪')
-    .replace(/喵喵/g, '咪咪喵呜');
-
-  return addRhythm(output, safeLevel, hashText(source + safeLevel));
+  return protectedInput.restore(output);
 }
 
 export function initPorcineTranslator() {
