@@ -31,8 +31,8 @@ const PARTICLE_REPLACEMENTS = [
 
 const PIG_FORMS = {
   light: { prefix:['',''], suffix:['',' ୯(*´ω｀*)୬'], interjection:['咪','嗯哼'] },
-  standard: { prefix:['','咪咪—— ','噢哼哼，'], suffix:[' ୯(*´ω｀*)୬',' (ﾟωﾟ)',''], interjection:['咪咪','oonk','唔咪'] },
-  full: { prefix:['咪咪咪—— ','oonk！','唔咪唔咪—— '], suffix:[' ୯(*´ω｀*)୬',' (ﾟωﾟ)',' oonk'], interjection:['咪咪咪','oonk oonk','唔咪','哼哼'] },
+  standard: { prefix:['','咪咪—— ','噢哼哼，'], suffix:[' ୯(*´ω｀*)୬',' (ﾟωﾟ)',''], interjection:['咪咪','onk onk','唔咪'] },
+  full: { prefix:['咪咪咪—— ','onk onk！','唔咪唔咪—— '], suffix:[' ୯(*´ω｀*)୬',' (ﾟωﾟ)',' onk onk'], interjection:['咪咪咪','onk onk','唔咪','哼哼'] },
 };
 
 const SEMANTIC_FORMS = [
@@ -71,6 +71,13 @@ function applySemanticForms(text, level) {
   return output;
 }
 
+function applyCuteOonk(text, level, seed) {
+  if (level !== 'full') return text;
+  // "oonk" is not the canonical grunt; it is a deliberately stretched,
+  // extra-cute variant of "onk / onk onk".
+  return (seed % 4 === 0) ? text.replace(/onk onk/g, 'oonk') : text;
+}
+
 function addRhythm(text, level, seed) {
   if (level === 'light') return text;
   const form = PIG_FORMS[level];
@@ -100,7 +107,7 @@ function addRhythm(text, level, seed) {
       .replace(/很烦/g, '很凑')
       .replace(/烦人/g, '凑');
   }
-  return out;
+  return applyCuteOonk(out, level, seed);
 }
 
 export function translateToPorcine(input, level = 'standard') {
