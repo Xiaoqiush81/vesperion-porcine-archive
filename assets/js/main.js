@@ -6,6 +6,7 @@ const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';
 const ARCHIVE_MODULE_URL = './archive.js?v=20261031-specimens-59';
 const CHRONICLES_MODULE_URL = './chronicles.js?v=20261101-poetry-9';
 const FAITH_MODULE_URL = './porcine-faith.js?v=20261102-faith-9';
+const PORCINE_TRANSLATOR_MODULE_URL = './porcine-translator.js?v=20261107-translator-1';
 
 const ROOM_TITLES = {
   home:'PIGDEX 081 · 维斯珀里昂猪类图鉴',
@@ -16,6 +17,7 @@ const ROOM_TITLES = {
   chronicles:'猪事馆 · PIGDEX 081',
   scholia:'诸科笺注 · PIGDEX 081',
   faith:'猪猪教堂 · PIGDEX 081',
+  translator:'猪语翻译器 · PIGDEX 081',
   legal:'馆舍公约 · PIGDEX 081'
 };
 
@@ -72,12 +74,14 @@ let identityReady = false;
 let recordsReady = false;
 let chroniclesReady = false;
 let faithReady = false;
+let translatorReady = false;
 let archiveLoading = null;
 let tarotLoading = null;
 let identityLoading = null;
 let recordsLoading = null;
 let chroniclesLoading = null;
 let faithLoading = null;
+let translatorLoading = null;
 let archiveController = null;
 let roomRequest = 0;
 
@@ -171,7 +175,22 @@ async function initFaith() {
   return faithLoading;
 }
 
-const ROOM_NAMES = new Set(['tarot', 'specimens', 'identify', 'records', 'chronicles', 'scholia', 'faith', 'legal']);
+
+async function initTranslator() {
+  if (translatorReady) return;
+  if (!translatorLoading) translatorLoading = import(PORCINE_TRANSLATOR_MODULE_URL)
+    .then(module => module.initPorcineTranslator())
+    .then(() => { translatorReady = true; })
+    .catch(error => {
+      console.error(error);
+      const output = document.querySelector('#translatorOutput');
+      if (output) output.innerHTML = '<p class="translator-placeholder">猪语系统暂时卡壳，请刷新后再试。</p>';
+    })
+    .finally(() => { translatorLoading = null; });
+  return translatorLoading;
+}
+
+const ROOM_NAMES = new Set(['tarot', 'specimens', 'identify', 'records', 'chronicles', 'scholia', 'faith', 'translator', 'legal']);
 
 function roomFromLocation() {
   const queryRoom = new URLSearchParams(location.search).get('room');
@@ -193,7 +212,7 @@ async function enterRoom(room, push = true) {
   const request = ++roomRequest;
   const target = ROOM_NAMES.has(room) ? room : 'home';
   const routeChanged = roomFromLocation() !== target;
-  const roomNames = { specimens: '猪猪图鉴', identify: '猪种鉴定所', tarot: '宅邸塔罗馆', records: '宅邸档案室', chronicles: '猪事馆', scholia: '诸科笺注', faith: '猪猪教堂', legal: '宅邸制度文件' };
+  const roomNames = { specimens: '猪猪图鉴', identify: '猪种鉴定所', tarot: '宅邸塔罗馆', records: '宅邸档案室', chronicles: '猪事馆', scholia: '诸科笺注', faith: '猪猪教堂', translator: '猪语翻译器', legal: '宅邸制度文件' };
   if (target === 'specimens') await initArchive();
   if (target === 'tarot') await initTarot();
   if (target === 'identify') await initIdentity();
@@ -201,6 +220,7 @@ async function enterRoom(room, push = true) {
   if (target === 'chronicles') initChronicles();
   if (target === 'scholia') await initChronicles();
   if (target === 'faith') await initFaith();
+  if (target === 'translator') await initTranslator();
   if (request !== roomRequest) return;
   document.body.dataset.room = target;
   if (push && routeChanged) history.pushState({ room: target }, '', roomUrl(target));

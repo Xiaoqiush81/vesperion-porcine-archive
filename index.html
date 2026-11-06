@@ -36,6 +36,7 @@
       <button class="header-room" data-room-target="records" type="button">档案室</button>
       <button class="header-room" data-room-target="chronicles" type="button">猪事馆</button>
       <button class="header-room" data-room-target="faith" type="button">猪猪教</button>
+      <button class="header-room" data-room-target="translator" type="button">猪语翻译</button>
       <button id="randomPig" class="nav-button" type="button">随机捕猪</button>
       <button class="nav-button" data-room-target="legal" type="button">条款与政策</button>
     </nav>
@@ -94,7 +95,7 @@
       <section class="home-directory" aria-labelledby="homeDirectoryTitle">
         <header class="home-directory-heading">
           <div><p>MANOR DIRECTORY</p><h2 id="homeDirectoryTitle">馆舍导览</h2></div>
-          <small>六处馆舍 · 各自独立进入</small>
+          <small>七处馆舍 · 各自独立进入</small>
         </header>
         <nav class="collection-switcher" id="collections" aria-label="馆藏区域入口">
           <a href="#specimens" data-room-target="specimens"><span>PORCINE ARCHIVE</span><b>猪猪图鉴</b><small>59 种已发现形态</small></a>
@@ -103,8 +104,57 @@
           <a href="#records" data-room-target="records"><span>MANOR RECORD ROOM</span><b>宅邸档案室</b><small>鉴定 · 占卜 · 收藏</small></a>
           <a href="#chronicles" data-room-target="chronicles"><span>MANOR CHRONICLES</span><b>猪事馆</b><small>猪史 · 猪诗 · 见闻</small></a>
           <a href="#faith" data-room-target="faith" class="faith-entry"><span>PORCINE CHAPEL</span><b>猪猪教堂</b><small>圣词 · 猪谕 · 教籍</small></a>
+          <a href="#translator" data-room-target="translator"><span>PORCINE LINGUISTICS</span><b>猪语翻译器</b><small>人话输入 · 猪言猪语输出</small></a>
         </nav>
       </section>
+    </section>
+
+
+    <section class="translator-room room-view room-translator" id="translator" aria-labelledby="translatorTitle">
+      <div class="translator-shell">
+        <header class="translator-heading">
+          <p class="eyebrow">VESPERION MANOR · PORCINE LINGUISTICS</p>
+          <h2 id="translatorTitle">猪语翻译器</h2>
+          <p>把普通文字交给第 081 号猪语系统，译成带有固定词义、语气和猪咪节奏的猪言猪语。</p>
+        </header>
+
+        <div class="translator-grid">
+          <section class="translator-panel" aria-labelledby="translatorInputTitle">
+            <div class="translator-panel-head">
+              <div><small>HUMAN INPUT</small><h3 id="translatorInputTitle">输入人话</h3></div>
+              <button class="translator-clear" id="translatorClear" type="button">清空</button>
+            </div>
+            <textarea id="translatorInput" maxlength="1200" rows="10" placeholder="例如：爸爸，我回来了，今天真的好累，但是猪还是超级可爱。"></textarea>
+            <div class="translator-controls">
+              <label>
+                <span>猪语浓度</span>
+                <select id="translatorLevel">
+                  <option value="light">轻咪</option>
+                  <option value="standard" selected>标准猪语</option>
+                  <option value="full">全猪化</option>
+                </select>
+              </label>
+              <button class="primary" id="translatorRun" type="button">翻译成猪语</button>
+            </div>
+          </section>
+
+          <section class="translator-panel translator-output-panel" aria-labelledby="translatorOutputTitle">
+            <div class="translator-panel-head">
+              <div><small>PORCINE OUTPUT</small><h3 id="translatorOutputTitle">猪言猪语</h3></div>
+              <button class="translator-copy" id="translatorCopy" type="button" disabled>复制</button>
+            </div>
+            <div class="translator-output is-empty" id="translatorOutput" tabindex="0" aria-live="polite">
+              <p class="translator-placeholder">等待一段人话被猪化……</p>
+            </div>
+            <p class="translator-note">固定猪语优先保留原义；“凑”就是凑，不会擅自翻成“臭”。</p>
+          </section>
+        </div>
+
+        <div class="translator-lexicon" aria-label="猪语样例">
+          <span>咪咪</span><span>唔咪</span><span>oonk</span><span>凑粑粑</span><span>piapia</span><span>୯(*´ω｀*)୬</span><span>(ﾟωﾟ)</span>
+        </div>
+        <a class="section-jump" href="#home" data-room-target="home">← 返回馆舍大厅</a>
+      </div>
     </section>
 
     <section class="faith-room room-view room-faith" id="faith" aria-labelledby="faithRoomTitle">
@@ -450,7 +500,7 @@
     </form>
   </dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261102-faith-9"></script>
+  <script type="module" src="assets/js/main.js?v=20261107-translator-1"></script>
 </body>
 </html>
 
