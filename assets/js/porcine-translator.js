@@ -1,28 +1,9 @@
-const FIXED_REPLACEMENTS = [
-  [/爸爸爸爸/g, '粑粑粑粑咪'],
-  [/爸爸/g, '粑粑'],
-  [/老爸/g, '粑粑'],
-  [/不知道/g, '布吉岛'],
-  [/吃饭/g, '吃饭饭'],
-  [/抱一下/g, '抱抱'],
-  [/抱一抱/g, '抱抱'],
-  [/贴一下/g, '贴贴'],
-  [/贴一贴/g, '贴贴'],
-  [/亲一下/g, '亲亲'],
-  [/亲一亲/g, '亲亲'],
-  [/搓一下/g, '搓搓'],
-  [/搓一搓/g, '搓搓'],
-  [/小猪/g, '猪咪'],
-  [/猪猪/g, '猪咪'],
-  [/特别可爱/g, '超萌'],
-  [/非常可爱/g, '超萌'],
-  [/超级可爱/g, '宇宙无敌第一萌'],
-  [/好可爱/g, '好萌'],
-  [/可爱/g, '萌'],
-  [/特别/g, '超'],
-  [/非常/g, '超'],
-  [/超级/g, '超'],
-];
+import {
+  PORCINE_LEXICON,
+  PORCINE_NORMALIZATIONS,
+  getCanonicalPorcineForms,
+  getPorcineRules,
+} from './porcine-lexicon.js?v=20261107-lexicon-1';
 
 const PARTICLE_REPLACEMENTS = [
   [/(^|[^不没])了(?=[。！？!?…]|$)/g, '$1惹'],
@@ -34,57 +15,6 @@ const PIG_FORMS = {
   standard: { prefix:['','咪咪—— ','噢哼哼，'], suffix:[' ୯(*´ω｀*)୬',' (ﾟωﾟ)',''], interjection:['咪咪','onk onk','唔咪'] },
   full: { prefix:['咪咪咪—— ','onk onk！','唔咪唔咪—— '], suffix:[' ୯(*´ω｀*)୬',' (ﾟωﾟ)',' onk onk'], interjection:['咪咪咪','onk onk','唔咪','哼哼'] },
 };
-
-const SEMANTIC_FORMS = [
-  { pattern: /(听不懂|完全没懂|脑子一片空白)/g, replacement: '猪泥' },
-  { pattern: /(反应不过来|脑子没转过来|理解得很慢)/g, replacement: '猪脑加载中' },
-  { pattern: /(一堆问题|好多问题|满脑子问题)/g, replacement: '一书包问号' },
-  { pattern: /(扑过去|撞过去|冲过去抱住)/g, replacement: '肥猪冲击' },
-];
-
-const CANONICAL_NORMALIZATIONS = [
-  [/臭粑粑/g, '凑粑粑'],
-  [/臭猪/g, '凑猪'],
-  [/喵喵/g, '咪咪喵呜'],
-];
-
-const CANONICAL_FORMS = [
-  '宇宙无敌第一萌', '猪脑加载中', '粑粑粑粑咪', '咪咪喵呜',
-  '一书包问号', '肥猪冲击', '凑粑粑', 'onk onk', '吃饭饭',
-  '布吉岛', 'piapia', '猪咪', '粑粑', '抱抱', '贴贴', '亲亲',
-  '搓搓', '猪泥', '咪咪咪', '咪咪', 'oonk', 'onk',
-];
-
-function normalizeCanonicalForms(text) {
-  let output = text;
-  CANONICAL_NORMALIZATIONS.forEach(([pattern, replacement]) => {
-    output = output.replace(pattern, replacement);
-  });
-  return output;
-}
-
-function protectCanonicalForms(text) {
-  const forms = [];
-  let output = text;
-  CANONICAL_FORMS.forEach(form => {
-    const parts = output.split(form);
-    if (parts.length === 1) return;
-    output = parts.join(`⟦PIG_${forms.push(form) - 1}⟧`);
-  });
-  return {
-    text: output,
-    restore(value) {
-      return value.replace(/⟦PIG_(\d+)⟧/g, (_, index) => forms[Number(index)] || '');
-    },
-  };
-}
-
-function isNativePorcine(text) {
-  const protectedText = protectCanonicalForms(text).text;
-  return !protectedText
-    .replace(/⟦PIG_\d+⟧/g, '')
-    .replace(/[\s，。！？!?、；：—…~～（）()୯*´ω｀ﾟ]+/g, '');
-}
 
 function hashText(text) {
   let hash = 2166136261;
@@ -99,6 +29,42 @@ function pick(items, seed, offset = 0) {
   return items[(seed + offset) % items.length];
 }
 
+function normalizeCanonicalForms(text) {
+  return PORCINE_NORMALIZATIONS.reduce(
+    (output, [source, replacement]) => output.split(source).join(replacement),
+    text,
+  );
+}
+
+function protectCanonicalForms(text) {
+  const forms = [];
+  let output = text;
+  getCanonicalPorcineForms().forEach(form => {
+    const parts = output.split(form);
+    if (parts.length === 1) return;
+    output = parts.join(`⟦PIG_${forms.push(form) - 1}⟧`);
+  });
+  return {
+    text: output,
+    restore(value) {
+      return value.replace(/⟦PIG_(\d+)⟧/g, (_, index) => forms[Number(index)] || '');
+    },
+  };
+}
+
+function isNativePorcine(text) {
+  return !protectCanonicalForms(text).text
+    .replace(/⟦PIG_\d+⟧/g, '')
+    .replace(/[\s，。！？!?、；：—…~～（）()୯*´ω｀ﾟ]+/g, '');
+}
+
+function applyLexicon(text, level) {
+  return getPorcineRules(level).reduce(
+    (output, rule) => output.split(rule.source).join(rule.replacement),
+    text,
+  );
+}
+
 function replaceSelfReference(text, level) {
   if (level === 'light') return text;
   return text
@@ -106,19 +72,8 @@ function replaceSelfReference(text, level) {
     .replace(/我的/g, '猪的');
 }
 
-function applySemanticForms(text, level) {
-  if (level !== 'full') return text;
-  let output = text;
-  SEMANTIC_FORMS.forEach(({ pattern, replacement }) => {
-    output = output.replace(pattern, replacement);
-  });
-  return output;
-}
-
 function applyCuteOonk(text, level, seed) {
   if (level !== 'full') return text;
-  // "oonk" is not the canonical grunt; it is a deliberately stretched,
-  // extra-cute variant of "onk / onk onk".
   return (seed % 4 === 0) ? text.replace(/onk onk/g, 'oonk') : text;
 }
 
@@ -144,12 +99,7 @@ function addRhythm(text, level, seed) {
   }
 
   if (level === 'full') {
-    out = out
-      .replace(/哈哈哈+/g, '哼哼哼')
-      .replace(/哈哈/g, '哼哼')
-      .replace(/打你/g, 'piapia你')
-      .replace(/很烦/g, '很凑')
-      .replace(/烦人/g, '凑');
+    out = out.replace(/哈哈哈+/g, '哼哼哼').replace(/哈哈/g, '哼哼');
   }
   return applyCuteOonk(out, level, seed);
 }
@@ -157,22 +107,36 @@ function addRhythm(text, level, seed) {
 export function translateToPorcine(input, level = 'standard') {
   const source = String(input || '').trim();
   if (!source) return '';
+
   const safeLevel = PIG_FORMS[level] ? level : 'standard';
   const normalized = normalizeCanonicalForms(source);
-
-  // Native pig-language is already translated; preserve it instead of pigging it again.
   if (isNativePorcine(normalized)) return normalized;
 
   const protectedInput = protectCanonicalForms(normalized);
-  let output = protectedInput.text;
+  let output = applyLexicon(protectedInput.text, safeLevel);
 
-  FIXED_REPLACEMENTS.forEach(([pattern, replacement]) => { output = output.replace(pattern, replacement); });
-  PARTICLE_REPLACEMENTS.forEach(([pattern, replacement]) => { output = output.replace(pattern, replacement); });
+  PARTICLE_REPLACEMENTS.forEach(([pattern, replacement]) => {
+    output = output.replace(pattern, replacement);
+  });
   output = replaceSelfReference(output, safeLevel);
-  output = applySemanticForms(output, safeLevel);
   output = addRhythm(output, safeLevel, hashText(normalized + safeLevel));
 
   return protectedInput.restore(output);
+}
+
+function renderLexicon() {
+  const root = document.querySelector('#translatorLexicon');
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = 'true';
+  root.replaceChildren(...PORCINE_LEXICON.map(entry => {
+    const item = document.createElement('span');
+    const term = document.createElement('b');
+    const meaning = document.createElement('small');
+    term.textContent = entry.term;
+    meaning.textContent = entry.meaning;
+    item.append(term, meaning);
+    return item;
+  }));
 }
 
 export function initPorcineTranslator() {
@@ -183,6 +147,7 @@ export function initPorcineTranslator() {
   const copy = document.querySelector('#translatorCopy');
   const clear = document.querySelector('#translatorClear');
 
+  renderLexicon();
   if (!input || !output || !level || !run || !copy || !clear || run.dataset.ready) return;
   run.dataset.ready = 'true';
 
