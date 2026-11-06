@@ -1547,26 +1547,20 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] s
   .collection-switcher b { font-size:15px; line-height:1.35; }
   .collection-switcher small { font-size:8px; line-height:1.45; }
   .hero-specimen {
-    width:min(100%,520px);
-    min-height:0;
-    aspect-ratio:4 / 5;
-    padding:38px 28px 30px;
-    box-shadow:10px 12px 0 var(--plate-shadow);
-  }
-  .plate-rule {
-    height:24px;
-    margin-bottom:14px;
+    min-height:435px;
+    padding-inline:35px;
+    box-shadow:14px 16px 0 var(--paper-deep);
   }
   .plate-logo {
-    width:108px;
-    height:108px;
-    flex-basis:108px;
-    margin-bottom:12px;
+    width:150px;
+    height:150px;
+    flex-basis:150px;
   }
-  .plate-number { font-size:42px; }
-  .plate-name { margin:10px 0 18px; font-size:10px; }
-  .plate-caption { font-size:7px; }
-  .theme-hint { top:14px; right:14px; font-size:6px; }
+  .theme-hint {
+    top:18px;
+    right:20px;
+    font-size:7px;
+  }
 }
 
 @media (max-width: 360px) {
@@ -1667,4 +1661,35 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
   .status-strip div:nth-last-child(-n+2) { border-bottom:0; }
   .status-strip span { font-size:27px; }
   .status-strip small { margin-top:5px; font-size:8px; }
+}
+
+/* Restore the proven pre-directory mobile plate geometry. */
+@media (max-width:640px) {
+  body[data-room="home"] .hero-specimen {
+    width:100%;
+    min-height:435px;
+    aspect-ratio:auto;
+    padding:48px 35px 38px;
+    box-shadow:14px 16px 0 var(--paper-deep);
+  }
+  body[data-room="home"] .plate-rule {
+    height:42px;
+    margin-bottom:24px;
+  }
+  body[data-room="home"] .plate-logo {
+    width:150px;
+    height:150px;
+    flex:0 0 150px;
+    margin-bottom:22px;
+  }
+  body[data-room="home"] .plate-number { font-size:55px; }
+  body[data-room="home"] .plate-name { margin:16px 0 32px; font-size:13px; }
+  body[data-room="home"] .plate-caption { font-size:9px; }
+  body[data-room="home"] .theme-hint { top:18px; right:20px; font-size:7px; }
+
+  /* iOS Safari auto-zooms focused form controls below 16px. */
+  #translatorInput,
+  .translator-controls select {
+    font-size:16px;
+  }
 }
