@@ -1719,3 +1719,65 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
     font-size:7px;
   }
 }
+
+/* Stabilize translator layout */
+.translator-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:stretch;
+}
+.translator-panel {
+  display:flex;
+  flex-direction:column;
+  min-height:520px;
+}
+.translator-panel-head {
+  flex:0 0 auto;
+}
+#translatorInput,
+.translator-output {
+  flex:1 1 auto;
+  min-height:300px;
+}
+.translator-controls {
+  margin-top:18px;
+  flex:0 0 auto;
+  display:grid;
+  grid-template-columns:minmax(150px,220px) minmax(180px,1fr);
+  align-items:end;
+  gap:18px;
+}
+.translator-controls label {
+  min-width:0;
+}
+.translator-controls .primary {
+  width:100%;
+}
+.translator-note {
+  flex:0 0 auto;
+}
+.translator-lexicon {
+  margin-top:22px;
+}
+@media (max-width:980px) {
+  .translator-grid {
+    grid-template-columns:1fr;
+  }
+  .translator-panel {
+    min-height:auto;
+  }
+  #translatorInput,
+  .translator-output {
+    min-height:280px;
+  }
+}
+@media (max-width:560px) {
+  .translator-controls {
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  #translatorInput,
+  .translator-output {
+    min-height:260px;
+  }
+}
