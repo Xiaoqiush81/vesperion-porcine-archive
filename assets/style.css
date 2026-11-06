@@ -1496,15 +1496,20 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] s
     padding-bottom:62px;
   }
   .hero-copy { max-width:820px; }
-  .hero-specimen { width:min(100%,620px); justify-self:center; }
+  .hero-specimen {
+    width:min(100%,470px);
+    min-height:500px;
+    justify-self:center;
+  }
   .collection-switcher { grid-template-columns:repeat(3,minmax(0,1fr)); }
 }
 
 @media (max-width: 640px) {
   .hero {
     width:100%;
-    padding:48px 18px 54px;
-    gap:28px;
+    padding-top:65px;
+    padding-bottom:80px;
+    gap:65px;
   }
   .hero h1 {
     font-size:clamp(40px,12vw,54px);
@@ -1663,36 +1668,6 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
   .status-strip small { margin-top:5px; font-size:8px; }
 }
 
-/* Restore the proven pre-directory mobile plate geometry. */
-@media (max-width:640px) {
-  body[data-room="home"] .hero-specimen {
-    width:100%;
-    min-height:435px;
-    aspect-ratio:auto;
-    padding:48px 35px 38px;
-    box-shadow:14px 16px 0 var(--paper-deep);
-  }
-  body[data-room="home"] .plate-rule {
-    height:42px;
-    margin-bottom:24px;
-  }
-  body[data-room="home"] .plate-logo {
-    width:150px;
-    height:150px;
-    flex:0 0 150px;
-    margin-bottom:22px;
-  }
-  body[data-room="home"] .plate-number { font-size:55px; }
-  body[data-room="home"] .plate-name { margin:16px 0 32px; font-size:13px; }
-  body[data-room="home"] .plate-caption { font-size:9px; }
-  body[data-room="home"] .theme-hint { top:18px; right:20px; font-size:7px; }
-
-  /* iOS Safari auto-zooms focused form controls below 16px. */
-  #translatorInput,
-  .translator-controls select {
-    font-size:16px;
-  }
-}
 
 /* Translator theme tokens */
 .translator-room,
@@ -1711,3 +1686,36 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
 .translator-controls label,
 .translator-note,
 .translator-placeholder { color:var(--muted); }
+
+/* Historical home plate geometry restored from the pre-directory layout. */
+@media (max-width:940px) {
+  body[data-room="home"] .hero-specimen {
+    width:min(100%,470px);
+    min-height:500px;
+    justify-self:center;
+  }
+}
+@media (max-width:640px) {
+  body[data-room="home"] .hero {
+    min-height:auto;
+    padding-top:65px;
+    padding-bottom:80px;
+    gap:65px;
+  }
+  body[data-room="home"] .hero-specimen {
+    width:min(100%,470px);
+    min-height:435px;
+    padding:48px 35px 38px;
+    box-shadow:14px 16px 0 var(--paper-deep);
+  }
+  body[data-room="home"] .plate-logo {
+    width:150px;
+    height:150px;
+    flex-basis:150px;
+  }
+  body[data-room="home"] .theme-hint {
+    top:18px;
+    right:20px;
+    font-size:7px;
+  }
+}
