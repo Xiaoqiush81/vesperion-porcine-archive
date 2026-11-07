@@ -46,7 +46,7 @@ function normalizeArchive(archive) {
     id:text(item.id,80), name:text(item.name,80), rarity:text(item.rarity,40), at:text(item.at,40)
   })).filter(item => item.id && item.name) : [];
   const readings = Array.isArray(tarot.history) ? tarot.history.slice(0, 20).map(reading).filter(Boolean) : [];
-  const theme = preferences.theme === 'night' ? 'night' : 'paper';
+  const theme = ['paper', 'night', 'signal'].includes(preferences.theme) ? preferences.theme : 'paper';
   const sourceAudio = preferences.audio && typeof preferences.audio === 'object' ? preferences.audio : {};
   const volume = (value, fallback) => Number.isFinite(Number(value)) ? Math.min(1, Math.max(0, Number(value))) : fallback;
   return new Map([

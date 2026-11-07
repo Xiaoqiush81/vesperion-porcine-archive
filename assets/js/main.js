@@ -1,4 +1,4 @@
-import { initTheme } from './theme.js?v=20261011-safari-1';
+import { initTheme } from './theme.js?v=20261107-signal-1';
 import { createSoundscape } from './audio.js?v=20261025-assets-1';
 import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-browser-icons-1';
 
@@ -242,7 +242,7 @@ async function enterRoom(room, push = true) {
 
 async function main() {
   applyAssetOverrides();
-  initTheme(document.querySelector('#themeToggle'));
+  initTheme(document.querySelector('#themeToggle'), document.querySelector('#signalTrigger'));
   createSoundscape();
   applyFaithMembership();
   const warmRooms = () => {

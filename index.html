@@ -12,11 +12,11 @@
   <link rel="icon" type="image/png" sizes="48x48" href="assets/icons/icon-48.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-180.png">
   <link rel="manifest" href="site.webmanifest">
-  <script>try{document.documentElement.dataset.theme=localStorage.getItem('pigdex-theme')||'paper';document.documentElement.dataset.faithMember=JSON.parse(localStorage.getItem('pigdex-faith-member-v1')||'null')?.active?'true':'false'}catch{document.documentElement.dataset.theme='paper';document.documentElement.dataset.faithMember='false'}</script>
+  <script>try{const t=localStorage.getItem('pigdex-theme');document.documentElement.dataset.theme=['paper','night','signal'].includes(t)?t:'paper';document.documentElement.dataset.faithMember=JSON.parse(localStorage.getItem('pigdex-faith-member-v1')||'null')?.active?'true':'false'}catch{document.documentElement.dataset.theme='paper';document.documentElement.dataset.faithMember='false'}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261107-lexicon-1">
+  <link rel="stylesheet" href="assets/style.css?v=20261107-signal-1">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -70,26 +70,28 @@
   <main id="top">
     <section class="hero room-view room-home">
       <div class="hero-copy">
-        <p class="eyebrow">THE PORCINE COLLECTION · № 081</p>
-        <h1>猪咪，作为一种<br><em>不断发生的物种</em></h1>
-        <p class="lede">一部持续生长的私人自然史：记录 Specimen No.081 在维斯珀里昂宅邸、知识兔子洞与互联网深处留下的五十九种形态。</p>
+        <p class="eyebrow"><span class="base-only">THE PORCINE COLLECTION · № 081</span><span class="signal-only">PIGDEX NODE // CHANNEL 081</span><button class="signal-trigger" id="signalTrigger" type="button" aria-label="馆藏校准标记"><span aria-hidden="true">✦</span></button></p>
+        <h1 class="base-only">猪咪，作为一种<br><em>不断发生的物种</em></h1>
+        <h1 class="signal-only signal-title" data-text="PIGDEX NIGHT ACCESS">PIGDEX<br><em>NIGHT ACCESS</em></h1>
+        <p class="lede base-only">一部持续生长的私人自然史：记录 Specimen No.081 在维斯珀里昂宅邸、知识兔子洞与互联网深处留下的五十九种形态。</p>
+        <p class="lede signal-only">第 081 号夜间访问节点。身份记录已加密；获准访客可以继续检索猪类变体、宅邸异象与未归档信号。</p>
         <div class="home-utility">
-          <button class="secondary" id="callPig" type="button">播放标准呼叫</button>
+          <button class="secondary" id="callPig" type="button"><span class="base-only">播放标准呼叫</span><span class="signal-only">发送猪语握手</span></button>
           <p class="pig-quote" id="pigQuote">“可猫可猪；若必须二选一，仍然是猪。”</p>
         </div>
       </div>
 
       <button class="hero-specimen" id="themeToggle" type="button" aria-label="切换为深蓝主题" aria-pressed="false">
-        <span class="theme-hint" aria-hidden="true">TAP TO INVERT · 点击换色</span>
+        <span class="theme-hint" aria-hidden="true"><span class="base-only">TAP TO INVERT · 点击换色</span><span class="signal-only">ID SURFACE // 081</span></span>
         <span class="plate-rule" aria-hidden="true"></span>
         <span class="plate-logo" aria-hidden="true">
           <img class="logo-paper" src="assets/vesperion-transfer-logo.svg" alt="VESPERION 家徽" width="404" height="404">
           <img class="logo-night" src="assets/vesperion-transfer-logo-ivory.svg" alt="" width="404" height="404" aria-hidden="true">
         </span>
-        <span class="plate-kicker">VESPERION MANOR</span>
+        <span class="plate-kicker"><span class="base-only">VESPERION MANOR</span><span class="signal-only">VESPERION IDENTIFICATION</span></span>
         <span class="plate-number">№ 081</span>
         <span class="plate-name">KEW AMBERIA</span>
-        <span class="plate-caption"><span>PORCINE VARIANT</span><span>UNCONTAINED</span></span>
+        <span class="plate-caption"><span class="base-only">PORCINE VARIANT</span><span class="signal-only">NIGHT ACCESS</span><span>UNCONTAINED</span></span>
       </button>
 
       <section class="home-directory" aria-labelledby="homeDirectoryTitle">
@@ -497,8 +499,12 @@
       <button class="primary" type="submit">展开诸科笺注</button>
     </form>
   </dialog>
+  <div class="signal-handoff" id="signalHandoff" aria-hidden="true">
+    <i class="signal-cut cut-a"></i><i class="signal-cut cut-b"></i><i class="signal-cut cut-c"></i>
+    <div><small>PIGDEX 081 // 未知信号</small><b data-text="SIGNAL BREACH">SIGNAL BREACH</b><span id="signalStatus">正在校准馆藏频段…</span><em><i></i></em></div>
+  </div>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261107-mobile-layout-fix-1"></script>
+  <script type="module" src="assets/js/main.js?v=20261107-signal-1"></script>
 </body>
 </html>
 
