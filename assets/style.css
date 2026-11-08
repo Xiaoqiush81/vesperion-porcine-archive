@@ -2050,9 +2050,10 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
 :root[data-theme="signal"] .hero-specimen::before { inset:55px 24px auto; }
 :root[data-theme="signal"] .hero-specimen .theme-hint { top:15px; right:20px; }
 :root[data-theme="signal"] .hero-specimen .plate-logo { width:min(126px,100%); height:auto; aspect-ratio:1; margin:8px 0 0; grid-column:1; grid-row:1 / 4; align-self:center; justify-self:center; flex-basis:auto; }
-:root[data-theme="signal"] .hero-specimen .plate-kicker { margin-top:31px; grid-column:2; grid-row:1; align-self:end; font-size:9px; letter-spacing:.18em; }
-:root[data-theme="signal"] .hero-specimen .plate-number { margin:4px 0 0; grid-column:2; grid-row:2; align-self:center; font-size:clamp(43px,6vw,62px); }
-:root[data-theme="signal"] .hero-specimen .plate-name { margin:1px 0 0; grid-column:2; grid-row:3; align-self:start; font-size:11px; }
+:root[data-theme="signal"] .hero-specimen .plate-logo { transform:translateY(12px); }
+:root[data-theme="signal"] .hero-specimen .plate-kicker { margin-top:31px; grid-column:2; grid-row:1; align-self:end; font-size:9px; letter-spacing:.18em; transform:translateY(12px); }
+:root[data-theme="signal"] .hero-specimen .plate-number { margin:4px 0 0; grid-column:2; grid-row:2; align-self:center; font-size:clamp(43px,6vw,62px); transform:translateY(12px); }
+:root[data-theme="signal"] .hero-specimen .plate-name { margin:1px 0 0; grid-column:2; grid-row:3; align-self:start; font-size:11px; transform:translateY(12px); }
 :root[data-theme="signal"] .signal-front-meta { width:100%; margin-top:13px; grid-column:1 / -1; grid-row:4; align-self:end; display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid rgba(90,245,231,.28); border-bottom:1px solid rgba(90,245,231,.16); }
 :root[data-theme="signal"] .signal-front-meta>span { min-width:0; padding:9px 10px 8px; text-align:left; border-right:1px solid rgba(90,245,231,.16); }
 :root[data-theme="signal"] .signal-front-meta>span:last-child { border-right:0; }
@@ -2083,6 +2084,10 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
   :root[data-theme="signal"] .hero-specimen::before { inset:44px 16px auto; }
   :root[data-theme="signal"] .hero-specimen .theme-hint { top:11px; right:14px; font-size:6px; }
   :root[data-theme="signal"] .hero-specimen .plate-logo { width:min(96px,100%); margin-top:6px; }
+  :root[data-theme="signal"] .hero-specimen .plate-logo,
+  :root[data-theme="signal"] .hero-specimen .plate-kicker,
+  :root[data-theme="signal"] .hero-specimen .plate-number,
+  :root[data-theme="signal"] .hero-specimen .plate-name { transform:translateY(9px); }
   :root[data-theme="signal"] .hero-specimen .plate-kicker { margin-top:24px; font-size:7px; letter-spacing:.12em; }
   :root[data-theme="signal"] .hero-specimen .plate-number { margin-top:3px; font-size:clamp(35px,11.5vw,49px); }
   :root[data-theme="signal"] .hero-specimen .plate-name { font-size:8px; letter-spacing:.16em; }

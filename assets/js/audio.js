@@ -224,6 +224,29 @@ export function createSoundscape(root = document) {
     });
   }
 
+  function electricCrackle(delay, duration, volume) {
+    const start = context.currentTime + delay;
+    const source = context.createBufferSource();
+    const filter = context.createBiquadFilter();
+    const gain = context.createGain();
+    source.buffer = getNoiseBuffer();
+    source.playbackRate.value = 1.7;
+    filter.type = 'bandpass';
+    filter.frequency.value = 1850;
+    filter.Q.value = .9;
+    gain.gain.setValueAtTime(.0001, start);
+    const steps = Math.max(4, Math.floor(duration / .018));
+    for (let index = 0; index < steps; index += 1) {
+      const level = index % 3 === 1 ? volume * .22 : volume * (.68 + Math.random() * .32);
+      gain.gain.setValueAtTime(level, start + index * duration / steps);
+    }
+    gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
+    source.connect(filter).connect(gain).connect(effectsBus);
+    source.start(start);
+    source.stop(start + duration + .02);
+    voice(86, delay, duration + .06, volume * .42, { type:'sawtooth', attack:.006, release:.07, cutoff:520 });
+  }
+
   function duckMusic(depth = .34, recovery = .55) {
     if (!musicBus || !settings.music) return;
     const now = context.currentTime;
@@ -300,15 +323,18 @@ export function createSoundscape(root = document) {
     } else if (name === 'signalHandoff') {
       duckMusic(.16, 1.15);
       uiPing(74, 168, 0, .48, .085, 'sawtooth');
-      signalBurst(.025, .09, 760, .105, -.65);
+      electricCrackle(.015, .26, .09);
+      signalBurst(.025, .09, 760, .09, -.65);
       signalBurst(.14, .055, 1480, .08, .55);
       signalBurst(.27, .075, 1020, .09, -.2);
       signalBurst(.46, .045, 2300, .065, .72);
+      electricCrackle(.39, .21, .07);
       uiPing(310, 860, .49, .21, .07, 'triangle');
       signalLock(.69);
       voice(880, .72, .46, .035, { type:'sine', attack:.018, release:.38, cutoff:2600 });
     } else if (name === 'signalSurface') {
       duckMusic(.24, .48);
+      electricCrackle(0, .14, .085);
       signalBurst(0, .052, 980, .11, -.6);
       signalBurst(.055, .04, 2100, .075, .65);
       signalBurst(.105, .07, 1320, .09, -.15);
