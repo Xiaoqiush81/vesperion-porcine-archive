@@ -1,5 +1,5 @@
 import { initTheme } from './theme.js?v=20261108-signal-3';
-import { createSoundscape } from './audio.js?v=20261025-assets-1';
+import { createSoundscape } from './audio.js?v=20261108-signal-4';
 import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-browser-icons-1';
 
 const TAROT_MODULE_URL = './tarot.js?v=20261023-safari-paint-1';

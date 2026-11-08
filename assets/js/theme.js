@@ -38,6 +38,7 @@ export function initTheme(toggle, secretTrigger) {
   function shiftSignalCard() {
     if (toggle.classList.contains('is-card-shifting')) return;
     const next = !toggle.classList.contains('is-signal-flipped');
+    document.dispatchEvent(new CustomEvent('signalsurface', { detail:{ face:next ? 'dossier' : 'identity' } }));
     toggle.classList.add('is-card-shifting');
     clearTimeout(cardTimer);
     cardTimer = setTimeout(() => {
@@ -77,6 +78,7 @@ export function initTheme(toggle, secretTrigger) {
     if (taps < SECRET_TAPS) return;
     clearTimeout(timer); taps = 0; secretTrigger.classList.remove('is-listening');
     const entering = document.documentElement.dataset.theme !== 'signal';
+    document.dispatchEvent(new CustomEvent('signalhandoff', { detail:{ entering } }));
     playHandoff(() => apply(entering ? 'signal' : lastBase));
   });
 }

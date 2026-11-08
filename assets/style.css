@@ -2035,6 +2035,69 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
   :root[data-theme="signal"] .signal-back-name b::after { animation:none !important; }
 }
 
+/* 081 / credential geometry */
+:root[data-theme="signal"] .hero-specimen {
+  min-height:0;
+  aspect-ratio:1.58 / 1;
+  padding:25px 28px 22px;
+  display:grid;
+  grid-template-columns:minmax(112px,.72fr) minmax(0,1.28fr);
+  grid-template-rows:auto auto auto 1fr;
+  column-gap:26px;
+  align-items:center;
+  border-radius:28px 8px 28px 8px;
+}
+:root[data-theme="signal"] .hero-specimen::before { inset:55px 24px auto; }
+:root[data-theme="signal"] .hero-specimen .theme-hint { top:15px; right:20px; }
+:root[data-theme="signal"] .hero-specimen .plate-logo { width:min(126px,100%); height:auto; aspect-ratio:1; margin:8px 0 0; grid-column:1; grid-row:1 / 4; align-self:center; justify-self:center; flex-basis:auto; }
+:root[data-theme="signal"] .hero-specimen .plate-kicker { margin-top:31px; grid-column:2; grid-row:1; align-self:end; font-size:9px; letter-spacing:.18em; }
+:root[data-theme="signal"] .hero-specimen .plate-number { margin:4px 0 0; grid-column:2; grid-row:2; align-self:center; font-size:clamp(43px,6vw,62px); }
+:root[data-theme="signal"] .hero-specimen .plate-name { margin:1px 0 0; grid-column:2; grid-row:3; align-self:start; font-size:11px; }
+:root[data-theme="signal"] .hero-specimen .plate-caption { margin-top:15px; grid-column:1 / -1; grid-row:4; align-self:end; }
+:root[data-theme="signal"] .signal-card-back.signal-only { inset:20px 24px; padding:2px; }
+:root[data-theme="signal"] .signal-back-head { padding-bottom:9px; }
+:root[data-theme="signal"] .signal-back-name { padding:11px 0 8px; }
+:root[data-theme="signal"] .signal-back-name b { font-size:clamp(25px,3.4vw,38px); }
+:root[data-theme="signal"] .signal-back-grid>span { padding:7px 10px; }
+:root[data-theme="signal"] .signal-back-code { height:19px; margin:9px 0; }
+:root[data-theme="signal"] .signal-back-foot { padding-top:8px; }
+:root[data-theme="signal"] .signal-card-back::before { bottom:35px; font-size:50px; }
+
+@media (max-width:640px) {
+  :root[data-theme="signal"] .hero-specimen {
+    min-height:0;
+    aspect-ratio:1.48 / 1;
+    padding:19px 18px 16px;
+    grid-template-columns:minmax(84px,.68fr) minmax(0,1.32fr);
+    grid-template-rows:auto auto auto 1fr;
+    column-gap:15px;
+    border-radius:23px 7px 23px 7px;
+    box-shadow:9px 10px 0 rgba(240,92,255,.68),0 24px 48px rgba(0,0,0,.48);
+  }
+  :root[data-theme="signal"] .hero-specimen::before { inset:44px 16px auto; }
+  :root[data-theme="signal"] .hero-specimen .theme-hint { top:11px; right:14px; font-size:6px; }
+  :root[data-theme="signal"] .hero-specimen .plate-logo { width:min(96px,100%); margin-top:6px; }
+  :root[data-theme="signal"] .hero-specimen .plate-kicker { margin-top:24px; font-size:7px; letter-spacing:.12em; }
+  :root[data-theme="signal"] .hero-specimen .plate-number { margin-top:3px; font-size:clamp(35px,11.5vw,49px); }
+  :root[data-theme="signal"] .hero-specimen .plate-name { font-size:8px; letter-spacing:.16em; }
+  :root[data-theme="signal"] .hero-specimen .plate-caption { margin-top:8px; padding-top:8px; font-size:7px; }
+  :root[data-theme="signal"] .signal-card-back.signal-only { inset:14px 15px; }
+  :root[data-theme="signal"] .signal-back-head { padding-bottom:6px; }
+  :root[data-theme="signal"] .signal-back-head small { font-size:6px; }
+  :root[data-theme="signal"] .signal-back-head b { font-size:7px; }
+  :root[data-theme="signal"] .signal-back-name { padding:7px 0 5px; }
+  :root[data-theme="signal"] .signal-back-name small { margin-bottom:3px; font-size:6px; }
+  :root[data-theme="signal"] .signal-back-name b { font-size:clamp(20px,7vw,29px); }
+  :root[data-theme="signal"] .signal-back-grid>span { padding:5px 7px; }
+  :root[data-theme="signal"] .signal-back-grid small { margin-bottom:3px; font-size:5px; }
+  :root[data-theme="signal"] .signal-back-grid b { font-size:7px; }
+  :root[data-theme="signal"] .signal-back-code { height:14px; margin:6px 0; }
+  :root[data-theme="signal"] .signal-back-foot { padding-top:6px; }
+  :root[data-theme="signal"] .signal-back-foot small { font-size:5px; }
+  :root[data-theme="signal"] .signal-back-foot b { padding:4px 5px; font-size:6px; }
+  :root[data-theme="signal"] .signal-card-back::before { bottom:24px; font-size:37px; }
+}
+
 
 /* Translator theme tokens */
 .translator-room,

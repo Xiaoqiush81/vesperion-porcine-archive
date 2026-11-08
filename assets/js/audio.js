@@ -264,6 +264,18 @@ export function createSoundscape(root = document) {
       duckMusic(.18, .82);
       playSample('themeSwitch', .72);
       themeBloom(document.documentElement.dataset.theme === 'paper');
+    } else if (name === 'signalHandoff') {
+      duckMusic(.16, 1.15);
+      paperLayer(0, .42, 170, 680, .032, .82);
+      uiPing(92, 154, 0, .34, .052, 'sine');
+      uiPing(176, 238, .18, .38, .038, 'sine');
+      voice(392, .72, .5, .036, { type:'sine', attack:.035, release:.4, cutoff:1200 });
+      voice(587.33, .79, .56, .028, { type:'sine', attack:.045, release:.44, cutoff:1500 });
+    } else if (name === 'signalSurface') {
+      duckMusic(.24, .48);
+      paperLayer(0, .16, 230, 980, .027, 1.05);
+      uiPing(205, 335, 0, .17, .045, 'sine');
+      uiPing(430, 350, .075, .16, .026, 'triangle');
     } else {
       duckMusic(.46, .28);
       paperLayer(0, .038, 1750, 3600, .038, 1.8);
@@ -391,10 +403,13 @@ export function createSoundscape(root = document) {
   root.addEventListener('click', event => {
     if (event.target.closest('#soundscape')) return;
     menu?.removeAttribute('open');
+    if (event.target.closest('#signalTrigger')) return;
     if (event.target.closest('.tarot-card, .draw-card, .chronicle-portal, .chronicle-volume, .chronicle-entry-details summary, .inner-shelf, .inner-volume-button, .scholia-subject')) effect('flip');
     else if (event.target.closest('.favorite-toggle')) effect('favorite');
     else if (event.target.closest('[data-room-target], .chronicle-section-back, .inner-section-back')) effect('door');
-    else if (event.target.closest('#themeToggle')) effect('theme');
+    else if (event.target.closest('#themeToggle')) {
+      if (document.documentElement.dataset.theme !== 'signal') effect('theme');
+    }
     else if (event.target.closest('#callPig')) effect('pig');
     else if (event.target.closest('button')) effect('tap');
   });
@@ -408,6 +423,8 @@ export function createSoundscape(root = document) {
   window.addEventListener('pagehide', pauseForBackground);
   window.addEventListener('pageshow', restoreAudio);
   window.addEventListener('focus', restoreAudio);
+  document.addEventListener('signalhandoff', () => effect('signalHandoff'));
+  document.addEventListener('signalsurface', () => effect('signalSurface'));
   if (settings.effects) {
     preloadSample('cardFlip');
     preloadSample('themeSwitch');
