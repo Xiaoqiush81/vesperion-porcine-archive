@@ -1795,6 +1795,155 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
   .status-strip small { margin-top:5px; font-size:8px; }
 }
 
+/* 081 / recovered fragments */
+:root[data-theme="signal"] .brand-mark .brand-paper {
+  opacity:1;
+  filter:brightness(0) saturate(100%) invert(49%) sepia(99%) saturate(4200%) hue-rotate(285deg) brightness(118%) contrast(112%) drop-shadow(0 0 4px #f05cff) drop-shadow(0 0 13px rgba(240,92,255,.78));
+  animation:signal-logo-current 6.4s linear infinite;
+}
+:root[data-theme="signal"] .brand-mark::after {
+  content:"";
+  position:absolute;
+  inset:8% 2%;
+  z-index:-1;
+  opacity:.42;
+  background:#f05cff;
+  filter:blur(13px);
+  animation:signal-logo-current 6.4s linear infinite reverse;
+}
+:root[data-theme="signal"] .archive { background:linear-gradient(180deg,#071014,#04080b 72%); }
+:root[data-theme="signal"] .archive .section-heading h2,
+:root[data-theme="signal"] .archive .section-heading .eyebrow,
+:root[data-theme="signal"] .archive .controls,
+:root[data-theme="signal"] .archive .results-meta { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+:root[data-theme="signal"] .archive .section-heading h2 { text-transform:uppercase; text-shadow:2px 0 rgba(90,245,231,.24),-2px 0 rgba(240,92,255,.2); }
+:root[data-theme="signal"] .filter.active { color:#06100f; background:#5af5e7; box-shadow:4px 3px 0 #f05cff; }
+:root[data-theme="signal"] .specimen-grid { column-gap:22px; row-gap:34px; }
+:root[data-theme="signal"] .card {
+  padding:10px 10px 23px;
+  overflow:hidden;
+  isolation:isolate;
+  background:linear-gradient(145deg,rgba(13,27,34,.94),rgba(5,10,14,.98));
+  border:1px solid rgba(90,245,231,.2);
+  box-shadow:0 18px 38px rgba(0,0,0,.28),inset 0 0 24px rgba(90,245,231,.018);
+  transition:transform .24s cubic-bezier(.2,.75,.25,1),border-color .2s ease,box-shadow .2s ease;
+}
+:root[data-theme="signal"] .card::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:4;
+  opacity:0;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent 0 11%,rgba(90,245,231,.42) 12% 14%,transparent 15% 66%,rgba(240,92,255,.4) 67% 70%,transparent 71%);
+  mix-blend-mode:screen;
+  clip-path:polygon(0 16%,100% 16%,100% 21%,0 21%,0 58%,100% 58%,100% 63%,0 63%);
+}
+:root[data-theme="signal"] .card::after {
+  content:"// " attr(data-number);
+  position:absolute;
+  right:-5px;
+  bottom:5px;
+  z-index:3;
+  color:rgba(240,92,255,.22);
+  font:900 42px/1 Arial Black,Impact,sans-serif;
+  letter-spacing:-.08em;
+  transform:rotate(-4deg);
+  pointer-events:none;
+}
+:root[data-theme="signal"] .card:hover,
+:root[data-theme="signal"] .card:focus-visible { transform:translateY(-5px) rotate(-.25deg); border-color:rgba(90,245,231,.62); box-shadow:7px 8px 0 rgba(240,92,255,.48),0 24px 48px rgba(0,0,0,.42); }
+:root[data-theme="signal"] .card:hover::before,
+:root[data-theme="signal"] .card:focus-visible::before { animation:signal-card-slice .52s steps(2); }
+:root[data-theme="signal"] .card-art { background:#071218; border:1px solid rgba(90,245,231,.18); }
+:root[data-theme="signal"] .card-art::before { inset:11px; border-color:rgba(90,245,231,.32); box-shadow:inset 0 0 12px rgba(90,245,231,.08); }
+:root[data-theme="signal"] .card-art::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  opacity:0;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(90,245,231,.34),transparent 42%,rgba(240,92,255,.31));
+  mix-blend-mode:color-dodge;
+  clip-path:inset(42% 0 45%);
+  animation:signal-art-trace 6.8s steps(2) infinite;
+}
+:root[data-theme="signal"] .card .art-image { animation:signal-image-lock 6.8s steps(1) infinite; }
+:root[data-theme="signal"] .art-index { top:21px; left:22px; color:#06100f; background:#5af5e7; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; box-shadow:3px 2px 0 #f05cff; }
+:root[data-theme="signal"] .art-caption { left:22px; right:22px; bottom:21px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+:root[data-theme="signal"] .card-art.has-image .art-caption { color:#eafffa; background:rgba(4,10,14,.82); border-left:2px solid #f05cff; -webkit-backdrop-filter:blur(7px); backdrop-filter:blur(7px); }
+:root[data-theme="signal"] .card-top { margin:14px 2px 9px; color:#5af5e7; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+:root[data-theme="signal"] .rarity { color:#f05cff; }
+:root[data-theme="signal"] .card-name { margin-inline:2px; position:relative; width:max-content; max-width:calc(100% - 4px); color:#edfffb; font-family:Arial Black,"Noto Sans SC",sans-serif; font-size:22px; font-weight:800; letter-spacing:-.04em; }
+:root[data-theme="signal"] .card-name::before,
+:root[data-theme="signal"] .card-name::after { content:attr(data-label); position:absolute; inset:0; opacity:0; pointer-events:none; }
+:root[data-theme="signal"] .card-name::before { color:#5af5e7; clip-path:inset(8% 0 61%); animation:signal-name-a 5.9s steps(2) infinite; }
+:root[data-theme="signal"] .card-name::after { color:#f05cff; clip-path:inset(61% 0 9%); animation:signal-name-b 5.1s steps(2) .7s infinite; }
+:root[data-theme="signal"] .card .latin { margin-inline:2px; color:#5af5e7; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-style:normal; }
+:root[data-theme="signal"] .card .desc { margin-inline:2px; color:#a3b8b4; }
+:root[data-theme="signal"] .card .tag-row { margin-inline:2px; position:relative; z-index:1; }
+:root[data-theme="signal"] .card .tag { padding:3px 6px; color:#98aaa7; border:1px solid rgba(90,245,231,.18); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:8px; transform:rotate(-.4deg); }
+:root[data-theme="signal"] .card .tag:nth-child(even) { color:#d68cdf; border-color:rgba(240,92,255,.24); transform:rotate(.7deg); }
+:root[data-theme="signal"] .card .tag+.tag::before { content:none; }
+:root[data-theme="signal"] .card-favorite { color:#ff66a8; text-shadow:0 0 11px #ff66a8; }
+
+:root[data-theme="signal"] .specimen-dialog { border-color:rgba(90,245,231,.34); background:#050a0d; box-shadow:0 0 0 1px rgba(240,92,255,.18),0 35px 110px rgba(0,0,0,.78); }
+:root[data-theme="signal"] .specimen-dialog .close { color:#f05cff; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; text-shadow:0 0 9px rgba(240,92,255,.8); }
+:root[data-theme="signal"] .detail-layout { position:relative; overflow:hidden; background:linear-gradient(135deg,#0a161c,#05090d 68%); }
+:root[data-theme="signal"] .detail-layout::after { content:"SIGNAL // 081"; position:absolute; right:-12px; bottom:-9px; color:rgba(240,92,255,.09); font:900 clamp(52px,8vw,112px)/1 Arial Black,Impact,sans-serif; letter-spacing:-.08em; transform:rotate(-4deg); pointer-events:none; }
+:root[data-theme="signal"] .detail-art { position:relative; z-index:1; border:1px solid rgba(90,245,231,.35); box-shadow:12px 14px 0 rgba(240,92,255,.42),0 24px 54px rgba(0,0,0,.46); }
+:root[data-theme="signal"] .detail-art::after { content:""; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.035) 3px 4px); mix-blend-mode:screen; }
+:root[data-theme="signal"] .detail-copy { position:relative; z-index:1; }
+:root[data-theme="signal"] .detail-number,:root[data-theme="signal"] .detail-body,:root[data-theme="signal"] .fact small,:root[data-theme="signal"] .abilities h3 { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+:root[data-theme="signal"] .detail-hero h2 { width:max-content; max-width:100%; position:relative; color:#effffb; font-family:Arial Black,"Noto Sans SC",sans-serif; font-weight:800; }
+:root[data-theme="signal"] .detail-hero h2::before,:root[data-theme="signal"] .detail-hero h2::after { content:attr(data-label); position:absolute; inset:0; opacity:0; pointer-events:none; }
+:root[data-theme="signal"] .detail-hero h2::before { color:#5af5e7; clip-path:inset(12% 0 58%); animation:signal-name-a 5.4s steps(2) infinite; }
+:root[data-theme="signal"] .detail-hero h2::after { color:#f05cff; clip-path:inset(66% 0 7%); animation:signal-name-b 4.8s steps(2) .4s infinite; }
+:root[data-theme="signal"] .facts { background:rgba(90,245,231,.025); }
+:root[data-theme="signal"] .fact:nth-child(2) b,:root[data-theme="signal"] .fact:nth-child(3) b { color:#f1a0f8; }
+:root[data-theme="signal"] .detail-switch { margin-top:32px; padding-top:15px; align-items:center; justify-content:space-between; gap:12px; border-top:1px solid rgba(90,245,231,.23); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+:root[data-theme="signal"] .detail-switch.signal-only { display:flex; }
+:root[data-theme="signal"] .detail-switch button { min-height:40px; padding:8px 0; color:#5af5e7; background:none; border:0; font-family:inherit; font-size:9px; font-weight:700; line-height:1.2; letter-spacing:.1em; cursor:pointer; }
+:root[data-theme="signal"] .detail-switch span { color:#f05cff; font-size:8px; letter-spacing:.13em; }
+:root[data-theme="signal"] #dialogContent.is-switching { animation:signal-detail-out .16s steps(2) forwards; }
+:root[data-theme="signal"] #dialogContent.is-resolving { animation:signal-detail-in .28s cubic-bezier(.2,.75,.25,1); }
+:root[data-theme="signal"] #dialogContent.is-resolving .detail-art { animation:signal-detail-art .32s steps(3); }
+
+:root[data-theme="signal"] .tarot-card { padding:8px 8px 17px; overflow:hidden; background:linear-gradient(145deg,#0b171d,#050a0d); border:1px solid rgba(90,245,231,.17); }
+:root[data-theme="signal"] .tarot-card.is-collected:hover { transform:translateY(-5px) rotate(.2deg); border-color:rgba(240,92,255,.54); box-shadow:6px 7px 0 rgba(90,245,231,.3); }
+:root[data-theme="signal"] .tarot-art { border:1px solid rgba(240,92,255,.25); }
+:root[data-theme="signal"] .draw-card.revealed .draw-card-inner,:root[data-theme="signal"] .tarot-card.is-revealed .tarot-card-inner { transform:rotateY(180deg) rotateZ(.35deg); }
+
+@keyframes signal-logo-current { 0%,91%,100%{opacity:1;transform:none} 92%{opacity:.72;transform:translateX(1px)} 93%{opacity:1;transform:translateX(-1px)} 94%{opacity:.84;transform:none} }
+@keyframes signal-card-slice { 0%,100%{opacity:0;transform:none} 16%,31%{opacity:.7;transform:translateX(6%)} 32%,46%{opacity:.28;transform:translateX(-8%)} 47%,63%{opacity:.5;transform:translateX(3%)} }
+@keyframes signal-art-trace { 0%,84%,100%{opacity:0;transform:none} 85%,87%{opacity:.6;transform:translateX(5%)} 88%,90%{opacity:.24;transform:translateX(-7%)} 91%{opacity:0} }
+@keyframes signal-image-lock { 0%,84%,100%{transform:none;filter:none} 85%{transform:translateX(-2px);filter:contrast(1.16) saturate(1.22)} 88%{transform:translateX(3px);filter:hue-rotate(8deg) contrast(1.1)} 91%{transform:none;filter:none} }
+@keyframes signal-name-a { 0%,88%,100%{opacity:0;transform:none} 89%,91%{opacity:.8;transform:translate(5px,-1px)} 92%,94%{opacity:.28;transform:translate(-3px,1px)} }
+@keyframes signal-name-b { 0%,81%,100%{opacity:0;transform:none} 82%,85%{opacity:.7;transform:translate(-5px,1px)} 86%,88%{opacity:.25;transform:translate(3px,-1px)} }
+@keyframes signal-detail-out { to{opacity:.25;filter:contrast(1.8) hue-rotate(35deg);transform:translateX(8px);clip-path:polygon(0 0,100% 0,100% 18%,4% 18%,4% 42%,100% 42%,100% 64%,0 64%)} }
+@keyframes signal-detail-in { 0%{opacity:.25;filter:contrast(1.7);transform:translateX(-7px)} 45%{opacity:.75;filter:contrast(1.2);transform:translateX(2px)} 100%{opacity:1;filter:none;transform:none} }
+@keyframes signal-detail-art { 0%{transform:translateX(-5px);filter:hue-rotate(20deg)} 34%{transform:translateX(4px);filter:contrast(1.25)} 67%{transform:translateX(-2px)} 100%{transform:none;filter:none} }
+
+@media (max-width:640px) {
+  :root[data-theme="signal"] .specimen-grid { row-gap:26px; }
+  :root[data-theme="signal"] .card { padding:8px 8px 20px; }
+  :root[data-theme="signal"] .card-name { font-size:21px; }
+  :root[data-theme="signal"] .detail-switch { gap:8px; }
+  :root[data-theme="signal"] .detail-switch button { max-width:112px; font-size:8px; }
+  :root[data-theme="signal"] .detail-layout::after { font-size:54px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  :root[data-theme="signal"] .brand-mark .brand-paper,
+  :root[data-theme="signal"] .brand-mark::after,
+  :root[data-theme="signal"] .card-art::after,
+  :root[data-theme="signal"] .card .art-image,
+  :root[data-theme="signal"] .card-name::before,
+  :root[data-theme="signal"] .card-name::after,
+  :root[data-theme="signal"] .detail-hero h2::before,
+  :root[data-theme="signal"] .detail-hero h2::after { animation:none !important; }
+}
+
 
 /* Translator theme tokens */
 .translator-room,
