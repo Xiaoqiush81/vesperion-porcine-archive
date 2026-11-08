@@ -2053,7 +2053,13 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
 :root[data-theme="signal"] .hero-specimen .plate-kicker { margin-top:31px; grid-column:2; grid-row:1; align-self:end; font-size:9px; letter-spacing:.18em; }
 :root[data-theme="signal"] .hero-specimen .plate-number { margin:4px 0 0; grid-column:2; grid-row:2; align-self:center; font-size:clamp(43px,6vw,62px); }
 :root[data-theme="signal"] .hero-specimen .plate-name { margin:1px 0 0; grid-column:2; grid-row:3; align-self:start; font-size:11px; }
-:root[data-theme="signal"] .hero-specimen .plate-caption { margin-top:15px; grid-column:1 / -1; grid-row:4; align-self:end; }
+:root[data-theme="signal"] .signal-front-meta { width:100%; margin-top:13px; grid-column:1 / -1; grid-row:4; align-self:end; display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid rgba(90,245,231,.28); border-bottom:1px solid rgba(90,245,231,.16); }
+:root[data-theme="signal"] .signal-front-meta>span { min-width:0; padding:9px 10px 8px; text-align:left; border-right:1px solid rgba(90,245,231,.16); }
+:root[data-theme="signal"] .signal-front-meta>span:last-child { border-right:0; }
+:root[data-theme="signal"] .signal-front-meta small,:root[data-theme="signal"] .signal-front-meta b { display:block; overflow:hidden; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; white-space:nowrap; text-overflow:ellipsis; }
+:root[data-theme="signal"] .signal-front-meta small { margin-bottom:4px; color:#5af5e7; font-size:6px; letter-spacing:.18em; }
+:root[data-theme="signal"] .signal-front-meta b { color:#dffbf6; font-size:8px; letter-spacing:.09em; }
+:root[data-theme="signal"] .hero-specimen .plate-caption { margin-top:8px; grid-column:1 / -1; grid-row:5; align-self:end; }
 :root[data-theme="signal"] .signal-card-back.signal-only { inset:20px 24px; padding:2px; }
 :root[data-theme="signal"] .signal-back-head { padding-bottom:9px; }
 :root[data-theme="signal"] .signal-back-name { padding:11px 0 8px; }
@@ -2069,7 +2075,7 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
     aspect-ratio:1.48 / 1;
     padding:19px 18px 16px;
     grid-template-columns:minmax(84px,.68fr) minmax(0,1.32fr);
-    grid-template-rows:auto auto auto 1fr;
+    grid-template-rows:auto auto auto 1fr auto;
     column-gap:15px;
     border-radius:23px 7px 23px 7px;
     box-shadow:9px 10px 0 rgba(240,92,255,.68),0 24px 48px rgba(0,0,0,.48);
@@ -2080,7 +2086,11 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
   :root[data-theme="signal"] .hero-specimen .plate-kicker { margin-top:24px; font-size:7px; letter-spacing:.12em; }
   :root[data-theme="signal"] .hero-specimen .plate-number { margin-top:3px; font-size:clamp(35px,11.5vw,49px); }
   :root[data-theme="signal"] .hero-specimen .plate-name { font-size:8px; letter-spacing:.16em; }
-  :root[data-theme="signal"] .hero-specimen .plate-caption { margin-top:8px; padding-top:8px; font-size:7px; }
+  :root[data-theme="signal"] .signal-front-meta { margin-top:7px; }
+  :root[data-theme="signal"] .signal-front-meta>span { padding:5px 6px 4px; }
+  :root[data-theme="signal"] .signal-front-meta small { margin-bottom:2px; font-size:4px; }
+  :root[data-theme="signal"] .signal-front-meta b { font-size:5px; }
+  :root[data-theme="signal"] .hero-specimen .plate-caption { margin-top:5px; padding-top:5px; font-size:6px; }
   :root[data-theme="signal"] .signal-card-back.signal-only { inset:14px 15px; }
   :root[data-theme="signal"] .signal-back-head { padding-bottom:6px; }
   :root[data-theme="signal"] .signal-back-head small { font-size:6px; }
@@ -2119,7 +2129,7 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
 
 /* Historical home plate geometry restored from the pre-directory layout. */
 @media (max-width:940px) {
-  body[data-room="home"] .hero-specimen {
+  :root:not([data-theme="signal"]) body[data-room="home"] .hero-specimen {
     width:min(100%,470px);
     min-height:500px;
     justify-self:center;
@@ -2132,18 +2142,18 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
     padding-bottom:80px;
     gap:65px;
   }
-  body[data-room="home"] .hero-specimen {
+  :root:not([data-theme="signal"]) body[data-room="home"] .hero-specimen {
     width:min(100%,470px);
     min-height:435px;
     padding:48px 35px 38px;
     box-shadow:14px 16px 0 var(--paper-deep);
   }
-  body[data-room="home"] .plate-logo {
+  :root:not([data-theme="signal"]) body[data-room="home"] .plate-logo {
     width:150px;
     height:150px;
     flex-basis:150px;
   }
-  body[data-room="home"] .theme-hint {
+  :root:not([data-theme="signal"]) body[data-room="home"] .theme-hint {
     top:18px;
     right:20px;
     font-size:7px;

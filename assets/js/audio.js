@@ -191,6 +191,39 @@ export function createSoundscape(root = document) {
     oscillator.stop(start + duration + .02);
   }
 
+  function signalBurst(delay, duration, frequency, volume, pan = 0) {
+    const start = context.currentTime + delay;
+    const source = context.createBufferSource();
+    const filter = context.createBiquadFilter();
+    const gain = context.createGain();
+    const panner = context.createStereoPanner?.();
+    source.buffer = getNoiseBuffer();
+    source.playbackRate.value = 1.35;
+    filter.type = 'bandpass';
+    filter.frequency.value = frequency;
+    filter.Q.value = 2.4;
+    gain.gain.setValueAtTime(.0001, start);
+    gain.gain.linearRampToValueAtTime(volume, start + .006);
+    gain.gain.setValueAtTime(volume * .34, start + duration * .42);
+    gain.gain.linearRampToValueAtTime(volume * .82, start + duration * .58);
+    gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
+    source.connect(filter).connect(gain);
+    if (panner) {
+      panner.pan.value = pan;
+      gain.connect(panner).connect(effectsBus);
+    } else gain.connect(effectsBus);
+    source.start(start);
+    source.stop(start + duration + .02);
+  }
+
+  function signalLock(delay = 0) {
+    [196, 293.66, 440].forEach((frequency, index) => {
+      voice(frequency, delay + index * .045, .34 - index * .025, .052 - index * .006, {
+        type:index === 1 ? 'triangle' : 'sine', attack:.008, release:.24, cutoff:2200
+      });
+    });
+  }
+
   function duckMusic(depth = .34, recovery = .55) {
     if (!musicBus || !settings.music) return;
     const now = context.currentTime;
@@ -266,16 +299,22 @@ export function createSoundscape(root = document) {
       themeBloom(document.documentElement.dataset.theme === 'paper');
     } else if (name === 'signalHandoff') {
       duckMusic(.16, 1.15);
-      paperLayer(0, .42, 170, 680, .032, .82);
-      uiPing(92, 154, 0, .34, .052, 'sine');
-      uiPing(176, 238, .18, .38, .038, 'sine');
-      voice(392, .72, .5, .036, { type:'sine', attack:.035, release:.4, cutoff:1200 });
-      voice(587.33, .79, .56, .028, { type:'sine', attack:.045, release:.44, cutoff:1500 });
+      uiPing(74, 168, 0, .48, .085, 'sawtooth');
+      signalBurst(.025, .09, 760, .105, -.65);
+      signalBurst(.14, .055, 1480, .08, .55);
+      signalBurst(.27, .075, 1020, .09, -.2);
+      signalBurst(.46, .045, 2300, .065, .72);
+      uiPing(310, 860, .49, .21, .07, 'triangle');
+      signalLock(.69);
+      voice(880, .72, .46, .035, { type:'sine', attack:.018, release:.38, cutoff:2600 });
     } else if (name === 'signalSurface') {
       duckMusic(.24, .48);
-      paperLayer(0, .16, 230, 980, .027, 1.05);
-      uiPing(205, 335, 0, .17, .045, 'sine');
-      uiPing(430, 350, .075, .16, .026, 'triangle');
+      signalBurst(0, .052, 980, .11, -.6);
+      signalBurst(.055, .04, 2100, .075, .65);
+      signalBurst(.105, .07, 1320, .09, -.15);
+      uiPing(185, 510, 0, .18, .07, 'sawtooth');
+      uiPing(740, 460, .085, .17, .045, 'triangle');
+      signalLock(.17);
     } else {
       duckMusic(.46, .28);
       paperLayer(0, .038, 1750, 3600, .038, 1.8);
