@@ -33,13 +33,28 @@ function playHandoff(onComplete) {
 
 export function initTheme(toggle, secretTrigger) {
   let lastBase = 'paper';
+  let cardTimer = 0;
+
+  function shiftSignalCard() {
+    if (toggle.classList.contains('is-card-shifting')) return;
+    const next = !toggle.classList.contains('is-signal-flipped');
+    toggle.classList.add('is-card-shifting');
+    clearTimeout(cardTimer);
+    cardTimer = setTimeout(() => {
+      toggle.classList.toggle('is-signal-flipped', next);
+      toggle.setAttribute('aria-label', next ? '切换至身份卡正面' : '切换至身份档案面');
+    }, 150);
+    cardTimer = setTimeout(() => toggle.classList.remove('is-card-shifting'), 470);
+  }
+
   function apply(theme, persist = true) {
     const next = theme in THEMES ? theme : 'paper';
     if (next !== 'signal') lastBase = next;
     document.documentElement.dataset.theme = next;
     document.querySelector('meta[name="theme-color"]').content = THEMES[next];
     toggle.setAttribute('aria-pressed', String(next === 'night'));
-    toggle.setAttribute('aria-label', next === 'night' ? '切换为象牙白主题' : '切换为深蓝主题');
+    if (next !== 'signal') toggle.classList.remove('is-signal-flipped', 'is-card-shifting');
+    toggle.setAttribute('aria-label', next === 'signal' ? '切换至身份档案面' : next === 'night' ? '切换为象牙白主题' : '切换为深蓝主题');
     if (persist) saveTheme(next);
     document.dispatchEvent(new CustomEvent('themechange', { detail:{ theme:next } }));
   }
@@ -47,7 +62,9 @@ export function initTheme(toggle, secretTrigger) {
   const initial = readSavedTheme();
   apply(initial in THEMES ? initial : 'paper', false);
   toggle.addEventListener('click', () => {
-    apply(document.documentElement.dataset.theme === 'night' ? 'paper' : 'night');
+    const current = document.documentElement.dataset.theme;
+    if (current === 'signal') shiftSignalCard();
+    else apply(current === 'night' ? 'paper' : 'night');
   });
 
   if (!secretTrigger) return;
