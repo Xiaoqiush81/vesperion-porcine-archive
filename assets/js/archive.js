@@ -1,6 +1,6 @@
 import { escapeHtml as escape, specimenArt, specimenArtwork } from './specimen-art.js?v=20261023-details-1';
 import { isFavorite, toggleFavorite } from './favorites.js?v=20261021-1';
-import { markdownInline, markdownToHtml } from './markdown.js?v=20261112-markdown-1';
+import { markdownInline, markdownToHtml } from './markdown.js?v=20261112-markdown-2';
 
 const RARITY_RANK = Object.freeze({ '宇宙唯一': 6, '神话': 5, '史诗': 4, '限定': 3, '稀有': 2, '普通': 1 });
 
