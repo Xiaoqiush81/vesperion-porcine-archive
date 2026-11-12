@@ -27,9 +27,13 @@ function saveBase(theme) {
   catch { /* Returning from signal still falls back safely. */ }
 }
 
-function playHandoff(onComplete) {
+function playHandoff(onComplete, onDone) {
   const overlay = document.querySelector('#signalHandoff');
-  if (!overlay || matchMedia('(prefers-reduced-motion: reduce)').matches) return onComplete();
+  if (!overlay || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    onComplete();
+    onDone();
+    return;
+  }
   const status = overlay.querySelector('#signalStatus');
   overlay.classList.remove('is-leaving');
   overlay.classList.add('is-active');
@@ -44,6 +48,7 @@ function playHandoff(onComplete) {
     overlay.classList.remove('is-active', 'is-leaving');
     overlay.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('signal-switching');
+    onDone();
   }, 1810);
 }
 
@@ -101,7 +106,9 @@ export function initTheme(toggle, secretTrigger) {
     const entering = document.documentElement.dataset.theme !== 'signal';
     isSwitching = true;
     document.dispatchEvent(new CustomEvent('signalhandoff', { detail:{ entering } }));
-    playHandoff(() => apply(entering ? 'signal' : lastBase));
-    setTimeout(() => { isSwitching = false; }, 1810);
+    playHandoff(
+      () => apply(entering ? 'signal' : lastBase),
+      () => { isSwitching = false; }
+    );
   });
 }
