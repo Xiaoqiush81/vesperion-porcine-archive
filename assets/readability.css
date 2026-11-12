@@ -1,0 +1,240 @@
+/*
+ * Readability baseline
+ * Keeps content legible on mobile and low-DPI/older Windows displays without
+ * flattening the archive's visual hierarchy.
+ */
+
+:root {
+  --serif: "Cormorant Garamond", "Noto Serif SC", "Microsoft YaHei", "PingFang SC", "Songti SC", "SimSun", serif;
+  --cn-serif: "Noto Serif SC", "Microsoft YaHei", "PingFang SC", "Songti SC", "SimSun", serif;
+  --sans: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+}
+
+/* Primary reading text */
+.card .desc,
+.detail-body > p,
+.detail-body > .markdown-content,
+.abilities ul,
+.certificate-copy > p:not(.eyebrow):not(.certificate-verdict),
+.timeline p,
+.chronicle-entry-body,
+.chronicle-entry-body .markdown-content,
+.chronicle-portals p,
+.scholia-prompt,
+.scholia-comparison p,
+.scholia-points,
+.legal-copy p,
+.faith-intro,
+.faith-doctrine-item > p,
+.faith-doctrine-item > .markdown-content,
+.faith-membership-copy > p,
+.faith-membership-copy > .markdown-content,
+.faith-inner-response > div p,
+.faith-oracle-library li > p,
+.tarot-detail .markdown-content,
+.draw-meaning {
+  font-size:14px;
+}
+
+/* Secondary explanatory text */
+.section-heading > p,
+.practice-intro > p:last-child,
+.record-panel-heading > p:last-child,
+.favorite-groups section > p,
+.symbolic-pair p,
+.activity-ledger p,
+.recurring-cards p,
+.record-empty,
+.faith-section-head > p,
+.faith-oracle-library-body > p,
+.legal-masthead > p:not(.eyebrow),
+.chronicle-masthead-copy > p:last-child,
+.identity-options b,
+.certificate-verdict,
+.fact b,
+.scholia-unit-count,
+.scholia-unit-action,
+.practice-status,
+.reading-notes > p,
+.reading-history article p,
+.history-empty,
+.translator-note,
+.translator-lexicon span,
+.translator-controls label {
+  font-size:12px;
+}
+
+/* Controls and metadata that still need to remain comfortably readable */
+.site-header nav a,
+.nav-button,
+.header-room,
+.soundscape-menu > summary,
+.soundscape button,
+.room-toolbar small,
+.collection-switcher small,
+.filter,
+.results-meta button,
+.card-top,
+.tag,
+.question-field span,
+.reading-notes label > span,
+.tarot-switch b,
+.tarot-switch small,
+.custom-count,
+.draw-position,
+.draw-hint,
+.reading-history summary,
+.reading-history article time,
+.tarot-tab,
+.tarot-toolbar-actions button,
+.chronicle-portals small,
+.chronicle-expand,
+.chronicle-entry-details[open] .chronicle-expand::after,
+.chronicle-gate label span,
+.scholia-count,
+.scholia-response > span,
+.gate-status,
+.detail-number,
+.fact small,
+.toast,
+.faith-toolbar-mark,
+.faith-masthead-member,
+.faith-member-date,
+.translator-panel-head small,
+.translator-clear,
+.translator-copy {
+  font-size:10px;
+}
+
+/* Decorative micro-copy: still small, but no longer sub-pixel-looking on low DPI. */
+.brand small,
+.volume-panel-head small,
+.theme-hint,
+.collection-switcher span,
+.identity-progress,
+.certificate-copy > small,
+.certificate-copy dt,
+.identity-history time,
+.identity-history small,
+.legal-meta,
+.legal-index small,
+.legal-document-title > p,
+.legal-document-title small,
+.legal-contact,
+.activity-ledger small,
+.recurring-cards small,
+.favorite-groups small,
+.symbolic-pair > small,
+.spread-choice small,
+.tarot-placeholder i,
+.tarot-meta small,
+.tarot-meta em,
+.chronicle-masthead-meta,
+.chronicle-portals span,
+.chronicle-seal small,
+.scholia-entry small,
+.scholia-study-heading small,
+.scholia-material small,
+.scholia-unit-heading small,
+.scholia-question::before,
+.scholia-question-heading small,
+.faith-altar > small,
+.faith-section-head small,
+.faith-text-title small,
+.faith-colophon small,
+.faith-membership::after,
+.faith-membership-copy > small,
+.faith-ceremony > small,
+.faith-oracle > small,
+.faith-inner-response summary small,
+.faith-oracle-library summary small,
+.faith-oracle-library time,
+.faith-oracle-library li > span,
+.status-strip small {
+  font-size:9px;
+}
+
+/* Signal/glitch UI keeps its compressed identity, but not at 4–6px. */
+:root[data-theme="signal"] .card .tag,
+:root[data-theme="signal"] .detail-switch button,
+:root[data-theme="signal"] .detail-switch span,
+:root[data-theme="signal"] .signal-back-head small,
+:root[data-theme="signal"] .signal-back-head b,
+:root[data-theme="signal"] .signal-back-name small,
+:root[data-theme="signal"] .signal-back-grid small,
+:root[data-theme="signal"] .signal-back-grid b,
+:root[data-theme="signal"] .signal-back-foot small,
+:root[data-theme="signal"] .signal-back-foot b,
+:root[data-theme="signal"] .hero-specimen .plate-kicker,
+:root[data-theme="signal"] .hero-specimen .plate-name,
+:root[data-theme="signal"] .signal-front-meta small,
+:root[data-theme="signal"] .signal-front-meta b,
+:root[data-theme="signal"] .hero-specimen .plate-caption {
+  font-size:8px;
+}
+
+@media (max-width:640px) {
+  .card .desc,
+  .detail-body > p,
+  .detail-body > .markdown-content,
+  .abilities ul,
+  .certificate-copy > p:not(.eyebrow):not(.certificate-verdict),
+  .timeline p,
+  .chronicle-entry-body,
+  .chronicle-entry-body .markdown-content,
+  .chronicle-portals p,
+  .scholia-prompt,
+  .scholia-comparison p,
+  .scholia-points,
+  .legal-copy p,
+  .faith-intro,
+  .faith-doctrine-item > p,
+  .faith-doctrine-item > .markdown-content,
+  .faith-membership-copy > p,
+  .faith-membership-copy > .markdown-content,
+  .faith-inner-response > div p,
+  .faith-oracle-library li > p,
+  .tarot-detail .markdown-content,
+  .draw-meaning {
+    font-size:15px;
+  }
+
+  .timeline p,
+  .chronicle-entry-body,
+  .legal-copy p,
+  .faith-intro,
+  .scholia-prompt,
+  .scholia-comparison p,
+  .scholia-points {
+    line-height:1.9;
+  }
+
+  .site-header nav a,
+  .nav-button,
+  .header-room,
+  .soundscape-menu > summary,
+  .room-toolbar-current {
+    font-size:12px;
+  }
+
+  .draw-position,
+  .draw-meaning {
+    font-size:12px;
+  }
+
+  :root[data-theme="signal"] .hero-specimen .theme-hint,
+  :root[data-theme="signal"] .signal-front-meta small,
+  :root[data-theme="signal"] .signal-front-meta b,
+  :root[data-theme="signal"] .signal-back-head small,
+  :root[data-theme="signal"] .signal-back-head b,
+  :root[data-theme="signal"] .signal-back-name small,
+  :root[data-theme="signal"] .signal-back-grid small,
+  :root[data-theme="signal"] .signal-back-grid b,
+  :root[data-theme="signal"] .signal-back-foot small,
+  :root[data-theme="signal"] .signal-back-foot b,
+  :root[data-theme="signal"] .hero-specimen .plate-kicker,
+  :root[data-theme="signal"] .hero-specimen .plate-name,
+  :root[data-theme="signal"] .hero-specimen .plate-caption {
+    font-size:8px;
+  }
+}
