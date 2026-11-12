@@ -8,6 +8,7 @@ const CUSTOM_MUSIC_URL = resolveAsset(SITE_ASSETS.music);
 const CUSTOM_EFFECT_URLS = Object.freeze(Object.fromEntries(
   Object.entries(SITE_ASSETS.effects).map(([name, url]) => [name, resolveAsset(url)])
 ));
+const SIGNAL_NOTES = Object.freeze({ low:98, root:196, fifth:293.66, high:440, spark:880 });
 const CHORDS = [
   [146.83, 220, 293.66, 349.23],
   [116.54, 174.61, 233.08, 293.66],
@@ -217,11 +218,57 @@ export function createSoundscape(root = document) {
   }
 
   function signalLock(delay = 0) {
-    [196, 293.66, 440].forEach((frequency, index) => {
+    [SIGNAL_NOTES.root, SIGNAL_NOTES.fifth, SIGNAL_NOTES.high].forEach((frequency, index) => {
       voice(frequency, delay + index * .045, .34 - index * .025, .052 - index * .006, {
         type:index === 1 ? 'triangle' : 'sine', attack:.008, release:.24, cutoff:2200
       });
     });
+  }
+
+  function signalTick(delay = 0, bright = false) {
+    signalBurst(delay, .026, bright ? 2400 : 1650, bright ? .034 : .028, bright ? .28 : -.18);
+    uiPing(bright ? SIGNAL_NOTES.spark : 1320, bright ? 1180 : 920, delay + .002, .042, bright ? .032 : .028, 'square');
+  }
+
+  function signalNavigate(reverse = false) {
+    duckMusic(.3, .38);
+    electricCrackle(0, .085, .052);
+    signalBurst(.012, .045, 1180, .06, reverse ? .52 : -.52);
+    if (reverse) {
+      uiPing(SIGNAL_NOTES.high, SIGNAL_NOTES.root, .018, .16, .052, 'triangle');
+      uiPing(SIGNAL_NOTES.fifth, SIGNAL_NOTES.low, .075, .12, .034, 'sine');
+    } else {
+      uiPing(SIGNAL_NOTES.root, SIGNAL_NOTES.fifth, .018, .14, .052, 'triangle');
+      uiPing(SIGNAL_NOTES.fifth, SIGNAL_NOTES.high, .075, .14, .036, 'sine');
+    }
+  }
+
+  function signalFlip() {
+    duckMusic(.28, .42);
+    electricCrackle(0, .11, .06);
+    signalBurst(.008, .04, 920, .07, -.55);
+    signalBurst(.064, .035, 2050, .055, .58);
+    uiPing(SIGNAL_NOTES.low, SIGNAL_NOTES.fifth, .012, .16, .052, 'sawtooth');
+    uiPing(SIGNAL_NOTES.high, SIGNAL_NOTES.root, .082, .14, .034, 'triangle');
+  }
+
+  function signalConfirm() {
+    duckMusic(.3, .36);
+    signalTick(0, true);
+    [SIGNAL_NOTES.root, SIGNAL_NOTES.fifth, SIGNAL_NOTES.high].forEach((frequency, index) => {
+      voice(frequency * 2, .025 + index * .032, .19, .035 - index * .004, {
+        type:index === 1 ? 'triangle' : 'sine', attack:.004, release:.13, cutoff:3000
+      });
+    });
+  }
+
+  function signalPig() {
+    duckMusic(.31, .46);
+    signalBurst(0, .04, 720, .052, -.4);
+    uiPing(560, 760, .01, .09, .05, 'square');
+    uiPing(760, 520, .105, .1, .047, 'triangle');
+    signalBurst(.19, .035, 1900, .043, .5);
+    uiPing(610, 980, .205, .12, .04, 'sine');
   }
 
   function electricCrackle(delay, duration, volume) {
@@ -320,7 +367,7 @@ export function createSoundscape(root = document) {
       duckMusic(.18, .82);
       playSample('themeSwitch', .72);
       themeBloom(document.documentElement.dataset.theme === 'paper');
-    } else if (name === 'signalHandoff') {
+    } else if (name === 'signalEnter') {
       duckMusic(.16, 1.15);
       uiPing(74, 168, 0, .48, .085, 'sawtooth');
       electricCrackle(.015, .26, .09);
@@ -331,7 +378,15 @@ export function createSoundscape(root = document) {
       electricCrackle(.39, .21, .07);
       uiPing(310, 860, .49, .21, .07, 'triangle');
       signalLock(.69);
-      voice(880, .72, .46, .035, { type:'sine', attack:.018, release:.38, cutoff:2600 });
+      voice(SIGNAL_NOTES.spark, .72, .46, .035, { type:'sine', attack:.018, release:.38, cutoff:2600 });
+    } else if (name === 'signalExit') {
+      duckMusic(.18, .82);
+      signalLock(0);
+      uiPing(SIGNAL_NOTES.high, SIGNAL_NOTES.root, .12, .24, .06, 'triangle');
+      signalBurst(.18, .055, 1700, .065, .52);
+      signalBurst(.27, .045, 880, .052, -.45);
+      electricCrackle(.31, .13, .05);
+      uiPing(168, 74, .34, .2, .055, 'sawtooth');
     } else if (name === 'signalSurface') {
       duckMusic(.24, .48);
       electricCrackle(0, .14, .085);
@@ -341,7 +396,16 @@ export function createSoundscape(root = document) {
       uiPing(185, 510, 0, .18, .07, 'sawtooth');
       uiPing(740, 460, .085, .17, .045, 'triangle');
       signalLock(.17);
-    } else {
+    } else if (name === 'signalHover') signalTick();
+    else if (name === 'signalTap') {
+      duckMusic(.42, .22);
+      signalTick(0, true);
+    } else if (name === 'signalDoor') signalNavigate(false);
+    else if (name === 'signalBack') signalNavigate(true);
+    else if (name === 'signalFlip') signalFlip();
+    else if (name === 'signalConfirm') signalConfirm();
+    else if (name === 'signalPig') signalPig();
+    else {
       duckMusic(.46, .28);
       paperLayer(0, .038, 1750, 3600, .038, 1.8);
       uiPing(1180, 720, .004, .072, .085, 'triangle');
@@ -469,15 +533,34 @@ export function createSoundscape(root = document) {
     if (event.target.closest('#soundscape')) return;
     menu?.removeAttribute('open');
     if (event.target.closest('#signalTrigger')) return;
-    if (event.target.closest('.tarot-card, .draw-card, .chronicle-portal, .chronicle-volume, .chronicle-entry-details summary, .inner-shelf, .inner-volume-button, .scholia-subject')) effect('flip');
-    else if (event.target.closest('.favorite-toggle')) effect('favorite');
-    else if (event.target.closest('[data-room-target], .chronicle-section-back, .inner-section-back')) effect('door');
-    else if (event.target.closest('#themeToggle')) {
-      if (document.documentElement.dataset.theme !== 'signal') effect('theme');
+
+    const signal = document.documentElement.dataset.theme === 'signal';
+    if (event.target.closest('.tarot-card, .draw-card, .chronicle-portal, .chronicle-volume, .chronicle-entry-details summary, .inner-shelf, .inner-volume-button, .scholia-subject')) {
+      effect(signal ? 'signalFlip' : 'flip');
+    } else if (event.target.closest('.favorite-toggle')) {
+      effect(signal ? 'signalConfirm' : 'favorite');
+    } else if (event.target.closest('[data-room-target], .chronicle-section-back, .inner-section-back')) {
+      const target = event.target.closest('[data-room-target]');
+      effect(signal && target?.dataset.roomTarget === 'home' ? 'signalBack' : signal ? 'signalDoor' : 'door');
+    } else if (event.target.closest('#themeToggle')) {
+      if (!signal) effect('theme');
+    } else if (event.target.closest('#callPig')) {
+      effect(signal ? 'signalPig' : 'pig');
+    } else if (event.target.closest('button')) {
+      effect(signal ? 'signalTap' : 'tap');
     }
-    else if (event.target.closest('#callPig')) effect('pig');
-    else if (event.target.closest('button')) effect('tap');
   });
+
+  let lastSignalHover = 0;
+  root.addEventListener('pointerover', event => {
+    if (document.documentElement.dataset.theme !== 'signal' || !matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+    const target = event.target.closest('button, .collection-switcher a, .card');
+    if (!target || target.contains(event.relatedTarget) || target.closest('#soundscape')) return;
+    const now = performance.now();
+    if (now - lastSignalHover < 70) return;
+    lastSignalHover = now;
+    effect('signalHover');
+  }, { passive:true });
 
   root.addEventListener('pointerdown', restoreAudio, { capture:true, passive:true });
   root.addEventListener('touchstart', restoreAudio, { capture:true, passive:true });
@@ -488,7 +571,7 @@ export function createSoundscape(root = document) {
   window.addEventListener('pagehide', pauseForBackground);
   window.addEventListener('pageshow', restoreAudio);
   window.addEventListener('focus', restoreAudio);
-  document.addEventListener('signalhandoff', () => effect('signalHandoff'));
+  document.addEventListener('signalhandoff', event => effect(event.detail?.entering ? 'signalEnter' : 'signalExit'));
   document.addEventListener('signalsurface', () => effect('signalSurface'));
   if (settings.effects) {
     preloadSample('cardFlip');
