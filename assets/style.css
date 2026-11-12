@@ -2351,3 +2351,10 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
 :root[data-theme="signal"] .markdown-content pre,
 :root[data-theme="signal"] .markdown-content code,
 :root[data-theme="signal"] .markdown-inline code { background:rgba(90,245,231,.06); }
+
+.markdown-table-wrap { max-width:100%; margin:.9em 0; overflow-x:auto; }
+.markdown-content table { width:100%; border-collapse:collapse; font-size:.94em; }
+.markdown-content th,.markdown-content td { padding:.55em .7em; border:1px solid var(--line); text-align:left; vertical-align:top; }
+.markdown-content th { background:color-mix(in srgb,var(--paper-deep) 72%,transparent); font-weight:700; }
+.markdown-content .markdown-task { list-style:none; margin-left:-1.35em; display:flex; gap:.55em; align-items:flex-start; }
+.markdown-content .markdown-task input { margin-top:.28em; accent-color:var(--gold); }
