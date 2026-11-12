@@ -396,6 +396,9 @@ export function createSoundscape(root = document) {
       uiPing(185, 510, 0, .18, .07, 'sawtooth');
       uiPing(740, 460, .085, .17, .045, 'triangle');
       signalLock(.17);
+    } else if (name === 'signalMark') {
+      signalBurst(0, .022, 1320, .022, -.12);
+      uiPing(1040, 860, .002, .038, .022, 'triangle');
     } else if (name === 'signalHover') signalTick();
     else if (name === 'signalTap') {
       duckMusic(.42, .22);
@@ -532,7 +535,10 @@ export function createSoundscape(root = document) {
   root.addEventListener('click', event => {
     if (event.target.closest('#soundscape')) return;
     menu?.removeAttribute('open');
-    if (event.target.closest('#signalTrigger')) return;
+    if (event.target.closest('#signalTrigger')) {
+      effect('signalMark');
+      return;
+    }
 
     const signal = document.documentElement.dataset.theme === 'signal';
     if (event.target.closest('.tarot-card, .draw-card, .chronicle-portal, .chronicle-volume, .chronicle-entry-details summary, .inner-shelf, .inner-volume-button, .scholia-subject')) {
