@@ -1,4 +1,4 @@
-import { markdownInline, markdownToHtml } from './markdown.js?v=20261112-markdown-1';
+import { markdownInline, markdownToHtml } from './markdown.js?v=20261112-markdown-2';
 const DATA_URL = './data/porcine-faith.json?v=20261102-faith-9';
 const ORACLE_URL = './data/porcine-oracles.json?v=20261101-faith-7';
 const MEMBER_KEY = 'pigdex-faith-member-v1';
