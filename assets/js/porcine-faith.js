@@ -1,3 +1,4 @@
+import { markdownInline, markdownToHtml } from './markdown.js?v=20261112-markdown-1';
 const DATA_URL = './data/porcine-faith.json?v=20261102-faith-9';
 const ORACLE_URL = './data/porcine-oracles.json?v=20261101-faith-7';
 const MEMBER_KEY = 'pigdex-faith-member-v1';
@@ -127,7 +128,7 @@ function membershipHtml(data, member, oracleData) {
       <div class="faith-membership-copy">
         <small>${data.membership.memberMark}</small>
         <h3 id="faithMembershipTitle">${data.membership.memberTitle}</h3>
-        <p>${data.membership.memberText}</p>
+        <p>${markdownToHtml(data.membership.memberText)}</p>
         <p class="faith-member-date">入教于 ${new Intl.DateTimeFormat('zh-CN', { dateStyle:'long' }).format(new Date(member.joinedAt))}</p>
       </div>
       <button id="faithLeave" class="faith-membership-leave" type="button">${data.membership.leaveLabel}</button>
@@ -139,7 +140,7 @@ function membershipHtml(data, member, oracleData) {
         <h3>${hasToday ? '今日猪谕' : '今日一签尚未开启'}</h3>
         <div class="faith-oracle-result" id="faithOracleResult" aria-live="polite">
           ${hasToday
-            ? `<span>${current.entry.tag} · ${current.entry.id}</span><p>${current.entry.text}</p>`
+            ? `<span>${current.entry.tag} · ${current.entry.id}</span><p>${markdownInline(current.entry.text)}</p>`
             : '<span>SEALED · 一日一签</span><p>今日尚未开签。启封以后，本日签文不可重抽。</p>'}
         </div>
         ${hasToday
@@ -149,7 +150,7 @@ function membershipHtml(data, member, oracleData) {
 
       <details class="faith-inner-response">
         <summary><div><small>${inner?.kicker || 'INNER CHAPEL RESPONSE'}</small><strong>${inner?.title || '内坛应答'}</strong></div><b aria-hidden="true">＋</b></summary>
-        <div>${(inner?.lines || []).map(line => `<p>${line}</p>`).join('')}</div>
+        <div>${(inner?.lines || []).map(line => `<p class="markdown-inline">${markdownInline(line)}</p>`).join('')}</div>
       </details>
     </section>
 
@@ -176,9 +177,9 @@ function renderFaith(root, data, oracleData) {
       <p class="faith-sigil" aria-hidden="true">✦</p>
       <h2>${data.title}</h2>
       <div class="faith-motto" aria-label="${data.motto.join('，')}">
-        ${data.motto.map(line => `<span>${line}</span>`).join('')}
+        ${data.motto.map(line => `<span class="markdown-inline">${markdownInline(line)}</span>`).join('')}
       </div>
-      <p class="faith-intro">${data.intro}</p>
+      <div class="faith-intro markdown-content">${markdownToHtml(data.intro)}</div>
       ${member ? '<p class="faith-masthead-member">✦ 教籍猪已归坛 ✦</p>' : ''}
     </header>
 
@@ -188,7 +189,7 @@ function renderFaith(root, data, oracleData) {
       <small>THE GREAT RESPONSE · 大齐诵</small>
       <h3 id="faithResponseTitle">大齐诵</h3>
       <div class="faith-response" id="faithResponse" aria-live="polite">
-        ${data.response.map((line, index) => `<p data-response-line="${index}">${line}</p>`).join('')}
+        ${data.response.map((line, index) => `<p class="markdown-inline" data-response-line="${index}">${markdownInline(line)}</p>`).join('')}
       </div>
       <div class="faith-chant-controls">
         <button id="faithChant" type="button">${member ? '教籍猪领诵' : '开始齐诵'}</button>
@@ -205,7 +206,7 @@ function renderFaith(root, data, oracleData) {
         ${data.articles.map(article => `
           <details class="faith-doctrine-item">
             <summary><span>${article.mark}</span><strong>${article.title}</strong><b aria-hidden="true">＋</b></summary>
-            <p>${article.body}</p>
+            <div class="markdown-content">${markdownToHtml(article.body)}</div>
           </details>
         `).join('')}
       </div>
