@@ -19,6 +19,8 @@ export function markdownInline(value = '') {
     return '\u0000' + (code.length - 1) + '\u0000';
   });
   text = text
+    .replace(/&lt;(https?:\/\/[^&]+)&gt;/g, (_, href) =>
+      '<a href="' + safeHref(href) + '" target="_blank" rel="noopener noreferrer">' + href + '</a>')
     .replace(/!\[([^\]]*)\]\(([^\s)]+)(?:\s+"([^"]*)")?\)/g, (_, alt, href, title) =>
       '<img src="' + safeHref(href) + '" alt="' + alt + '"' + (title ? ' title="' + title + '"' : '') + ' loading="lazy">')
     .replace(/\[([^\]]+)\]\(([^\s)]+)(?:\s+"([^"]*)")?\)/g, (_, label, href, title) =>
@@ -73,6 +75,26 @@ export function markdownToHtml(value = '') {
       continue;
     }
 
+    const tableDivider = lines[i + 1]?.match(/^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*$/);
+    if (line.includes('|') && tableDivider) {
+      const splitRow = row => row.trim().replace(/^\||\|$/g, '').split('|').map(cell => cell.trim());
+      const headers = splitRow(line);
+      const aligns = splitRow(lines[i + 1]).map(cell => {
+        const left = cell.startsWith(':');
+        const right = cell.endsWith(':');
+        return left && right ? 'center' : right ? 'right' : left ? 'left' : '';
+      });
+      i += 2;
+      const rows = [];
+      while (i < lines.length && lines[i].includes('|') && lines[i].trim()) rows.push(splitRow(lines[i++]));
+      const head = '<thead><tr>' + headers.map((cell, index) =>
+        '<th' + (aligns[index] ? ' style="text-align:' + aligns[index] + '"' : '') + '>' + markdownInline(cell) + '</th>').join('') + '</tr></thead>';
+      const body = '<tbody>' + rows.map(row => '<tr>' + headers.map((_, index) =>
+        '<td' + (aligns[index] ? ' style="text-align:' + aligns[index] + '"' : '') + '>' + markdownInline(row[index] || '') + '</td>').join('') + '</tr>').join('') + '</tbody>';
+      output.push('<div class="markdown-table-wrap"><table>' + head + body + '</table></div>');
+      continue;
+    }
+
     const listMatch = line.match(/^\s*([-+*]|\d+\.)\s+(.+)$/);
     if (listMatch) {
       const ordered = /\d+\./.test(listMatch[1]);
@@ -81,7 +103,10 @@ export function markdownToHtml(value = '') {
       while (i < lines.length) {
         const match = lines[i].match(/^\s*([-+*]|\d+\.)\s+(.+)$/);
         if (!match || (/\d+\./.test(match[1]) !== ordered)) break;
-        items.push('<li>' + markdownInline(match[2]) + '</li>');
+        const task = match[2].match(/^\[([ xX])\]\s+(.+)$/);
+        items.push(task
+          ? '<li class="markdown-task"><input type="checkbox" disabled' + (task[1].toLowerCase() === 'x' ? ' checked' : '') + '> <span>' + markdownInline(task[2]) + '</span></li>'
+          : '<li>' + markdownInline(match[2]) + '</li>');
         i += 1;
       }
       output.push('<' + tag + '>' + items.join('') + '</' + tag + '>');
