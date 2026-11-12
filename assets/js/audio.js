@@ -380,19 +380,20 @@ export function createSoundscape(root = document) {
       signalLock(.69);
       voice(SIGNAL_NOTES.spark, .72, .46, .035, { type:'sine', attack:.018, release:.38, cutoff:2600 });
     } else if (name === 'signalExit') {
-      duckMusic(.15, 1.65);
-      signalLock(0);
-      uiPing(SIGNAL_NOTES.high, SIGNAL_NOTES.root, .1, .28, .058, 'triangle');
-      signalBurst(.18, .055, 1700, .062, .52);
-      signalBurst(.29, .045, 880, .05, -.45);
-      electricCrackle(.36, .16, .048);
-      uiPing(190, 86, .43, .34, .052, 'sawtooth');
-      signalBurst(.72, .07, 620, .042, .18);
-      voice(SIGNAL_NOTES.root, .76, .72, .032, { type:'triangle', attack:.018, release:.62, cutoff:900 });
-      voice(SIGNAL_NOTES.low, 1.02, .7, .026, { type:'sine', attack:.02, release:.6, cutoff:620 });
-      signalBurst(1.22, .065, 420, .032, -.2);
-      uiPing(118, 62, 1.28, .34, .038, 'sawtooth');
-      voice(55, 1.34, .42, .02, { type:'sine', attack:.01, release:.34, cutoff:320 });
+      duckMusic(.17, 1.78);
+      paperLayer(.02, 1.46, 3100, 720, .026, .82);
+      voice(SIGNAL_NOTES.high, .02, .52, .034, { type:'sine', detune:7, attack:.012, release:.46, cutoff:2600 });
+      voice(SIGNAL_NOTES.fifth, .08, .68, .03, { type:'triangle', detune:-9, attack:.016, release:.58, cutoff:1800 });
+      signalBurst(.2, .035, 1860, .038, .42);
+      signalBurst(.34, .028, 980, .029, -.38);
+      uiPing(420, 196, .38, .42, .04, 'triangle');
+      voice(SIGNAL_NOTES.root, .62, .82, .028, { type:'sine', detune:-12, attack:.028, release:.72, cutoff:980 });
+      voice(740, .78, .52, .019, { type:'sine', detune:11, attack:.035, release:.44, cutoff:2400 });
+      voice(1110, .92, .46, .014, { type:'sine', detune:-8, attack:.03, release:.39, cutoff:3200 });
+      signalBurst(1.08, .038, 1320, .025, .16);
+      uiPing(174, 88, 1.12, .36, .032, 'triangle');
+      voice(73, 1.24, .54, .024, { type:'sine', attack:.02, release:.46, cutoff:460 });
+      signalBurst(1.48, .026, 520, .018, -.12);
     } else if (name === 'signalSurface') {
       duckMusic(.24, .48);
       electricCrackle(0, .14, .085);
