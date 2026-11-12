@@ -1904,6 +1904,37 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] s
   }
 }
 
+
+/* Channel 081 / scholia readability */
+:root[data-theme="signal"] .scholia-material,
+:root[data-theme="signal"] .scholia-sheet,
+:root[data-theme="signal"] .scholia-response textarea {
+  color:#eaf8f5;
+  background:
+    linear-gradient(rgba(99,247,233,.025),rgba(243,106,255,.02)),
+    rgba(8,18,23,.94);
+  border-color:rgba(99,247,233,.22);
+  box-shadow:none;
+}
+:root[data-theme="signal"] .scholia-material blockquote,
+:root[data-theme="signal"] .scholia-material p,
+:root[data-theme="signal"] .scholia-material h3,
+:root[data-theme="signal"] .scholia-response textarea {
+  color:#eaf8f5;
+}
+:root[data-theme="signal"] .scholia-material small,
+:root[data-theme="signal"] .scholia-response>span {
+  color:#75f8ea;
+}
+:root[data-theme="signal"] .scholia-response textarea::placeholder {
+  color:#8fa7a3;
+  opacity:.72;
+}
+:root[data-theme="signal"] .scholia-response textarea:focus {
+  border-color:#63f7e9;
+  box-shadow:inset 2px 0 #63f7e9,0 0 0 1px rgba(243,106,255,.12);
+}
+
 /* Channel 081 / chronicle ornament system */
 :root[data-theme="signal"] .chronicle-masthead {
   isolation:isolate;
