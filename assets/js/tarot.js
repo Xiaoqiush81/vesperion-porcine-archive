@@ -2,7 +2,7 @@ import { TAROT_CARDS, TAROT_GROUPS, TAROT_SPREADS, getReadingMeaning, getSpread 
 import { createReadingSession } from './tarot-engine.js?v=20261019-modular-1';
 import { addReadingRecord, loadReadingHistory } from './tarot-storage.js?v=20261019-modular-1';
 import { isFavorite, toggleFavorite } from './favorites.js?v=20261021-1';
-import { markdownInline, markdownToHtml } from './markdown.js?v=20261112-markdown-1';
+import { markdownInline, markdownToHtml } from './markdown.js?v=20261112-markdown-2';
 
 const CARD_BACK_URL = 'assets/tarot/card-back.webp?v=2651';
 const CARD_ART_VERSION = 'modular-20261019';
