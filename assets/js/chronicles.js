@@ -1,4 +1,5 @@
-import { initScholia } from './scholia.js?v=20261101-poetry-9';
+import { initScholia } from './scholia.js?v=20261112-markdown-1';
+import { markdownElement, renderMarkdown } from './markdown.js?v=20261112-markdown-1';
 
 const DATA_URL = './data/chronicles.json?v=20261101-poetry-9';
 let scholiaController;
@@ -13,11 +14,11 @@ function element(tag, className, text) {
 function renderEntryBody(host, entry) {
   if (entry.verse?.length) {
     const verse = element('blockquote', 'chronicle-verse');
-    verse.append(...entry.verse.map(line => element('span', '', line)));
+    verse.append(...entry.verse.map(line => markdownElement('span', '', line, true)));
     host.append(verse);
   }
   const paragraphs = entry.details || (entry.verse ? [] : [entry.body]);
-  host.append(...paragraphs.map(paragraph => element('p', '', paragraph)));
+  host.append(...paragraphs.map(paragraph => markdownElement('div', 'markdown-content', paragraph)));
 }
 
 function renderEntry(entry, fallbackPeriod = '') {
@@ -26,7 +27,7 @@ function renderEntry(entry, fallbackPeriod = '') {
   const summary = element('summary');
   summary.append(
     element('b', '', entry.title),
-    element('p', 'chronicle-excerpt', entry.excerpt || entry.body),
+    markdownElement('p', 'chronicle-excerpt markdown-inline', entry.excerpt || entry.body, true),
     element('span', 'chronicle-expand', '展开完整卷宗')
   );
   const full = element('div', 'chronicle-entry-body');
@@ -78,7 +79,7 @@ function renderSections(sections, entries) {
     button.append(
       element('span', '', section.kicker),
       element('h3', '', section.title),
-      element('p', '', section.description),
+      markdownElement('p', 'markdown-inline', section.description, true),
       element('small', '', catalogue)
     );
     return button;
@@ -94,7 +95,7 @@ function renderEntries(entries, section, volume = '') {
   const host = document.querySelector('#chronicleTimeline');
   document.querySelector('#publicChronicleKicker').textContent = `OPEN SHELVES · ${section.kicker}${volume ? ` · ${volume}` : ''}`;
   document.querySelector('#publicChronicleTitle').textContent = volume ? `${section.title} · ${volume}` : section.title;
-  document.querySelector('#publicChronicleDescription').textContent = section.description;
+  renderMarkdown(document.querySelector('#publicChronicleDescription'), section.description, true);
   document.querySelectorAll('#chroniclePortals .chronicle-portal').forEach(button => {
     button.setAttribute('aria-pressed', String(button.dataset.shelf === section.title));
   });
