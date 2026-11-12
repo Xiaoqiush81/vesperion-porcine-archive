@@ -2287,64 +2287,6 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] s
   :root[data-theme="signal"] .hero-specimen { width:min(100%,560px); }
 }
 @media (max-width:640px) {
-  :root[data-theme="signal"] body[data-room="home"] .site-header {
-    min-height:104px;
-    padding:10px 18px 9px;
-    display:grid;
-    grid-template-columns:auto 1fr auto;
-    grid-template-rows:44px 32px;
-    column-gap:14px;
-    align-items:center;
-    background:rgba(7,16,20,.94);
-    -webkit-backdrop-filter:blur(14px);
-    backdrop-filter:blur(14px);
-  }
-  :root[data-theme="signal"] body[data-room="home"] .brand {
-    grid-column:1;
-    grid-row:1;
-    gap:10px;
-    min-width:0;
-  }
-  :root[data-theme="signal"] body[data-room="home"] .brand-mark {
-    width:30px;
-    height:35px;
-  }
-  :root[data-theme="signal"] body[data-room="home"] .brand b {
-    font-size:14px;
-    letter-spacing:.14em;
-    white-space:nowrap;
-  }
-  :root[data-theme="signal"] body[data-room="home"] .brand small { display:none; }
-  :root[data-theme="signal"] body[data-room="home"] .soundscape {
-    grid-column:3;
-    grid-row:1;
-    justify-self:end;
-  }
-  :root[data-theme="signal"] body[data-room="home"] .soundscape-menu>summary {
-    padding:7px 0;
-    white-space:nowrap;
-    font-size:10px;
-    letter-spacing:.06em;
-  }
-  :root[data-theme="signal"] body[data-room="home"] .site-header nav {
-    grid-column:1 / -1;
-    grid-row:2;
-    width:100%;
-    min-width:0;
-    display:flex;
-    gap:22px;
-    overflow-x:auto;
-    scrollbar-width:none;
-  }
-  :root[data-theme="signal"] body[data-room="home"] .site-header nav::-webkit-scrollbar { display:none; }
-  :root[data-theme="signal"] body[data-room="home"] .site-header .nav-button {
-    flex:0 0 auto;
-    margin-left:0;
-    padding:5px 0 6px;
-    font-size:10px;
-    letter-spacing:.06em;
-    white-space:nowrap;
-  }
   :root[data-theme="signal"] .hero { padding:42px 20px 76px; gap:52px; }
   :root[data-theme="signal"] .hero-eyebrow { max-width:100%; grid-template-columns:auto minmax(18px,1fr) 26px; gap:9px; }
   :root[data-theme="signal"] .signal-title { font-size:clamp(58px,18.5vw,86px); line-height:.82; }
