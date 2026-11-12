@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'pigdex-theme';
+const BASE_STORAGE_KEY = 'pigdex-base-theme';
 const THEMES = Object.freeze({ paper:'#f3efe5', night:'#10263d', signal:'#05080b' });
 const SECRET_TAPS = 4;
 const TAP_WINDOW = 1500;
@@ -13,12 +14,26 @@ function saveTheme(theme) {
   catch { /* The theme still works when storage is unavailable. */ }
 }
 
+function readSavedBase() {
+  try {
+    const theme = localStorage.getItem(BASE_STORAGE_KEY);
+    return theme === 'night' ? 'night' : 'paper';
+  } catch { return 'paper'; }
+}
+
+function saveBase(theme) {
+  if (theme !== 'paper' && theme !== 'night') return;
+  try { localStorage.setItem(BASE_STORAGE_KEY, theme); }
+  catch { /* Returning from signal still falls back safely. */ }
+}
+
 function playHandoff(onComplete) {
   const overlay = document.querySelector('#signalHandoff');
   if (!overlay || matchMedia('(prefers-reduced-motion: reduce)').matches) return onComplete();
   const status = overlay.querySelector('#signalStatus');
   overlay.classList.remove('is-leaving');
   overlay.classList.add('is-active');
+  overlay.setAttribute('aria-hidden', 'false');
   document.body.classList.add('signal-switching');
   status.textContent = '正在校准馆藏频段…';
   setTimeout(() => { status.textContent = '捕获未知节点 // 正在核验…'; }, 520);
@@ -27,13 +42,15 @@ function playHandoff(onComplete) {
   setTimeout(() => overlay.classList.add('is-leaving'), 1460);
   setTimeout(() => {
     overlay.classList.remove('is-active', 'is-leaving');
+    overlay.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('signal-switching');
   }, 1810);
 }
 
 export function initTheme(toggle, secretTrigger) {
-  let lastBase = 'paper';
+  let lastBase = readSavedBase();
   let cardTimer = 0;
+  let isSwitching = false;
 
   function shiftSignalCard() {
     if (toggle.classList.contains('is-card-shifting')) return;
@@ -50,7 +67,10 @@ export function initTheme(toggle, secretTrigger) {
 
   function apply(theme, persist = true) {
     const next = theme in THEMES ? theme : 'paper';
-    if (next !== 'signal') lastBase = next;
+    if (next !== 'signal') {
+      lastBase = next;
+      saveBase(next);
+    }
     document.documentElement.dataset.theme = next;
     document.querySelector('meta[name="theme-color"]').content = THEMES[next];
     toggle.setAttribute('aria-pressed', String(next === 'night'));
@@ -71,6 +91,7 @@ export function initTheme(toggle, secretTrigger) {
   if (!secretTrigger) return;
   let taps = 0, timer;
   secretTrigger.addEventListener('click', () => {
+    if (isSwitching) return;
     taps += 1;
     secretTrigger.classList.toggle('is-listening', taps > 1);
     clearTimeout(timer);
@@ -78,7 +99,9 @@ export function initTheme(toggle, secretTrigger) {
     if (taps < SECRET_TAPS) return;
     clearTimeout(timer); taps = 0; secretTrigger.classList.remove('is-listening');
     const entering = document.documentElement.dataset.theme !== 'signal';
+    isSwitching = true;
     document.dispatchEvent(new CustomEvent('signalhandoff', { detail:{ entering } }));
     playHandoff(() => apply(entering ? 'signal' : lastBase));
+    setTimeout(() => { isSwitching = false; }, 1810);
   });
 }
