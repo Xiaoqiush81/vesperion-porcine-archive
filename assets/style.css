@@ -1727,6 +1727,353 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] s
 
 
 /* Channel 081 / chronicle surface */
+
+/* Channel 081 / chronicle ornament system */
+:root[data-theme="signal"] .chronicle-masthead {
+  isolation:isolate;
+}
+:root[data-theme="signal"] .chronicle-masthead-copy {
+  max-width:640px;
+}
+:root[data-theme="signal"] .chronicle-masthead-copy::before {
+  content:"ARCHIVE / LIVE";
+  width:max-content;
+  margin:0 0 18px;
+  padding:5px 8px 4px;
+  display:block;
+  color:#061114;
+  background:#63f7e9;
+  box-shadow:5px 4px 0 rgba(243,106,255,.72);
+  font:700 7px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.15em;
+  transform:rotate(-1.4deg);
+}
+:root[data-theme="signal"] .inner-index .chronicle-masthead-copy::before {
+  content:"PRIVATE / INNER NODE";
+  color:#120815;
+  background:#f36aff;
+  box-shadow:5px 4px 0 rgba(99,247,233,.62);
+}
+:root[data-theme="signal"] .chronicle-folio {
+  width:min(34vw,310px);
+  height:min(19vw,172px);
+  right:clamp(28px,6vw,86px);
+  top:46%;
+  display:grid;
+  place-items:center;
+  overflow:visible;
+  opacity:1;
+  color:rgba(240,255,251,.08);
+  font:900 clamp(96px,15vw,215px)/.72 Arial Black,Impact,sans-serif;
+  letter-spacing:-.11em;
+  -webkit-text-stroke:1px rgba(99,247,233,.18);
+  text-shadow:
+    9px 0 0 rgba(243,106,255,.11),
+    -7px 0 0 rgba(99,247,233,.08);
+  transform:translateY(-53%) rotate(-4deg);
+}
+:root[data-theme="signal"] .chronicle-folio::before,
+:root[data-theme="signal"] .chronicle-folio::after {
+  content:attr(data-folio);
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+}
+:root[data-theme="signal"] .chronicle-folio::before {
+  color:transparent;
+  -webkit-text-stroke:1px rgba(99,247,233,.62);
+  clip-path:polygon(0 14%,100% 14%,100% 31%,0 31%,0 58%,100% 58%,100% 67%,0 67%);
+  transform:translate(8px,-3px);
+  opacity:.68;
+}
+:root[data-theme="signal"] .chronicle-folio::after {
+  color:rgba(243,106,255,.22);
+  clip-path:polygon(0 37%,100% 37%,100% 44%,0 44%,0 76%,100% 76%,100% 82%,0 82%);
+  transform:translate(-9px,4px);
+  mix-blend-mode:screen;
+}
+:root[data-theme="signal"] .chronicle-masthead-meta {
+  position:relative;
+  overflow:hidden;
+}
+:root[data-theme="signal"] .chronicle-masthead-meta::after {
+  content:"081 // VESPERION // ACTIVE";
+  position:absolute;
+  right:0;
+  bottom:-1px;
+  color:rgba(99,247,233,.42);
+  font:7px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.13em;
+}
+:root[data-theme="signal"] .chronicle-portals {
+  isolation:isolate;
+}
+:root[data-theme="signal"] .chronicle-portal {
+  min-height:250px;
+}
+:root[data-theme="signal"] .chronicle-portal::before {
+  content:"";
+  position:absolute;
+  top:18px;
+  right:18px;
+  width:34px;
+  height:34px;
+  opacity:.52;
+  background:
+    linear-gradient(#63f7e9,#63f7e9) 0 0/13px 1px no-repeat,
+    linear-gradient(#63f7e9,#63f7e9) 0 0/1px 13px no-repeat,
+    linear-gradient(#f36aff,#f36aff) 100% 100%/10px 1px no-repeat,
+    linear-gradient(#f36aff,#f36aff) 100% 100%/1px 10px no-repeat;
+  transform:rotate(3deg);
+}
+:root[data-theme="signal"] .chronicle-portals span,
+:root[data-theme="signal"] .chronicle-volume span,
+:root[data-theme="signal"] .scholia-unit-heading small,
+:root[data-theme="signal"] .scholia-question::before {
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+:root[data-theme="signal"] .chronicle-portals span {
+  width:max-content;
+  padding:4px 6px 3px;
+  color:#071014;
+  background:#63f7e9;
+  box-shadow:3px 2px 0 rgba(243,106,255,.62);
+  font-size:7px;
+  transform:rotate(-1deg);
+}
+:root[data-theme="signal"] .chronicle-portal:nth-child(even) span {
+  color:#140917;
+  background:#f36aff;
+  box-shadow:3px 2px 0 rgba(99,247,233,.5);
+  transform:rotate(1deg);
+}
+:root[data-theme="signal"] .chronicle-portal h3 {
+  margin-top:44px;
+  width:max-content;
+  max-width:100%;
+  position:relative;
+}
+:root[data-theme="signal"] .chronicle-portal h3::after {
+  content:"//";
+  margin-left:10px;
+  color:#f36aff;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.48em;
+  vertical-align:middle;
+}
+:root[data-theme="signal"] .chronicle-volumes {
+  position:relative;
+  overflow:hidden;
+}
+:root[data-theme="signal"] .chronicle-volumes::before {
+  content:"INDEX / ACCESS CHANNEL";
+  position:absolute;
+  right:12px;
+  top:7px;
+  z-index:2;
+  color:rgba(243,106,255,.44);
+  font:6px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.16em;
+  pointer-events:none;
+}
+:root[data-theme="signal"] .chronicle-volume {
+  position:relative;
+}
+:root[data-theme="signal"] .chronicle-volume[aria-pressed="true"]::before {
+  content:"ACTIVE";
+  position:absolute;
+  top:8px;
+  right:8px;
+  color:#071014;
+  background:#63f7e9;
+  padding:2px 4px;
+  font:700 5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.12em;
+  transform:rotate(2deg);
+}
+:root[data-theme="signal"] .timeline article,
+:root[data-theme="signal"] .inner-timeline article {
+  position:relative;
+  padding-left:10px;
+}
+:root[data-theme="signal"] .timeline article::before,
+:root[data-theme="signal"] .inner-timeline article::before {
+  content:"";
+  position:absolute;
+  left:0;
+  top:23px;
+  bottom:23px;
+  width:2px;
+  background:linear-gradient(#63f7e9 0 42%,transparent 42% 58%,#f36aff 58% 78%,transparent 78%);
+  opacity:.64;
+}
+:root[data-theme="signal"] .timeline time {
+  color:#72fff0;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.05em;
+}
+:root[data-theme="signal"] .chronicle-entry-details summary {
+  position:relative;
+}
+:root[data-theme="signal"] .chronicle-entry-details summary::after {
+  content:"OPEN // FILE";
+  position:absolute;
+  right:0;
+  top:1px;
+  color:rgba(243,106,255,.5);
+  font:6px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.14em;
+}
+:root[data-theme="signal"] .chronicle-entry-details[open] summary::after {
+  content:"FILE // OPEN";
+  color:rgba(99,247,233,.55);
+}
+:root[data-theme="signal"] .scholia-entry>span {
+  height:1px;
+  background:
+    linear-gradient(90deg,#63f7e9 0 30%,transparent 30% 41%,#f36aff 41% 54%,transparent 54% 68%,#63f7e9 68%);
+  opacity:.72;
+}
+:root[data-theme="signal"] .scholia-seal {
+  position:relative;
+  color:#effffb;
+  border:1px solid rgba(99,247,233,.28);
+  background:rgba(9,20,25,.58);
+  box-shadow:6px 5px 0 rgba(243,106,255,.14);
+  transform:rotate(-1deg);
+}
+:root[data-theme="signal"] .scholia-seal::before {
+  content:"//";
+  margin-right:7px;
+  color:#f36aff;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+:root[data-theme="signal"] .scholia-shell {
+  background:
+    radial-gradient(circle at 12% 9%,rgba(99,247,233,.07),transparent 24%),
+    radial-gradient(circle at 91% 23%,rgba(243,106,255,.055),transparent 22%),
+    var(--paper);
+}
+:root[data-theme="signal"] .scholia-heading {
+  position:relative;
+}
+:root[data-theme="signal"] .scholia-heading::after {
+  content:"NINE / SUBJECT CHANNELS";
+  position:absolute;
+  right:0;
+  top:-13px;
+  color:rgba(243,106,255,.5);
+  font:6px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.14em;
+}
+:root[data-theme="signal"] .scholia-unit-summary {
+  position:relative;
+}
+:root[data-theme="signal"] .scholia-unit-summary::after {
+  content:"";
+  width:38px;
+  height:1px;
+  position:absolute;
+  right:16px;
+  bottom:10px;
+  background:linear-gradient(90deg,#63f7e9 0 48%,transparent 48% 62%,#f36aff 62%);
+  opacity:.55;
+}
+:root[data-theme="signal"] .scholia-question {
+  overflow:hidden;
+}
+:root[data-theme="signal"] .scholia-question::after {
+  content:"";
+  position:absolute;
+  left:-8%;
+  right:-8%;
+  bottom:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#63f7e9 28% 48%,transparent 48% 59%,#f36aff 59% 68%,transparent);
+  opacity:.48;
+  transform:skewX(-18deg);
+}
+@media (hover:hover) and (pointer:fine) {
+  :root[data-theme="signal"] .chronicle-portal:hover::before {
+    opacity:.9;
+    transform:rotate(-2deg) scale(1.04);
+  }
+  :root[data-theme="signal"] .chronicle-portal:hover h3 {
+    text-shadow:2px 0 rgba(99,247,233,.28),-2px 0 rgba(243,106,255,.22);
+  }
+  :root[data-theme="signal"] .chronicle-entry-details summary:hover::after {
+    color:#f36aff;
+  }
+}
+@media (max-width:760px) {
+  :root[data-theme="signal"] .chronicle-masthead-copy::before {
+    margin-bottom:14px;
+    padding:4px 6px 3px;
+    font-size:6px;
+    box-shadow:4px 3px 0 rgba(243,106,255,.6);
+  }
+  :root[data-theme="signal"] .chronicle-folio {
+    width:170px;
+    height:108px;
+    right:18px;
+    top:52%;
+    font-size:118px;
+    opacity:.9;
+  }
+  :root[data-theme="signal"] .chronicle-folio::before {
+    transform:translate(5px,-2px);
+  }
+  :root[data-theme="signal"] .chronicle-folio::after {
+    transform:translate(-6px,3px);
+  }
+  :root[data-theme="signal"] .chronicle-masthead-meta::after,
+  :root[data-theme="signal"] .chronicle-volumes::before,
+  :root[data-theme="signal"] .chronicle-entry-details summary::after,
+  :root[data-theme="signal"] .scholia-heading::after {
+    display:none;
+  }
+  :root[data-theme="signal"] .chronicle-portal {
+    min-height:220px;
+  }
+  :root[data-theme="signal"] .chronicle-portals span {
+    font-size:6px;
+  }
+  :root[data-theme="signal"] .chronicle-portal h3 {
+    margin-top:35px;
+  }
+  :root[data-theme="signal"] .timeline article,
+  :root[data-theme="signal"] .inner-timeline article {
+    padding-left:8px;
+  }
+  :root[data-theme="signal"] .scholia-unit-summary::after {
+    width:26px;
+    right:10px;
+  }
+}
+@media (max-width:430px) {
+  :root[data-theme="signal"] .chronicle-folio {
+    width:138px;
+    height:92px;
+    right:12px;
+    top:54%;
+    font-size:96px;
+    -webkit-text-stroke-width:.7px;
+  }
+  :root[data-theme="signal"] .chronicle-portal::before {
+    width:28px;
+    height:28px;
+    top:14px;
+    right:14px;
+  }
+  :root[data-theme="signal"] .chronicle-portals span {
+    max-width:70%;
+    white-space:normal;
+  }
+}
+
+
 :root[data-theme="signal"] .chronicle-room {
   background:
     radial-gradient(circle at 16% 8%,rgba(99,247,233,.09),transparent 27%),
