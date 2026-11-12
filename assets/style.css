@@ -1596,7 +1596,7 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] s
 
 /* Channel 081 */
 .signal-only { display:none; }
-.signal-trigger { width:18px; height:18px; margin-left:8px; padding:0; display:inline-grid; place-items:center; vertical-align:-3px; color:currentColor; background:transparent; border:0; border-radius:50%; font:10px/1 var(--serif); opacity:.58; cursor:default; }
+.signal-trigger { width:18px; height:18px; margin-left:8px; padding:0; position:relative; z-index:2; display:inline-grid; place-items:center; vertical-align:-3px; color:currentColor; background:transparent; border:0; border-radius:50%; font:10px/1 var(--serif); opacity:.58; cursor:pointer; user-select:none; -webkit-user-select:none; pointer-events:auto; touch-action:manipulation; }
 .signal-trigger:focus-visible { outline:1px solid currentColor; outline-offset:2px; }
 .signal-trigger.is-listening { animation:signal-mark-listen .26s steps(2) 2; }
 
@@ -1639,7 +1639,7 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] s
 :root[data-theme="signal"] .brand-mark .brand-night { opacity:0; }
 :root[data-theme="signal"] .hero { min-height:calc(100svh - 88px); grid-template-columns:minmax(0,1.05fr) minmax(360px,.78fr); gap:clamp(48px,7vw,110px); position:relative; }
 :root[data-theme="signal"] .hero-copy { position:relative; z-index:1; }
-:root[data-theme="signal"] .hero-copy .eyebrow { color:#5af5e7; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11px; }
+:root[data-theme="signal"] .hero-copy .eyebrow { position:relative; z-index:2; color:#5af5e7; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11px; }
 :root[data-theme="signal"] .signal-trigger { color:#bfff63; opacity:1; text-shadow:0 0 10px #bfff63; }
 :root[data-theme="signal"] .signal-title { max-width:780px; position:relative; color:#effffb; font-family:Arial Black,Impact,sans-serif; font-size:clamp(64px,8vw,124px); font-weight:900; line-height:.79; letter-spacing:-.075em; text-transform:uppercase; animation:signal-title-breathe 4.8s linear infinite; }
 :root[data-theme="signal"] .signal-title em { color:#f05cff; font:inherit; text-shadow:4px 2px 0 #5af5e7; }
