@@ -1,5 +1,6 @@
 import { escapeHtml as escape, specimenArt, specimenArtwork } from './specimen-art.js?v=20261023-details-1';
 import { isFavorite, toggleFavorite } from './favorites.js?v=20261021-1';
+import { markdownInline, markdownToHtml } from './markdown.js?v=20261112-markdown-1';
 
 const RARITY_RANK = Object.freeze({ '宇宙唯一': 6, '神话': 5, '史诗': 4, '限定': 3, '稀有': 2, '普通': 1 });
 
@@ -9,7 +10,7 @@ const card = (specimen, favorite) => `
     <span class="card-top"><span>${escape(specimen.number)}</span><span class="rarity">${escape(specimen.rarity)}</span></span>
     ${specimenArt(specimen)}
     <span class="card-name" data-label="${escape(specimen.name)}">${escape(specimen.name)}</span><span class="latin">${escape(specimen.latin)}</span>
-    <span class="desc">${escape(specimen.description)}</span>
+    <span class="desc markdown-inline">${markdownInline(specimen.description)}</span>
     <span class="tag-row">${specimen.tags.map(tag => `<span class="tag">${escape(tag)}</span>`).join('')}</span>
   </button>`;
 
@@ -35,7 +36,7 @@ export function createArchive(specimens) {
 
   function detail(item) {
     const favorite = isFavorite('specimens', item.id);
-    return `<div class="detail-layout"><figure class="detail-art"><img src="${specimenArtwork(item)}" alt="${escape(item.name)}卡面" width="640" height="960" decoding="async"></figure><div class="detail-copy"><section class="detail-hero"><span class="detail-number"><span class="base-only">ARCHIVE</span><span class="signal-only">SIGNAL FILE</span> ${escape(item.id)} · ${escape(item.rarity)}</span><h2 data-label="${escape(item.name)}">${escape(item.name)}</h2><span class="latin">${escape(item.latin)}</span><div class="detail-actions"><button class="favorite-toggle" type="button" data-favorite-type="specimens" data-favorite-id="${escape(item.id)}" aria-pressed="${favorite}">${favorite ? '♥ 已收藏此形态' : '♡ 收藏此形态'}</button></div></section><section class="detail-body"><p>${escape(item.description)}</p><div class="facts"><div class="fact"><small>首次观测</small><b>${escape(item.firstObserved)}</b></div><div class="fact"><small>主要栖息地</small><b>${escape(item.habitat)}</b></div><div class="fact"><small>当前状态</small><b>${escape(item.status)}</b></div><div class="fact"><small>档案分类</small><b>${escape(item.category)}</b></div></div><div class="abilities"><h3>KNOWN ABILITIES · 已知能力</h3><ul>${item.abilities.map(ability => `<li>${escape(ability)}</li>`).join('')}</ul></div><div class="tag-row">${item.tags.map(tag => `<span class="tag">${escape(tag)}</span>`).join('')}</div><nav class="detail-switch signal-only" aria-label="切换信号档案"><button type="button" data-detail-step="-1">← PREV SIGNAL</button><span>NODE ${escape(item.number)}</span><button type="button" data-detail-step="1">NEXT SIGNAL →</button></nav></section></div></div>`;
+    return `<div class="detail-layout"><figure class="detail-art"><img src="${specimenArtwork(item)}" alt="${escape(item.name)}卡面" width="640" height="960" decoding="async"></figure><div class="detail-copy"><section class="detail-hero"><span class="detail-number"><span class="base-only">ARCHIVE</span><span class="signal-only">SIGNAL FILE</span> ${escape(item.id)} · ${escape(item.rarity)}</span><h2 data-label="${escape(item.name)}">${escape(item.name)}</h2><span class="latin">${escape(item.latin)}</span><div class="detail-actions"><button class="favorite-toggle" type="button" data-favorite-type="specimens" data-favorite-id="${escape(item.id)}" aria-pressed="${favorite}">${favorite ? '♥ 已收藏此形态' : '♡ 收藏此形态'}</button></div></section><section class="detail-body"><div class="markdown-content">${markdownToHtml(item.description)}</div><div class="facts"><div class="fact"><small>首次观测</small><b>${escape(item.firstObserved)}</b></div><div class="fact"><small>主要栖息地</small><b>${escape(item.habitat)}</b></div><div class="fact"><small>当前状态</small><b>${escape(item.status)}</b></div><div class="fact"><small>档案分类</small><b>${escape(item.category)}</b></div></div><div class="abilities"><h3>KNOWN ABILITIES · 已知能力</h3><ul>${item.abilities.map(ability => `<li class="markdown-inline">${markdownInline(ability)}</li>`).join('')}</ul></div><div class="tag-row">${item.tags.map(tag => `<span class="tag">${escape(tag)}</span>`).join('')}</div><nav class="detail-switch signal-only" aria-label="切换信号档案"><button type="button" data-detail-step="-1">← PREV SIGNAL</button><span>NODE ${escape(item.number)}</span><button type="button" data-detail-step="1">NEXT SIGNAL →</button></nav></section></div></div>`;
   }
 
   function open(id) {
