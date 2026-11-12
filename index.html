@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261112-signal-7">
+  <link rel="stylesheet" href="assets/style.css?v=20261112-signal-9">
 </head>
 <body data-room="home">
   <div class="noise" aria-hidden="true"></div>
@@ -70,7 +70,25 @@
   <main id="top">
     <section class="hero room-view room-home">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="base-only">THE PORCINE COLLECTION · № 081</span><span class="signal-only">PIGDEX NODE // CHANNEL 081</span><button class="signal-trigger" id="signalTrigger" type="button" aria-label="馆藏校准标记"><span aria-hidden="true">✦</span></button></p>
+        <p class="eyebrow hero-eyebrow">
+          <span class="base-only">THE PORCINE COLLECTION · № 081</span>
+          <span class="signal-only">PIGDEX NODE // CHANNEL 081</span>
+          <span class="hero-eyebrow-rule" aria-hidden="true"></span>
+          <button class="signal-trigger" id="signalTrigger" type="button" aria-label="馆藏状态标记">
+            <svg class="signal-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <g class="signal-mark-base">
+                <circle cx="12" cy="12" r="7.25"></circle>
+                <path d="M12 7.5 14.6 12 12 16.5 9.4 12Z"></path>
+                <path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2"></path>
+              </g>
+              <g class="signal-mark-breach">
+                <path d="M7.7 6.7A7.25 7.25 0 0 1 16.3 6.7M17.9 9.1A7.25 7.25 0 0 1 16.9 16.5M13.9 18.7A7.25 7.25 0 0 1 7.1 16.8M5.4 14.2A7.25 7.25 0 0 1 6.2 9"></path>
+                <path class="signal-mark-cut" d="M13.9 4.8 11.5 9.5l2.1 1.7-3 3.2 1 4.8"></path>
+                <path class="signal-mark-accent" d="m6.1 17.5 3-2.2M16.8 8.5l2.2-1.6"></path>
+              </g>
+            </svg>
+          </button>
+        </p>
         <h1 class="base-only">猪咪，作为一种<br><em>不断发生的物种</em></h1>
         <h1 class="signal-only signal-title" data-text="PIGDEX NIGHT ACCESS">PIGDEX<br><em>NIGHT ACCESS</em></h1>
         <p class="lede base-only">一部持续生长的私人自然史：记录 Specimen No.081 在维斯珀里昂宅邸、知识兔子洞与互联网深处留下的五十九种形态。</p>
