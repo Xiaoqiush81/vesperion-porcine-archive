@@ -1,4 +1,4 @@
-import { initTheme } from './theme.js?v=20261112-signal-7';
+import { initTheme } from './theme.js?v=20261112-signal-8';
 import { createSoundscape } from './audio.js?v=20261108-signal-6';
 import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-browser-icons-1';
 
