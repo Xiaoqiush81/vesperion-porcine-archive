@@ -1,3 +1,4 @@
+import { markdownElement, renderMarkdown } from './markdown.js?v=20261112-markdown-1';
 const DATA_URL = './data/scholia.json?v=20261101-poetry-9';
 const STORAGE_KEY = 'vesperion-scholia-answers-v1';
 
@@ -28,7 +29,7 @@ function renderQuestion(question, material, subject, answers) {
     element('small', '', `${subject.label} · ${material.title}`),
     element('h3', '', question.title)
   );
-  const prompt = element('p', 'scholia-prompt', question.prompt);
+  const prompt = markdownElement('div', 'scholia-prompt markdown-content', question.prompt);
   const label = element('label', 'scholia-response');
   label.append(element('span', '', '我的作答'));
   const textarea = element('textarea');
@@ -47,9 +48,9 @@ function renderQuestion(question, material, subject, answers) {
   const ownText = element('p', 'scholia-own-answer', textarea.value || '尚未作答。');
   own.append(ownText);
   const reference = element('section');
-  reference.append(element('h4', '', '参考答案'), element('p', '', question.answer));
+  reference.append(element('h4', '', '参考答案'), markdownElement('div', 'markdown-content', question.answer));
   const points = element('ul', 'scholia-points');
-  points.append(...question.points.map(point => element('li', '', point)));
+  points.append(...question.points.map(point => markdownElement('li', 'markdown-inline', point, true)));
   reference.append(element('h4', '', '得分要点'), points);
   comparison.append(own, reference);
   details.append(summary, comparison);
@@ -70,7 +71,7 @@ function renderMaterial(material) {
   const article = element('article', 'scholia-material');
   article.append(element('small', '', '本卷原文'), element('h3', '', material.title));
   const verse = element('blockquote');
-  verse.append(...material.verse.map(line => element('span', '', line)));
+  verse.append(...material.verse.map(line => markdownElement('span', '', line, true)));
   article.append(verse);
   return article;
 }
