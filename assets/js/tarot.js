@@ -2,6 +2,7 @@ import { TAROT_CARDS, TAROT_GROUPS, TAROT_SPREADS, getReadingMeaning, getSpread 
 import { createReadingSession } from './tarot-engine.js?v=20261019-modular-1';
 import { addReadingRecord, loadReadingHistory } from './tarot-storage.js?v=20261019-modular-1';
 import { isFavorite, toggleFavorite } from './favorites.js?v=20261021-1';
+import { markdownInline, markdownToHtml } from './markdown.js?v=20261112-markdown-1';
 
 const CARD_BACK_URL = 'assets/tarot/card-back.webp?v=2651';
 const CARD_ART_VERSION = 'modular-20261019';
@@ -67,7 +68,7 @@ function readingCardMarkup(item, position, index, extra = false) {
       </span>
     </button>
     <span class="draw-hint">点击翻牌</span>
-    <p class="draw-meaning"><b>${escapeHtml(item.card.name)} · ${escapeHtml(item.card.title)} <em>${orientation}</em></b>${escapeHtml(getReadingMeaning(item.card, item.reversed))}</p>
+    <p class="draw-meaning"><b>${escapeHtml(item.card.name)} · ${escapeHtml(item.card.title)} <em>${orientation}</em></b>${markdownInline(getReadingMeaning(item.card, item.reversed))}</p>
   </article>`;
 }
 
@@ -115,7 +116,7 @@ export function createTarotCabinet(root = document) {
     const card = TAROT_CARDS.find(item => item.id === id);
     if (!card?.artwork) return;
     const favorite = isFavorite('tarot', card.id);
-    elements.dialogContent.innerHTML = `<div class="tarot-detail"><figure class="tarot-detail-art"><img src="${thumbnailUrl(card.artwork)}" alt="${escapeHtml(card.name)}牌面" width="768" height="1152" decoding="async"></figure><div><p class="eyebrow">${escapeHtml(card.number)} · ${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</p><h2>${escapeHtml(card.name)}</h2><p class="tarot-english">${escapeHtml(card.title)}</p><p>${escapeHtml(card.meaning)}</p><button class="favorite-toggle" type="button" data-favorite-type="tarot" data-favorite-id="${escapeHtml(card.id)}" aria-pressed="${favorite}">${favorite ? '♥ 已收藏此牌' : '♡ 收藏此牌'}</button></div></div>`;
+    elements.dialogContent.innerHTML = `<div class="tarot-detail"><figure class="tarot-detail-art"><img src="${thumbnailUrl(card.artwork)}" alt="${escapeHtml(card.name)}牌面" width="768" height="1152" decoding="async"></figure><div><p class="eyebrow">${escapeHtml(card.number)} · ${card.group === 'major' ? 'MAJOR ARCANA' : card.group.toUpperCase()}</p><h2>${escapeHtml(card.name)}</h2><p class="tarot-english">${escapeHtml(card.title)}</p><div class="markdown-content">${markdownToHtml(card.meaning)}</div><button class="favorite-toggle" type="button" data-favorite-type="tarot" data-favorite-id="${escapeHtml(card.id)}" aria-pressed="${favorite}">${favorite ? '♥ 已收藏此牌' : '♡ 收藏此牌'}</button></div></div>`;
     elements.dialog.showModal();
     const preview = elements.dialogContent.querySelector('.tarot-detail-art img');
     const highResolution = new Image();
