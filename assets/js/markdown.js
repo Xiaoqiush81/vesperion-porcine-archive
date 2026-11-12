@@ -1,39 +1,89 @@
+/*
+ * Small, safe Markdown subset for archive content.
+ * Scope is intentional: headings, emphasis, links/images, quotes, lists/tasks,
+ * fenced code, tables and horizontal rules. Raw HTML is always escaped.
+ */
 const ESCAPE_RE = /[&<>"']/g;
 const ESCAPES = Object.freeze({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' });
+const TOKEN_RE = /\u0000MD(\d+)\u0000/g;
 
 export function escapeHtml(value = '') {
   return String(value).replace(ESCAPE_RE, character => ESCAPES[character]);
 }
 
-function safeHref(raw = '') {
-  const href = String(raw).trim();
-  if (/^(?:https?:|mailto:|#|\/)/i.test(href)) return escapeHtml(href);
-  return '#';
+function escapeAttribute(value = '') {
+  return escapeHtml(value);
 }
 
-export function markdownInline(value = '') {
-  let text = escapeHtml(value);
-  const code = [];
-  text = text.replace(/\x60([^\x60]+)\x60/g, (_, content) => {
-    code.push('<code>' + content + '</code>');
-    return '\u0000' + (code.length - 1) + '\u0000';
-  });
-  text = text
-    .replace(/&lt;(https?:\/\/[^&]+)&gt;/g, (_, href) =>
-      '<a href="' + safeHref(href) + '" target="_blank" rel="noopener noreferrer">' + href + '</a>')
-    .replace(/!\[([^\]]*)\]\(([^\s)]+)(?:\s+"([^"]*)")?\)/g, (_, alt, href, title) =>
-      '<img src="' + safeHref(href) + '" alt="' + alt + '"' + (title ? ' title="' + title + '"' : '') + ' loading="lazy">')
-    .replace(/\[([^\]]+)\]\(([^\s)]+)(?:\s+"([^"]*)")?\)/g, (_, label, href, title) =>
-      '<a href="' + safeHref(href) + '"' + (title ? ' title="' + title + '"' : '') + ' target="_blank" rel="noopener noreferrer">' + label + '</a>')
+function safeHref(raw = '') {
+  const href = String(raw).trim();
+  if (!href) return '#';
+
+  if (/^(?:https?:|mailto:)/i.test(href) || href.startsWith('#') || href.startsWith('/') ||
+      href.startsWith('./') || href.startsWith('../')) {
+    return escapeAttribute(href);
+  }
+
+  if (/^[a-z][a-z0-9+.-]*:/i.test(href)) return '#';
+  return escapeAttribute(href);
+}
+
+function applyEmphasis(text) {
+  return text
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/__([^_]+)__/g, '<strong>$1</strong>')
     .replace(/~~([^~]+)~~/g, '<del>$1</del>')
     .replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em>$2</em>')
     .replace(/(^|[^_])_([^_\n]+)_/g, '$1<em>$2</em>');
-  return text.replace(/\u0000(\d+)\u0000/g, (_, index) => code[Number(index)] || '');
 }
 
-function isFence(line) { return /^\s*\x60\x60\x60/.test(line); }
+export function markdownInline(value = '') {
+  const tokens = [];
+  const stash = html => {
+    tokens.push(html);
+    return '\u0000MD' + (tokens.length - 1) + '\u0000';
+  };
+
+  let text = String(value ?? '');
+
+  text = text.replace(/\x60([^\x60]+)\x60/g, (_, content) =>
+    stash('<code>' + escapeHtml(content) + '</code>'));
+
+  text = text.replace(/!\[([^\]]*)\]\(([^\s)]+)(?:\s+"([^"]*)")?\)/g, (_, alt, href, title) =>
+    stash(
+      '<img src="' + safeHref(href) + '" alt="' + escapeAttribute(alt) + '"' +
+      (title ? ' title="' + escapeAttribute(title) + '"' : '') + ' loading="lazy">'
+    ));
+
+  text = text.replace(/\[([^\]]+)\]\(([^\s)]+)(?:\s+"([^"]*)")?\)/g, (_, label, href, title) =>
+    stash(
+      '<a href="' + safeHref(href) + '"' +
+      (title ? ' title="' + escapeAttribute(title) + '"' : '') +
+      ' target="_blank" rel="noopener noreferrer">' + applyEmphasis(escapeHtml(label)) + '</a>'
+    ));
+
+  text = text.replace(/<(https?:\/\/[^\s>]+)>/g, (_, href) =>
+    stash('<a href="' + safeHref(href) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(href) + '</a>'));
+
+  text = applyEmphasis(escapeHtml(text));
+  return text.replace(TOKEN_RE, (_, index) => tokens[Number(index)] || '');
+}
+
+function isFence(line) {
+  return /^\s*\x60\x60\x60/.test(line);
+}
+
+function isHorizontalRule(line) {
+  return /^\s*(?:---+|___+|\*\*\*+)\s*$/.test(line);
+}
+
+function isListLine(line) {
+  return /^\s*([-+*]|\d+\.)\s+/.test(line);
+}
+
+function splitTableRow(row) {
+  return row.trim().replace(/^\||\|$/g, '').split('|').map(cell => cell.trim());
+}
 
 export function markdownToHtml(value = '') {
   const lines = String(value ?? '').replace(/\r\n?/g, '\n').split('\n');
@@ -50,7 +100,10 @@ export function markdownToHtml(value = '') {
       i += 1;
       while (i < lines.length && !isFence(lines[i])) body.push(lines[i++]);
       if (i < lines.length) i += 1;
-      output.push('<pre><code' + (language ? ' class="language-' + escapeHtml(language) + '"' : '') + '>' + escapeHtml(body.join('\n')) + '</code></pre>');
+      output.push(
+        '<pre><code' + (language ? ' class="language-' + escapeAttribute(language) + '"' : '') + '>' +
+        escapeHtml(body.join('\n')) + '</code></pre>'
+      );
       continue;
     }
 
@@ -62,7 +115,7 @@ export function markdownToHtml(value = '') {
       continue;
     }
 
-    if (/^\s*(?:---+|___+|\*\*\*+)\s*$/.test(line)) {
+    if (isHorizontalRule(line)) {
       output.push('<hr>');
       i += 1;
       continue;
@@ -77,20 +130,27 @@ export function markdownToHtml(value = '') {
 
     const tableDivider = lines[i + 1]?.match(/^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*$/);
     if (line.includes('|') && tableDivider) {
-      const splitRow = row => row.trim().replace(/^\||\|$/g, '').split('|').map(cell => cell.trim());
-      const headers = splitRow(line);
-      const aligns = splitRow(lines[i + 1]).map(cell => {
+      const headers = splitTableRow(line);
+      const aligns = splitTableRow(lines[i + 1]).map(cell => {
         const left = cell.startsWith(':');
         const right = cell.endsWith(':');
         return left && right ? 'center' : right ? 'right' : left ? 'left' : '';
       });
       i += 2;
+
       const rows = [];
-      while (i < lines.length && lines[i].includes('|') && lines[i].trim()) rows.push(splitRow(lines[i++]));
+      while (i < lines.length && lines[i].includes('|') && lines[i].trim()) rows.push(splitTableRow(lines[i++]));
+
       const head = '<thead><tr>' + headers.map((cell, index) =>
-        '<th' + (aligns[index] ? ' style="text-align:' + aligns[index] + '"' : '') + '>' + markdownInline(cell) + '</th>').join('') + '</tr></thead>';
-      const body = '<tbody>' + rows.map(row => '<tr>' + headers.map((_, index) =>
-        '<td' + (aligns[index] ? ' style="text-align:' + aligns[index] + '"' : '') + '>' + markdownInline(row[index] || '') + '</td>').join('') + '</tr>').join('') + '</tbody>';
+        '<th' + (aligns[index] ? ' style="text-align:' + aligns[index] + '"' : '') + '>' +
+        markdownInline(cell) + '</th>').join('') + '</tr></thead>';
+
+      const body = '<tbody>' + rows.map(row =>
+        '<tr>' + headers.map((_, index) =>
+          '<td' + (aligns[index] ? ' style="text-align:' + aligns[index] + '"' : '') + '>' +
+          markdownInline(row[index] || '') + '</td>').join('') + '</tr>'
+      ).join('') + '</tbody>';
+
       output.push('<div class="markdown-table-wrap"><table>' + head + body + '</table></div>');
       continue;
     }
@@ -100,15 +160,20 @@ export function markdownToHtml(value = '') {
       const ordered = /\d+\./.test(listMatch[1]);
       const tag = ordered ? 'ol' : 'ul';
       const items = [];
+
       while (i < lines.length) {
         const match = lines[i].match(/^\s*([-+*]|\d+\.)\s+(.+)$/);
         if (!match || (/\d+\./.test(match[1]) !== ordered)) break;
+
         const task = match[2].match(/^\[([ xX])\]\s+(.+)$/);
         items.push(task
-          ? '<li class="markdown-task"><input type="checkbox" disabled' + (task[1].toLowerCase() === 'x' ? ' checked' : '') + '> <span>' + markdownInline(task[2]) + '</span></li>'
+          ? '<li class="markdown-task"><input type="checkbox" disabled' +
+            (task[1].toLowerCase() === 'x' ? ' checked' : '') +
+            '> <span>' + markdownInline(task[2]) + '</span></li>'
           : '<li>' + markdownInline(match[2]) + '</li>');
         i += 1;
       }
+
       output.push('<' + tag + '>' + items.join('') + '</' + tag + '>');
       continue;
     }
@@ -117,10 +182,11 @@ export function markdownToHtml(value = '') {
     i += 1;
     while (i < lines.length && lines[i].trim() && !isFence(lines[i]) &&
       !/^(#{1,6})\s+/.test(lines[i]) && !/^\s*>\s?/.test(lines[i]) &&
-      !/^\s*([-+*]|\d+\.)\s+/.test(lines[i]) && !/^\s*(?:---+|___+|\*\*\*+)\s*$/.test(lines[i])) {
+      !isListLine(lines[i]) && !isHorizontalRule(lines[i])) {
       paragraph.push(lines[i].trim());
       i += 1;
     }
+
     output.push('<p>' + paragraph.map(markdownInline).join('<br>') + '</p>');
   }
 
