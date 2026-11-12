@@ -1,5 +1,5 @@
-import { initScholia } from './scholia.js?v=20261112-markdown-1';
-import { markdownElement, renderMarkdown } from './markdown.js?v=20261112-markdown-1';
+import { initScholia } from './scholia.js?v=20261112-markdown-2';
+import { markdownElement, renderMarkdown } from './markdown.js?v=20261112-markdown-2';
 
 const DATA_URL = './data/chronicles.json?v=20261101-poetry-9';
 let scholiaController;
