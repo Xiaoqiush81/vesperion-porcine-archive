@@ -380,13 +380,19 @@ export function createSoundscape(root = document) {
       signalLock(.69);
       voice(SIGNAL_NOTES.spark, .72, .46, .035, { type:'sine', attack:.018, release:.38, cutoff:2600 });
     } else if (name === 'signalExit') {
-      duckMusic(.18, .82);
+      duckMusic(.15, 1.65);
       signalLock(0);
-      uiPing(SIGNAL_NOTES.high, SIGNAL_NOTES.root, .12, .24, .06, 'triangle');
-      signalBurst(.18, .055, 1700, .065, .52);
-      signalBurst(.27, .045, 880, .052, -.45);
-      electricCrackle(.31, .13, .05);
-      uiPing(168, 74, .34, .2, .055, 'sawtooth');
+      uiPing(SIGNAL_NOTES.high, SIGNAL_NOTES.root, .1, .28, .058, 'triangle');
+      signalBurst(.18, .055, 1700, .062, .52);
+      signalBurst(.29, .045, 880, .05, -.45);
+      electricCrackle(.36, .16, .048);
+      uiPing(190, 86, .43, .34, .052, 'sawtooth');
+      signalBurst(.72, .07, 620, .042, .18);
+      voice(SIGNAL_NOTES.root, .76, .72, .032, { type:'triangle', attack:.018, release:.62, cutoff:900 });
+      voice(SIGNAL_NOTES.low, 1.02, .7, .026, { type:'sine', attack:.02, release:.6, cutoff:620 });
+      signalBurst(1.22, .065, 420, .032, -.2);
+      uiPing(118, 62, 1.28, .34, .038, 'sawtooth');
+      voice(55, 1.34, .42, .02, { type:'sine', attack:.01, release:.34, cutoff:320 });
     } else if (name === 'signalSurface') {
       duckMusic(.24, .48);
       electricCrackle(0, .14, .085);
