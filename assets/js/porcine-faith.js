@@ -5,7 +5,7 @@ const MEMBER_KEY = 'pigdex-faith-member-v1';
 const ORACLE_KEY = 'pigdex-faith-oracle-v1';
 
 function linesHtml(lines) {
-  return lines.map(line => line ? `<span>${line}</span>` : '<i aria-hidden="true"></i>').join('');
+  return lines.map(line => line ? `<span class="markdown-inline">${markdownInline(line)}</span>` : '<i aria-hidden="true"></i>').join('');
 }
 
 function readMember() {
@@ -94,7 +94,7 @@ function oracleHistoryHtml(entries, state) {
     <li>
       <time datetime="${row.date}">${row.date}</time>
       <span>${row.entry.tag}</span>
-      <p>${row.entry.text}</p>
+      <p class="markdown-inline">${markdownInline(row.entry.text)}</p>
     </li>
   `).join('');
 }
@@ -106,12 +106,12 @@ function membershipHtml(data, member, oracleData) {
         <div class="faith-membership-copy">
           <small>PORCINE MEMBERSHIP · 教籍</small>
           <h3 id="faithMembershipTitle">${data.membership.visitorTitle}</h3>
-          <p>${data.membership.visitorText}</p>
+          <div class="markdown-content">${markdownToHtml(data.membership.visitorText)}</div>
         </div>
         <button id="faithJoinStart" class="faith-membership-action" type="button">${data.membership.joinLabel}</button>
         <div class="faith-ceremony" id="faithCeremony" hidden>
           <small>RITE OF ADMISSION · 入教仪式</small>
-          <div class="faith-oath">${data.membership.oath.map(line => `<p>${line}</p>`).join('')}</div>
+          <div class="faith-oath">${data.membership.oath.map(line => `<p class="markdown-inline">${markdownInline(line)}</p>`).join('')}</div>
           <button id="faithJoinConfirm" type="button">我猪愿入教</button>
         </div>
       </section>
@@ -128,7 +128,7 @@ function membershipHtml(data, member, oracleData) {
       <div class="faith-membership-copy">
         <small>${data.membership.memberMark}</small>
         <h3 id="faithMembershipTitle">${data.membership.memberTitle}</h3>
-        <p>${markdownToHtml(data.membership.memberText)}</p>
+        <div class="markdown-content">${markdownToHtml(data.membership.memberText)}</div>
         <p class="faith-member-date">入教于 ${new Intl.DateTimeFormat('zh-CN', { dateStyle:'long' }).format(new Date(member.joinedAt))}</p>
       </div>
       <button id="faithLeave" class="faith-membership-leave" type="button">${data.membership.leaveLabel}</button>
