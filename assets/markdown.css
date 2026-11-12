@@ -1,0 +1,56 @@
+/* Shared rich text */
+.markdown-content { min-width:0; }
+.markdown-content > :first-child { margin-top:0; }
+.markdown-content > :last-child { margin-bottom:0; }
+.markdown-content p { margin:.72em 0; }
+.markdown-content h1,.markdown-content h2,.markdown-content h3,.markdown-content h4,.markdown-content h5,.markdown-content h6 {
+  margin:1.15em 0 .48em;
+  color:var(--ink);
+  font-family:var(--cn-serif);
+  line-height:1.35;
+}
+.markdown-content h1 { font-size:1.55em; }
+.markdown-content h2 { font-size:1.38em; }
+.markdown-content h3 { font-size:1.2em; }
+.markdown-content ul,.markdown-content ol { margin:.7em 0; padding-left:1.45em; }
+.markdown-content li + li { margin-top:.32em; }
+.markdown-content blockquote {
+  margin:.9em 0;
+  padding:.35em 0 .35em 1em;
+  border-left:2px solid var(--gold);
+  color:var(--muted);
+}
+.markdown-content pre {
+  max-width:100%;
+  margin:.9em 0;
+  padding:12px 14px;
+  overflow:auto;
+  border:1px solid var(--line);
+  background:color-mix(in srgb,var(--paper-deep) 72%,transparent);
+  font:12px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+.markdown-content code,.markdown-inline code {
+  padding:.08em .35em;
+  border-radius:3px;
+  background:color-mix(in srgb,var(--paper-deep) 76%,transparent);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.9em;
+}
+.markdown-content pre code { padding:0; background:none; }
+.markdown-content a,.markdown-inline a { color:inherit; text-decoration-thickness:1px; text-underline-offset:.18em; }
+.markdown-content hr { margin:1.25em 0; border:0; border-top:1px solid var(--line); }
+.markdown-content img { display:block; max-width:100%; height:auto; margin:.9em auto; border-radius:8px; }
+.markdown-content strong,.markdown-inline strong { font-weight:700; }
+.markdown-content del,.markdown-inline del { opacity:.7; }
+.chronicle-entry-body > .markdown-content + .markdown-content { margin-top:.9em; }
+:root[data-theme="signal"] .markdown-content blockquote { border-left-color:#5af5e7; }
+:root[data-theme="signal"] .markdown-content pre,
+:root[data-theme="signal"] .markdown-content code,
+:root[data-theme="signal"] .markdown-inline code { background:rgba(90,245,231,.06); }
+
+.markdown-table-wrap { max-width:100%; margin:.9em 0; overflow-x:auto; }
+.markdown-content table { width:100%; border-collapse:collapse; font-size:.94em; }
+.markdown-content th,.markdown-content td { padding:.55em .7em; border:1px solid var(--line); text-align:left; vertical-align:top; }
+.markdown-content th { background:color-mix(in srgb,var(--paper-deep) 72%,transparent); font-weight:700; }
+.markdown-content .markdown-task { list-style:none; margin-left:-1.35em; display:flex; gap:.55em; align-items:flex-start; }
+.markdown-content .markdown-task input { margin-top:.28em; accent-color:var(--gold); }
