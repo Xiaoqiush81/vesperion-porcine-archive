@@ -2,10 +2,10 @@ import { initTheme } from './theme.js?v=20261112-signal-8';
 import { createSoundscape } from './audio.js?v=20261112-signal-audio-3';
 import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-browser-icons-1';
 
-const TAROT_MODULE_URL = './tarot.js?v=20261112-markdown-2';
-const ARCHIVE_MODULE_URL = './archive.js?v=20261112-markdown-2';
-const CHRONICLES_MODULE_URL = './chronicles.js?v=20261112-markdown-2';
-const FAITH_MODULE_URL = './porcine-faith.js?v=20261112-markdown-2';
+const TAROT_MODULE_URL = './tarot.js?v=20261112-architecture-1';
+const ARCHIVE_MODULE_URL = './archive.js?v=20261112-architecture-1';
+const CHRONICLES_MODULE_URL = './chronicles.js?v=20261112-architecture-1';
+const FAITH_MODULE_URL = './porcine-faith.js?v=20261112-architecture-1';
 const PORCINE_TRANSLATOR_MODULE_URL = './porcine-translator.js?v=20261107-translator-5';
 
 const ROOM_TITLES = {
@@ -119,7 +119,7 @@ async function initTarot() {
 async function initIdentity() {
   if (identityReady) return;
   if (!identityLoading) identityLoading = Promise.all([
-    import('./identity.js?v=20261112-markdown-2'),
+    import('./identity.js?v=20261112-architecture-1'),
     import(ARCHIVE_MODULE_URL).then(module => module.loadSpecimens())
   ])
     .then(([{ createIdentityOffice }, specimens]) => {
