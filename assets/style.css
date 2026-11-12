@@ -1695,7 +1695,7 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"] s
 @keyframes signal-lock { 0%{width:3%} 34%{width:39%} 36%{width:24%} 68%{width:75%} 70%{width:63%} 100%{width:100%} }
 @keyframes signal-cut { 0%,100%{opacity:0;transform:none} 15%,31%{opacity:.4;transform:translateX(9%)} 32%,48%{opacity:.12;transform:translateX(-13%)} }
 @keyframes signal-leave { 0%{opacity:1;filter:brightness(1)} 48%{opacity:1;filter:brightness(3)} 100%{opacity:0;visibility:hidden;filter:brightness(1)} }
-@keyframes signal-world-fault { 50% { filter:hue-rotate(35deg) contrast(1.22); transform:translateX(2px); } }
+@keyframes signal-world-fault { 50% { transform:translateX(2px); opacity:.985; } }
 
 @media (max-width:940px) {
   :root[data-theme="signal"] .hero { grid-template-columns:1fr; }
