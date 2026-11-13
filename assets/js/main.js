@@ -4,7 +4,7 @@ import { SITE_ASSETS, resolveAsset } from './site-assets.js?v=20261025-browser-i
 
 const TAROT_MODULE_URL = './tarot.js?v=20261112-architecture-1';
 const ARCHIVE_MODULE_URL = './archive.js?v=20261112-architecture-1';
-const CHRONICLES_MODULE_URL = './chronicles.js?v=20261114-poetry-10';
+const CHRONICLES_MODULE_URL = './chronicles.js?v=20261114-poetry-11';
 const FAITH_MODULE_URL = './porcine-faith.js?v=20261112-architecture-1';
 const PORCINE_TRANSLATOR_MODULE_URL = './porcine-translator.js?v=20261107-translator-5';
 
