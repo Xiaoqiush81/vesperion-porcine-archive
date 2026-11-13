@@ -1190,6 +1190,13 @@ dialog::backdrop { background:var(--backdrop); }
 .faith-text[open] .faith-text-ornament { opacity:1; background:color-mix(in srgb,var(--amber) 10%,transparent); }
 .faith-text summary::after { content:""; position:absolute; left:clamp(34px,6vw,64px); right:clamp(34px,6vw,64px); bottom:10px; height:1px; background:linear-gradient(90deg,transparent,var(--line),transparent); }
 .faith-text[open] summary::after { opacity:0; }
+
+.faith-verse,
+.faith-verse p,
+.faith-verse span,
+.faith-verse div,
+.faith-verse strong,
+.faith-verse em { font-family:var(--cn-serif); }
 .faith-verse { padding:38px clamp(28px,8vw,88px) 44px; position:relative; display:grid; justify-items:center; color:var(--navy); font-family:var(--cn-serif); font-size:15px; line-height:2.1; text-align:center; }
 .faith-verse::before { content:""; width:48px; height:1px; margin-bottom:22px; background:var(--amber); opacity:.65; }
 .faith-verse span { display:block; }
