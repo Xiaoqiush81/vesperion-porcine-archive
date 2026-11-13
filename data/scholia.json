@@ -86,7 +86,7 @@
           "id": "crossing-english-translation",
           "subject": "english",
           "title": "语境翻译",
-          "prompt": "Translate “欲知深浅无人问，先遣一蹄试水清” into natural English. Then explain why your tense and connective choices fit the scene.",
+          "prompt": "将“欲知深浅无人问，先遣一蹄试水清”译成自然、连贯的英语；随后说明你为什么这样选择时态和连接方式，以及这些选择如何贴合诗句所写的情境。",
           "answer": "One possible version: “With no one there to tell how deep the stream was, the little pig first dipped one hoof into the clear water to test it.” The past tense keeps the translation within a narrated event. “With no one there…” expresses the circumstance rather than a separate action, while “to test it” states the purpose of dipping the hoof.",
           "points": [
             "准确表达无人可问与试水目的",
@@ -198,7 +198,7 @@
           "id": "lamp-english-retelling",
           "subject": "english",
           "title": "叙事改写",
-          "prompt": "Retell the poem in 80–100 English words. Use at least one non-finite construction and one sentence beginning with “Only after…”. Keep the change from frustration to insight clear.",
+          "prompt": "用 80–100 个英语单词复述全诗。至少使用一处非谓语结构，并写出一个以 “Only after…” 开头的句子；要清楚表现小猪由受挫到豁然开朗的变化。",
           "answer": "One possible version: Rain kept tapping on the window while the little pig struggled with a difficult problem under a single lamp. Surrounded by pages of failed attempts, she stopped several times to listen to the dripping water. Instead of hiding the mistakes, however, she examined them one by one, trying to find where her reasoning had changed direction. Only after tracing an error back to its source did she understand the whole problem. By dawn, the curled page was still warm, and what had looked like failure had become a small field of stars.",
           "points": [
             "篇幅符合要求且叙事完整",
@@ -424,8 +424,8 @@
         {
           "id": "ballad-english-monologue",
           "subject": "english",
-          "title": "Character Monologue",
-          "prompt": "Rewrite the poem as a 90–120-word first-person monologue by the little pig. Include one concessive clause and one comparative structure, but do not translate the lines mechanically. Preserve the comic gap between ambition and action.",
+          "title": "第一人称独白",
+          "prompt": "以小猪第一人称写一段 90–120 个英语单词的独白。至少使用一个让步从句和一个比较结构；不要逐句直译原诗，并保留“志向很大、行动很猪”的喜剧反差。",
           "answer": "One possible version: I always wake up early, although leaving the blanket is a completely different matter. The world may call me a hundred times, but breakfast is far more persuasive than duty. The moment I smell food, my ears are already awake, and my feet soon follow. After eating, I usually announce a magnificent plan for the day. Then I open a book, read half a page, and discover that thinking is more exhausting than expected. Some people question my discipline. I prefer to say that diligence is scheduled for tomorrow. As for today, being the most adorable pig in the room is already a serious achievement.",
           "points": [
             "使用第一人称独白而非逐句直译",
