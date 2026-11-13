@@ -254,6 +254,39 @@ function bindGate() {
   });
 }
 
+let depthBound = false;
+
+function bindSignalDepth() {
+  if (depthBound) return;
+  depthBound = true;
+  const finePointer = matchMedia('(hover:hover) and (pointer:fine)');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const reset = surface => {
+    surface.style.removeProperty('--signal-folio-x');
+    surface.style.removeProperty('--signal-folio-y');
+    surface.style.removeProperty('--signal-copy-x');
+    surface.style.removeProperty('--signal-copy-y');
+  };
+
+  document.querySelectorAll('.chronicle-masthead').forEach(surface => {
+    surface.addEventListener('pointermove', event => {
+      if (document.documentElement.dataset.theme !== 'signal' || !finePointer.matches || reducedMotion.matches) return;
+      const rect = surface.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - .5;
+      const y = (event.clientY - rect.top) / rect.height - .5;
+      surface.style.setProperty('--signal-folio-x', `${(x * 12).toFixed(2)}px`);
+      surface.style.setProperty('--signal-folio-y', `${(y * 8).toFixed(2)}px`);
+      surface.style.setProperty('--signal-copy-x', `${(-x * 2.4).toFixed(2)}px`);
+      surface.style.setProperty('--signal-copy-y', `${(-y * 1.8).toFixed(2)}px`);
+    }, { passive:true });
+    surface.addEventListener('pointerleave', () => reset(surface), { passive:true });
+  });
+
+  document.addEventListener('themechange', event => {
+    if (event.detail?.theme !== 'signal') document.querySelectorAll('.chronicle-masthead').forEach(reset);
+  });
+}
+
 let ready = false;
 let gateBound = false;
 
@@ -316,6 +349,7 @@ export async function initChronicles() {
     document.querySelector('#chronicleSectionBack').addEventListener('click', showIndex);
     showIndex();
     renderInnerShelves(data.innerShelves);
+    bindSignalDepth();
     ready = true;
   } catch (error) {
     console.error(error);
