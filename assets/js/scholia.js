@@ -1,5 +1,5 @@
 import { markdownElement, renderMarkdown } from './markdown.js?v=20261112-architecture-1';
-const DATA_URL = './data/scholia.json?v=20261114-cn-prompts-1';
+const DATA_URL = './data/scholia.json?v=20261114-english-mix-1';
 const STORAGE_KEY = 'vesperion-scholia-answers-v1';
 
 function element(tag, className = '', text = '') {
