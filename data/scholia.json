@@ -550,6 +550,127 @@
           ]
         }
       ]
+    },
+    {
+      "id": "evening-tide",
+      "title": "《晚潮》",
+      "verse": [
+        "潮退长堤露浅沙，",
+        "小猪提灯认旧洼。",
+        "舟横远浦灯如豆，",
+        "风过芦汀影自斜。",
+        "一线水痕收暮色，",
+        "半轮新月挂蒹葭。",
+        "回身忽见蹄印满，",
+        "原是来时一路花。"
+      ],
+      "questions": [
+        {
+          "id": "tide-english-cloze",
+          "subject": "english",
+          "title": "语法填空",
+          "prompt": "阅读下面的英语改写，在空白处填入 1 个适当的单词，或用括号内单词的正确形式填空：\n\nAs the tide slowly withdrew, the little pig walked along the wet shore with a lamp in hand. Boats lay far away, their lights looking like tiny beans in the dark. A line of water marks seemed to gather the last colour of evening, while the moon hung above the reeds. When the pig finally turned back, she noticed that the beach was covered with hoofprints, as if the road she had taken ______ (turn) into flowers.",
+          "answer": "had turned。主句动作 noticed 发生在过去，而“路变成花”在她回头注意到之前已经完成，故用过去完成时 had turned。",
+          "points": [
+            "判断主从句时间先后",
+            "正确使用过去完成时",
+            "说明 had turned 与 noticed 的时间关系"
+          ]
+        },
+        {
+          "id": "tide-english-vocab",
+          "subject": "english",
+          "title": "语境词义辨析",
+          "prompt": "根据《晚潮》的意境，选择最适合补全句子的词，并说明理由：\nThe distant boat lights were ______ in the dark, but they were enough to guide the pig’s eyes across the water.\nA. dazzling  B. faint  C. violent  D. rigid",
+          "answer": "B. faint。诗中“灯如豆”强调灯火细小、遥远、微弱，因此 faint 最贴合；dazzling 表示耀眼，violent 表示猛烈，rigid 表示僵硬，均不合语境。",
+          "points": [
+            "选出 faint",
+            "联系“灯如豆”的意象",
+            "能排除至少两个干扰项"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "morning-mist",
+      "title": "《晨雾》",
+      "verse": [
+        "晓雾低垂锁短桥，",
+        "小猪踏湿过溪腰。",
+        "树从近处先成影，",
+        "山到天边尚未描。",
+        "风起半坡开一线，",
+        "日来高处照千梢。",
+        "原来路并非无路，",
+        "只是晨光到得迟。"
+      ],
+      "questions": [
+        {
+          "id": "mist-english-rewrite",
+          "subject": "english",
+          "title": "句式改写",
+          "prompt": "不改变原意，用倒装结构改写下句：\nThe pig did not realize that the road had always been there until the mist began to lift.\n要求使用 “Not until…” 开头。",
+          "answer": "Not until the mist began to lift did the pig realize that the road had always been there.",
+          "points": [
+            "Not until 置于句首",
+            "主句使用部分倒装 did the pig realize",
+            "时态与原句保持一致"
+          ]
+        },
+        {
+          "id": "mist-english-reading",
+          "subject": "english",
+          "title": "语篇理解",
+          "prompt": "阅读下面的英语短文并回答问题：\n\nAt first, the little pig could see only the bridge beneath her feet. The trees nearby appeared before the mountains in the distance, and the world seemed to return layer by layer. When the wind opened a narrow path through the mist, sunlight followed from above. The pig then understood that the road had never disappeared; it had only been hidden for a while.\n\nWhy does the passage use “layer by layer” instead of simply saying “the view became clear”? 请用中文作答，并结合空间远近说明。",
+          "answer": "“layer by layer”强调景物不是同时显现，而是按距离由近及远逐步恢复：先看见脚下的桥和近处树木，再看见远山。相比“the view became clear”，这种表达更具体地表现了雾散过程，也与诗中“树从近处先成影，山到天边尚未描”的空间层次相呼应。",
+          "points": [
+            "指出由近及远的显现顺序",
+            "比较 layer by layer 与 became clear 的表达效果",
+            "联系原诗空间层次"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paper-lamp",
+      "title": "《纸灯》",
+      "verse": [
+        "纸灯一盏照书边，",
+        "小猪临窗坐夜阑。",
+        "墨到半行风忽动，",
+        "影从桌角上帘看。",
+        "题难未必今宵尽，",
+        "心乱何妨暂且安。",
+        "留得微光陪一页，",
+        "明朝续笔也不难。"
+      ],
+      "questions": [
+        {
+          "id": "lamp2-english-translation",
+          "subject": "english",
+          "title": "情境翻译",
+          "prompt": "将“题难未必今宵尽，心乱何妨暂且安”译成自然英语。要求体现“今晚不必全部做完”和“可以先让自己平静下来”两层意思，不必逐字直译。",
+          "answer": "One possible version: “The problem does not have to be finished tonight; if my mind is in a mess, I can let myself settle down for a while first.” 也可使用 calm down / take a moment / leave it for tomorrow 等自然表达，只要两层语义完整。",
+          "points": [
+            "表达不必今晚完成",
+            "表达先让自己平静",
+            "英语自然，不逐字硬译"
+          ]
+        },
+        {
+          "id": "lamp2-english-note",
+          "subject": "english",
+          "title": "短应用表达",
+          "prompt": "假设你是诗中的小猪，要给明早的自己留一张 40–60 词的英文便签。内容包括：①今晚做到哪里；②为什么暂停；③明早第一步准备做什么。要求至少使用一次 because / so / although 中的任意一个连接词。",
+          "answer": "Sample: “I stopped after working through the first half of the problem because I was getting too tired to think clearly. The key idea is still unfinished, but I marked the line where I got stuck. Tomorrow morning, I’ll reread that step first and try a different method before checking the answer.”",
+          "points": [
+            "包含进度、暂停原因、下一步三项信息",
+            "40–60 词左右",
+            "至少正确使用一个指定连接词",
+            "语气符合便签而非正式作文"
+          ]
+        }
+      ]
     }
   ]
 }
