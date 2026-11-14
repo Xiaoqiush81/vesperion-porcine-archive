@@ -1,14 +1,14 @@
 import { escapeHtml as escape } from './specimen-art.js?v=20261015-specimens-51';
 import { TAROT_CARDS } from './tarot-data.js?v=20261019-modular-1';
 import { loadReadingHistory } from './tarot-storage.js?v=20261019-modular-1';
-import { loadIdentityHistory } from './identity-storage.js?v=20261020-bank-1';
+import { loadIdentityHistory } from './identity-storage.js?v=20261114-records-2';
 import { SYMBOLIC_LINKS } from './record-links.js?v=20261023-new-forms-1';
 import { loadFavorites } from './favorites.js?v=20261021-1';
-import { initArchiveTransfer } from './archive-transfer.js?v=20261024-1';
+import { initArchiveTransfer } from './archive-transfer.js?v=20261114-records-2';
 
 const specimenArt = item => item.artwork || `assets/cards/${item.id.toLowerCase()}.webp`;
 const tarotArt = card => `assets/tarot/thumbs/${String(card.artwork).split('?')[0]}?v=fast-20261021`;
-const formatDate = value => new Intl.DateTimeFormat('zh-CN',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
+const formatDate = value => Number.isFinite(Date.parse(value)) ? new Intl.DateTimeFormat('zh-CN',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value)) : '日期未记录';
 
 function activityItems(identities, readings) {
   return [
@@ -29,14 +29,19 @@ function recurringCards(readings) {
 
 export function createRecordRoom(specimens) {
   initArchiveTransfer();
-  const identities = loadIdentityHistory(), readings = loadReadingHistory();
-  const activities = activityItems(identities, readings), recurring = recurringCards(readings);
-  const distinctCards = new Set(readings.flatMap(reading => reading.cards || []).map(card => card.title || card.name)).size;
-  document.querySelector('#recordSummary').innerHTML = [
-    [specimens.length,'馆藏猪种'],[identities.length,'近期鉴定'],[readings.length,'占卜记录'],[distinctCards,'曾来访牌']
-  ].map(([value,label]) => `<div><strong>${value}</strong><span>${label}</span></div>`).join('');
-  document.querySelector('#activityLedger').innerHTML = activities.length ? activities.map(item => `<article><time>${escape(formatDate(item.at))}</time><div><small>${item.type}</small><b>${escape(item.title)}</b><p>${escape(item.detail)}</p></div></article>`).join('') : '<p class="record-empty">档案纸还是空白的。完成一次鉴定或保存一场占卜后，记录会自动汇入这里。</p>';
-  document.querySelector('#recurringCards').innerHTML = recurring.length ? recurring.map(item => `<article><span>${item.count}</span><div><small>APPEARANCES</small><b>${escape(item.name || item.title)}</b><p>${item.reversed ? `${item.reversed} 次逆位` : '尚未逆位出现'}</p></div></article>`).join('') : '<p class="record-empty">还没有反复出现的牌。保存几场占卜后，档案员会开始统计。</p>';
+  function renderActivity() {
+    const identities = loadIdentityHistory(), readings = loadReadingHistory();
+    const activities = activityItems(identities, readings), recurring = recurringCards(readings);
+    const distinctCards = new Set(readings.flatMap(reading => reading.cards || []).map(card => card.title || card.name)).size;
+    document.querySelector('#recordSummary').innerHTML = [
+      [specimens.length,'馆藏猪种'],[identities.length,'近期鉴定'],[readings.length,'占卜记录'],[distinctCards,'曾来访牌']
+    ].map(([value,label]) => `<div><strong>${value}</strong><span>${label}</span></div>`).join('');
+    document.querySelector('#activityLedger').innerHTML = activities.length ? activities.map(item => `<article><time>${escape(formatDate(item.at))}</time><div><small>${item.type}</small><b>${escape(item.title)}</b><p>${escape(item.detail)}</p></div></article>`).join('') : '<p class="record-empty">档案纸还是空白的。完成一次鉴定或保存一场占卜后，记录会自动汇入这里。</p>';
+    document.querySelector('#recurringCards').innerHTML = recurring.length ? recurring.map(item => `<article><span>${item.count}</span><div><small>APPEARANCES</small><b>${escape(item.name || item.title)}</b><p>${item.reversed ? `${item.reversed} 次逆位` : '尚未逆位出现'}</p></div></article>`).join('') : '<p class="record-empty">还没有反复出现的牌。保存几场占卜后，档案员会开始统计。</p>';
+
+  }
+  renderActivity();
+  document.addEventListener('roomchange', event => { if (event.detail?.room === 'records') renderActivity(); });
 
   const pigById = new Map(specimens.map(item => [item.id,item]));
   const cardById = new Map(TAROT_CARDS.map(card => [card.id,card]));

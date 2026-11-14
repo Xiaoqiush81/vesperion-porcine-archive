@@ -119,7 +119,7 @@ async function initTarot() {
 async function initIdentity() {
   if (identityReady) return;
   if (!identityLoading) identityLoading = Promise.all([
-    import('./identity.js?v=20261112-architecture-1'),
+    import('./identity.js?v=20261114-records-2'),
     import(ARCHIVE_MODULE_URL).then(module => module.loadSpecimens())
   ])
     .then(([{ createIdentityOffice }, specimens]) => {
@@ -137,7 +137,7 @@ async function initIdentity() {
 async function initRecords() {
   if (recordsReady) return;
   if (!recordsLoading) recordsLoading = Promise.all([
-    import('./records.js?v=20261024-archive-transfer-1'),
+    import('./records.js?v=20261114-records-2'),
     import(ARCHIVE_MODULE_URL).then(module => module.loadSpecimens())
   ]).then(([{ createRecordRoom }, specimens]) => {
     createRecordRoom(specimens);

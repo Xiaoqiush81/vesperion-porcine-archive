@@ -1,79 +1,68 @@
-const FORMAT = 'vesperion-porcine-archive';
-const VERSION = 1;
-const MAX_FILE_SIZE = 1024 * 1024;
-const KEYS = Object.freeze({
-  favorites:'pigdex-favorites-v1', identityHistory:'vesperion-identity-history',
-  identityQuestions:'vesperion-identity-last-questions', tarotHistory:'vesperion-tarot-history',
-  scholiaAnswers:'vesperion-scholia-answers-v1', theme:'pigdex-theme', audio:'pigdex-audio-v1'
-});
+import { ARCHIVE_FORMAT, ARCHIVE_VERSION, ARCHIVE_KEYS as KEYS, MAX_ARCHIVE_BYTES, normalizeArchive } from './archive-format.js?v=20261114-records-2';
 
-const arrayOfStrings = (value, limit = 500) => Array.isArray(value)
-  ? [...new Set(value.slice(0, limit).filter(item => typeof item === 'string' && item.length <= 160))]
-  : [];
-const text = (value, limit) => String(value ?? '').slice(0, limit);
-const readJson = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); } catch { return fallback; } };
-const answerMap = value => value && typeof value === 'object' && !Array.isArray(value)
-  ? Object.fromEntries(Object.entries(value).slice(0, 100).map(([key, answer]) => [text(key, 100), text(answer, 3000)]).filter(([key]) => key))
-  : {};
-
-function reading(entry) {
-  if (!entry || typeof entry !== 'object' || !Array.isArray(entry.cards)) return null;
-  return {
-    createdAt:text(entry.createdAt, 40), question:text(entry.question, 80), spreadId:text(entry.spreadId || entry.spread, 80),
-    cards:entry.cards.slice(0, 14).map(card => ({ name:text(card?.name,80), title:text(card?.title,80), reversed:Boolean(card?.reversed), position:text(card?.position,80) })),
-    note:text(entry.note, 500)
-  };
+function readJson(storage, key, fallback) {
+  const raw = storage.getItem(key);
+  if (raw === null) return fallback;
+  try { return JSON.parse(raw); }
+  catch { throw new Error('当前设备有一项记录无法读取，已停止导出以免遗漏。'); }
 }
 
-function createArchive() {
-  const favorites = readJson(KEYS.favorites, {}), audio = readJson(KEYS.audio, {});
-  return {
-    format:FORMAT, version:VERSION, exportedAt:new Date().toISOString(),
+export function createArchive(storage = globalThis.localStorage) {
+  const read = (key, fallback) => readJson(storage, key, fallback);
+  const archive = {
+    format:ARCHIVE_FORMAT, version:ARCHIVE_VERSION, exportedAt:new Date().toISOString(),
     data:{
-      favorites:{ specimens:arrayOfStrings(favorites.specimens), tarot:arrayOfStrings(favorites.tarot) },
-      identity:{ history:readJson(KEYS.identityHistory, []), lastQuestions:arrayOfStrings(readJson(KEYS.identityQuestions, []), 100) },
-      tarot:{ history:readJson(KEYS.tarotHistory, []) },
-      scholia:{ answers:answerMap(readJson(KEYS.scholiaAnswers, {})) },
-      preferences:{ theme:localStorage.getItem(KEYS.theme) || 'paper', audio }
+      favorites:read(KEYS.favorites, { specimens:[], tarot:[] }),
+      identity:{ history:read(KEYS.identityHistory, []), lastQuestions:read(KEYS.identityQuestions, []), session:read(KEYS.identitySession, null) },
+      tarot:{ history:read(KEYS.tarotHistory, []) },
+      scholia:{ answers:read(KEYS.scholiaAnswers, {}) },
+      faith:{ member:read(KEYS.faithMember, null), oracle:read(KEYS.faithOracle, { used:[], history:[], today:null }) },
+      preferences:{ theme:storage.getItem(KEYS.theme) || 'paper', baseTheme:storage.getItem(KEYS.baseTheme) || 'paper', audio:read(KEYS.audio, {}) }
     }
   };
+  // Use the same schema in both directions; never create a file we cannot restore.
+  const { entries } = normalizeArchive(archive);
+  const clean = key => JSON.parse(entries.get(KEYS[key]) ?? 'null');
+  archive.data = {
+    favorites:clean('favorites'),
+    identity:{ history:clean('identityHistory'), lastQuestions:clean('identityQuestions'), session:clean('identitySession') },
+    tarot:{ history:clean('tarotHistory') }, scholia:{ answers:clean('scholiaAnswers') },
+    faith:{ member:clean('faithMember'), oracle:clean('faithOracle') },
+    preferences:{ theme:entries.get(KEYS.theme), baseTheme:entries.get(KEYS.baseTheme), audio:clean('audio') }
+  };
+  return archive;
 }
 
-function normalizeArchive(archive) {
-  if (!archive || archive.format !== FORMAT || archive.version !== VERSION || !archive.data) throw new Error('这不是可识别的宅邸档案。');
-  const { favorites = {}, identity = {}, tarot = {}, scholia = {}, preferences = {} } = archive.data;
-  const history = Array.isArray(identity.history) ? identity.history.slice(0, 8).filter(item => item && typeof item === 'object').map(item => ({
-    id:text(item.id,80), name:text(item.name,80), rarity:text(item.rarity,40), at:text(item.at,40)
-  })).filter(item => item.id && item.name) : [];
-  const readings = Array.isArray(tarot.history) ? tarot.history.slice(0, 20).map(reading).filter(Boolean) : [];
-  const theme = ['paper', 'night', 'signal'].includes(preferences.theme) ? preferences.theme : 'paper';
-  const sourceAudio = preferences.audio && typeof preferences.audio === 'object' ? preferences.audio : {};
-  const volume = (value, fallback) => Number.isFinite(Number(value)) ? Math.min(1, Math.max(0, Number(value))) : fallback;
-  return new Map([
-    [KEYS.favorites, JSON.stringify({ specimens:arrayOfStrings(favorites.specimens), tarot:arrayOfStrings(favorites.tarot) })],
-    [KEYS.identityHistory, JSON.stringify(history)],
-    [KEYS.identityQuestions, JSON.stringify(arrayOfStrings(identity.lastQuestions, 100))],
-    [KEYS.tarotHistory, JSON.stringify(readings)],
-    [KEYS.scholiaAnswers, JSON.stringify(answerMap(scholia.answers))],
-    [KEYS.theme, theme],
-    [KEYS.audio, JSON.stringify({ music:Boolean(sourceAudio.music), effects:Boolean(sourceAudio.effects), musicVolume:volume(sourceAudio.musicVolume,.65), effectsVolume:volume(sourceAudio.effectsVolume,.5) })]
-  ]);
-}
-
-function replaceStorage(entries) {
-  const previous = new Map([...entries.keys()].map(key => [key, localStorage.getItem(key)]));
-  try { entries.forEach((value, key) => localStorage.setItem(key, value)); }
-  catch (error) {
-    previous.forEach((value, key) => { try { value === null ? localStorage.removeItem(key) : localStorage.setItem(key, value); } catch {} });
-    throw error;
+export function replaceStorage(entries, storage = globalThis.localStorage) {
+  const previous = new Map([...entries.keys()].map(key => [key, storage.getItem(key)]));
+  const changed = [];
+  try {
+    for (const [key, value] of entries) {
+      if (value === previous.get(key)) continue;
+      value === null ? storage.removeItem(key) : storage.setItem(key, value);
+      changed.push(key);
+    }
+  } catch {
+    // Revert every successful write. Removing new values first also releases quota.
+    for (const key of changed) { try { storage.removeItem(key); } catch {} }
+    for (const key of changed) {
+      const value = previous.get(key);
+      try { value === null ? storage.removeItem(key) : storage.setItem(key, value); } catch {}
+    }
+    let restored = false;
+    try { restored = changed.every(key => storage.getItem(key) === previous.get(key)); } catch {}
+    throw new Error(restored
+      ? '浏览器未能写入档案，已恢复导入前的记录。'
+      : '浏览器拒绝写入，且部分原记录无法恢复。请保留原备份文件，不要继续导入。');
   }
 }
 
 function downloadArchive() {
-  const stamp = new Date().toISOString().slice(0, 10);
-  const blob = new Blob([JSON.stringify(createArchive(), null, 2)], { type:'application/json' });
+  const archive = createArchive();
+  const blob = new Blob([JSON.stringify(archive, null, 2)], { type:'application/json' });
+  if (blob.size > MAX_ARCHIVE_BYTES) throw new Error('当前档案超过 1MB，未生成无法恢复的文件。');
   const url = URL.createObjectURL(blob), link = document.createElement('a');
-  link.href = url; link.download = `pigdex-081-archive-${stamp}.json`;
+  link.href = url; link.download = `pigdex-081-archive-${archive.exportedAt.slice(0,10)}.json`;
   document.body.append(link); link.click(); link.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
@@ -83,18 +72,36 @@ export function initArchiveTransfer(root = document) {
   const input = root.querySelector('#archiveFile'), status = root.querySelector('#archiveTransferStatus');
   if (!exportButton || exportButton.dataset.ready === 'true') return;
   exportButton.dataset.ready = 'true';
-  exportButton.addEventListener('click', () => { try { downloadArchive(); status.textContent = '宅邸档案已交付浏览器下载。'; } catch { status.textContent = '导出失败：浏览器拒绝了文件下载。'; } });
-  importButton.addEventListener('click', () => input.click());
+  let busy = false;
+  const setBusy = value => { busy = value; exportButton.disabled = value; importButton.disabled = value; input.disabled = value; };
+  exportButton.addEventListener('click', () => {
+    if (busy) return;
+    try { downloadArchive(); status.textContent = '完整宅邸档案已交付浏览器下载。'; }
+    catch (error) { status.textContent = `导出失败：${error instanceof Error ? error.message : '浏览器拒绝了文件下载。'}`; }
+  });
+  importButton.addEventListener('click', () => { if (!busy) input.click(); });
   input.addEventListener('change', async () => {
     const file = input.files?.[0]; input.value = '';
-    if (!file) return;
+    if (!file || busy) return;
+    setBusy(true);
+    let committed = false;
     try {
-      if (file.size > MAX_FILE_SIZE) throw new Error('档案超过 1MB，已拒绝读取。');
-      const entries = normalizeArchive(JSON.parse(await file.text()));
-      if (!window.confirm('导入会替换当前设备上的收藏、鉴定、占卜、诸科作答与偏好记录。确认继续吗？')) return;
+      if (file.size > MAX_ARCHIVE_BYTES) throw new Error('档案超过 1MB，已拒绝读取。');
+      const source = await file.text();
+      let archive;
+      try { archive = JSON.parse(source.replace(/^\uFEFF/, '')); }
+      catch { throw new Error('文件不是有效的 JSON，未修改当前记录。'); }
+      const { entries, summary, version } = normalizeArchive(archive);
+      const compatibility = version === 1 ? '\n旧版未收录的项目会保留当前记录。' : '';
+      if (!window.confirm(`即将恢复：${summary.join('、')}。\n这些项目会替换当前设备上的对应记录，请先保留需要的备份。${compatibility}\n确认导入吗？`)) {
+        status.textContent = '已取消导入，当前记录未改动。';
+        return;
+      }
       replaceStorage(entries);
+      committed = true;
       status.textContent = '档案已恢复，正在重新装订馆舍…';
       window.setTimeout(() => location.reload(), 450);
     } catch (error) { status.textContent = `导入失败：${error instanceof Error ? error.message : '文件内容无效。'}`; }
+    finally { if (!committed) setBusy(false); }
   });
 }

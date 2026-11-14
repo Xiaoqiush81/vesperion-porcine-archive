@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261114-surface-1">
+  <link rel="stylesheet" href="assets/style.css?v=20261114-records-2">
   <link rel="stylesheet" href="assets/markdown.css?v=20261112-architecture-1">
   <link rel="stylesheet" href="assets/readability.css?v=20261112-readability-1">
 </head>
@@ -298,7 +298,7 @@
       </div>
       <div class="record-summary" id="recordSummary" aria-label="宅邸档案统计"></div>
       <section class="archive-transfer" aria-labelledby="archiveTransferTitle">
-        <div><p class="eyebrow">PORTABLE MANOR ARCHIVE</p><h3 id="archiveTransferTitle">携带宅邸档案</h3><p>将当前设备上的收藏、鉴定、占卜与界面偏好装订成一份本地文件，或从旧档案恢复。</p></div>
+        <div><p class="eyebrow">PORTABLE MANOR ARCHIVE</p><h3 id="archiveTransferTitle">携带宅邸档案</h3><p>将收藏、鉴定与答题进度、占卜、诸科作答、教籍与猪谕及界面偏好装订成本地文件。支持恢复旧版档案；旧档未收录的项目会保留。</p></div>
         <div class="archive-transfer-actions">
           <button id="exportArchive" type="button">导出档案</button>
           <button id="importArchive" type="button">导入档案</button>
@@ -331,15 +331,19 @@
           <p class="identity-seal" aria-hidden="true">081</p>
           <p class="eyebrow">TEMPORARY MORPHOLOGY CERTIFICATE</p>
           <h3>今天是哪一种猪？</h3>
-          <p>鉴定所会从题库随机签发六项不同维度的宅邸观察，再从现有馆藏中寻找最接近的形态。没有正确答案，只有已经暴露的猪迹。</p>
+          <p>鉴定所会从题库随机签发六项不同维度的宅邸观察，再从现有馆藏中寻找最接近的形态。没有正确答案，只有已经暴露的猪迹。选好后进入下一项，途中可以返回修改；刷新后仍可接着作答。</p>
           <button class="primary" id="startIdentity" type="button">开始接受鉴定</button>
         </section>
         <section class="identity-quiz" id="identityQuiz" hidden aria-live="polite">
           <div class="identity-progress"><span id="identityStep">OBSERVATION 01 / 06</span><i><b id="identityProgressBar"></b></i></div>
           <p class="eyebrow" id="identityKicker"></p>
-          <h3 id="identityQuestion"></h3>
+          <h3 id="identityQuestion" tabindex="-1"></h3>
           <div class="identity-options" id="identityOptions"></div>
-          <button class="identity-back" id="identityBack" type="button">← 返回上一项</button>
+          <div class="identity-quiz-actions">
+            <button class="identity-back" id="identityBack" type="button">← 返回上一项</button>
+            <button class="primary" id="identityNext" type="button" disabled>下一项 →</button>
+          </div>
+          <p class="identity-save-status" id="identitySaveStatus" role="status"></p>
         </section>
         <section class="identity-result" id="identityResult" hidden aria-live="polite"></section>
       </div>
@@ -539,7 +543,7 @@
     <div><small>PIGDEX 081 // 未知信号</small><b data-text="SIGNAL BREACH">SIGNAL BREACH</b><span id="signalStatus">正在校准馆藏频段…</span><em><i></i></em></div>
   </div>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261114-surface-1"></script>
+  <script type="module" src="assets/js/main.js?v=20261114-records-2"></script>
 </body>
 </html>
 
