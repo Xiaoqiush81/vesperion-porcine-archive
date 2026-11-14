@@ -219,7 +219,7 @@ function renderFaith(root, data, oracleData) {
       </header>
       <div class="faith-scriptures">
         ${data.texts.map((text, index) => `
-          <details class="faith-text" id="faith-text-${text.id}" ${index === 0 ? 'open' : ''}>
+          <details class="faith-text" id="faith-text-${text.id}">
             <summary>
               <span class="faith-text-mark">${text.mark}</span>
               <div class="faith-text-title"><small>${text.kicker}</small><strong>${text.title}</strong></div>
