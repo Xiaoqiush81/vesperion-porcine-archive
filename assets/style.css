@@ -1178,7 +1178,16 @@ dialog::backdrop { background:var(--backdrop); }
 .faith-doctrine-item summary>b,.faith-text summary>b { color:var(--amber); font-family:var(--cn-serif); font-size:17px; font-weight:400; transition:transform .2s ease; }
 .faith-doctrine-item[open] summary>b,.faith-text[open] summary>b { transform:rotate(45deg); }
 .faith-doctrine-item[open] summary { background:var(--surface-raised); border-bottom:1px solid var(--line); }
-.faith-doctrine-item>p { margin:0; padding:20px 24px 24px 78px; color:var(--text-secondary); font-family:var(--cn-serif); font-size:12px; line-height:2; }
+.faith-doctrine-item>p,
+.faith-doctrine-item>.markdown-content { margin:0; padding:20px 24px 24px 78px; color:var(--text-secondary); font-family:var(--cn-serif); font-size:12px; line-height:2; }
+.faith-doctrine-item>.markdown-content,
+.faith-doctrine-item>.markdown-content p,
+.faith-doctrine-item>.markdown-content span,
+.faith-doctrine-item>.markdown-content div,
+.faith-doctrine-item>.markdown-content strong,
+.faith-doctrine-item>.markdown-content em { font-family:var(--cn-serif); }
+.faith-doctrine-item>.markdown-content p { margin:0; color:inherit; font-size:inherit; line-height:inherit; }
+.faith-doctrine-item>.markdown-content p+p { margin-top:.85em; }
 
 .faith-scriptures { margin-top:14px; display:grid; gap:14px; }
 .faith-text { position:relative; overflow:hidden; background:var(--surface); border:1px solid var(--line); box-shadow:0 10px 26px var(--shadow-soft); }
