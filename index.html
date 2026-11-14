@@ -532,10 +532,15 @@
   <dialog id="scholiaGate" class="chronicle-gate scholia-gate">
     <button class="close scholia-gate-close" aria-label="关闭诸科笺注入口">×</button>
     <form id="scholiaGateForm" method="dialog">
-      <p class="eyebrow">SCHOLIA OMNIUM DISCIPLINARUM</p>
-      <h2>诸科合卷确认</h2>
-      <p>此处会把猪诗交给不同学科审问，并在当前设备保存你的作答。</p>
-      <button class="primary" type="submit">展开诸科笺注</button>
+      <p class="eyebrow">SCHOLIA // RESTRICTED ARCHIVE</p>
+      <h2>诸科密卷复核</h2>
+      <p>此卷未随公开馆藏开放。凭证仅用于当前页面解密，不会上传或保存。</p>
+      <label>
+        <span>调阅凭证</span>
+        <input id="scholiaPassphrase" type="password" autocomplete="off" autocapitalize="none" spellcheck="false">
+      </label>
+      <button class="primary" id="scholiaUnlock" type="submit">核验并展开</button>
+      <p class="gate-status" id="scholiaGateStatus" aria-live="polite"></p>
     </form>
   </dialog>
   <div class="signal-handoff" id="signalHandoff" aria-hidden="true">
@@ -543,7 +548,7 @@
     <div><small>PIGDEX 081 // 未知信号</small><b data-text="SIGNAL BREACH">SIGNAL BREACH</b><span id="signalStatus">正在校准馆藏频段…</span><em><i></i></em></div>
   </div>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261115-faith-2"></script>
+  <script type="module" src="assets/js/main.js?v=20261115-scholia-lock-1"></script>
 </body>
 </html>
 

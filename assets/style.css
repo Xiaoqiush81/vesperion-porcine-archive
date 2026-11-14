@@ -939,7 +939,11 @@ body[data-room="legal"] .room-legal { display: block !important; }
 .scholia-comparison p,.scholia-points { margin:0; color:var(--navy); font-family:var(--cn-serif); font-size:12px; line-height:1.9; white-space:pre-wrap; }
 .scholia-points { padding-left:18px; }
 .scholia-own-answer { color:var(--text-secondary) !important; }
+.scholia-gate label { margin-top:24px; display:grid; gap:8px; color:var(--text-secondary); font-family:var(--cn-serif); font-size:10px; }
+.scholia-gate input { width:100%; min-height:44px; padding:10px 12px; color:var(--navy); background:var(--surface); border:1px solid var(--line); border-radius:0; outline:0; -webkit-appearance:none; appearance:none; font:14px/1.4 var(--cn-serif); letter-spacing:.08em; }
+.scholia-gate input:focus { border-color:var(--amber); box-shadow:inset 3px 0 var(--amber); }
 .scholia-gate form>.primary { margin-top:22px; }
+.scholia-gate form>.primary:disabled { opacity:.48; cursor:default; }
 .gate-status { min-height:18px; margin:16px 0 0; color:var(--text-accent); font-family:var(--cn-serif); font-size:10px; }
 footer { min-height: 92px; padding: 28px clamp(24px, 7vw, 110px); display: flex; align-items: center; justify-content: space-between; color: var(--muted); background: var(--paper); border-top: 1px solid var(--line); font-family: var(--serif); font-size: 10px; letter-spacing: .12em; }
 

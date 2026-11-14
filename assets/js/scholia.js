@@ -1,6 +1,38 @@
 import { markdownElement, renderMarkdown } from './markdown.js?v=20261112-architecture-1';
-const DATA_URL = './data/scholia.json?v=20261114-poetry-11';
+const DATA_URL = './data/scholia.enc.json?v=20261115-scholia-lock-1';
 const STORAGE_KEY = 'vesperion-scholia-answers-v1';
+
+function base64Bytes(value) {
+  const raw = atob(value);
+  return Uint8Array.from(raw, char => char.charCodeAt(0));
+}
+
+async function decryptScholia(envelope, password) {
+  if (!globalThis.crypto?.subtle) throw new Error('Web Crypto is unavailable');
+  if (envelope?.format !== 'vesperion-scholia-encrypted' || envelope.version !== 1
+    || envelope.kdf?.name !== 'PBKDF2' || envelope.kdf.hash !== 'SHA-256'
+    || envelope.cipher?.name !== 'AES-GCM') throw new Error('Invalid encrypted scholia envelope');
+
+  const sourceKey = await crypto.subtle.importKey(
+    'raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']
+  );
+  const key = await crypto.subtle.deriveKey({
+    name:'PBKDF2',
+    salt:base64Bytes(envelope.kdf.salt),
+    iterations:envelope.kdf.iterations,
+    hash:'SHA-256'
+  }, sourceKey, { name:'AES-GCM', length:256 }, false, ['decrypt']);
+  const plaintext = await crypto.subtle.decrypt({
+    name:'AES-GCM',
+    iv:base64Bytes(envelope.cipher.iv),
+    tagLength:envelope.cipher.tagLength
+  }, key, base64Bytes(envelope.ciphertext));
+  const decoded = JSON.parse(new TextDecoder().decode(plaintext));
+  if (!Array.isArray(decoded?.subjects) || !Array.isArray(decoded?.materials)) {
+    throw new Error('Invalid scholia payload');
+  }
+  return decoded;
+}
 
 function element(tag, className = '', text = '') {
   const node = document.createElement(tag);
@@ -110,17 +142,27 @@ export async function initScholia() {
   const subjectsHost = document.querySelector('#scholiaSubjects');
   const list = document.querySelector('#scholiaList');
   const count = document.querySelector('#scholiaCount');
+  const passphrase = document.querySelector('#scholiaPassphrase');
+  const gateStatus = document.querySelector('#scholiaGateStatus');
+  const unlockButton = document.querySelector('#scholiaUnlock');
   const answers = loadAnswers();
+  let envelope;
   let data;
   let activeSubject = null;
   let taps = [];
   let origin = 'outer';
 
-  const load = async () => {
-    if (data) return data;
-    const response = await fetch(DATA_URL);
+  const readEnvelope = async () => {
+    if (envelope) return envelope;
+    const response = await fetch(DATA_URL, { cache:'force-cache' });
     if (!response.ok) throw new Error(`Scholia data request failed: ${response.status}`);
-    data = await response.json();
+    envelope = await response.json();
+    return envelope;
+  };
+
+  const unlock = async password => {
+    if (data) return data;
+    data = await decryptScholia(await readEnvelope(), password);
     return data;
   };
 
@@ -154,7 +196,7 @@ export async function initScholia() {
 
   const prepare = async () => {
     try {
-      await load();
+      if (!data) return;
       if (subjectsHost.childElementCount) return;
       subjectsHost.replaceChildren(...data.subjects.map(subject => {
         const button = element('button', 'scholia-subject');
@@ -198,9 +240,33 @@ export async function initScholia() {
   }));
   form.addEventListener('submit', async event => {
     event.preventDefault();
-    await prepare();
-    gate.close();
-    document.dispatchEvent(new CustomEvent('roomrequest', { detail:{ room:'scholia' } }));
+    if (data) {
+      gate.close();
+      document.dispatchEvent(new CustomEvent('roomrequest', { detail:{ room:'scholia' } }));
+      return;
+    }
+    const credential = passphrase.value;
+    if (!credential) {
+      gateStatus.textContent = '馆印没有收到凭证。';
+      passphrase.focus();
+      return;
+    }
+    unlockButton.disabled = true;
+    gateStatus.textContent = '正在核验密卷…';
+    try {
+      await unlock(credential);
+      passphrase.value = '';
+      gateStatus.textContent = '';
+      await prepare();
+      gate.close();
+      document.dispatchEvent(new CustomEvent('roomrequest', { detail:{ room:'scholia' } }));
+    } catch (error) {
+      console.warn('Scholia unlock rejected', error);
+      gateStatus.textContent = '馆印拒绝调阅。凭证无效或密卷损坏。';
+      passphrase.select();
+    } finally {
+      unlockButton.disabled = false;
+    }
   });
   gate.querySelector('.scholia-gate-close').addEventListener('click', () => gate.close());
   document.querySelector('#leaveScholia').addEventListener('click', () => {
@@ -212,7 +278,12 @@ export async function initScholia() {
     taps = [];
     if (event.detail.room === 'scholia') {
       showIndex();
-      prepare();
+      if (data) prepare();
+      else if (!gate.open) {
+        gateStatus.textContent = '';
+        gate.showModal();
+        requestAnimationFrame(() => passphrase.focus());
+      }
     }
   });
 
