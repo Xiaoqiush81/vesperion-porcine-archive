@@ -52,7 +52,39 @@ function playHandoff(onComplete, onDone) {
   }, 1810);
 }
 
+// Pointer-driven only: no idle animation loop, touch work, or retained frame on exit.
+function bindCredentialDepth(card) {
+  const pointer = matchMedia('(hover:hover) and (pointer:fine)');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let frame = 0, x = 0, y = 0;
+  const reset = () => {
+    cancelAnimationFrame(frame);
+    frame = 0;
+    card.style.removeProperty('--credential-rx');
+    card.style.removeProperty('--credential-ry');
+  };
+  card.addEventListener('pointermove', event => {
+    if (document.documentElement.dataset.theme !== 'signal' || !pointer.matches || motion.matches) return;
+    x = event.clientX; y = event.clientY;
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      frame = 0;
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--credential-rx', `${((.5 - (y - rect.top) / rect.height) * 4).toFixed(2)}deg`);
+      card.style.setProperty('--credential-ry', `${(((x - rect.left) / rect.width - .5) * 5).toFixed(2)}deg`);
+    });
+  }, { passive:true });
+  card.addEventListener('pointerleave', reset, { passive:true });
+  card.addEventListener('pointercancel', reset, { passive:true });
+  pointer.addEventListener('change', reset);
+  motion.addEventListener('change', reset);
+  document.addEventListener('themechange', reset);
+  document.addEventListener('roomchange', reset);
+  document.addEventListener('visibilitychange', reset);
+}
+
 export function initTheme(toggle, secretTrigger) {
+  bindCredentialDepth(toggle);
   let lastBase = readSavedBase();
   let cardTimer = 0;
   let isSwitching = false;
@@ -94,13 +126,15 @@ export function initTheme(toggle, secretTrigger) {
   });
 
   if (!secretTrigger) return;
-  let taps = 0, timer;
+  let taps = 0, tapStarted = 0, timer;
   secretTrigger.addEventListener('click', () => {
     if (isSwitching) return;
+    const now = performance.now();
+    if (!taps || now - tapStarted > TAP_WINDOW) { taps = 0; tapStarted = now; }
     taps += 1;
     secretTrigger.classList.toggle('is-listening', taps > 1);
     clearTimeout(timer);
-    timer = setTimeout(() => { taps = 0; secretTrigger.classList.remove('is-listening'); }, TAP_WINDOW);
+    timer = setTimeout(() => { taps = 0; secretTrigger.classList.remove('is-listening'); }, Math.max(0, TAP_WINDOW - (now - tapStarted)));
     if (taps < SECRET_TAPS) return;
     clearTimeout(timer); taps = 0; secretTrigger.classList.remove('is-listening');
     const entering = document.documentElement.dataset.theme !== 'signal';
