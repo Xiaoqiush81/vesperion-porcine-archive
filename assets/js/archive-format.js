@@ -6,6 +6,7 @@ export const ARCHIVE_KEYS = Object.freeze({
   favorites:'pigdex-favorites-v1', identityHistory:'vesperion-identity-history',
   identityQuestions:'vesperion-identity-last-questions', identitySession:'vesperion-identity-session-v1',
   tarotHistory:'vesperion-tarot-history', scholiaAnswers:'vesperion-scholia-answers-v1',
+  extracurricularAnswers:'vesperion-extracurricular-answers-v1',
   faithMember:'pigdex-faith-member-v1', faithOracle:'pigdex-faith-oracle-v1',
   theme:'pigdex-theme', baseTheme:'pigdex-base-theme', audio:'pigdex-audio-v1'
 });
@@ -91,10 +92,17 @@ export function normalizeArchive(archive) {
     put('tarotHistory', history); summary.push(`占卜 ${history.length} 次`);
   }
   if (owns(data,'scholia')) {
-    const value = object(data.scholia, '诸科作答'), answers = object(value.answers,'诸科作答');
+    const value = object(data.scholia, '学习作答'), answers = object(value.answers,'诸科作答');
     if (Object.keys(answers).length > 1000) fail('诸科作答数量');
     put('scholiaAnswers', Object.fromEntries(Object.entries(answers).map(([key, answer]) => [string(key,100,'题目编号',true), string(answer,3000,'作答内容')])));
-    summary.push(`诸科作答 ${Object.keys(answers).length} 项`);
+    let extraCount = 0;
+    if (owns(value,'extracurricularAnswers')) {
+      const extra = object(value.extracurricularAnswers, '课外综合作答');
+      if (Object.keys(extra).length > 1000) fail('课外综合作答数量');
+      put('extracurricularAnswers', Object.fromEntries(Object.entries(extra).map(([key, answer]) => [string(key,100,'题目编号',true), string(answer,3000,'作答内容')])));
+      extraCount = Object.keys(extra).length;
+    }
+    summary.push(`诸科作答 ${Object.keys(answers).length} 项${extraCount ? `、课外综合 ${extraCount} 项` : ''}`);
   }
   if (owns(data,'preferences')) {
     const value = object(data.preferences, '界面偏好');
