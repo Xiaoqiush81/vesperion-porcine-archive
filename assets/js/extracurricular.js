@@ -134,19 +134,19 @@ export async function initExtracurricular() {
       )));
     } else {
       const emptyNotes = {
-        mathematics:'数卷尚静。待有值得建模、推演或证明的材料，再请入室。',
-        english:'英卷未开。待有真正适合阅读、表达或语用考查的材料，再行装订。',
-        physics:'理卷无题。未见可落回物理模型与定律的材料，馆员暂不强解。',
-        biology:'生卷暂空。待材料能落到结构、功能、调节或生态关系，再作笺注。',
-        politics:'政卷未录。待材料确有可据的概念、原理与规范设问，再收入卷中。',
-        history:'史卷尚阙。待材料具备可考史实、时序或因果关系，再启此卷。',
-        geography:'地卷未展。待材料能落到空间、过程、区域或人地关系，再来问地。',
-        chinese:'语卷尚静。待有值得辨析的文本、语言或逻辑材料，再请入室。',
-        chemistry:'化卷暂空。待材料能落到真实结构、反应或规律，再行设问。'
+        mathematics:'数卷暂空，待后续材料入馆。',
+        english:'英卷暂空，待后续材料入馆。',
+        physics:'理卷暂空，待后续材料入馆。',
+        biology:'生卷暂空，待后续材料入馆。',
+        politics:'政卷暂空，待后续材料入馆。',
+        history:'史卷暂空，待后续材料入馆。',
+        geography:'地卷暂空，待后续材料入馆。',
+        chinese:'语卷暂空，待后续材料入馆。',
+        chemistry:'化卷暂空，待后续材料入馆。'
       };
       const empty = element('div', 'extracurricular-empty');
       empty.append(
-        element('small', '', '此卷未启'),
+        element('small', '', '卷中暂空'),
         element('p', '', emptyNotes[subject.id] || '此科尚无合适材料，馆员暂不强作笺注。')
       );
       list.replaceChildren(empty);
