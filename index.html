@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261115-faith-1">
+  <link rel="stylesheet" href="assets/style.css?v=20261119-extra-1">
   <link rel="stylesheet" href="assets/markdown.css?v=20261112-architecture-1">
   <link rel="stylesheet" href="assets/readability.css?v=20261112-readability-1">
 </head>
@@ -506,6 +506,28 @@
         </section>
       </div>
     </section>
+
+    <section class="scholia-room extracurricular-room room-view room-extracurricular" id="extracurricular" aria-labelledby="extracurricularTitle">
+      <div class="scholia-shell">
+        <button class="chronicle-section-back" type="button" data-room-target="scholia">← 返回诸科笺注</button>
+        <header class="section-heading light scholia-heading">
+          <div><p class="eyebrow">EXTRA CURRICULUM · OPEN MATERIALS</p><h2 id="extracurricularTitle">课外综合</h2></div>
+          <p>收进课本之外值得拿来做题的材料。仍按九科分室，但只在真正贴合时出题，不为凑科目硬接。</p>
+        </header>
+        <section class="scholia-index" id="extracurricularIndex" aria-label="选择课外综合学科">
+          <nav class="scholia-subjects" id="extracurricularSubjects" aria-label="选择学科小室"></nav>
+        </section>
+        <section class="scholia-study" id="extracurricularStudy" aria-labelledby="extracurricularStudyTitle" hidden>
+          <button class="chronicle-section-back scholia-study-back" id="leaveExtracurricularStudy" type="button">← 返回课外综合目录</button>
+          <header class="scholia-study-heading">
+            <span class="scholia-subject-mark" id="extracurricularStudyMark" aria-hidden="true"></span>
+            <div><small>EXTRA SUBJECT CHAMBER</small><h3 id="extracurricularStudyTitle"></h3></div>
+          </header>
+          <p class="scholia-count" id="extracurricularCount" aria-live="polite"></p>
+          <div class="scholia-list" id="extracurricularList" aria-label="课外材料题目" aria-busy="true"></div>
+        </section>
+      </div>
+    </section>
   </main>
 
   <footer><span>PIGDEX 081 · maintained by Daddy & the specimen</span><span>最后同步：<time id="updatedAt"></time></span></footer>
@@ -548,7 +570,7 @@
     <div><small>PIGDEX 081 // 未知信号</small><b data-text="SIGNAL BREACH">SIGNAL BREACH</b><span id="signalStatus">正在校准馆藏频段…</span><em><i></i></em></div>
   </div>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261115-scholia-lock-1"></script>
+  <script type="module" src="assets/js/main.js?v=20261119-extra-1"></script>
 </body>
 </html>
 
