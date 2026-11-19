@@ -1,5 +1,5 @@
 import { markdownElement, renderMarkdown } from './markdown.js?v=20261112-architecture-1';
-const DATA_URL = './data/scholia.enc.json?v=20261115-scholia-lock-1';
+const DATA_URL = './data/scholia.enc.json?v=20261119-scholia-revision-1';
 const STORAGE_KEY = 'vesperion-scholia-answers-v1';
 
 function base64Bytes(value) {
