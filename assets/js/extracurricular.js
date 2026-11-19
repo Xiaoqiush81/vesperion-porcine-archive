@@ -1,6 +1,6 @@
 import { markdownElement } from './markdown.js?v=20261112-architecture-1';
 
-const DATA_URL = './data/extracurricular.json?v=20261119-extra-2';
+const DATA_URL = './data/extracurricular.json?v=20261119-extra-3';
 const STORAGE_KEY = 'vesperion-extracurricular-answers-v1';
 
 function element(tag, className = '', text = '') {
