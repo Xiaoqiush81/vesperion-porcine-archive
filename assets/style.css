@@ -3016,3 +3016,69 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
   font-size:9px;
   line-height:1.55;
 }
+
+
+/* Extra curriculum reuses the scholia visual system without joining the encrypted archive. */
+body[data-room="extracurricular"] .room-extracurricular { display:block !important; }
+.scholia-extra-entry { position:relative; overflow:hidden; }
+.scholia-extra-entry small {
+  margin-left:auto;
+  color:var(--muted);
+  font-family:var(--serif);
+  font-size:7px;
+  letter-spacing:.13em;
+}
+.extracurricular-empty {
+  min-height:180px;
+  padding:34px;
+  display:grid;
+  place-content:center;
+  gap:10px;
+  color:var(--text-secondary);
+  background:var(--scholia-sheet);
+  border:1px solid var(--line);
+  text-align:center;
+}
+.extracurricular-empty small {
+  color:var(--text-accent);
+  font-family:var(--serif);
+  font-size:8px;
+  letter-spacing:.16em;
+}
+.extracurricular-empty p {
+  max-width:520px;
+  margin:0;
+  font-family:var(--cn-serif);
+  font-size:12px;
+  line-height:1.9;
+}
+.extracurricular-room .scholia-material p {
+  margin:0;
+  color:var(--navy);
+  font-family:var(--cn-serif);
+  font-size:13px;
+  line-height:2;
+}
+.extracurricular-room .scholia-material p + p { margin-top:14px; }
+:root[data-theme="signal"] .scholia-extra-entry {
+  background:
+    linear-gradient(135deg,rgba(90,245,231,.035),rgba(240,92,255,.04)),
+    var(--surface-raised);
+}
+:root[data-theme="signal"] .scholia-extra-entry::after {
+  content:"// EXTRA";
+  position:absolute;
+  right:12px;
+  bottom:8px;
+  color:rgba(240,92,255,.62);
+  font:7px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.12em;
+}
+:root[data-theme="signal"] .extracurricular-empty {
+  background:rgba(8,18,23,.94);
+  border-color:rgba(99,247,233,.22);
+}
+:root[data-theme="signal"] .extracurricular-empty p { color:#d7ebe7; }
+@media (max-width:640px) {
+  .scholia-extra-entry small { display:none; }
+}
