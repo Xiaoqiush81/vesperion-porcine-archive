@@ -198,14 +198,24 @@ export async function initScholia() {
     try {
       if (!data) return;
       if (subjectsHost.childElementCount) return;
-      subjectsHost.replaceChildren(...data.subjects.map(subject => {
+      const subjectButtons = data.subjects.map(subject => {
         const button = element('button', 'scholia-subject');
         button.type = 'button';
         button.dataset.subject = subject.id;
         button.setAttribute('aria-label', `进入${subject.label}小室`);
         button.append(element('span', '', subject.mark), element('b', '', subject.label));
         return button;
-      }));
+      });
+      const extracurricular = element('button', 'scholia-subject scholia-extra-entry');
+      extracurricular.type = 'button';
+      extracurricular.dataset.room = 'extracurricular';
+      extracurricular.setAttribute('aria-label', '进入课外综合');
+      extracurricular.append(
+        element('span', '', '外'),
+        element('b', '', '课外综合'),
+        element('small', '', 'EXTRA')
+      );
+      subjectsHost.replaceChildren(...subjectButtons, extracurricular);
       list.removeAttribute('aria-busy');
     } catch (error) {
       console.error(error);
@@ -216,6 +226,10 @@ export async function initScholia() {
   subjectsHost.addEventListener('click', event => {
     const button = event.target.closest('.scholia-subject');
     if (!button) return;
+    if (button.dataset.room === 'extracurricular') {
+      document.dispatchEvent(new CustomEvent('roomrequest', { detail:{ room:'extracurricular' } }));
+      return;
+    }
     activeSubject = button.dataset.subject;
     renderStudy();
   });
