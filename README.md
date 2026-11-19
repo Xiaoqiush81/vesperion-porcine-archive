@@ -118,7 +118,7 @@ python3 -m http.server 8080
 
 「诸科笺注」是一套独立馆舍与跨学科题库，只在内外馆猪诗卷末保留低调馆印，不进入主导航。题目、原文、学科与参考答案不会以明文进入当前仓库，而是集中封装在 `data/scholia.enc.json`：访问者提交本地凭证后，由浏览器使用 PBKDF2（SHA-256）派生 AES-256-GCM 密钥并在内存中解密，凭证与解密后的题库均不会写入 localStorage 或上传。解锁后仍由同一套小室模板负责九科切换、作答与答案对照。
 
-维护题库时，在仓库外保留明文 JSON，并使用 `tools/encrypt-scholia.mjs` 重新生成密卷；密码通过环境变量 `SCHOLIA_PASSWORD` 传入，不得写入源码、README、提交信息或数据文件。题库仍只在真正开启时延迟加载，不增加首页负担。
+维护题库时，在仓库外保留明文 JSON，并使用 `tools/encrypt-scholia.mjs` 重新生成密卷；密码通过环境变量 `SCHOLIA_PASSWORD` 传入，不得写入源码、README、提交信息或数据文件。题库仍只在真正开启时延迟加载，不增加首页负担。\n\n如需批量翻新题目，先在仓库外维护 `vesperion-scholia-maintenance-patch` 格式补丁，再运行 `node tools/apply-scholia-patch.mjs <plain.json> <patch.json> [output.json]`。脚本会校验材料/题目 ID、删除项、替换项和已审保留项，避免靠手工复制修改密卷；补丁文件同样不得提交到公开仓库。
 
 「课外综合」从诸科目录第十格进入，但与加密的猪诗题库解耦。它复用九科小室与作答界面，内容集中维护在 `data/extracurricular.json`；材料可来自科技、互联网、生活观察等课外主题，只给真正相关的学科出题，其余小室允许为空。
 
