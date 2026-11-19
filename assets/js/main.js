@@ -7,7 +7,7 @@ const ARCHIVE_MODULE_URL = './archive.js?v=20261112-architecture-1';
 const CHRONICLES_MODULE_URL = './chronicles.js?v=20261119-extra-1';
 const FAITH_MODULE_URL = './porcine-faith.js?v=20261115-faith-2';
 const PORCINE_TRANSLATOR_MODULE_URL = './porcine-translator.js?v=20261107-translator-5';
-const EXTRACURRICULAR_MODULE_URL = './extracurricular.js?v=20261119-extra-1';
+const EXTRACURRICULAR_MODULE_URL = './extracurricular.js?v=20261119-extra-2';
 
 const ROOM_TITLES = {
   home:'PIGDEX 081 · 维斯珀里昂猪类图鉴',
