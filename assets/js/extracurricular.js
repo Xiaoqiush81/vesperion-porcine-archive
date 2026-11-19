@@ -1,6 +1,6 @@
 import { markdownElement } from './markdown.js?v=20261112-architecture-1';
 
-const DATA_URL = './data/extracurricular.json?v=20261119-extra-1';
+const DATA_URL = './data/extracurricular.json?v=20261119-extra-2';
 const STORAGE_KEY = 'vesperion-extracurricular-answers-v1';
 
 function element(tag, className = '', text = '') {
@@ -133,8 +133,22 @@ export async function initExtracurricular() {
         answers
       )));
     } else {
+      const emptyNotes = {
+        mathematics:'数卷尚静。待有值得建模、推演或证明的材料，再请入室。',
+        english:'英卷未开。待有真正适合阅读、表达或语用考查的材料，再行装订。',
+        physics:'理卷无题。未见可落回物理模型与定律的材料，馆员暂不强解。',
+        biology:'生卷暂空。待材料能落到结构、功能、调节或生态关系，再作笺注。',
+        politics:'政卷未录。待材料确有可据的概念、原理与规范设问，再收入卷中。',
+        history:'史卷尚阙。待材料具备可考史实、时序或因果关系，再启此卷。',
+        geography:'地卷未展。待材料能落到空间、过程、区域或人地关系，再来问地。',
+        chinese:'语卷尚静。待有值得辨析的文本、语言或逻辑材料，再请入室。',
+        chemistry:'化卷暂空。待材料能落到真实结构、反应或规律，再行设问。'
+      };
       const empty = element('div', 'extracurricular-empty');
-      empty.append(element('small', '', 'NO MATERIAL YET'), element('p', '', `${subject.label}小室暂时没有课外卷。以后遇到真正合适的材料再加，不为了凑九科硬塞。`));
+      empty.append(
+        element('small', '', '此卷未启'),
+        element('p', '', emptyNotes[subject.id] || '此科尚无合适材料，馆员暂不强作笺注。')
+      );
       list.replaceChildren(empty);
     }
     list.removeAttribute('aria-busy');
