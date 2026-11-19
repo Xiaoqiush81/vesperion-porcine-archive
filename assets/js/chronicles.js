@@ -1,7 +1,7 @@
 import { initScholia } from './scholia.js?v=20261119-extra-1';
 import { markdownElement, renderMarkdown } from './markdown.js?v=20261112-architecture-1';
 
-const DATA_URL = './data/chronicles.json?v=20261119-poetry-12';
+const DATA_URL = './data/chronicles.json?v=20261119-poetry-13';
 let scholiaController;
 
 function element(tag, className, text) {
