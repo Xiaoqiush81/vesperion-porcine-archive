@@ -1,4 +1,4 @@
-import { ARCHIVE_FORMAT, ARCHIVE_VERSION, ARCHIVE_KEYS as KEYS, MAX_ARCHIVE_BYTES, normalizeArchive } from './archive-format.js?v=20261114-records-2';
+import { ARCHIVE_FORMAT, ARCHIVE_VERSION, ARCHIVE_KEYS as KEYS, MAX_ARCHIVE_BYTES, normalizeArchive } from './archive-format.js?v=20261119-extra-1';
 
 function readJson(storage, key, fallback) {
   const raw = storage.getItem(key);
@@ -15,7 +15,7 @@ export function createArchive(storage = globalThis.localStorage) {
       favorites:read(KEYS.favorites, { specimens:[], tarot:[] }),
       identity:{ history:read(KEYS.identityHistory, []), lastQuestions:read(KEYS.identityQuestions, []), session:read(KEYS.identitySession, null) },
       tarot:{ history:read(KEYS.tarotHistory, []) },
-      scholia:{ answers:read(KEYS.scholiaAnswers, {}) },
+      scholia:{ answers:read(KEYS.scholiaAnswers, {}), extracurricularAnswers:read(KEYS.extracurricularAnswers, {}) },
       faith:{ member:read(KEYS.faithMember, null), oracle:read(KEYS.faithOracle, { used:[], history:[], today:null }) },
       preferences:{ theme:storage.getItem(KEYS.theme) || 'paper', baseTheme:storage.getItem(KEYS.baseTheme) || 'paper', audio:read(KEYS.audio, {}) }
     }
@@ -26,7 +26,7 @@ export function createArchive(storage = globalThis.localStorage) {
   archive.data = {
     favorites:clean('favorites'),
     identity:{ history:clean('identityHistory'), lastQuestions:clean('identityQuestions'), session:clean('identitySession') },
-    tarot:{ history:clean('tarotHistory') }, scholia:{ answers:clean('scholiaAnswers') },
+    tarot:{ history:clean('tarotHistory') }, scholia:{ answers:clean('scholiaAnswers'), extracurricularAnswers:clean('extracurricularAnswers') },
     faith:{ member:clean('faithMember'), oracle:clean('faithOracle') },
     preferences:{ theme:entries.get(KEYS.theme), baseTheme:entries.get(KEYS.baseTheme), audio:clean('audio') }
   };
