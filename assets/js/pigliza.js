@@ -2,6 +2,7 @@ import { PiglizaEngine } from './pigliza-engine.js?v=20261122-pigliza-8';
 import { PIGLIZA_DATA } from './pigliza-rules.js?v=20261122-pigliza-8';
 
 export const PIGLIZA_STORAGE_KEY = 'pigdex-pigliza-v1';
+export const PIGLIZA_AVATAR_URL = 'assets/cards/vpa-081-pigliza.webp';
 const MAX_MESSAGES = 40;
 const MIN_REPLY_DELAY = 650;
 const MAX_REPLY_DELAY = 1600;
@@ -34,12 +35,24 @@ function saveSession(messages, engine, storage = globalThis.localStorage) {
 
 function messageNode(message) {
   const article = document.createElement('article');
+  const copy = document.createElement('div');
   const label = document.createElement('small');
   const content = document.createElement('p');
   article.className = `pigliza-message is-${message.role}`;
+  copy.className = 'pigliza-message-copy';
   label.textContent = message.role === 'user' ? '小猪' : '猪莉莎';
   content.textContent = message.content;
-  article.append(label, content);
+  copy.append(label, content);
+  if (message.role === 'bot') {
+    const avatar = document.createElement('img');
+    avatar.className = 'pigliza-avatar';
+    avatar.src = PIGLIZA_AVATAR_URL;
+    avatar.alt = '';
+    avatar.width = 48;
+    avatar.height = 48;
+    article.append(avatar);
+  }
+  article.append(copy);
   return article;
 }
 

@@ -2598,8 +2598,10 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
 .pigliza-console-head button { padding:8px 0; color:var(--text-accent); background:transparent; border:0; border-bottom:1px solid var(--amber-pale); font-family:var(--cn-serif); font-size:13px; cursor:pointer; }
 .pigliza-log { height:min(52vh,520px); min-height:360px; padding:28px clamp(18px,4vw,38px); display:flex; flex-direction:column; gap:18px; overflow-y:auto; overscroll-behavior:contain; background:var(--surface); scroll-behavior:smooth; }
 .pigliza-message { width:min(82%,680px); padding:15px 18px; display:grid; gap:6px; border:1px solid var(--line); }
-.pigliza-message.is-bot { align-self:flex-start; background:var(--surface-raised); border-left:3px solid var(--amber); }
+.pigliza-message.is-bot { align-self:flex-start; grid-template-columns:48px minmax(0,1fr); gap:13px; background:var(--surface-raised); border-left:3px solid var(--amber); }
 .pigliza-message.is-user { align-self:flex-end; background:color-mix(in srgb,var(--navy) 8%,var(--surface-raised)); border-right:3px solid var(--navy); }
+.pigliza-message-copy { min-width:0; display:grid; gap:6px; }
+.pigliza-avatar { width:48px; height:48px; box-sizing:border-box; object-fit:cover; object-position:50% 39%; border:1px solid var(--amber-pale); border-radius:50%; box-shadow:0 3px 10px var(--shadow-soft); }
 .pigliza-message small { color:var(--amber); font-family:var(--serif); font-size:11px; letter-spacing:.14em; }
 .pigliza-message.is-user small { color:var(--text-accent); text-align:right; }
 .pigliza-message p { margin:0; color:var(--ink); font-family:var(--cn-serif); font-size:16px; line-height:1.75; overflow-wrap:anywhere; }
@@ -2620,6 +2622,8 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
   .pigliza-identity { min-width:0; width:min(100%,270px); box-sizing:border-box; }
   .pigliza-log { height:48vh; min-height:320px; padding:20px 14px; }
   .pigliza-message { width:88%; box-sizing:border-box; padding:13px 14px; }
+  .pigliza-message.is-bot { grid-template-columns:40px minmax(0,1fr); gap:10px; }
+  .pigliza-avatar { width:40px; height:40px; }
   .pigliza-form { padding:17px 14px 12px; }
   .pigliza-form > div { grid-template-columns:1fr; }
   .pigliza-form .primary { min-height:46px; }
