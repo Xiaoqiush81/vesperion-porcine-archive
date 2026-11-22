@@ -38,4 +38,8 @@ const restored = createEngine();
 restored.setState(state);
 assert.deepEqual(restored.getState(), state);
 
+const legacyState = createEngine();
+legacyState.setState({ turn:7, memory:[], lastChoices:{} });
+assert.deepEqual(legacyState.getState().dialogue, { concept:null, topic:'', depth:0 });
+
 console.log('pigliza engine tests passed');

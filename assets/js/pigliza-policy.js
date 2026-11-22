@@ -1,6 +1,27 @@
 const STAGES = ['clarify','deepen','contrast','action'];
 export const piglizaStageForTurn = turn => STAGES[Math.max(0, turn) % STAGES.length];
 
+const cleanFocus = value => String(value || '').replace(/[“”'"。！？!?，,　\s]/gu, '').slice(0, 80);
+
+export function createPiglizaDialogue(saved = {}) {
+  if (!saved || typeof saved !== 'object') saved = {};
+  return {
+    concept:typeof saved.concept === 'string' ? saved.concept.slice(0, 80) : null,
+    topic:typeof saved.topic === 'string' ? saved.topic.slice(0, 80) : '',
+    depth:Number.isInteger(saved.depth) ? Math.min(3, Math.max(0, saved.depth)) : 0,
+  };
+}
+
+export function advancePiglizaDialogue(saved, frame) {
+  const dialogue = createPiglizaDialogue(saved);
+  if (!frame?.primary?.id) return dialogue;
+  const concept = frame.primary.id, topic = cleanFocus(frame.topic || frame.primary.topic);
+  const previousTopic = cleanFocus(dialogue.topic);
+  const sameTopic = frame.continuation || (dialogue.concept === concept
+    && (!topic || !previousTopic || topic.includes(previousTopic) || previousTopic.includes(topic)));
+  return { concept, topic:topic || previousTopic, depth:sameTopic ? Math.min(3, dialogue.depth + 1) : 0 };
+}
+
 function matches(strategy, frame) {
   if (strategy.negated !== undefined && strategy.negated !== frame.negated) return false;
   if (frame.negated && strategy.negated !== true && strategy.valence) return false;
@@ -27,7 +48,7 @@ function candidates(frame, data) {
 }
 
 export function selectPiglizaPlan(analysis, state, data) {
-  const stage = piglizaStageForTurn(state.turn);
+  const stage = piglizaStageForTurn(state.dialogue?.depth || 0);
   let best = null;
   for (const frame of analysis.frames) for (const strategy of candidates(frame, data)) {
     if (!matches(strategy, frame)) continue;

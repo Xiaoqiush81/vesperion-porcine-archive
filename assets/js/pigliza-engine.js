@@ -1,5 +1,5 @@
 import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-8';
-import { selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-8';
+import { advancePiglizaDialogue, createPiglizaDialogue, selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-9';
 import { realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-8';
 import { adaptPiglizaTurn, createPiglizaGrounding, foreignPiglizaReply, groundPiglizaAnalysis } from './pigliza-grounding.js?v=20261122-pigliza-7';
 
@@ -39,6 +39,7 @@ export class PiglizaEngine {
     this.turn = 0;
     this.quit = false;
     this.grounding = createPiglizaGrounding();
+    this.dialogue = createPiglizaDialogue();
   }
 
   pick(key, items) {
@@ -70,6 +71,7 @@ export class PiglizaEngine {
 
     const analysis = groundPiglizaAnalysis(contextualizePiglizaAnalysis(
       analyzePiglizaText(source, this.data), this.activeFrame, this.data), this.grounding);
+    this.dialogue = advancePiglizaDialogue(this.dialogue, analysis.primary);
     const plan = selectPiglizaPlan(analysis, this, this.data);
     let reply;
     if (plan?.strategy.id === 'social-follow' && this.activeFrame?.act === 'recall') {
@@ -117,6 +119,7 @@ export class PiglizaEngine {
       memory:[...this.memory], lastChoices:{ ...this.lastChoices }, lastGroup:this.lastGroup,
       lastStrategy:this.lastStrategy, turn:this.turn, quit:this.quit,
       grounding:createPiglizaGrounding(this.grounding),
+      dialogue:createPiglizaDialogue(this.dialogue),
     };
   }
 
@@ -129,6 +132,7 @@ export class PiglizaEngine {
     this.lastStrategy = typeof state.lastStrategy === 'string' ? state.lastStrategy : null;
     this.turn = Number.isInteger(state.turn) && state.turn >= 0 ? state.turn : 0;
     this.grounding = createPiglizaGrounding(state.grounding);
+    this.dialogue = createPiglizaDialogue(state.dialogue);
     const legacyTerms = this.memory.map(parseMemory).filter(frame => frame?.termKey && frame.meaning);
     if (!state.grounding && legacyTerms.length) this.grounding = createPiglizaGrounding({ terms:legacyTerms.map(frame => ({
       key:frame.termKey, term:frame.topic || frame.termKey, meaning:frame.meaning,

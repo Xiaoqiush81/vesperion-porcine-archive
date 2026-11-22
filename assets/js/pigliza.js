@@ -1,4 +1,4 @@
-import { PiglizaEngine } from './pigliza-engine.js?v=20261122-pigliza-8';
+import { PiglizaEngine } from './pigliza-engine.js?v=20261122-pigliza-9';
 import { PIGLIZA_DATA } from './pigliza-rules.js?v=20261122-pigliza-8';
 
 export const PIGLIZA_STORAGE_KEY = 'pigdex-pigliza-v1';

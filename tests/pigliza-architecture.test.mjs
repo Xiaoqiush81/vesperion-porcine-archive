@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { PiglizaEngine } from '../assets/js/pigliza-engine.js';
 import { analyzePiglizaText } from '../assets/js/pigliza-analyzer.js';
+import { piglizaStageForTurn } from '../assets/js/pigliza-policy.js';
 import { estimatePiglizaResponseSpace, PIGLIZA_LEADS } from '../assets/js/pigliza-realizer.js';
 import { extendPiglizaData, PIGLIZA_DATA } from '../assets/js/pigliza-rules.js';
 
@@ -33,6 +34,18 @@ const progression = createEngine();
 const replies = Array.from({ length:4 }, () => progression.respond('最近考试压力真的很大'));
 assert.ok(new Set(replies).size >= 3);
 assert.equal(progression.getState().turn, 4);
+assert.equal(progression.getState().dialogue.depth, 3);
+assert.equal(piglizaStageForTurn(progression.getState().dialogue.depth), 'action');
+
+const topicThreads = createEngine();
+topicThreads.respond('最近考试压力真的很大');
+topicThreads.respond('主要是考试越来越近了');
+assert.equal(topicThreads.getState().dialogue.depth, 1);
+topicThreads.respond('你好');
+assert.equal(topicThreads.getState().dialogue.depth, 1);
+topicThreads.respond('朋友最近不理我');
+assert.equal(topicThreads.getState().dialogue.depth, 0);
+assert.equal(topicThreads.getState().dialogue.concept, 'relationship');
 
 const relief = createEngine();
 relief.respond('我最近很焦虑');
