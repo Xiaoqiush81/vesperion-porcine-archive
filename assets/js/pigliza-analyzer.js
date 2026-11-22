@@ -29,9 +29,15 @@ function validTerm(text, term, index) { return !(term === '困' && text[index + 
 
 function findTerms(text, items) {
   const matches = [];
-  for (const item of items) for (const term of item.terms || item.markers || []) {
-    const index = text.indexOf(term);
-    if (index >= 0 && validTerm(text, term, index)) matches.push({ ...item, term, index });
+  for (const item of items) {
+    for (const term of item.terms || item.markers || []) {
+      const index = text.indexOf(term);
+      if (index >= 0 && validTerm(text, term, index)) matches.push({ ...item, term, index });
+    }
+    for (const pattern of item.patterns || []) {
+      const match = text.match(pattern);
+      if (match) matches.push({ ...item, term:match[0], index:match.index || 0 });
+    }
   }
   return matches.sort((a, b) => b.priority - a.priority || b.term.length - a.term.length || a.index - b.index);
 }
@@ -63,7 +69,8 @@ export function analyzePiglizaText(source, data) {
   const text = normalizePiglizaText(source);
   const frames = splitPiglizaClauses(text).map((clause, index) => {
     const concepts = findTerms(clause, data.concepts), acts = findTerms(clause, data.acts);
-    const primary = concepts[0] || null, act = acts[0] || null;
+    const primary = concepts[0] || null;
+    const act = acts[0] || (!primary ? { id:'statement', priority:1, term:'', index:0 } : null);
     const negated = conceptNegated(clause, primary);
     const context = primary?.kind === 'affect' ? concepts.find(item => ['context','relation'].includes(item.kind)) : null;
     const around = primary ? topicAround(clause, primary) : '';
@@ -73,7 +80,7 @@ export function analyzePiglizaText(source, data) {
       || (primary ? (primary.term.length >= 4 ? primary.term : primary.topic) : act ? cleanTopic(clause.slice(act.index + act.term.length)) : '');
     const continuation = CONTINUATION.test(clause);
     const frame = { text:clause, index, concepts:concepts.map(({ id, term }) => ({ id, term })), primary, act,
-      acts:acts.map(({ id }) => id), topic:reflectPorcinePhrase(rawTopic || primary?.term || primary?.topic || ''),
+      acts:acts.length ? acts.map(({ id }) => id) : act ? [act.id] : [], topic:reflectPorcinePhrase(rawTopic || primary?.term || primary?.topic || ''),
       negated, continuation, continuationTopic:continuation && !REFERENCE.test(clause) ? reflectPorcinePhrase(cleanTopic(clause.replace(CONTINUATION, ''))) : '',
       intensity:(clause.match(/非常|特别|太|超级|真的|极其|越来越/gu) || []).length,
     };

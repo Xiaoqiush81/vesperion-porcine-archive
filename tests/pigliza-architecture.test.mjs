@@ -12,7 +12,7 @@ for (const strategy of PIGLIZA_DATA.strategies) {
   assert.ok(PIGLIZA_LEADS[strategy.lead], strategy.id);
   for (const template of strategy.templates) {
     const slots = [...template.matchAll(/\{(\w+)\}/gu)].map(match => match[1]);
-    assert.ok(slots.every(slot => ['topic','feeling','metaphor'].includes(slot)), `${strategy.id}: ${template}`);
+    assert.ok(slots.every(slot => ['topic','feeling','metaphor','explanation','reason'].includes(slot)), `${strategy.id}: ${template}`);
   }
 }
 
@@ -43,6 +43,24 @@ assert.match(restoredContext.respond('就是昨天那件事'), /昨天|关系|�
 const pronoun = createEngine();
 pronoun.respond('主要是明天的考试');
 assert.match(pronoun.respond('它让我喘不过气'), /考试|压力|喘不过气/);
+
+const metaQuestion = createEngine();
+metaQuestion.respond('我最近压力很大');
+assert.match(metaQuestion.respond('什么？'), /意思|是在问|直白话/);
+assert.match(metaQuestion.respond('为什么？'), /因为|目的|这样问/);
+
+const daily = createEngine();
+assert.match(daily.respond('想吃猪猪'), /吃|外卖|饭/);
+assert.match(daily.respond('点外卖！'), /外卖|咸|甜|饭/);
+assert.doesNotMatch(daily.respond('什么？'), /没完全接住|换一种说法/);
+
+const ordinary = createEngine();
+ordinary.respond('今天买了个新杯子');
+assert.match(ordinary.respond('然后呢？'), /杯子|继续|后面/);
+
+for (const input of ['你好','谢谢','哈哈哈哈','笨蛋猪莉莎','好无聊','在干嘛']) {
+  assert.doesNotMatch(createEngine().respond(input), /最重要|最想|哪一部分对小猪/);
+}
 
 const corpus = [
   '学业压力…还有自我焦虑','爸爸，我最近学业压力很大','还有自我焦虑','这个问题很困难',

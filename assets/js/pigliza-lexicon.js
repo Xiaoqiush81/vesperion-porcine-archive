@@ -6,7 +6,7 @@ export const PIGLIZA_COPY = {
   ],
   farewells:['本次猪式谈话到这里惹。下回想说话时，猪莉莎还会重新开机。','咪，猪莉莎收好这段谈话惹。小猪下次见。'],
   noInput:['猪莉莎只听见了一小团空气。小猪原本想说什么？','咪？输入框里还没有话。'],
-  fallbacks:['猪莉莎还没完全接住。小猪愿意换一种说法吗？','这句话里，哪一部分对小猪最重要？','咪，继续说一点；猪莉莎正在听。','如果把这件事缩成一句话，小猪会怎么说？'],
+  fallbacks:['噢？然后呢？','这句猪莉莎听到了。继续继续。','猪莉莎还没完全接住，小猪愿意多说半句吗？','咪，猪莉莎暂时只接到了一小截。'],
   quitPhrases:['再见','拜拜','不聊了','结束谈话','退出'],
   crisisTerms:['不想活','想死','自杀','伤害自己'],
   crisisReply:'猪莉莎只是一台规则谈话机，接不住可能伤害小猪的紧急情况。请立刻联系身边可信赖的人、当地紧急服务或专业支持，不要独自承担。',
@@ -27,6 +27,18 @@ export const PIGLIZA_CONCEPTS = [
 ];
 
 export const PIGLIZA_ACTS = [
+  { id:'clarify-request', priority:40, patterns:[/^(?:什么|是什么|啥|啥意思|什么意思|没懂|没听懂|不明白|猪莉莎说什么)$/u] },
+  { id:'why-followup', priority:39, patterns:[/^(?:为什么|为啥|为什么这么问|干嘛这么问)$/u] },
+  { id:'continue-chat', priority:38, patterns:[/^(?:然后呢|后来呢|还有呢|接着呢)$/u] },
+  { id:'greeting', priority:34, patterns:[/^(?:嗨|哈喽|你好|早上好|中午好|晚上好|在吗|猪莉莎在吗)$/u] },
+  { id:'thanks', priority:34, patterns:[/^(?:谢谢|谢谢猪莉莎|谢啦|感谢|好耶谢谢)$/u] },
+  { id:'laughter', priority:33, patterns:[/^(?:哈+|哈哈哈+|笑死|笑死我了|绷不住了)$/u] },
+  { id:'insult', priority:33, patterns:[/^(?:笨蛋|笨猪|傻猪|笨蛋猪莉莎|猪莉莎真笨)$/u] },
+  { id:'acknowledge', priority:31, patterns:[/^(?:嗯|嗯嗯|对|是的|没错|好|好吧|可以|行|知道了)$/u] },
+  { id:'disagree', priority:31, patterns:[/^(?:不|不是|没有|才不是|不对)$/u] },
+  { id:'food-talk', priority:30, markers:['想吃','好饿','饿了','点外卖','叫外卖','吃饭','外卖','奶茶'] },
+  { id:'bored', priority:30, markers:['好无聊','无聊死了','无聊'] },
+  { id:'small-talk', priority:28, patterns:[/^(?:在干嘛|你在干嘛|你好吗|吃了吗|干什么呢)$/u] },
   { id:'uncertain', priority:20, markers:['不知道','布吉岛','说不清','不确定'] },
   { id:'cause', priority:17, markers:['因为','由于'] },
   { id:'result', priority:17, markers:['所以','因此'] },

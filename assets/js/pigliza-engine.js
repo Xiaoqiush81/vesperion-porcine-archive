@@ -1,6 +1,6 @@
-import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-4';
-import { selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-4';
-import { realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-4';
+import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-5';
+import { selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-5';
+import { realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-5';
 
 const DEFAULT_MEMORY_SIZE = 12;
 export { reflectPorcinePhrase };
@@ -60,10 +60,16 @@ export class PiglizaEngine {
     const analysis = contextualizePiglizaAnalysis(analyzePiglizaText(source, this.data), this.activeFrame, this.data);
     const plan = selectPiglizaPlan(analysis, this, this.data);
     let reply;
-    if (plan) {
+    if (plan?.strategy.id === 'social-follow' && this.activeFrame?.act === 'recall') {
+      reply = this.recall();
+      this.lastGroup = null;
+      this.lastStrategy = 'memory';
+    } else if (plan) {
       reply = realizePiglizaPlan(plan, this, this.random);
-      this.lastGroup = plan.frame.primary?.id || null;
-      this.lastStrategy = plan.strategy.id;
+      if (!plan.strategy.meta) {
+        this.lastGroup = plan.frame.primary?.id || null;
+        this.lastStrategy = plan.strategy.id;
+      }
     } else {
       reply = this.recall() || this.pick('fallback', this.data.fallbacks);
       this.lastGroup = null;
