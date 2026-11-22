@@ -8,7 +8,7 @@
 
 **在线访问：** [xiaoqiush81.github.io/vesperion-porcine-archive](https://xiaoqiush81.github.io/vesperion-porcine-archive/)
 
-**最新入馆：** PIGLIZA · 猪莉莎会客室开放；以中文原生的关键词、句式分解、人称反射和短期记忆重构经典 ELIZA 机制，全程本地运行且不连接语言模型。
+**最新入馆：** PIGLIZA · 猪莉莎二代内核启用；将中文分析、语义帧、对话策略、受约束生成和显著性记忆分层组合，以约 300 行核心流程配合独立数据获得千级响应路径，全程本地运行且不连接语言模型。
 
 PIGLIZA 继承 Joseph Weizenbaum 于 1960 年代提出的 ELIZA 会话思想；工程调研参考了 [Steve02081504/ELIZA](https://github.com/steve02081504/ELIZA) 的职责分层，但引擎、中文规则、回答模板与界面均为独立实现。
 
@@ -23,7 +23,7 @@ PIGLIZA 继承 Joseph Weizenbaum 于 1960 年代提出的 ELIZA 会话思想；�
 | 猪事馆 | 将宅邸轶闻分入猪事录、万猪丛中与七卷猪史；第七卷“猪诗”收录诗、谣、赞与短章，支持逐行诗体排版 |
 | 猪猪教堂 | 四句总纲圣词、完整大齐诵、可折叠教义与礼仪经卷；支持本地入教、教籍状态、每日一次且优先不重复的猪谕、猪谕历史簿及教籍猪专属内坛互动 |
 | 猪语翻译器 | 词典驱动的人话猪化，分离猪语浓度与说话语体，并保护既有猪语不被二次改写 |
-| PIGLIZA · 猪莉莎 | 中文原生的反射式谈话机；使用规则匹配、人称转换与短期记忆，不调用模型或远端接口 |
+| PIGLIZA · 猪莉莎 | 中文原生的反射式谈话机；以语义帧、阶段化对话策略、组合式表达和显著性记忆回应，不调用模型或远端接口 |
 | 条款与政策 | 宅邸服务条款、隐私政策及版本化制度文件 |
 | 声景设置 | 独立控制背景音乐、交互音效及各自音量；处理 Safari 前后台切换与播放限制 |
 
@@ -63,8 +63,12 @@ PIGLIZA 继承 Joseph Weizenbaum 于 1960 年代提出的 ELIZA 会话思想；�
 │       ├── extracurricular.js  # 课外综合九科小室与开放材料作答
 │       ├── porcine-faith.js    # 猪猪教堂礼仪、教籍与每日猪谕
 │       ├── porcine-translator.js # 猪语翻译流程与界面
-│       ├── pigliza-engine.js   # 中文反射式谈话引擎
-│       ├── pigliza-rules.js    # 猪莉莎关键词、句式与回答模板
+│       ├── pigliza-engine.js   # 会话状态、记忆与兼容外壳
+│       ├── pigliza-analyzer.js # 中文分句、概念/言语行为与语义帧
+│       ├── pigliza-policy.js   # 对话阶段、策略约束与评分
+│       ├── pigliza-realizer.js # 受约束的组合式表达生成
+│       ├── pigliza-lexicon.js  # 概念、词汇与系统文案
+│       ├── pigliza-rules.js    # 稳定的公开数据入口
 │       ├── pigliza.js          # 会客室界面与本地会话状态
 │       ├── records.js          # 宅邸档案聚合
 │       ├── archive-format.js   # 版本化档案格式与纯数据校验

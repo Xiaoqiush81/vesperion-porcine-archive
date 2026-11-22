@@ -1,0 +1,39 @@
+export const PIGLIZA_COPY = {
+  greetings:[
+    '咪。这里是猪莉莎会客室。今天有什么话黏在小猪脑袋上？',
+    '猪莉莎已经开机惹。小猪想从哪件事说起？',
+    'onk onk。请坐好，说说现在最占脑袋的事情。',
+  ],
+  farewells:['本次猪式谈话到这里惹。下回想说话时，猪莉莎还会重新开机。','咪，猪莉莎收好这段谈话惹。小猪下次见。'],
+  noInput:['猪莉莎只听见了一小团空气。小猪原本想说什么？','咪？输入框里还没有话。'],
+  fallbacks:['猪莉莎还没完全接住。小猪愿意换一种说法吗？','这句话里，哪一部分对小猪最重要？','咪，继续说一点；猪莉莎正在听。','如果把这件事缩成一句话，小猪会怎么说？'],
+  quitPhrases:['再见','拜拜','不聊了','结束谈话','退出'],
+  crisisTerms:['不想活','想死','自杀','伤害自己'],
+  crisisReply:'猪莉莎只是一台规则谈话机，接不住可能伤害小猪的紧急情况。请立刻联系身边可信赖的人、当地紧急服务或专业支持，不要独自承担。',
+};
+
+export const PIGLIZA_CONCEPTS = [
+  { id:'stress', kind:'affect', valence:'negative', priority:16, label:'压力', metaphor:'让压力重到喘不过气', topic:'这份压力', terms:['喘不过气','压力','负担','压得'] },
+  { id:'anxiety', kind:'affect', valence:'negative', priority:15, label:'不安', metaphor:'让不安变响', topic:'这份不安', terms:['焦虑','担心','害怕','紧张','不安'] },
+  { id:'fatigue', kind:'affect', valence:'negative', priority:14, label:'疲惫', metaphor:'耗电', topic:'这份疲惫', terms:['没精神','疲惫','好累','累死','困'] },
+  { id:'sadness', kind:'affect', valence:'negative', priority:13, label:'难过', metaphor:'刺', topic:'这份难过', terms:['难过','伤心','委屈','想哭','失落'] },
+  { id:'anger', kind:'affect', valence:'negative', priority:13, label:'生气', metaphor:'让小猪炸毛', topic:'这股气', terms:['生气','气死','烦死','讨厌','恼火'] },
+  { id:'joy', kind:'affect', valence:'positive', priority:12, label:'开心', metaphor:'值得翘尾巴', topic:'这份开心', terms:['开心','高兴','骄傲','好棒','惊喜'] },
+  { id:'self-doubt', kind:'affect', valence:'negative', priority:14, label:'自我怀疑', metaphor:'不肯放过小猪', topic:'对自己的怀疑', terms:['没用','失败','不够好','做不好','什么都没做好'] },
+  { id:'school', kind:'context', valence:'neutral', priority:11, label:'学业', metaphor:'占脑袋', topic:'学业', terms:['学校','上学','老师','同学','作业','考试','学习','成绩','学业'] },
+  { id:'relationship', kind:'relation', valence:'neutral', priority:10, label:'关系', metaphor:'拉扯', topic:'这段关系', terms:['朋友','别人','他们','她说','他说','关系'] },
+  { id:'father', kind:'relation', valence:'neutral', priority:8, label:'粑粑', metaphor:'让小猪在意', topic:'粑粑', terms:['爸爸','粑粑'] },
+  { id:'loneliness', kind:'affect', valence:'negative', priority:13, label:'孤独', metaphor:'安静', topic:'这份孤独', terms:['孤独','孤单','没人懂','一个人'] },
+];
+
+export const PIGLIZA_ACTS = [
+  { id:'uncertain', priority:20, markers:['不知道','布吉岛','说不清','不确定'] },
+  { id:'cause', priority:17, markers:['因为','由于'] },
+  { id:'result', priority:17, markers:['所以','因此'] },
+  { id:'belief', priority:16, markers:['我觉得','我认为','我感觉','感觉自己'] },
+  { id:'desire', priority:15, markers:['我希望','我想','想要'] },
+  { id:'inability', priority:15, markers:['做不到','不能','不会'] },
+  { id:'generalize', priority:9, markers:['所有人','总是','从来','每次'] },
+  { id:'ask-bot', priority:8, markers:['你是','你会','你能','你觉得','你想'] },
+  { id:'recall', priority:4, markers:['以前','曾经','记得'] },
+];

@@ -9,7 +9,7 @@ assert.equal(reflectPorcinePhrase('我的朋友说你不了解我'), '你的朋�
 const engine = createEngine();
 assert.match(engine.getGreeting(), /猪莉莎|会客室/);
 assert.match(engine.respond('我觉得自己什么都没做好'), /什么都没做好/);
-assert.match(engine.respond('我今天真的好累'), /猪饼|身体|卸下/);
+assert.match(engine.respond('我今天真的好累'), /疲惫|难受|卸下|没电/);
 assert.match(engine.respond('我不想活了'), /规则谈话机/);
 
 const compoundReply = createEngine().respond('学业压力…还有自我焦虑');

@@ -1,5 +1,5 @@
-import { PiglizaEngine } from './pigliza-engine.js?v=20261122-pigliza-2';
-import { PIGLIZA_DATA } from './pigliza-rules.js?v=20261122-pigliza-2';
+import { PiglizaEngine } from './pigliza-engine.js?v=20261122-pigliza-3';
+import { PIGLIZA_DATA } from './pigliza-rules.js?v=20261122-pigliza-3';
 
 export const PIGLIZA_STORAGE_KEY = 'pigdex-pigliza-v1';
 const MAX_MESSAGES = 40;
@@ -67,7 +67,7 @@ export function initPigliza() {
     send.disabled = engine.quit || busy;
     status.classList.toggle('is-thinking', busy);
     status.textContent = busy
-      ? '猪莉莎正在翻找规则卡片……'
+      ? '猪莉莎正在整理话里的线索……'
       : engine.quit
       ? '本次谈话已经结束；点“重新开始”可唤醒猪莉莎。'
       : '本地规则机正在倾听 · 不连接 AI 或远端服务';

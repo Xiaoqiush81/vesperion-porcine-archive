@@ -66,7 +66,10 @@ function piglizaSession(value) {
   const choices = object(engine.lastChoices ?? {}, '猪莉莎选择记录');
   if (Object.keys(choices).length > 100 || Object.values(choices).some(choice => !Number.isInteger(choice) || choice < -1 || choice > 100)) fail('猪莉莎选择记录');
   const lastGroup = engine.lastGroup == null ? null : string(engine.lastGroup,80,'猪莉莎上次话题',true);
-  return { version:1, messages, engine:{ memory, lastChoices:{ ...choices }, lastGroup, quit:flag(engine.quit ?? false,'猪莉莎结束状态') } };
+  const lastStrategy = engine.lastStrategy == null ? null : string(engine.lastStrategy,80,'猪莉莎上次策略',true);
+  const turn = engine.turn == null ? 0 : engine.turn;
+  if (!Number.isInteger(turn) || turn < 0 || turn > 100000) fail('猪莉莎谈话轮次');
+  return { version:1, messages, engine:{ memory, lastChoices:{ ...choices }, lastGroup, lastStrategy, turn, quit:flag(engine.quit ?? false,'猪莉莎结束状态') } };
 }
 
 export function normalizeArchive(archive) {

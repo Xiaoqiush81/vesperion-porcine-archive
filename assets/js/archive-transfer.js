@@ -1,4 +1,4 @@
-import { ARCHIVE_FORMAT, ARCHIVE_VERSION, ARCHIVE_KEYS as KEYS, MAX_ARCHIVE_BYTES, normalizeArchive } from './archive-format.js?v=20261122-pigliza-2';
+import { ARCHIVE_FORMAT, ARCHIVE_VERSION, ARCHIVE_KEYS as KEYS, MAX_ARCHIVE_BYTES, normalizeArchive } from './archive-format.js?v=20261122-pigliza-3';
 
 function readJson(storage, key, fallback) {
   const raw = storage.getItem(key);
