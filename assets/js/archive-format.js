@@ -1,6 +1,6 @@
 // Portable schema only: no DOM, downloads, or storage writes.
 export const ARCHIVE_FORMAT = 'vesperion-porcine-archive';
-export const ARCHIVE_VERSION = 2;
+export const ARCHIVE_VERSION = 3;
 export const MAX_ARCHIVE_BYTES = 1024 * 1024;
 export const ARCHIVE_KEYS = Object.freeze({
   favorites:'pigdex-favorites-v1', identityHistory:'vesperion-identity-history',
@@ -8,6 +8,7 @@ export const ARCHIVE_KEYS = Object.freeze({
   tarotHistory:'vesperion-tarot-history', scholiaAnswers:'vesperion-scholia-answers-v1',
   extracurricularAnswers:'vesperion-extracurricular-answers-v1',
   faithMember:'pigdex-faith-member-v1', faithOracle:'pigdex-faith-oracle-v1',
+  pigliza:'pigdex-pigliza-v1',
   theme:'pigdex-theme', baseTheme:'pigdex-base-theme', audio:'pigdex-audio-v1'
 });
 const owns = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
@@ -52,13 +53,29 @@ function oracleRecord(value) {
   return { date:day(value.date, '猪谕日期'), id:string(value.id, 80, '猪谕编号', true) };
 }
 
+function piglizaSession(value) {
+  object(value, '猪莉莎谈话');
+  if (value.version !== 1) fail('猪莉莎谈话版本');
+  const messages = list(value.messages, 40, '猪莉莎消息').map(item => {
+    object(item, '猪莉莎消息');
+    if (!['user','bot'].includes(item.role)) fail('猪莉莎消息角色');
+    return { role:item.role, content:string(item.content,1200,'猪莉莎消息内容',true) };
+  });
+  const engine = object(value.engine, '猪莉莎状态');
+  const memory = list(engine.memory ?? [], 12, '猪莉莎记忆').map(item => string(item,1200,'猪莉莎记忆'));
+  const choices = object(engine.lastChoices ?? {}, '猪莉莎选择记录');
+  if (Object.keys(choices).length > 100 || Object.values(choices).some(choice => !Number.isInteger(choice) || choice < -1 || choice > 100)) fail('猪莉莎选择记录');
+  return { version:1, messages, engine:{ memory, lastChoices:{ ...choices }, quit:flag(engine.quit ?? false,'猪莉莎结束状态') } };
+}
+
 export function normalizeArchive(archive) {
   object(archive, '文件');
-  if (archive.format !== ARCHIVE_FORMAT || ![1, ARCHIVE_VERSION].includes(archive.version)) throw new Error('这不是支持的宅邸档案版本。');
+  if (archive.format !== ARCHIVE_FORMAT || ![1,2,ARCHIVE_VERSION].includes(archive.version)) throw new Error('这不是支持的宅邸档案版本。');
   const data = object(archive.data, '档案内容');
   const sections = ['favorites','identity','tarot','scholia','preferences','faith'];
   if (!sections.some(key => owns(data, key))) fail('档案内容');
-  if (archive.version === 2 && sections.some(key => !owns(data, key))) fail('完整档案');
+  if (archive.version >= 2 && sections.some(key => !owns(data, key))) fail('完整档案');
+  if (archive.version >= 3 && !owns(data,'pigliza')) fail('猪莉莎谈话');
   const entries = new Map(), summary = [];
   const put = (key, value) => entries.set(ARCHIVE_KEYS[key], value === null ? null : JSON.stringify(value));
 
@@ -126,6 +143,11 @@ export function normalizeArchive(archive) {
     const history = list(oracle.history,60,'猪谕历史').map(oracleRecord);
     put('faithOracle', { used:strings(oracle.used,500,'已抽猪谕'), history, today:oracle.today === null ? null : oracleRecord(oracle.today) });
     summary.push(`教籍与猪谕 ${history.length} 签`);
+  }
+  if (owns(data,'pigliza')) {
+    const value = data.pigliza === null ? null : piglizaSession(data.pigliza);
+    put('pigliza', value);
+    summary.push(`猪莉莎谈话 ${value?.messages.length || 0} 条`);
   }
   return { entries, summary, version:archive.version };
 }

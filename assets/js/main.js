@@ -7,6 +7,7 @@ const ARCHIVE_MODULE_URL = './archive.js?v=20261112-architecture-1';
 const CHRONICLES_MODULE_URL = './chronicles.js?v=20261119-scholia-revision-1';
 const FAITH_MODULE_URL = './porcine-faith.js?v=20261115-faith-2';
 const PORCINE_TRANSLATOR_MODULE_URL = './porcine-translator.js?v=20261122-translator-6';
+const PIGLIZA_MODULE_URL = './pigliza.js?v=20261122-pigliza-1';
 const EXTRACURRICULAR_MODULE_URL = './extracurricular.js?v=20261119-extra-3';
 
 const ROOM_TITLES = {
@@ -20,6 +21,7 @@ const ROOM_TITLES = {
   extracurricular:'课外综合 · PIGDEX 081',
   faith:'猪猪教堂 · PIGDEX 081',
   translator:'猪语翻译器 · PIGDEX 081',
+  pigliza:'猪莉莎会客室 · PIGDEX 081',
   legal:'馆舍公约 · PIGDEX 081'
 };
 
@@ -77,6 +79,7 @@ let recordsReady = false;
 let chroniclesReady = false;
 let faithReady = false;
 let translatorReady = false;
+let piglizaReady = false;
 let extracurricularReady = false;
 let archiveLoading = null;
 let tarotLoading = null;
@@ -85,6 +88,7 @@ let recordsLoading = null;
 let chroniclesLoading = null;
 let faithLoading = null;
 let translatorLoading = null;
+let piglizaLoading = null;
 let extracurricularLoading = null;
 let archiveController = null;
 let roomRequest = 0;
@@ -194,6 +198,20 @@ async function initTranslator() {
   return translatorLoading;
 }
 
+async function initPiglizaRoom() {
+  if (piglizaReady) return;
+  if (!piglizaLoading) piglizaLoading = import(PIGLIZA_MODULE_URL)
+    .then(module => module.initPigliza())
+    .then(() => { piglizaReady = true; })
+    .catch(error => {
+      console.error(error);
+      const status = document.querySelector('#piglizaStatus');
+      if (status) status.textContent = '猪莉莎暂时没有成功开机，请刷新后再试。';
+    })
+    .finally(() => { piglizaLoading = null; });
+  return piglizaLoading;
+}
+
 async function initExtracurricular() {
   if (extracurricularReady) return;
   if (!extracurricularLoading) extracurricularLoading = import(EXTRACURRICULAR_MODULE_URL)
@@ -208,7 +226,7 @@ async function initExtracurricular() {
   return extracurricularLoading;
 }
 
-const ROOM_NAMES = new Set(['tarot', 'specimens', 'identify', 'records', 'chronicles', 'scholia', 'extracurricular', 'faith', 'translator', 'legal']);
+const ROOM_NAMES = new Set(['tarot', 'specimens', 'identify', 'records', 'chronicles', 'scholia', 'extracurricular', 'faith', 'translator', 'pigliza', 'legal']);
 
 function roomFromLocation() {
   const queryRoom = new URLSearchParams(location.search).get('room');
@@ -230,7 +248,7 @@ async function enterRoom(room, push = true) {
   const request = ++roomRequest;
   const target = ROOM_NAMES.has(room) ? room : 'home';
   const routeChanged = roomFromLocation() !== target;
-  const roomNames = { specimens: '猪猪图鉴', identify: '猪种鉴定所', tarot: '宅邸塔罗馆', records: '宅邸档案室', chronicles: '猪事馆', scholia: '诸科笺注', extracurricular: '课外综合', faith: '猪猪教堂', translator: '猪语翻译器', legal: '宅邸制度文件' };
+  const roomNames = { specimens: '猪猪图鉴', identify: '猪种鉴定所', tarot: '宅邸塔罗馆', records: '宅邸档案室', chronicles: '猪事馆', scholia: '诸科笺注', extracurricular: '课外综合', faith: '猪猪教堂', translator: '猪语翻译器', pigliza: '猪莉莎会客室', legal: '宅邸制度文件' };
   if (target === 'specimens') await initArchive();
   if (target === 'tarot') await initTarot();
   if (target === 'identify') await initIdentity();
@@ -240,6 +258,7 @@ async function enterRoom(room, push = true) {
   if (target === 'extracurricular') await initExtracurricular();
   if (target === 'faith') await initFaith();
   if (target === 'translator') await initTranslator();
+  if (target === 'pigliza') await initPiglizaRoom();
   if (request !== roomRequest) return;
   document.body.dataset.room = target;
   if (push && routeChanged) history.pushState({ room: target }, '', roomUrl(target));

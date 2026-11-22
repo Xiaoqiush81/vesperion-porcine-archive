@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=20261119-extra-1">
+  <link rel="stylesheet" href="assets/style.css?v=20261122-pigliza-1">
   <link rel="stylesheet" href="assets/markdown.css?v=20261112-architecture-1">
   <link rel="stylesheet" href="assets/readability.css?v=20261112-readability-1">
 </head>
@@ -39,6 +39,7 @@
       <button class="header-room" data-room-target="chronicles" type="button">猪事馆</button>
       <button class="header-room" data-room-target="faith" type="button">猪猪教</button>
       <button class="header-room" data-room-target="translator" type="button">猪语翻译</button>
+      <button class="header-room" data-room-target="pigliza" type="button">猪莉莎</button>
       <button id="randomPig" class="nav-button" type="button">随机捕猪</button>
       <button class="nav-button" data-room-target="legal" type="button">条款与政策</button>
     </nav>
@@ -132,7 +133,7 @@
       <section class="home-directory" aria-labelledby="homeDirectoryTitle">
         <header class="home-directory-heading">
           <div><p>MANOR DIRECTORY</p><h2 id="homeDirectoryTitle">馆舍导览</h2></div>
-          <small>七处馆舍 · 各自独立进入</small>
+          <small>八处馆舍 · 各自独立进入</small>
         </header>
         <nav class="collection-switcher" id="collections" aria-label="馆藏区域入口">
           <a href="#specimens" data-room-target="specimens"><span>PORCINE ARCHIVE</span><b>猪猪图鉴</b><small>59 种已发现形态</small></a>
@@ -142,6 +143,7 @@
           <a href="#chronicles" data-room-target="chronicles"><span>MANOR CHRONICLES</span><b>猪事馆</b><small>猪史 · 猪诗 · 见闻</small></a>
           <a href="#faith" data-room-target="faith" class="faith-entry"><span>PORCINE CHAPEL</span><b>猪猪教堂</b><small>圣词 · 猪谕 · 教籍</small></a>
           <a href="#translator" data-room-target="translator"><span>PORCINE LINGUISTICS</span><b>猪语翻译器</b><small>人话输入 · 猪言猪语输出</small></a>
+          <a href="#pigliza" data-room-target="pigliza"><span>CLASSIC CONVERSATION MACHINE</span><b>PIGLIZA · 猪莉莎</b><small>中文反射式谈话 · 无模型</small></a>
         </nav>
       </section>
     </section>
@@ -192,6 +194,42 @@
         </div>
 
         <div class="translator-lexicon" id="translatorLexicon" aria-label="猪语词典"></div>
+        <a class="section-jump" href="#home" data-room-target="home">← 返回馆舍大厅</a>
+      </div>
+    </section>
+
+    <section class="pigliza-room room-view room-pigliza" id="pigliza" aria-labelledby="piglizaTitle">
+      <div class="pigliza-shell">
+        <header class="pigliza-heading">
+          <div>
+            <p class="eyebrow">VESPERION MANOR · ELECTRONIC ANTIQUE №081</p>
+            <h2 id="piglizaTitle">PIGLIZA · 猪莉莎</h2>
+            <p>一台继承 ELIZA 反射式谈话机制的中文电子猪。她依靠关键词、句式分解、人称转换与短期记忆回应，不使用语言模型，也不会真的理解小猪。</p>
+          </div>
+          <aside class="pigliza-identity" aria-label="猪莉莎系统说明">
+            <b>1960s → 081</b>
+            <span>RULE-BASED</span>
+            <span>LOCAL ONLY</span>
+          </aside>
+        </header>
+
+        <section class="pigliza-console" aria-label="猪莉莎谈话界面">
+          <div class="pigliza-console-head">
+            <div><small>PORCINE REFLECTION TERMINAL</small><b>会客室正在开放</b></div>
+            <button id="piglizaReset" type="button">重新开始</button>
+          </div>
+          <div class="pigliza-log" id="piglizaLog" role="log" aria-live="polite" aria-relevant="additions"></div>
+          <form class="pigliza-form" id="piglizaForm">
+            <label for="piglizaInput">和猪莉莎说点什么</label>
+            <div>
+              <textarea id="piglizaInput" maxlength="600" rows="2" placeholder="例如：我今天真的好累，但是又不知道从哪里说起。"></textarea>
+              <button class="primary" id="piglizaSend" type="submit">发送</button>
+            </div>
+          </form>
+          <p class="pigliza-status" id="piglizaStatus" aria-live="polite">猪莉莎正在开机……</p>
+        </section>
+
+        <p class="pigliza-disclaimer">猪莉莎是历史聊天机制的猪式重构与互动展品，不是心理治疗、诊断工具或紧急支持服务。</p>
         <a class="section-jump" href="#home" data-room-target="home">← 返回馆舍大厅</a>
       </div>
     </section>
@@ -274,13 +312,13 @@
           <div class="legal-copy">
             <section class="legal-preamble"><h4>政策摘要与适用范围</h4><p>宅邸管理方重视访问者及首席会员的隐私。本政策说明本站处理哪些信息、信息存放位置、第三方技术服务可能进行的处理，以及您可采取的控制措施。本政策适用于 PIGDEX 081 网站，不自动适用于您通过外部链接访问的其他网站、应用或通信服务。</p></section>
             <section><h4>第一条　处理原则与责任主体</h4><p><b>1.1</b> 本站遵循最小必要、本地优先、目的明确和访问者可控的原则设计数据功能。<br><b>1.2</b> 本站没有自建用户账户系统、广告系统、行为分析平台或云端业务数据库。宅邸管理方通常无法远程读取仅保存在您设备中的记录。<br><b>1.3</b> 本站为非商业私人创作项目；“宅邸管理方”是对本站维护者的功能性称谓，并非虚构为已注册公司的表示。</p></section>
-            <section><h4>第二条　本站处理的信息类别</h4><p><b>2.1 馆藏偏好：</b>您收藏或取消收藏的猪种与塔罗牌。<br><b>2.2 互动记录：</b>近期猪种鉴定的结果及题目记录、您主动保存的塔罗抽牌结果、问题与笔记。<br><b>2.3 界面偏好：</b>纸张或深蓝主题、音乐与音效开关、音乐及音效音量等设置。<br><b>2.4 技术必要信息：</b>浏览器为获取网页、图片、字体、脚本及音频资源而向托管或资源服务商自动发送的网络请求信息，可能包括 IP 地址、请求时间、页面地址、浏览器或设备类型。该等网络信息不由本站自建数据库接收。</p></section>
+            <section><h4>第二条　本站处理的信息类别</h4><p><b>2.1 馆藏偏好：</b>您收藏或取消收藏的猪种与塔罗牌。<br><b>2.2 互动记录：</b>近期猪种鉴定的结果及题目记录、您主动保存的塔罗抽牌结果、问题与笔记，以及保存在当前设备上的猪莉莎谈话。<br><b>2.3 界面偏好：</b>纸张或深蓝主题、音乐与音效开关、音乐及音效音量等设置。<br><b>2.4 技术必要信息：</b>浏览器为获取网页、图片、字体、脚本及音频资源而向托管或资源服务商自动发送的网络请求信息，可能包括 IP 地址、请求时间、页面地址、浏览器或设备类型。该等网络信息不由本站自建数据库接收。</p></section>
             <section><h4>第三条　本站不主动索取的信息</h4><p>本站不要求注册或登录，不设置付款入口，也不主动索取真实姓名、身份证件、住址、电话号码、电子邮箱、精确位置、联系人、相册、麦克风、摄像头或支付信息。请勿在塔罗问题或笔记中录入不必要的身份证号、账户口令、健康档案或他人敏感信息。</p></section>
             <section><h4>第四条　处理目的与法律性质</h4><p><b>4.1</b> 馆藏偏好用于展示私藏清单和收藏状态；互动记录用于恢复近期鉴定、占卜与档案联结；界面偏好用于在下次访问时维持您选择的视觉与声音体验。<br><b>4.2</b> 技术请求用于交付页面资源、保障托管安全、诊断故障及维持基本可用性。<br><b>4.3</b> 本地存储由您主动使用相应功能或调整设置触发。您可不使用收藏、保存或个性化功能，并仍可浏览大部分公开馆藏。</p></section>
             <section><h4>第五条　本地存储、保存期限与设备同步</h4><p><b>5.1</b> 前述馆藏偏好、互动记录和界面偏好通过浏览器 localStorage 保存在当前浏览器配置与设备中，通常持续至您主动删除、浏览器清理、存储策略回收或网站更新使其失效。<br><b>5.2</b> 无痕浏览可能在会话结束后清除记录；清除 Safari 网站数据、更换浏览器或设备也可能导致记录消失。<br><b>5.3</b> 本站目前不提供账户同步、云端备份或恢复服务，宅邸管理方通常无法为您找回已从设备删除的记录。</p></section>
             <section><h4>第六条　第三方托管与资源服务</h4><p><b>6.1 GitHub Pages：</b>本站由 GitHub Pages 托管。您访问页面时，请求会到达 GitHub 的基础设施；GitHub 可能依据其数据收集说明及隐私政策，为安全、运行维护与服务交付之目的处理 IP 地址、请求时间及其他必要技术信息。<br><b>6.2 Google Fonts：</b>本站使用 Google Fonts 提供部分字体。浏览器可能直接向 Google 的字体服务请求相关文件，从而向其传递网络连接所必需的信息；该等信息由 Google 依其隐私政策处理。<br><b>6.3</b> 宅邸管理方不会因上述基础服务而主动取得您的第三方账户凭据，亦不会出售从本站获得的个人信息。</p></section>
             <section><h4>第七条　Cookie、分析与广告</h4><p>截至本版本，本站自身不设置用于用户画像、跨站追踪、广告投放或分析统计的 Cookie，也未接入广告网络或第三方行为分析脚本。第三方托管或字体服务是否依据其自身规则使用必要技术，不受宅邸管理方直接控制；您可通过浏览器的隐私、防跟踪或内容拦截设置进行管理。</p></section>
-            <section><h4>第八条　信息共享、披露与跨境处理</h4><p><b>8.1</b> 宅邸管理方不出售、出租本地馆藏记录，也不会主动将鉴定答案、收藏、塔罗问题或笔记上传给宅邸管理员。<br><b>8.2</b> 页面托管与字体交付可能由分布在不同国家或地区的 GitHub、Google 基础设施完成，因此技术请求信息可能依据相应服务商安排在您所在地区之外处理。<br><b>8.3</b> 如法律依法要求披露宅邸管理方实际持有的信息，将仅在适用范围内配合；但管理方无法披露其从未取得、仅存在于您设备内的数据。</p></section>
+            <section><h4>第八条　信息共享、披露与跨境处理</h4><p><b>8.1</b> 宅邸管理方不出售、出租本地馆藏记录，也不会主动将鉴定答案、收藏、塔罗问题、笔记或猪莉莎谈话上传给宅邸管理员。<br><b>8.2</b> 页面托管与字体交付可能由分布在不同国家或地区的 GitHub、Google 基础设施完成，因此技术请求信息可能依据相应服务商安排在您所在地区之外处理。<br><b>8.3</b> 如法律依法要求披露宅邸管理方实际持有的信息，将仅在适用范围内配合；但管理方无法披露其从未取得、仅存在于您设备内的数据。</p></section>
             <section><h4>第九条　安全措施与风险提示</h4><p>本站采用静态页面与本地优先架构，以减少集中存储风险，并尽量限制外部脚本和数据流转。但任何网络传输、浏览器存储或第三方基础设施均无法保证绝对安全。使用共享设备时，请留意其他设备使用者可能读取同一浏览器中的本地记录；请勿保存可能造成现实损害的敏感信息。</p></section>
             <section><h4>第十条　您的控制权</h4><p><b>10.1</b> 您可在本站界面随时取消收藏，并可通过浏览器设置清除本站数据，以删除鉴定、占卜、收藏及偏好记录。<br><b>10.2</b> 您可关闭音乐与音效、使用浏览器阻止第三方字体请求，或停止使用需要本地记录的功能。<br><b>10.3</b> 由于相关业务记录默认仅存在本机，宅邸管理方通常无法代为访问、导出、更正或删除；该限制源于数据未被上传，而非拒绝履行您的请求。</p></section>
             <section><h4>第十一条　未成年人及他人信息</h4><p>本站并非专门面向儿童设计，不通过账户或表单有意收集未成年人的身份信息。任何访问者均不应在自由文本笔记中录入他人的敏感信息；如您使用由监护人、学校或机构管理的设备，还应遵守相应设备与网络规则。</p></section>
@@ -302,7 +340,7 @@
       </div>
       <div class="record-summary" id="recordSummary" aria-label="宅邸档案统计"></div>
       <section class="archive-transfer" aria-labelledby="archiveTransferTitle">
-        <div><p class="eyebrow">PORTABLE MANOR ARCHIVE</p><h3 id="archiveTransferTitle">携带宅邸档案</h3><p>将收藏、鉴定与答题进度、占卜、诸科作答、教籍与猪谕及界面偏好装订成本地文件。支持恢复旧版档案；旧档未收录的项目会保留。</p></div>
+        <div><p class="eyebrow">PORTABLE MANOR ARCHIVE</p><h3 id="archiveTransferTitle">携带宅邸档案</h3><p>将收藏、鉴定与答题进度、占卜、诸科作答、教籍与猪谕、猪莉莎谈话及界面偏好装订成本地文件。支持恢复旧版档案；旧档未收录的项目会保留。</p></div>
         <div class="archive-transfer-actions">
           <button id="exportArchive" type="button">导出档案</button>
           <button id="importArchive" type="button">导入档案</button>
@@ -574,7 +612,7 @@
     <div><small>PIGDEX 081 // 未知信号</small><b data-text="SIGNAL BREACH">SIGNAL BREACH</b><span id="signalStatus">正在校准馆藏频段…</span><em><i></i></em></div>
   </div>
   <div class="toast" id="toast" role="status"></div>
-  <script type="module" src="assets/js/main.js?v=20261119-scholia-revision-1"></script>
+  <script type="module" src="assets/js/main.js?v=20261122-pigliza-1"></script>
 </body>
 </html>
 

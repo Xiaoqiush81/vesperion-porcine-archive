@@ -1,4 +1,4 @@
-import { ARCHIVE_FORMAT, ARCHIVE_VERSION, ARCHIVE_KEYS as KEYS, MAX_ARCHIVE_BYTES, normalizeArchive } from './archive-format.js?v=20261119-extra-1';
+import { ARCHIVE_FORMAT, ARCHIVE_VERSION, ARCHIVE_KEYS as KEYS, MAX_ARCHIVE_BYTES, normalizeArchive } from './archive-format.js?v=20261122-pigliza-1';
 
 function readJson(storage, key, fallback) {
   const raw = storage.getItem(key);
@@ -17,6 +17,7 @@ export function createArchive(storage = globalThis.localStorage) {
       tarot:{ history:read(KEYS.tarotHistory, []) },
       scholia:{ answers:read(KEYS.scholiaAnswers, {}), extracurricularAnswers:read(KEYS.extracurricularAnswers, {}) },
       faith:{ member:read(KEYS.faithMember, null), oracle:read(KEYS.faithOracle, { used:[], history:[], today:null }) },
+      pigliza:read(KEYS.pigliza, null),
       preferences:{ theme:storage.getItem(KEYS.theme) || 'paper', baseTheme:storage.getItem(KEYS.baseTheme) || 'paper', audio:read(KEYS.audio, {}) }
     }
   };
@@ -28,6 +29,7 @@ export function createArchive(storage = globalThis.localStorage) {
     identity:{ history:clean('identityHistory'), lastQuestions:clean('identityQuestions'), session:clean('identitySession') },
     tarot:{ history:clean('tarotHistory') }, scholia:{ answers:clean('scholiaAnswers'), extracurricularAnswers:clean('extracurricularAnswers') },
     faith:{ member:clean('faithMember'), oracle:clean('faithOracle') },
+    pigliza:clean('pigliza'),
     preferences:{ theme:entries.get(KEYS.theme), baseTheme:entries.get(KEYS.baseTheme), audio:clean('audio') }
   };
   return archive;
