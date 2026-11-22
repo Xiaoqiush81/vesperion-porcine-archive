@@ -4,6 +4,12 @@ import {
   getCanonicalPorcineForms,
   getPorcineRules,
 } from './porcine-lexicon.js?v=20261107-lexicon-1';
+import {
+  PORCINE_REGISTERS,
+  applyPorcineRegister,
+  getPorcineRegister,
+  getRegisterRhythm,
+} from './porcine-registers.js?v=20261122-registers-1';
 
 const PARTICLE_REPLACEMENTS = [
   [/(^|[^不没])了(?=[。！？!?…]|$)/g, '$1惹'],
@@ -77,9 +83,9 @@ function applyCuteOonk(text, level, seed) {
   return (seed % 4 === 0) ? text.replace(/onk onk/g, 'oonk') : text;
 }
 
-function addRhythm(text, level, seed) {
+function addRhythm(text, level, seed, register) {
   if (level === 'light') return text;
-  const form = PIG_FORMS[level];
+  const form = getRegisterRhythm(register) || PIG_FORMS[level];
   let out = text;
   let clauseCount = 0;
 
@@ -88,7 +94,7 @@ function addRhythm(text, level, seed) {
     const trimmed = part.trim();
     if (!trimmed) return part;
     clauseCount += 1;
-    if (level === 'full' && clauseCount > 1 && (seed + index) % 3 === 0) {
+    if (level === 'full' && form.interjection.length && clauseCount > 1 && (seed + index) % 3 === 0) {
       return part.replace(trimmed, pick(form.interjection, seed, index) + '，' + trimmed);
     }
     return part;
@@ -104,11 +110,12 @@ function addRhythm(text, level, seed) {
   return applyCuteOonk(out, level, seed);
 }
 
-export function translateToPorcine(input, level = 'standard') {
+export function translateToPorcine(input, level = 'standard', register = 'natural') {
   const source = String(input || '').trim();
   if (!source) return '';
 
   const safeLevel = PIG_FORMS[level] ? level : 'standard';
+  const safeRegister = getPorcineRegister(register);
   const normalized = normalizeCanonicalForms(source);
   if (isNativePorcine(normalized)) return normalized;
 
@@ -119,7 +126,9 @@ export function translateToPorcine(input, level = 'standard') {
     output = output.replace(pattern, replacement);
   });
   output = replaceSelfReference(output, safeLevel);
-  output = addRhythm(output, safeLevel, hashText(normalized + safeLevel));
+  const seed = hashText(normalized + safeLevel + (safeRegister === 'natural' ? '' : safeRegister));
+  output = applyPorcineRegister(output, safeRegister, safeLevel, seed);
+  output = addRhythm(output, safeLevel, seed, safeRegister);
 
   return protectedInput.restore(output);
 }
@@ -139,16 +148,29 @@ function renderLexicon() {
   }));
 }
 
+function renderRegisters(select) {
+  if (!select || select.options.length) return;
+  select.append(...PORCINE_REGISTERS.map(register => {
+    const option = document.createElement('option');
+    option.value = register.id;
+    option.textContent = register.label;
+    option.title = register.description;
+    return option;
+  }));
+}
+
 export function initPorcineTranslator() {
   const input = document.querySelector('#translatorInput');
   const output = document.querySelector('#translatorOutput');
   const level = document.querySelector('#translatorLevel');
+  const register = document.querySelector('#translatorRegister');
   const run = document.querySelector('#translatorRun');
   const copy = document.querySelector('#translatorCopy');
   const clear = document.querySelector('#translatorClear');
 
   renderLexicon();
-  if (!input || !output || !level || !run || !copy || !clear || run.dataset.ready) return;
+  renderRegisters(register);
+  if (!input || !output || !level || !register || !run || !copy || !clear || run.dataset.ready) return;
   run.dataset.ready = 'true';
 
   const render = value => {
@@ -158,7 +180,7 @@ export function initPorcineTranslator() {
   };
 
   const translate = () => {
-    const translated = translateToPorcine(input.value, level.value);
+    const translated = translateToPorcine(input.value, level.value, register.value);
     render(translated);
     if (!translated) input.focus();
   };
