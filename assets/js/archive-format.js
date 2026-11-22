@@ -69,7 +69,21 @@ function piglizaSession(value) {
   const lastStrategy = engine.lastStrategy == null ? null : string(engine.lastStrategy,80,'猪莉莎上次策略',true);
   const turn = engine.turn == null ? 0 : engine.turn;
   if (!Number.isInteger(turn) || turn < 0 || turn > 100000) fail('猪莉莎谈话轮次');
-  return { version:1, messages, engine:{ memory, lastChoices:{ ...choices }, lastGroup, lastStrategy, turn, quit:flag(engine.quit ?? false,'猪莉莎结束状态') } };
+  const normalizedEngine = { memory, lastChoices:{ ...choices }, lastGroup, lastStrategy, turn, quit:flag(engine.quit ?? false,'猪莉莎结束状态') };
+  if (owns(engine, 'grounding')) {
+    const grounding = object(engine.grounding, '猪莉莎共同语境');
+    const terms = list(grounding.terms ?? [], 24, '猪莉莎术语').map(item => {
+      object(item, '猪莉莎术语');
+      return { key:string(item.key,80,'猪莉莎术语键',true), term:string(item.term,80,'猪莉莎术语',true), meaning:string(item.meaning,320,'猪莉莎术语含义',true) };
+    });
+    if (!['zh','en'].includes(grounding.language) || !['brief','normal'].includes(grounding.style)
+      || !['casual','adaptive'].includes(grounding.mode) || !Number.isInteger(grounding.samples)
+      || grounding.samples < 0 || grounding.samples > 100000 || typeof grounding.meanLength !== 'number'
+      || !Number.isFinite(grounding.meanLength) || grounding.meanLength < 0 || grounding.meanLength > 1200) fail('猪莉莎共同语境');
+    normalizedEngine.grounding = { terms, language:grounding.language, samples:grounding.samples,
+      meanLength:grounding.meanLength, style:grounding.style, mode:grounding.mode };
+  }
+  return { version:1, messages, engine:normalizedEngine };
 }
 
 export function normalizeArchive(archive) {

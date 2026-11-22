@@ -1,6 +1,7 @@
-import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-5';
-import { selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-5';
-import { realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-5';
+import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-6';
+import { selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-6';
+import { realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-6';
+import { createPiglizaGrounding, groundPiglizaTurn, languageFallback, observePiglizaSpeaker } from './pigliza-grounding.js?v=20261122-pigliza-6';
 
 const DEFAULT_MEMORY_SIZE = 12;
 export { reflectPorcinePhrase };
@@ -37,6 +38,7 @@ export class PiglizaEngine {
     this.activeFrame = null;
     this.turn = 0;
     this.quit = false;
+    this.grounding = createPiglizaGrounding();
   }
 
   pick(key, items) {
@@ -56,29 +58,16 @@ export class PiglizaEngine {
       return this.pick('farewell', this.data.farewells);
     }
     if (this.data.crisisTerms.some(term => source.includes(term))) return this.data.crisisReply;
-
-    // Ground unfamiliar vocabulary in the speaker's own definition.
-    const definition = source.match(/^(?:(?:我们(?:这边|这里|行业里)|我说的)\s*)?([^，。！？?]{1,36}?)(?:是指|指的是)(.{1,160}?)[。！]?$/u)
-      || source.match(/^(.{1,36}?) means (.{1,160}?)[.!]?$/iu);
-    const question = source.match(/^(.{1,36}?)(?:是什么意思|指的是什么)[？?。]?$/u)
-      || source.match(/^what does (.{1,36}?) mean[?？]?$/iu);
-    if (definition || question) {
-      const term = (definition || question)[1].trim();
-      const key = term.normalize('NFKC').toLowerCase();
-      const english = / means |^what does /iu.test(source);
-      const index = this.memory.findIndex(value => parseMemory(value)?.termKey === key);
-      if (question && index < 0) return english ? 'What does that term mean in your context?' : '小猪说的这个词，在你那里具体指什么？';
-      const meaning = definition ? definition[2].trim() : parseMemory(this.memory[index]).meaning;
-      if (definition) {
-        if (index >= 0) this.memory.splice(index, 1);
-        this.memory.push(JSON.stringify({termKey:key, meaning, topic:term, act:'definition'}));
-        if (this.memory.length > this.memorySize) this.memory.shift();
-      }
-      this.activeFrame = {topic:term, act:'definition'};
+    observePiglizaSpeaker(this.grounding, source);
+    const grounded = groundPiglizaTurn(this.grounding, source);
+    if (grounded) {
+      this.activeFrame = {topic:grounded.topic, act:'definition'};
       this.lastStrategy = 'definition';
       this.turn += 1;
-      return english ? 'In your usage, “' + term + '” means “' + meaning + '”.' : '按小猪的用法，“' + term + '”指的是“' + meaning + '”。';
+      return grounded.reply;
     }
+    const otherLanguage = languageFallback(this.grounding, source);
+    if (otherLanguage) { this.lastStrategy = 'language-fallback'; this.turn += 1; return otherLanguage; }
 
     const analysis = contextualizePiglizaAnalysis(analyzePiglizaText(source, this.data), this.activeFrame, this.data);
     const plan = selectPiglizaPlan(analysis, this, this.data);
@@ -127,6 +116,7 @@ export class PiglizaEngine {
     return {
       memory:[...this.memory], lastChoices:{ ...this.lastChoices }, lastGroup:this.lastGroup,
       lastStrategy:this.lastStrategy, turn:this.turn, quit:this.quit,
+      grounding:createPiglizaGrounding(this.grounding),
     };
   }
 
@@ -138,6 +128,12 @@ export class PiglizaEngine {
     this.lastGroup = typeof state.lastGroup === 'string' ? state.lastGroup : null;
     this.lastStrategy = typeof state.lastStrategy === 'string' ? state.lastStrategy : null;
     this.turn = Number.isInteger(state.turn) && state.turn >= 0 ? state.turn : 0;
+    this.grounding = createPiglizaGrounding(state.grounding);
+    const legacyTerms = this.memory.map(parseMemory).filter(frame => frame?.termKey && frame.meaning);
+    if (!state.grounding && legacyTerms.length) this.grounding = createPiglizaGrounding({ terms:legacyTerms.map(frame => ({
+      key:frame.termKey, term:frame.topic || frame.termKey, meaning:frame.meaning,
+    })) });
+    if (legacyTerms.length) this.memory = this.memory.filter(value => !parseMemory(value)?.termKey);
     this.activeFrame = parseMemory(this.memory.at(-1));
     this.quit = Boolean(state.quit);
   }

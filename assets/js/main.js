@@ -7,7 +7,7 @@ const ARCHIVE_MODULE_URL = './archive.js?v=20261112-architecture-1';
 const CHRONICLES_MODULE_URL = './chronicles.js?v=20261119-scholia-revision-1';
 const FAITH_MODULE_URL = './porcine-faith.js?v=20261115-faith-2';
 const PORCINE_TRANSLATOR_MODULE_URL = './porcine-translator.js?v=20261122-translator-6';
-const PIGLIZA_MODULE_URL = './pigliza.js?v=20261122-pigliza-5';
+const PIGLIZA_MODULE_URL = './pigliza.js?v=20261122-pigliza-6';
 const EXTRACURRICULAR_MODULE_URL = './extracurricular.js?v=20261119-extra-3';
 
 const ROOM_TITLES = {
@@ -145,7 +145,7 @@ async function initIdentity() {
 async function initRecords() {
   if (recordsReady) return;
   if (!recordsLoading) recordsLoading = Promise.all([
-    import('./records.js?v=20261122-pigliza-3'),
+    import('./records.js?v=20261122-pigliza-4'),
     import(ARCHIVE_MODULE_URL).then(module => module.loadSpecimens())
   ]).then(([{ createRecordRoom }, specimens]) => {
     createRecordRoom(specimens);

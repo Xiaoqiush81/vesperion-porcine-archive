@@ -74,7 +74,8 @@ export function realizePiglizaPlan({ frame, strategy }, state, random = Math.ran
   };
   const templateKey = `strategy:${strategy.id}`, leadKey = `lead:${strategy.lead}`;
   const template = choose(strategy.templates, state.lastChoices[templateKey], random);
-  const leads = PIGLIZA_LEADS[strategy.lead] || PIGLIZA_LEADS.neutral, lead = choose(leads, state.lastChoices[leadKey], random);
+  const leads = state.grounding?.style === 'brief' ? [''] : PIGLIZA_LEADS[strategy.lead] || PIGLIZA_LEADS.neutral;
+  const lead = choose(leads, state.lastChoices[leadKey], random);
   state.lastChoices[templateKey] = template.index; state.lastChoices[leadKey] = lead.index;
   return [lead.value, fill(template.value, slots)].filter(Boolean).join('');
 }
