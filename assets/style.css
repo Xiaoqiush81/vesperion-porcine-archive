@@ -2580,51 +2580,73 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
   .translator-controls label,.translator-controls .primary { width:100%; }
 }
 
-/* PIGLIZA: a local, rule-based electronic antique. */
-.pigliza-room { min-height:calc(100vh - 58px); padding:88px clamp(22px,6vw,92px) 110px; background:var(--surface); }
+/* PIGLIZA: a 1960s teletype reconstructed as an archive exhibit. */
+.pigliza-room {
+  --pigliza-case:#888273;
+  --pigliza-case-dark:#292e31;
+  --pigliza-paper:#eee6d5;
+  --pigliza-paper-edge:#d4c9b4;
+  --pigliza-ribbon:#272b2e;
+  min-height:calc(100vh - 58px);
+  padding:88px clamp(22px,6vw,92px) 110px;
+  background:var(--surface);
+}
+:root[data-theme="night"] .pigliza-room { --pigliza-case:#545b5d; --pigliza-case-dark:#111a21; --pigliza-paper:#d9d0bd; --pigliza-paper-edge:#b9ad96; }
+:root[data-theme="signal"] .pigliza-room { --pigliza-case:#263334; --pigliza-case-dark:#060c0d; --pigliza-paper:#d8e4da; --pigliza-paper-edge:#8fa69b; --pigliza-ribbon:#07100f; }
 .pigliza-shell { width:min(100%,1040px); margin-inline:auto; }
 .pigliza-heading { margin-bottom:34px; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:end; gap:34px; }
 .pigliza-heading > div { max-width:760px; }
 .pigliza-heading h2 { margin:0 0 14px; color:var(--navy); font-family:var(--cn-serif); font-size:clamp(38px,5vw,64px); font-weight:500; letter-spacing:-.045em; }
 .pigliza-heading > div > p:last-child { margin:0; color:var(--text-secondary); font-family:var(--cn-serif); font-size:16px; line-height:1.9; }
-.pigliza-identity { min-width:172px; padding:17px 18px; display:grid; gap:7px; color:var(--text-accent); background:var(--surface-raised); border:1px solid var(--line); font-family:var(--serif); letter-spacing:.12em; box-shadow:8px 8px 0 var(--paper-deep); }
-.pigliza-identity b { color:var(--navy); font-size:16px; letter-spacing:.06em; }
-.pigliza-identity span { font-size:12px; }
-.pigliza-console { overflow:hidden; background:var(--surface-raised); border:1px solid var(--line); box-shadow:0 20px 48px var(--shadow-soft); }
-.pigliza-console-head { min-height:72px; padding:16px 22px; display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--line); }
-.pigliza-console-head div { display:grid; gap:4px; }
-.pigliza-console-head small { color:var(--amber); font-family:var(--serif); font-size:11px; letter-spacing:.16em; }
-.pigliza-console-head b { color:var(--ink); font-family:var(--cn-serif); font-size:17px; font-weight:500; }
-.pigliza-console-head button { padding:8px 0; color:var(--text-accent); background:transparent; border:0; border-bottom:1px solid var(--amber-pale); font-family:var(--cn-serif); font-size:13px; cursor:pointer; }
-.pigliza-log { height:min(52vh,520px); min-height:360px; padding:28px clamp(18px,4vw,38px); display:flex; flex-direction:column; gap:18px; overflow-y:auto; overscroll-behavior:contain; background:var(--surface); scroll-behavior:smooth; }
-.pigliza-message { width:min(82%,680px); padding:15px 18px; display:grid; gap:6px; border:1px solid var(--line); }
-.pigliza-message.is-bot { align-self:flex-start; grid-template-columns:48px minmax(0,1fr); gap:13px; background:var(--surface-raised); border-left:3px solid var(--amber); }
-.pigliza-message.is-user { align-self:flex-end; background:color-mix(in srgb,var(--navy) 8%,var(--surface-raised)); border-right:3px solid var(--navy); }
+.pigliza-identity { min-width:172px; padding:17px 18px; display:grid; gap:7px; color:var(--pigliza-paper); background:var(--pigliza-case-dark); border:4px solid var(--pigliza-case); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.1em; box-shadow:7px 7px 0 var(--paper-deep); }
+.pigliza-identity b { color:var(--pigliza-paper); font-size:15px; letter-spacing:.04em; }
+.pigliza-identity span { font-size:10px; opacity:.7; }
+.pigliza-console { overflow:hidden; padding:10px; background:linear-gradient(135deg,color-mix(in srgb,var(--pigliza-case) 82%,white),var(--pigliza-case)); border:1px solid color-mix(in srgb,var(--pigliza-case) 72%,black); border-radius:8px; box-shadow:0 22px 48px var(--shadow-medium),inset 0 1px rgba(255,255,255,.4); }
+.pigliza-console-head { min-height:68px; padding:13px 18px; display:flex; align-items:center; justify-content:space-between; gap:20px; color:var(--pigliza-paper); background:var(--pigliza-case-dark); border:1px solid rgba(255,255,255,.08); border-radius:2px 2px 0 0; box-shadow:inset 0 -3px rgba(0,0,0,.25); }
+.pigliza-console-head div { display:grid; gap:5px; }
+.pigliza-console-head small { color:var(--amber-pale); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10px; letter-spacing:.12em; }
+.pigliza-console-head b { color:inherit; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:14px; font-weight:500; letter-spacing:.04em; }
+.pigliza-console-head b::before { content:""; width:7px; height:7px; margin-right:8px; display:inline-block; background:#9caf75; border-radius:50%; box-shadow:0 0 8px rgba(180,202,122,.55); }
+.pigliza-console-head button { padding:8px 10px; color:var(--pigliza-paper); background:#33393c; border:1px solid rgba(255,255,255,.18); border-radius:2px; box-shadow:0 2px 0 #111; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10px; letter-spacing:.05em; cursor:pointer; }
+.pigliza-log { height:min(52vh,520px); min-height:360px; padding:30px clamp(38px,6vw,68px); display:flex; flex-direction:column; gap:0; overflow-y:auto; overscroll-behavior:contain; color:var(--pigliza-ribbon); background:radial-gradient(circle at 9px 12px,var(--pigliza-case) 0 2.6px,transparent 2.8px) left top/18px 24px repeat-y,radial-gradient(circle at calc(100% - 9px) 12px,var(--pigliza-case) 0 2.6px,transparent 2.8px) right top/18px 24px repeat-y,repeating-linear-gradient(0deg,transparent 0 31px,rgba(60,56,48,.055) 31px 32px),var(--pigliza-paper); border-inline:1px solid var(--pigliza-paper-edge); scroll-behavior:smooth; }
+.pigliza-message { width:100%; box-sizing:border-box; padding:15px 0 17px; display:grid; border-bottom:1px dashed rgba(39,43,46,.22); }
+.pigliza-message.is-bot { grid-template-columns:40px minmax(0,1fr); gap:13px; }
+.pigliza-message.is-user { padding-left:53px; }
 .pigliza-message-copy { min-width:0; display:grid; gap:6px; }
-.pigliza-avatar { width:48px; height:48px; box-sizing:border-box; object-fit:cover; object-position:50% 39%; border:1px solid var(--amber-pale); border-radius:50%; box-shadow:0 3px 10px var(--shadow-soft); }
-.pigliza-message small { color:var(--amber); font-family:var(--serif); font-size:11px; letter-spacing:.14em; }
-.pigliza-message.is-user small { color:var(--text-accent); text-align:right; }
-.pigliza-message p { margin:0; color:var(--ink); font-family:var(--cn-serif); font-size:16px; line-height:1.75; overflow-wrap:anywhere; }
-.pigliza-form { padding:20px 22px 14px; display:grid; gap:9px; border-top:1px solid var(--line); }
-.pigliza-form > label { color:var(--muted); font-family:var(--cn-serif); font-size:13px; }
-.pigliza-form > div { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; }
-#piglizaInput { min-height:74px; box-sizing:border-box; padding:13px 15px; resize:vertical; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:0; outline:none; font-family:var(--cn-serif); font-size:16px; line-height:1.65; -webkit-appearance:none; appearance:none; }
-#piglizaInput:focus { border-color:var(--amber); }
-#piglizaInput::placeholder { color:var(--placeholder); opacity:1; }
-.pigliza-form .primary { min-width:104px; align-self:stretch; }
+.pigliza-avatar { width:40px; height:40px; box-sizing:border-box; object-fit:cover; object-position:50% 31%; background:var(--pigliza-paper-edge); border:1px solid rgba(39,43,46,.42); border-radius:1px; filter:grayscale(.65) contrast(1.08); box-shadow:2px 2px 0 rgba(39,43,46,.16); }
+.pigliza-message small { color:#6f5d40; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:9px; font-weight:700; letter-spacing:.1em; }
+.pigliza-message.is-user small { color:#4c5e63; }
+.pigliza-message p { margin:0; color:var(--pigliza-ribbon); font-family:ui-monospace,SFMono-Regular,Menlo,"Noto Sans SC",monospace; font-size:15px; line-height:1.8; letter-spacing:.015em; overflow-wrap:anywhere; }
+.pigliza-message p::before { content:"> "; color:#766446; font-weight:700; }
+.pigliza-message.is-user p::before { content:"* "; color:#4c5e63; }
+.pigliza-form { padding:18px 18px 14px; display:grid; gap:9px; background:var(--pigliza-case-dark); border-top:5px solid var(--pigliza-case); }
+.pigliza-form > label { color:var(--amber-pale); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10px; letter-spacing:.09em; }
+.pigliza-form > div { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; }
+#piglizaInput { min-height:72px; box-sizing:border-box; padding:13px 15px; resize:vertical; color:var(--pigliza-ribbon); background:var(--pigliza-paper); border:2px inset var(--pigliza-case); border-radius:1px; outline:none; font-family:ui-monospace,SFMono-Regular,Menlo,"Noto Sans SC",monospace; font-size:15px; line-height:1.65; caret-color:#7b673e; -webkit-appearance:none; appearance:none; }
+#piglizaInput:focus { box-shadow:inset 3px 0 #9b7b47; }
+#piglizaInput::placeholder { color:#726d63; opacity:.8; }
+.pigliza-form .primary { min-width:104px; align-self:stretch; color:var(--pigliza-paper); background:#3a4144; border-color:rgba(255,255,255,.18); box-shadow:0 3px 0 #111; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11px; letter-spacing:.08em; }
 .pigliza-form .primary:disabled,#piglizaInput:disabled { opacity:.48; cursor:not-allowed; }
-.pigliza-status { margin:0; padding:0 22px 18px; color:var(--muted); font-family:var(--cn-serif); font-size:12px; }
-.pigliza-status.is-thinking { color:var(--text-accent); }
+.pigliza-status { margin:0; padding:0 18px 16px; color:#aeb4b2; background:var(--pigliza-case-dark); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10px; letter-spacing:.03em; }
+.pigliza-status::before { content:"SYS: "; color:var(--amber-pale); }
+.pigliza-status.is-thinking { color:#d5c5a4; }
 .pigliza-disclaimer { margin:16px 0 0; color:var(--muted); font-family:var(--cn-serif); font-size:13px; line-height:1.7; }
 @media (max-width:720px) {
   .pigliza-room { padding:66px 18px 88px; }
   .pigliza-heading { grid-template-columns:1fr; align-items:start; gap:22px; }
   .pigliza-identity { min-width:0; width:min(100%,270px); box-sizing:border-box; }
-  .pigliza-log { height:48vh; min-height:320px; padding:20px 14px; }
-  .pigliza-message { width:88%; box-sizing:border-box; padding:13px 14px; }
-  .pigliza-message.is-bot { grid-template-columns:40px minmax(0,1fr); gap:10px; }
-  .pigliza-avatar { width:40px; height:40px; }
-  .pigliza-form { padding:17px 14px 12px; }
+  .pigliza-console { padding:7px; border-radius:5px; }
+  .pigliza-console-head { min-height:62px; padding:12px; }
+  .pigliza-console-head small { font-size:8px; }
+  .pigliza-console-head b { font-size:12px; }
+  .pigliza-console-head button { padding:7px; font-size:9px; }
+  .pigliza-log { height:48vh; min-height:320px; padding:22px 28px; background-size:14px 22px,14px 22px,auto,auto; }
+  .pigliza-message { padding:13px 0 15px; }
+  .pigliza-message.is-bot { grid-template-columns:34px minmax(0,1fr); gap:9px; }
+  .pigliza-message.is-user { padding-left:43px; }
+  .pigliza-avatar { width:34px; height:34px; }
+  .pigliza-message p { font-size:14px; }
+  .pigliza-form { padding:15px 12px 11px; }
   .pigliza-form > div { grid-template-columns:1fr; }
   .pigliza-form .primary { min-height:46px; }
   .pigliza-status { padding:0 14px 16px; }

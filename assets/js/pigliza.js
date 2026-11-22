@@ -2,7 +2,7 @@ import { PiglizaEngine } from './pigliza-engine.js?v=20261122-pigliza-8';
 import { PIGLIZA_DATA } from './pigliza-rules.js?v=20261122-pigliza-8';
 
 export const PIGLIZA_STORAGE_KEY = 'pigdex-pigliza-v1';
-export const PIGLIZA_AVATAR_URL = 'assets/cards/vpa-081-pigliza.webp';
+export const PIGLIZA_AVATAR_URL = 'assets/cards/vpa-081-pigliza.webp?v=20261122-2';
 const MAX_MESSAGES = 40;
 const MIN_REPLY_DELAY = 650;
 const MAX_REPLY_DELAY = 1600;
@@ -40,7 +40,7 @@ function messageNode(message) {
   const content = document.createElement('p');
   article.className = `pigliza-message is-${message.role}`;
   copy.className = 'pigliza-message-copy';
-  label.textContent = message.role === 'user' ? '小猪' : '猪莉莎';
+  label.textContent = message.role === 'user' ? 'INPUT / 小猪' : 'PIGLIZA / 猪莉莎';
   content.textContent = message.content;
   copy.append(label, content);
   if (message.role === 'bot') {
