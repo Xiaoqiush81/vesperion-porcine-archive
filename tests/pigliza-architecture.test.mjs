@@ -73,6 +73,10 @@ assert.match(metaQuestion.respond('为什么？'), /因为|目的|这样问/);
 const daily = createEngine();
 assert.match(daily.respond('想吃猪猪'), /吃|外卖|饭/);
 assert.match(daily.respond('点外卖！'), /外卖|咸|甜|饭/);
+assert.match(daily.respond('今天吃什么！'), /面|盖饭|饺子|炸鸡|鸡排饭/);
+assert.equal(daily.getState().lastStrategy, 'food-choice');
+assert.match(daily.respond('告诉我吃什么'), /面|盖饭|饺子|炸鸡|鸡排饭/);
+assert.equal(daily.getState().lastStrategy, 'food-choice');
 assert.doesNotMatch(daily.respond('什么？'), /没完全接住|换一种说法/);
 
 const ordinary = createEngine();
