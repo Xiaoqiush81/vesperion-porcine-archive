@@ -48,4 +48,5 @@ export const PIGLIZA_ACTS = [
   { id:'generalize', priority:9, markers:['所有人','总是','从来','每次'] },
   { id:'ask-bot', priority:8, markers:['你是','你会','你能','你觉得','你想'] },
   { id:'recall', priority:4, markers:['以前','曾经','记得'] },
+  { id:'open-question', priority:3, patterns:[/[？?]$/u] },
 ];

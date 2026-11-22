@@ -24,11 +24,17 @@ assert.deepEqual(JSON.parse(normalized.entries.get(ARCHIVE_KEYS.pigliza)), pigli
 
 const groundedArchive = structuredClone(archive);
 groundedArchive.data.pigliza.engine.grounding = {
-  terms:[{ key:'蓝签', term:'蓝签', meaning:'待复核' }], language:'zh', samples:4,
+  terms:[{ key:'蓝签', term:'蓝签', meaning:'待复核' }], bias:{ 'topic-open':4 }, locale:'zh', samples:4,
   meanLength:8.5, style:'brief', mode:'casual',
 };
 assert.deepEqual(JSON.parse(normalizeArchive(groundedArchive).entries.get(ARCHIVE_KEYS.pigliza)).engine.grounding,
   groundedArchive.data.pigliza.engine.grounding);
+const previousGrounding = structuredClone(groundedArchive);
+previousGrounding.data.pigliza.engine.grounding = {
+  terms:[], language:'zh', samples:1, meanLength:6, style:'normal', mode:'adaptive',
+};
+assert.deepEqual(JSON.parse(normalizeArchive(previousGrounding).entries.get(ARCHIVE_KEYS.pigliza)).engine.grounding,
+  { terms:[], bias:{}, locale:'zh', samples:1, meanLength:6, style:'normal', mode:'adaptive' });
 
 const withoutLastGroup = structuredClone(archive);
 delete withoutLastGroup.data.pigliza.engine.lastGroup;

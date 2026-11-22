@@ -1,6 +1,6 @@
 const CONTROL = /[\u0000-\u001f\u007f]/gu;
 const EDGE_NOISE = /^(?:我觉得|我认为|我感觉|感觉自己|觉得自己|都觉得|觉得|认为|所有人|主要是|其实是|说的是|已经不|不再|没那么|我|自己|自我|就是|因为|由于|关于|还有|但是|可是|而且|然后|又|也|都|很|真的|有点|最近|今天|现在|对|被)+|(?:让我|使我|感觉|觉得|好大|很大|太大|了|呢|啊|呀|吧|惹)+$/gu;
-const EMPTY_TOPICS = new Set(['','自己','自我','这','这个','事情','感觉','好大','很大','太大']);
+const EMPTY_TOPICS = new Set(['','自己','自我','这','这个','事情','感觉','好','好大','很大','太大']);
 const CONTINUATION = /^(?:主要是|就是|其实是|说的是|至于|它|这件事|那件事|这个|那个)/u;
 const REFERENCE = /^(?:它|这件事|那件事|这个|那个)/u;
 const GENERIC_TOPICS = new Set(['它','这','这个','那','那个','这件事','那件事']);
@@ -67,15 +67,21 @@ function frameScore(frame) {
 
 export function analyzePiglizaText(source, data) {
   const text = normalizePiglizaText(source);
-  const frames = splitPiglizaClauses(text).map((clause, index) => {
+  const clauses = splitPiglizaClauses(text), openQuestion = data.acts.find(act => act.id === 'open-question');
+  const frames = clauses.map((clause, index) => {
     const concepts = findTerms(clause, data.concepts), acts = findTerms(clause, data.acts);
+    if (openQuestion && index === clauses.length - 1 && /[？?]\s*$/u.test(text)
+      && !acts.some(act => act.id === 'open-question')) acts.push({ ...openQuestion, term:'?', index:clause.length });
+    acts.sort((a, b) => b.priority - a.priority || b.term.length - a.term.length || a.index - b.index);
     const primary = concepts[0] || null;
     const act = acts[0] || (!primary ? { id:'statement', priority:1, term:'', index:0 } : null);
     const negated = conceptNegated(clause, primary);
     const context = primary?.kind === 'affect' ? concepts.find(item => ['context','relation'].includes(item.kind)) : null;
     const around = primary ? topicAround(clause, primary) : '';
     const usableAround = !negated && around && !/(?:不知道|为什么|让我|使我)/u.test(around);
-    const rawTopic = usableAround ? around : context?.term
+    const questionTopic = act?.id === 'open-question'
+      ? cleanTopic(clause.slice(0, act.index).replace(/(?:是什么|为什么|怎么|如何)$/u, '')) : '';
+    const rawTopic = usableAround ? around : questionTopic || context?.term
       || (negated ? primary?.topic : around)
       || (primary ? (primary.term.length >= 4 ? primary.term : primary.topic) : act ? cleanTopic(clause.slice(act.index + act.term.length)) : '');
     const continuation = CONTINUATION.test(clause);

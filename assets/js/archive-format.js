@@ -76,11 +76,15 @@ function piglizaSession(value) {
       object(item, '猪莉莎术语');
       return { key:string(item.key,80,'猪莉莎术语键',true), term:string(item.term,80,'猪莉莎术语',true), meaning:string(item.meaning,320,'猪莉莎术语含义',true) };
     });
-    if (!['zh','en'].includes(grounding.language) || !['brief','normal'].includes(grounding.style)
-      || !['casual','adaptive'].includes(grounding.mode) || !Number.isInteger(grounding.samples)
+    const locale = grounding.locale || grounding.language;
+    const bias = object(grounding.bias ?? {}, '猪莉莎策略偏好');
+    if (Object.keys(bias).length > 40 || Object.entries(bias).some(([key, score]) => key.length > 80
+      || typeof score !== 'number' || !Number.isFinite(score) || score < -24 || score > 24)) fail('猪莉莎策略偏好');
+    if (!['zh','en','unknown'].includes(locale) || !['brief','normal'].includes(grounding.style)
+      || !['casual','adaptive','reflective'].includes(grounding.mode) || !Number.isInteger(grounding.samples)
       || grounding.samples < 0 || grounding.samples > 100000 || typeof grounding.meanLength !== 'number'
       || !Number.isFinite(grounding.meanLength) || grounding.meanLength < 0 || grounding.meanLength > 1200) fail('猪莉莎共同语境');
-    normalizedEngine.grounding = { terms, language:grounding.language, samples:grounding.samples,
+    normalizedEngine.grounding = { terms, bias:{ ...bias }, locale, samples:grounding.samples,
       meanLength:grounding.meanLength, style:grounding.style, mode:grounding.mode };
   }
   return { version:1, messages, engine:normalizedEngine };

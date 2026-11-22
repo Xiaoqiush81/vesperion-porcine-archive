@@ -1,5 +1,5 @@
-import { PIGLIZA_ACTS, PIGLIZA_CONCEPTS, PIGLIZA_COPY } from './pigliza-lexicon.js?v=20261122-pigliza-6';
-import { PIGLIZA_STRATEGIES } from './pigliza-realizer.js?v=20261122-pigliza-6';
+import { PIGLIZA_ACTS, PIGLIZA_CONCEPTS, PIGLIZA_COPY } from './pigliza-lexicon.js?v=20261122-pigliza-7';
+import { PIGLIZA_STRATEGIES } from './pigliza-realizer.js?v=20261122-pigliza-7';
 
 // Public data bundle kept stable for the engine constructor and experiments.
 export const PIGLIZA_DATA = Object.freeze({

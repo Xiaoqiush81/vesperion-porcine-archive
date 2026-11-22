@@ -25,6 +25,7 @@ const migrated = new PiglizaEngine(PIGLIZA_DATA, { random:() => 0 });
 migrated.setState({ memory:[JSON.stringify({ termKey:'蓝签', meaning:'旧定义', topic:'蓝签' })] });
 assert.equal(migrated.getState().memory.length, 0);
 assert.match(migrated.respond('蓝签是什么意思？'), /旧定义/);
+assert.match(glossary.respond('今天蓝签好多'), /蓝签/);
 
 const casual = new PiglizaEngine(PIGLIZA_DATA, { random:() => 0 });
 casual.respond('别分析我');
@@ -32,6 +33,12 @@ assert.doesNotMatch(casual.respond('我今天焦虑死了'), /事实|猜测|最�
 casual.respond('恢复自动判断');
 casual.respond('我今天焦虑死了');
 assert.notEqual(casual.getState().lastStrategy, 'casual-follow');
+
+const adaptive = new PiglizaEngine(PIGLIZA_DATA, { random:() => 0 });
+adaptive.respond('我最近考试压力很大');
+const rejectedStrategy = adaptive.getState().lastStrategy;
+adaptive.respond('别这么问');
+assert.equal(adaptive.getState().grounding.bias[rejectedStrategy], -8);
 
 const english = new PiglizaEngine(PIGLIZA_DATA, { random:() => 0 });
 assert.match(english.respond('I had a long day.'), /listening|next/i);

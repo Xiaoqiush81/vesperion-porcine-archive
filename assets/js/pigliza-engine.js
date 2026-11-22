@@ -1,7 +1,7 @@
-import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-6';
-import { selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-6';
-import { realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-6';
-import { createPiglizaGrounding, groundPiglizaTurn, languageFallback, observePiglizaSpeaker } from './pigliza-grounding.js?v=20261122-pigliza-6';
+import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-7';
+import { selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-7';
+import { realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-7';
+import { adaptPiglizaTurn, createPiglizaGrounding, foreignPiglizaReply, groundPiglizaAnalysis } from './pigliza-grounding.js?v=20261122-pigliza-7';
 
 const DEFAULT_MEMORY_SIZE = 12;
 export { reflectPorcinePhrase };
@@ -58,18 +58,18 @@ export class PiglizaEngine {
       return this.pick('farewell', this.data.farewells);
     }
     if (this.data.crisisTerms.some(term => source.includes(term))) return this.data.crisisReply;
-    observePiglizaSpeaker(this.grounding, source);
-    const grounded = groundPiglizaTurn(this.grounding, source);
-    if (grounded) {
-      this.activeFrame = {topic:grounded.topic, act:'definition'};
-      this.lastStrategy = 'definition';
+    const adapted = adaptPiglizaTurn(this.grounding, source, this.lastStrategy);
+    if (adapted) {
+      this.activeFrame = {topic:adapted.topic, act:adapted.strategy};
+      this.lastStrategy = adapted.strategy;
       this.turn += 1;
-      return grounded.reply;
+      return adapted.reply;
     }
-    const otherLanguage = languageFallback(this.grounding, source);
+    const otherLanguage = foreignPiglizaReply(this.grounding, source);
     if (otherLanguage) { this.lastStrategy = 'language-fallback'; this.turn += 1; return otherLanguage; }
 
-    const analysis = contextualizePiglizaAnalysis(analyzePiglizaText(source, this.data), this.activeFrame, this.data);
+    const analysis = groundPiglizaAnalysis(contextualizePiglizaAnalysis(
+      analyzePiglizaText(source, this.data), this.activeFrame, this.data), this.grounding);
     const plan = selectPiglizaPlan(analysis, this, this.data);
     let reply;
     if (plan?.strategy.id === 'social-follow' && this.activeFrame?.act === 'recall') {
