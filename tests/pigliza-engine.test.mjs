@@ -41,5 +41,6 @@ assert.deepEqual(restored.getState(), state);
 const legacyState = createEngine();
 legacyState.setState({ turn:7, memory:[], lastChoices:{} });
 assert.deepEqual(legacyState.getState().dialogue, { concept:null, topic:'', depth:0 });
+assert.deepEqual(legacyState.getState().board, { focus:{ topic:'', concept:null }, pending:null });
 
 console.log('pigliza engine tests passed');

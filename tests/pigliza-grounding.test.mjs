@@ -44,3 +44,5 @@ const english = new PiglizaEngine(PIGLIZA_DATA, { random:() => 0 });
 assert.match(english.respond('I had a long day.'), /listening|next/i);
 english.respond('ETA means estimated arrival');
 assert.match(english.respond('What does ETA mean?'), /estimated arrival/i);
+assert.match(new PiglizaEngine(PIGLIZA_DATA, { random:() => 0 }).respond('What should I eat?'), /PIGLIZA chooses.*noodles/i);
+assert.match(new PiglizaEngine(PIGLIZA_DATA, { random:() => 0 }).respond('Pizza or pasta?'), /PIGLIZA chooses.*Pizza/i);

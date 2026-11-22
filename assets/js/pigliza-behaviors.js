@@ -15,8 +15,6 @@ export const PIGLIZA_BEHAVIORS = [
     respond:{ id:'social-ack', weight:124, lead:'neutral', templates:['好，这一点先记下。','嗯哼，猪莉莎收到。','可以，继续往下说。'] } },
   { id:'disagree', recognize:{ priority:31, patterns:[/^(?:不|不是|没有|才不是|不对)$/u] },
     respond:{ id:'social-disagree', weight:124, lead:'neutral', templates:['好，那猪莉莎刚才理解错了。小猪纠正哪一部分？','收到，不是那样。正确版本是什么？','撤回刚才的猜法，小猪重新说。'] } },
-  { id:'food-choice', recognize:{ priority:32, markers:['吃什么','吃啥','吃点什么','吃点啥'] },
-    respond:{ id:'food-choice', weight:132, lead:'bright', templates:['猪莉莎拍板：今天吃一碗热乎乎的面，再加颗蛋。','今天交给猪莉莎决定——吃盖饭，有主食有肉，稳稳当当。','饭饭指令已经打印：去吃饺子，煎饺水饺都批准。','猪莉莎选择炸鸡或鸡排饭。今天就吃点香香脆脆的。'] } },
   { id:'food-talk', recognize:{ priority:30, markers:['想吃','好饿','饿了','点外卖','叫外卖','吃饭','外卖','奶茶'] },
     respond:{ id:'food-chat', weight:122, lead:'bright', templates:['吃。小猪现在最想点什么？','外卖提案通过。先选咸的、甜的，还是喝的？','猪莉莎投赞成票：饭饭问题应该立即处理。'] } },
   { id:'bored', recognize:{ priority:30, markers:['好无聊','无聊死了','无聊'] },

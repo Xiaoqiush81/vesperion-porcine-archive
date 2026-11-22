@@ -1,3 +1,5 @@
+import { PIGLIZA_LOCALES } from './pigliza-locales.js?v=20261122-pigliza-8';
+
 export const PIGLIZA_LEADS = {
   neutral:['','咪。','猪莉莎把这句话先放在桌面上。'],
   soft:['','先不急。','咪，猪莉莎听见了。'],
@@ -71,6 +73,16 @@ export function realizePiglizaPlan({ frame, strategy }, state, random = Math.ran
   const lead = choose(leads, state.lastChoices[leadKey], random);
   state.lastChoices[templateKey] = template.index; state.lastChoices[leadKey] = lead.index;
   return [lead.value, fill(template.value, slots)].filter(Boolean).join('');
+}
+
+export function realizePiglizaMoves(plan, state, random = Math.random) {
+  const pack = PIGLIZA_LOCALES[state.grounding?.locale] || PIGLIZA_LOCALES.zh;
+  return plan.moves.map(move => {
+    const templates = pack.moves?.[move.type] || PIGLIZA_LOCALES.zh.moves[move.type] || [''];
+    const selected = choose(templates, state.lastChoices[`move:${move.type}`], random);
+    state.lastChoices[`move:${move.type}`] = selected.index;
+    return fill(selected.value, move.slots || {});
+  }).filter(Boolean).join('');
 }
 
 export function estimatePiglizaResponseSpace(data) {

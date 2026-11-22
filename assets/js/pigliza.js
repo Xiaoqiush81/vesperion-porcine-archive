@@ -1,5 +1,5 @@
-import { PiglizaEngine } from './pigliza-engine.js?v=20261122-pigliza-9';
-import { PIGLIZA_DATA } from './pigliza-rules.js?v=20261122-pigliza-9';
+import { PiglizaEngine } from './pigliza-engine.js?v=20261122-pigliza-10';
+import { PIGLIZA_DATA } from './pigliza-rules.js?v=20261122-pigliza-10';
 
 export const PIGLIZA_STORAGE_KEY = 'pigdex-pigliza-v1';
 export const PIGLIZA_AVATAR_URL = 'assets/cards/vpa-081-pigliza.webp?v=20261122-2';

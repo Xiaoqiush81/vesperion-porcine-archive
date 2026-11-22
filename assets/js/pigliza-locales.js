@@ -13,6 +13,11 @@ const ZH = {
   unknownTerm:term => `“${term}”在你这里具体指什么？`,
   knownTerm:(term, meaning) => `按你的用法，“${term}”指的是“${meaning}”。`,
   fallback:{ question:'猪莉莎还不能可靠回答这个问题。最需要解释的是哪一部分？', statement:'猪莉莎听着。然后呢？' },
+  operations:[{ id:'choose', patterns:[/(?:帮|替|给)我选|选哪(?:个|一个)|(?:吃|穿|玩|看)(?:什么|啥)|.+(?:还是|或者|或是).+/u] }],
+  moves:{
+    choice:['猪莉莎拍板：{value}。','不用继续纠结惹，选“{value}”。','终端已经替小猪决定：{value}。'],
+    'choice-clarify':['可以。把候选项，或者要选的那类东西告诉猪莉莎。','猪莉莎可以拍板；小猪正在从什么里面选？'],
+  },
 };
 
 const EN = {
@@ -30,6 +35,11 @@ const EN = {
   unknownTerm:term => `What does “${term}” mean in your context?`,
   knownTerm:(term, meaning) => `In your usage, “${term}” means “${meaning}”.`,
   fallback:{ question:'I may not understand that question reliably yet. Which part should we clarify first?', statement:'I’m listening. What happened next?', brief:'Got it. What happened next?' },
+  operations:[{ id:'choose', patterns:[/choose(?: one)? for me|what should i (?:eat|wear|play|watch)|which (?:one )?should i choose|.+\s+(?:or|versus|vs\.?)\s+.+/iu] }],
+  moves:{
+    choice:['PIGLIZA chooses: {value}.','Decision printed: {value}.'],
+    'choice-clarify':['Give PIGLIZA the options or the kind of thing you want chosen.'],
+  },
 };
 
 export const PIGLIZA_LOCALES = Object.freeze({ zh:ZH, en:EN });

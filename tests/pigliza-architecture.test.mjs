@@ -74,10 +74,17 @@ const daily = createEngine();
 assert.match(daily.respond('想吃猪猪'), /吃|外卖|饭/);
 assert.match(daily.respond('点外卖！'), /外卖|咸|甜|饭/);
 assert.match(daily.respond('今天吃什么！'), /面|盖饭|饺子|炸鸡|鸡排饭/);
-assert.equal(daily.getState().lastStrategy, 'food-choice');
+assert.equal(daily.getState().lastStrategy, 'operation:choose');
 assert.match(daily.respond('告诉我吃什么'), /面|盖饭|饺子|炸鸡|鸡排饭/);
-assert.equal(daily.getState().lastStrategy, 'food-choice');
+assert.equal(daily.getState().lastStrategy, 'operation:choose');
 assert.doesNotMatch(daily.respond('什么？'), /没完全接住|换一种说法/);
+
+const chooser = createEngine();
+assert.match(chooser.respond('炸鸡还是汉堡？'), /炸鸡|汉堡/);
+assert.match(chooser.respond('帮我选一个'), /候选|从什么里面选/);
+assert.deepEqual(chooser.getState().board.pending, { operation:'choose', slot:'choice' });
+assert.match(chooser.respond('吃的'), /面|盖饭|饺子|炸鸡|鸡排饭/);
+assert.equal(chooser.getState().board.pending, null);
 
 const ordinary = createEngine();
 ordinary.respond('今天买了个新杯子');

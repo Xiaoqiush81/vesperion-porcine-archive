@@ -1,6 +1,7 @@
 import { compilePiglizaBehaviors, PIGLIZA_BEHAVIORS } from './pigliza-behaviors.js?v=20261122-pigliza-9';
+import { PIGLIZA_CAPABILITIES } from './pigliza-capabilities.js?v=20261122-pigliza-1';
 import { PIGLIZA_ACTS, PIGLIZA_CONCEPTS, PIGLIZA_COPY } from './pigliza-lexicon.js?v=20261122-pigliza-8';
-import { PIGLIZA_STRATEGIES } from './pigliza-realizer.js?v=20261122-pigliza-8';
+import { PIGLIZA_STRATEGIES } from './pigliza-realizer.js?v=20261122-pigliza-9';
 
 function assertUnique(items, label) {
   const seen = new Set();
@@ -20,12 +21,13 @@ function indexStrategies(strategies) {
   return Object.freeze({ generic:Object.freeze(generic), byAct:Object.freeze(byAct) });
 }
 
-export function compilePiglizaData({ copy = {}, concepts = [], acts = [], strategies = [], behaviors = [] }) {
+export function compilePiglizaData({ copy = {}, concepts = [], acts = [], strategies = [], behaviors = [], capabilities = [] }) {
   const compiled = compilePiglizaBehaviors(behaviors);
   const allConcepts = [...concepts], allActs = [...acts, ...compiled.acts];
   const allStrategies = [...strategies, ...compiled.strategies];
   assertUnique(allConcepts, 'concept'); assertUnique(allActs, 'act'); assertUnique(allStrategies, 'strategy');
-  return Object.freeze({ ...copy, concepts:Object.freeze(allConcepts), acts:Object.freeze(allActs),
+  assertUnique(capabilities, 'capability');
+  return Object.freeze({ ...copy, concepts:Object.freeze(allConcepts), acts:Object.freeze(allActs), capabilities:Object.freeze([...capabilities]),
     strategies:Object.freeze(allStrategies), strategyIndex:indexStrategies(allStrategies) });
 }
 
@@ -34,8 +36,9 @@ export function compilePiglizaData({ copy = {}, concepts = [], acts = [], strate
 export function extendPiglizaData(data, pack = {}) {
   return compilePiglizaData({ copy:{ ...data, ...(pack.copy || {}) },
     concepts:[...data.concepts, ...(pack.concepts || [])], acts:[...data.acts, ...(pack.acts || [])],
-    strategies:[...data.strategies, ...(pack.strategies || [])], behaviors:pack.behaviors || [] });
+    strategies:[...data.strategies, ...(pack.strategies || [])], behaviors:pack.behaviors || [],
+    capabilities:[...data.capabilities, ...(pack.capabilities || [])] });
 }
 
 export const PIGLIZA_DATA = compilePiglizaData({ copy:PIGLIZA_COPY, concepts:PIGLIZA_CONCEPTS,
-  acts:PIGLIZA_ACTS, strategies:PIGLIZA_STRATEGIES, behaviors:PIGLIZA_BEHAVIORS });
+  acts:PIGLIZA_ACTS, strategies:PIGLIZA_STRATEGIES, behaviors:PIGLIZA_BEHAVIORS, capabilities:PIGLIZA_CAPABILITIES });
