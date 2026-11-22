@@ -5,6 +5,7 @@ export const PIGLIZA_LEADS = {
 };
 
 export const PIGLIZA_STRATEGIES = [
+  { id:'relief-change', negated:true, valence:['negative'], weight:96, stages:['clarify','deepen','contrast','action'], lead:'bright', templates:['听起来“{topic}”已经轻了一点。是什么发生了变化？','小猪是什么时候发现这份{feeling}没有之前那么重了？','这次缓下来，有什么是小猪自己做对了的？'] },
   { id:'uncertainty', acts:['uncertain'], weight:90, stages:['clarify'], lead:'soft', templates:['不知道也可以。现在最接近的感觉是什么？','如果不用说得准确，小猪能先说一点点吗？','是什么让“{topic}”这么难说清？'] },
   { id:'cause-check', acts:['cause','result'], weight:82, stages:['deepen','contrast'], lead:'neutral', templates:['“{topic}”是主要原因，还是其中一个原因？','如果暂时拿走“{topic}”，事情会变得不一样吗？','小猪有多确定关键就在“{topic}”？'] },
   { id:'desire', acts:['desire'], weight:78, stages:['clarify','action'], lead:'neutral', templates:['如果真的得到“{topic}”，对小猪来说会改变什么？','是什么挡在小猪和“{topic}”之间？','小猪期待“{topic}”带来什么感觉？'] },

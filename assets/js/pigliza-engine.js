@@ -1,6 +1,6 @@
-import { analyzePiglizaText, compactFrame, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-3';
-import { selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-3';
-import { realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-3';
+import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-4';
+import { selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-4';
+import { realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-4';
 
 const DEFAULT_MEMORY_SIZE = 12;
 export { reflectPorcinePhrase };
@@ -34,6 +34,7 @@ export class PiglizaEngine {
     this.lastChoices = {};
     this.lastGroup = null;
     this.lastStrategy = null;
+    this.activeFrame = null;
     this.turn = 0;
     this.quit = false;
   }
@@ -56,7 +57,7 @@ export class PiglizaEngine {
     }
     if (this.data.crisisTerms.some(term => source.includes(term))) return this.data.crisisReply;
 
-    const analysis = analyzePiglizaText(source, this.data);
+    const analysis = contextualizePiglizaAnalysis(analyzePiglizaText(source, this.data), this.activeFrame, this.data);
     const plan = selectPiglizaPlan(analysis, this, this.data);
     let reply;
     if (plan) {
@@ -77,6 +78,7 @@ export class PiglizaEngine {
     const compact = compactFrame(frame);
     if (!compact || (!compact.topic && !compact.concept && compact.act !== 'recall')) return;
     const value = JSON.stringify(compact);
+    this.activeFrame = compact;
     if (this.memory.at(-1) === value) return;
     this.memory.push(value);
     if (this.memory.length > this.memorySize) this.memory.shift();
@@ -107,6 +109,7 @@ export class PiglizaEngine {
     this.lastGroup = typeof state.lastGroup === 'string' ? state.lastGroup : null;
     this.lastStrategy = typeof state.lastStrategy === 'string' ? state.lastStrategy : null;
     this.turn = Number.isInteger(state.turn) && state.turn >= 0 ? state.turn : 0;
+    this.activeFrame = parseMemory(this.memory.at(-1));
     this.quit = Boolean(state.quit);
   }
 }

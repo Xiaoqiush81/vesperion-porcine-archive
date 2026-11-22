@@ -1,6 +1,11 @@
 const CONTROL = /[\u0000-\u001f\u007f]/gu;
-const EDGE_NOISE = /^(?:我觉得|我认为|我感觉|感觉自己|觉得自己|都觉得|觉得|认为|所有人|我|自己|自我|就是|因为|由于|关于|还有|但是|可是|而且|然后|又|也|都|很|真的|有点|最近|今天|现在|对|被)+|(?:让我|使我|感觉|觉得|好大|很大|太大|了|呢|啊|呀|吧|惹)+$/gu;
+const EDGE_NOISE = /^(?:我觉得|我认为|我感觉|感觉自己|觉得自己|都觉得|觉得|认为|所有人|主要是|其实是|说的是|已经不|不再|没那么|我|自己|自我|就是|因为|由于|关于|还有|但是|可是|而且|然后|又|也|都|很|真的|有点|最近|今天|现在|对|被)+|(?:让我|使我|感觉|觉得|好大|很大|太大|了|呢|啊|呀|吧|惹)+$/gu;
 const EMPTY_TOPICS = new Set(['','自己','自我','这','这个','事情','感觉','好大','很大','太大']);
+const CONTINUATION = /^(?:主要是|就是|其实是|说的是|至于|它|这件事|那件事|这个|那个)/u;
+const REFERENCE = /^(?:它|这件事|那件事|这个|那个)/u;
+const GENERIC_TOPICS = new Set(['它','这','这个','那','那个','这件事','那件事']);
+const SENTENCE_SEGMENTER = typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function'
+  ? new Intl.Segmenter('zh-CN', { granularity:'sentence' }) : null;
 
 export const normalizePiglizaText = value => String(value ?? '').replace(CONTROL, ' ').replace(/[ \t]+/g, ' ').trim();
 
@@ -11,7 +16,7 @@ export function reflectPorcinePhrase(value) {
 }
 
 function sentenceParts(text) {
-  if (typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function') return [...new Intl.Segmenter('zh-CN', { granularity:'sentence' }).segment(text)].map(item => item.segment);
+  if (SENTENCE_SEGMENTER) return [...SENTENCE_SEGMENTER.segment(text)].map(item => item.segment);
   return text.split(/[。！？!?\n]+/u);
 }
 
@@ -40,7 +45,14 @@ function cleanTopic(value) {
 function topicAround(text, match) {
   const before = cleanTopic(text.slice(0, match.index));
   const after = cleanTopic(text.slice(match.index + match.term.length));
+  if (before.endsWith('的')) return `${before}${match.term}`;
   return after && !/^(?:好|大|小|多|少|重|严重)$/u.test(after) ? after : before;
+}
+
+function conceptNegated(text, concept) {
+  if (!concept) return false;
+  const before = text.slice(Math.max(0, concept.index - 5), concept.index);
+  return /(?:不|没|没有|不再|已经不|没那么)$/u.test(before);
 }
 
 function frameScore(frame) {
@@ -52,17 +64,34 @@ export function analyzePiglizaText(source, data) {
   const frames = splitPiglizaClauses(text).map((clause, index) => {
     const concepts = findTerms(clause, data.concepts), acts = findTerms(clause, data.acts);
     const primary = concepts[0] || null, act = acts[0] || null;
+    const negated = conceptNegated(clause, primary);
     const context = primary?.kind === 'affect' ? concepts.find(item => ['context','relation'].includes(item.kind)) : null;
     const around = primary ? topicAround(clause, primary) : '';
-    const rawTopic = around && !/(?:不知道|为什么|让我|使我)/u.test(around)
-      ? around : context?.term || around || (primary ? (primary.term.length >= 4 ? primary.term : primary.topic) : act ? cleanTopic(clause.slice(act.index + act.term.length)) : '');
+    const usableAround = !negated && around && !/(?:不知道|为什么|让我|使我)/u.test(around);
+    const rawTopic = usableAround ? around : context?.term
+      || (negated ? primary?.topic : around)
+      || (primary ? (primary.term.length >= 4 ? primary.term : primary.topic) : act ? cleanTopic(clause.slice(act.index + act.term.length)) : '');
+    const continuation = CONTINUATION.test(clause);
     const frame = { text:clause, index, concepts:concepts.map(({ id, term }) => ({ id, term })), primary, act,
       acts:acts.map(({ id }) => id), topic:reflectPorcinePhrase(rawTopic || primary?.term || primary?.topic || ''),
-      negated:/(?:不|没|无法|不能)/u.test(clause), intensity:(clause.match(/非常|特别|太|超级|真的|极其|越来越/gu) || []).length,
+      negated, continuation, continuationTopic:continuation && !REFERENCE.test(clause) ? reflectPorcinePhrase(cleanTopic(clause.replace(CONTINUATION, ''))) : '',
+      intensity:(clause.match(/非常|特别|太|超级|真的|极其|越来越/gu) || []).length,
     };
     return { ...frame, score:frameScore(frame) };
   }).sort((a, b) => b.score - a.score);
   return { text, frames, primary:frames[0] || null };
+}
+
+export function contextualizePiglizaAnalysis(analysis, context, data) {
+  if (!context) return analysis;
+  const inherited = data.concepts.find(concept => concept.id === context.concept);
+  const frames = analysis.frames.map(frame => {
+    if (!frame.continuation && !GENERIC_TOPICS.has(frame.topic)) return frame;
+    const primary = frame.primary || inherited || null;
+    const topic = frame.continuationTopic || context.topic || frame.topic;
+    return { ...frame, primary, topic, score:frame.score + (primary?.priority || 0) * 10 + 12 };
+  }).sort((a, b) => b.score - a.score);
+  return { ...analysis, frames, primary:frames[0] || null };
 }
 
 export function compactFrame(frame) {

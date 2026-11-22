@@ -2,6 +2,8 @@ const STAGES = ['clarify','deepen','contrast','action'];
 export const piglizaStageForTurn = turn => STAGES[Math.max(0, turn) % STAGES.length];
 
 function matches(strategy, frame) {
+  if (strategy.negated !== undefined && strategy.negated !== frame.negated) return false;
+  if (frame.negated && strategy.negated !== true && strategy.valence) return false;
   if (strategy.acts && !strategy.acts.some(act => frame.acts.includes(act))) return false;
   if (strategy.kinds && !strategy.kinds.includes(frame.primary?.kind)) return false;
   if (strategy.valence && !strategy.valence.includes(frame.primary?.valence)) return false;

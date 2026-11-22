@@ -26,6 +26,24 @@ const replies = Array.from({ length:4 }, () => progression.respond('最近考试
 assert.ok(new Set(replies).size >= 3);
 assert.equal(progression.getState().turn, 4);
 
+const relief = createEngine();
+relief.respond('我最近很焦虑');
+assert.match(relief.respond('但现在已经不焦虑了'), /轻|没有之前|缓/);
+
+const continuity = createEngine();
+continuity.respond('朋友最近不理我');
+assert.match(continuity.respond('就是昨天那件事'), /昨天|关系|对方/);
+
+const restoredContinuity = createEngine();
+restoredContinuity.respond('朋友最近不理我');
+const restoredContext = createEngine();
+restoredContext.setState(restoredContinuity.getState());
+assert.match(restoredContext.respond('就是昨天那件事'), /昨天|关系|对方/);
+
+const pronoun = createEngine();
+pronoun.respond('主要是明天的考试');
+assert.match(pronoun.respond('它让我喘不过气'), /考试|压力|喘不过气/);
+
 const corpus = [
   '学业压力…还有自我焦虑','爸爸，我最近学业压力很大','还有自我焦虑','这个问题很困难',
   '我想休息','我记得小时候下雨','所有人都觉得我很差','我很开心今天数学被老师夸了',
