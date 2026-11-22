@@ -57,6 +57,29 @@ export class PiglizaEngine {
     }
     if (this.data.crisisTerms.some(term => source.includes(term))) return this.data.crisisReply;
 
+    // Ground unfamiliar vocabulary in the speaker's own definition.
+    const definition = source.match(/^(?:(?:我们(?:这边|这里|行业里)|我说的)\s*)?([^，。！？?]{1,36}?)(?:是指|指的是)(.{1,160}?)[。！]?$/u)
+      || source.match(/^(.{1,36}?) means (.{1,160}?)[.!]?$/iu);
+    const question = source.match(/^(.{1,36}?)(?:是什么意思|指的是什么)[？?。]?$/u)
+      || source.match(/^what does (.{1,36}?) mean[?？]?$/iu);
+    if (definition || question) {
+      const term = (definition || question)[1].trim();
+      const key = term.normalize('NFKC').toLowerCase();
+      const english = / means |^what does /iu.test(source);
+      const index = this.memory.findIndex(value => parseMemory(value)?.termKey === key);
+      if (question && index < 0) return english ? 'What does that term mean in your context?' : '小猪说的这个词，在你那里具体指什么？';
+      const meaning = definition ? definition[2].trim() : parseMemory(this.memory[index]).meaning;
+      if (definition) {
+        if (index >= 0) this.memory.splice(index, 1);
+        this.memory.push(JSON.stringify({termKey:key, meaning, topic:term, act:'definition'}));
+        if (this.memory.length > this.memorySize) this.memory.shift();
+      }
+      this.activeFrame = {topic:term, act:'definition'};
+      this.lastStrategy = 'definition';
+      this.turn += 1;
+      return english ? 'In your usage, “' + term + '” means “' + meaning + '”.' : '按小猪的用法，“' + term + '”指的是“' + meaning + '”。';
+    }
+
     const analysis = contextualizePiglizaAnalysis(analyzePiglizaText(source, this.data), this.activeFrame, this.data);
     const plan = selectPiglizaPlan(analysis, this, this.data);
     let reply;
@@ -91,7 +114,7 @@ export class PiglizaEngine {
   }
 
   recall() {
-    const candidates = this.memory.map((value, index) => ({ value, index, frame:parseMemory(value) })).filter(item => item.frame);
+    const candidates = this.memory.map((value, index) => ({ value, index, frame:parseMemory(value) })).filter(item => item.frame && !item.frame.termKey);
     if (!candidates.length) return '';
     const chosen = candidates.reduce((best, item) => (item.frame.salience || 0) + item.index >= (best.frame.salience || 0) + best.index ? item : best);
     this.memory.splice(chosen.index, 1);
