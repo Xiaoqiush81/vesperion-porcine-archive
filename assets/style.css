@@ -2612,6 +2612,7 @@ html[data-faith-member="true"] .collection-switcher [data-room-target="faith"].i
 .pigliza-form .primary { min-width:104px; align-self:stretch; }
 .pigliza-form .primary:disabled,#piglizaInput:disabled { opacity:.48; cursor:not-allowed; }
 .pigliza-status { margin:0; padding:0 22px 18px; color:var(--muted); font-family:var(--cn-serif); font-size:12px; }
+.pigliza-status.is-thinking { color:var(--text-accent); }
 .pigliza-disclaimer { margin:16px 0 0; color:var(--muted); font-family:var(--cn-serif); font-size:13px; line-height:1.7; }
 @media (max-width:720px) {
   .pigliza-room { padding:66px 18px 88px; }

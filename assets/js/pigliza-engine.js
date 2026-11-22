@@ -5,10 +5,16 @@ const normalizeText = value => String(value ?? '')
   .replace(/[ \t]+/g, ' ')
   .trim();
 
-const splitSentences = text => text
-  .split(/[。！？!?；;\n]+/u)
-  .map(sentence => sentence.trim())
+const splitClauses = text => text
+  .split(/[。！？!?；;，,\n…]+/u)
+  .map(clause => clause.trim())
   .filter(Boolean);
+
+const FOCUS_TRIM = /^(?:我|自己|就是|因为|由于|关于|还有|但是|可是|而且|然后|又|也|很|真的|有点)+|(?:了|呢|啊|呀|吧|惹)+$/gu;
+
+function cleanFocus(value) {
+  return normalizeText(value).replace(FOCUS_TRIM, '').replace(/^[“”'"：:、\s]+|[“”'"：:、\s]+$/gu, '');
+}
 
 export function reflectPorcinePhrase(value) {
   const swaps = {
@@ -27,8 +33,41 @@ function choose(items, last, random) {
   return { value:items[index], index };
 }
 
-function fillTemplate(template, match) {
-  return template.replace(/\{(\d+)\}/g, (_, index) => reflectPorcinePhrase(match[Number(index)] || ''));
+function findLongestTerm(terms, text) {
+  let best = null;
+  for (const term of terms || []) {
+    if (text.includes(term) && (!best || term.length > best.length)) best = term;
+  }
+  return best;
+}
+
+function focusFromMatch(match, rule, group, term) {
+  const indices = rule.focus || Array.from({ length:match.length - 1 }, (_, index) => index + 1);
+  for (const index of indices) {
+    const focus = cleanFocus(match[index]);
+    if (focus && !rule.ignoreFocus?.includes(focus)) return reflectPorcinePhrase(focus);
+  }
+  return group.topic || term || '这件事';
+}
+
+function scoreCandidate(group, rule, clauseIndex, focus, lastGroup) {
+  const repeatedTopicPenalty = group.id === lastGroup ? 12 : 0;
+  return group.priority * 20 + clauseIndex * 3 + Math.min(focus.length, 12)
+    + (rule.weight || 0) - repeatedTopicPenalty;
+}
+
+function fillTemplate(template, match, focus) {
+  return template
+    .replace(/\{focus\}/g, focus)
+    .replace(/\{(\d+)\}/g, (_, index) => reflectPorcinePhrase(match[Number(index)] || ''));
+}
+
+function bestCandidate(candidates, predicate) {
+  let best = null;
+  for (const candidate of candidates) {
+    if (predicate(candidate) && (!best || candidate.score > best.score)) best = candidate;
+  }
+  return best;
 }
 
 export class PiglizaEngine {
@@ -43,6 +82,7 @@ export class PiglizaEngine {
   reset() {
     this.memory = [];
     this.lastChoices = {};
+    this.lastGroup = null;
     this.quit = false;
   }
 
@@ -60,29 +100,40 @@ export class PiglizaEngine {
       return this.pick('farewell', this.data.farewells).value;
     }
 
-    let deferred = false;
-    for (const sentence of splitSentences(source)) {
+    const candidates = [];
+    const clauses = splitClauses(source);
+    for (let clauseIndex = 0; clauseIndex < clauses.length; clauseIndex += 1) {
+      const clause = clauses[clauseIndex];
       for (const group of this.groups) {
-        if (group.terms?.length && !group.terms.some(term => sentence.includes(term))) continue;
+        const term = findLongestTerm(group.terms, clause);
+        if (group.terms?.length && !term) continue;
         for (let ruleIndex = 0; ruleIndex < group.rules.length; ruleIndex += 1) {
           const rule = group.rules[ruleIndex];
-          const match = sentence.match(rule.pattern);
+          const match = clause.match(rule.pattern);
           if (!match) continue;
-          const key = `${group.id}:${ruleIndex}`;
-          const selected = this.pick(key, rule.responses);
-          const reply = fillTemplate(selected.value, match);
-          if (rule.defer) {
-            this.remember(reply);
-            deferred = true;
-            continue;
-          }
-          return reply;
+          const focus = focusFromMatch(match, rule, group, term);
+          const score = scoreCandidate(group, rule, clauseIndex, focus, this.lastGroup);
+          candidates.push({ group, rule, ruleIndex, match, focus, score });
         }
       }
     }
 
+    const deferred = bestCandidate(candidates, candidate => candidate.rule.defer);
+    if (deferred) this.remember(this.renderCandidate(deferred));
+
+    const immediate = bestCandidate(candidates, candidate => !candidate.rule.defer);
+    if (immediate) {
+      this.lastGroup = immediate.group.id;
+      return this.renderCandidate(immediate);
+    }
     if (!deferred && this.memory.length) return this.memory.shift();
     return this.pick('fallback', this.data.fallbacks).value;
+  }
+
+  renderCandidate(candidate) {
+    const key = `${candidate.group.id}:${candidate.ruleIndex}`;
+    const selected = this.pick(key, candidate.rule.responses);
+    return fillTemplate(selected.value, candidate.match, candidate.focus);
   }
 
   pick(key, items) {
@@ -98,7 +149,7 @@ export class PiglizaEngine {
   }
 
   getState() {
-    return { memory:[...this.memory], lastChoices:{ ...this.lastChoices }, quit:this.quit };
+    return { memory:[...this.memory], lastChoices:{ ...this.lastChoices }, lastGroup:this.lastGroup, quit:this.quit };
   }
 
   setState(state) {
@@ -109,6 +160,7 @@ export class PiglizaEngine {
     this.lastChoices = state.lastChoices && typeof state.lastChoices === 'object'
       ? Object.fromEntries(Object.entries(state.lastChoices).filter(([, value]) => Number.isInteger(value)))
       : {};
+    this.lastGroup = typeof state.lastGroup === 'string' ? state.lastGroup : null;
     this.quit = Boolean(state.quit);
   }
 }

@@ -12,7 +12,7 @@ class MemoryStorage {
 const pigliza = {
   version:1,
   messages:[{ role:'bot', content:'咪。' }, { role:'user', content:'我今天好累' }],
-  engine:{ memory:['小猪刚才提到累。'], lastChoices:{ 'tired:0':1 }, quit:false },
+  engine:{ memory:['小猪刚才提到累。'], lastChoices:{ 'tired:0':1 }, lastGroup:'tired', quit:false },
 };
 const storage = new MemoryStorage({ [ARCHIVE_KEYS.pigliza]:JSON.stringify(pigliza) });
 const archive = createArchive(storage);
@@ -21,6 +21,10 @@ assert.deepEqual(archive.data.pigliza, pigliza);
 
 const normalized = normalizeArchive(archive);
 assert.deepEqual(JSON.parse(normalized.entries.get(ARCHIVE_KEYS.pigliza)), pigliza);
+
+const withoutLastGroup = structuredClone(archive);
+delete withoutLastGroup.data.pigliza.engine.lastGroup;
+assert.equal(JSON.parse(normalizeArchive(withoutLastGroup).entries.get(ARCHIVE_KEYS.pigliza)).engine.lastGroup, null);
 
 const legacy = structuredClone(archive);
 legacy.version = 2;

@@ -65,7 +65,8 @@ function piglizaSession(value) {
   const memory = list(engine.memory ?? [], 12, '猪莉莎记忆').map(item => string(item,1200,'猪莉莎记忆'));
   const choices = object(engine.lastChoices ?? {}, '猪莉莎选择记录');
   if (Object.keys(choices).length > 100 || Object.values(choices).some(choice => !Number.isInteger(choice) || choice < -1 || choice > 100)) fail('猪莉莎选择记录');
-  return { version:1, messages, engine:{ memory, lastChoices:{ ...choices }, quit:flag(engine.quit ?? false,'猪莉莎结束状态') } };
+  const lastGroup = engine.lastGroup == null ? null : string(engine.lastGroup,80,'猪莉莎上次话题',true);
+  return { version:1, messages, engine:{ memory, lastChoices:{ ...choices }, lastGroup, quit:flag(engine.quit ?? false,'猪莉莎结束状态') } };
 }
 
 export function normalizeArchive(archive) {

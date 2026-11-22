@@ -1,8 +1,14 @@
-import { PiglizaEngine } from './pigliza-engine.js?v=20261122-pigliza-1';
-import { PIGLIZA_DATA } from './pigliza-rules.js?v=20261122-pigliza-1';
+import { PiglizaEngine } from './pigliza-engine.js?v=20261122-pigliza-2';
+import { PIGLIZA_DATA } from './pigliza-rules.js?v=20261122-pigliza-2';
 
 export const PIGLIZA_STORAGE_KEY = 'pigdex-pigliza-v1';
 const MAX_MESSAGES = 40;
+const MIN_REPLY_DELAY = 650;
+const MAX_REPLY_DELAY = 1600;
+
+export function getPiglizaReplyDelay(message) {
+  return Math.min(MAX_REPLY_DELAY, Math.max(MIN_REPLY_DELAY, 460 + String(message ?? '').length * 18));
+}
 
 function readSession(storage = globalThis.localStorage) {
   try {
@@ -51,13 +57,18 @@ export function initPigliza() {
   const saved = readSession();
   const messages = saved?.messages?.length ? [...saved.messages] : [{ role:'bot', content:engine.getGreeting() }];
   if (saved?.engine) engine.setState(saved.engine);
+  let busy = false;
+  let turn = 0;
 
   const render = () => {
     log.replaceChildren(...messages.map(messageNode));
     log.scrollTop = log.scrollHeight;
-    input.disabled = engine.quit;
-    send.disabled = engine.quit;
-    status.textContent = engine.quit
+    input.disabled = engine.quit || busy;
+    send.disabled = engine.quit || busy;
+    status.classList.toggle('is-thinking', busy);
+    status.textContent = busy
+      ? '猪莉莎正在翻找规则卡片……'
+      : engine.quit
       ? '本次谈话已经结束；点“重新开始”可唤醒猪莉莎。'
       : '本地规则机正在倾听 · 不连接 AI 或远端服务';
   };
@@ -70,13 +81,22 @@ export function initPigliza() {
   form.addEventListener('submit', event => {
     event.preventDefault();
     const value = input.value.trim();
-    if (!value || engine.quit) return;
+    if (!value || engine.quit || busy) return;
     append('user', value);
-    append('bot', engine.respond(value));
     input.value = '';
+    const reply = engine.respond(value);
+    const currentTurn = ++turn;
+    busy = true;
     saveSession(messages, engine);
     render();
-    if (!engine.quit) input.focus();
+    window.setTimeout(() => {
+      if (currentTurn !== turn) return;
+      append('bot', reply);
+      busy = false;
+      saveSession(messages, engine);
+      render();
+      if (!engine.quit) input.focus();
+    }, getPiglizaReplyDelay(reply));
   });
 
   input.addEventListener('keydown', event => {
@@ -87,6 +107,8 @@ export function initPigliza() {
   });
 
   reset.addEventListener('click', () => {
+    turn += 1;
+    busy = false;
     engine.reset();
     messages.splice(0, messages.length, { role:'bot', content:engine.getGreeting() });
     saveSession(messages, engine);

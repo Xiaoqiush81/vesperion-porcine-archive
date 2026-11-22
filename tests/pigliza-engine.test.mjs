@@ -12,6 +12,17 @@ assert.match(engine.respond('我觉得自己什么都没做好'), /什么都没�
 assert.match(engine.respond('我今天真的好累'), /猪饼|身体|卸下/);
 assert.match(engine.respond('我不想活了'), /规则谈话机/);
 
+const compoundReply = createEngine().respond('学业压力…还有自我焦虑');
+assert.doesNotMatch(compoundReply, /“”/);
+assert.match(compoundReply, /压力|焦虑|不安|学业/);
+assert.doesNotMatch(createEngine().respond('还有自我焦虑'), /“自我”/);
+
+const stressedWithFather = createEngine().respond('爸爸，我最近学业压力很大');
+assert.match(stressedWithFather, /压力/);
+assert.doesNotMatch(stressedWithFather, /粑粑和/);
+
+assert.doesNotMatch(createEngine().respond('这个问题很困难'), /猪饼|身体没电|卸下/);
+
 const first = engine.respond('我想休息');
 const second = engine.respond('我想休息');
 assert.notEqual(first, second);
@@ -22,6 +33,7 @@ assert.equal(memoryEngine.getState().memory.length, 1);
 assert.match(memoryEngine.respond('今天没什么特别的'), /小时候下雨/);
 
 const state = memoryEngine.getState();
+assert.ok(Object.hasOwn(state, 'lastGroup'));
 const restored = createEngine();
 restored.setState(state);
 assert.deepEqual(restored.getState(), state);
