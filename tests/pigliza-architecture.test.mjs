@@ -47,6 +47,16 @@ topicThreads.respond('朋友最近不理我');
 assert.equal(topicThreads.getState().dialogue.depth, 0);
 assert.equal(topicThreads.getState().dialogue.concept, 'relationship');
 
+const questionContract = createEngine();
+questionContract.respond('我最近考试压力很大');
+assert.equal(questionContract.getState().board.pending?.operation, 'answer');
+assert.equal(questionContract.getState().board.pending?.slot, 'detail');
+assert.doesNotMatch(questionContract.respond('主要是考试越来越近了'), /日常播报|后面还有|继续继续/);
+assert.equal(questionContract.getState().board.pending?.operation, 'answer');
+const pendingBeforeMeta = questionContract.getState().board.pending;
+assert.match(questionContract.respond('什么？'), /意思|是在问|直白话/);
+assert.deepEqual(questionContract.getState().board.pending, pendingBeforeMeta);
+
 const relief = createEngine();
 relief.respond('我最近很焦虑');
 assert.match(relief.respond('但现在已经不焦虑了'), /轻|没有之前|缓/);
@@ -82,7 +92,8 @@ assert.doesNotMatch(daily.respond('什么？'), /没完全接住|换一种说法
 const chooser = createEngine();
 assert.match(chooser.respond('炸鸡还是汉堡？'), /炸鸡|汉堡/);
 assert.match(chooser.respond('帮我选一个'), /候选|从什么里面选/);
-assert.deepEqual(chooser.getState().board.pending, { operation:'choose', slot:'choice' });
+assert.equal(chooser.getState().board.pending?.operation, 'choose');
+assert.equal(chooser.getState().board.pending?.slot, 'choice');
 assert.match(chooser.respond('吃的'), /面|盖饭|饺子|炸鸡|鸡排饭/);
 assert.equal(chooser.getState().board.pending, null);
 

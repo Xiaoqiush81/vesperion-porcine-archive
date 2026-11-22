@@ -1,8 +1,8 @@
 import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-8';
 import { advancePiglizaDialogue, createPiglizaDialogue, selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-9';
-import { realizePiglizaMoves, realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-9';
+import { realizePiglizaMoves, realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-10';
 import { adaptPiglizaTurn, createPiglizaGrounding, foreignPiglizaReply, groundPiglizaAnalysis } from './pigliza-grounding.js?v=20261122-pigliza-7';
-import { compilePiglizaTurn, createPiglizaBoard, planPiglizaMoves, updatePiglizaBoard } from './pigliza-kernel.js?v=20261122-pigliza-1';
+import { compilePiglizaTurn, createPiglizaBoard, groundPiglizaAnswer, pendingForPiglizaPlan, planPiglizaMoves, updatePiglizaBoard } from './pigliza-kernel.js?v=20261122-pigliza-2';
 
 const DEFAULT_MEMORY_SIZE = 12;
 export { reflectPorcinePhrase };
@@ -68,9 +68,10 @@ export class PiglizaEngine {
       this.turn += 1;
       return adapted.reply;
     }
-    const analysis = groundPiglizaAnalysis(contextualizePiglizaAnalysis(
+    let analysis = groundPiglizaAnalysis(contextualizePiglizaAnalysis(
       analyzePiglizaText(source, this.data), this.activeFrame, this.data), this.grounding);
     const turn = compilePiglizaTurn(source, analysis, this.board, this.data.capabilities);
+    analysis = groundPiglizaAnswer(analysis, turn, this.board, this.data);
     this.board = updatePiglizaBoard(this.board, turn);
     const operationPlan = planPiglizaMoves(turn, this.data, this);
     if (operationPlan) {
@@ -82,6 +83,7 @@ export class PiglizaEngine {
       this.turn += 1;
       return reply;
     }
+    if (turn.act === 'answer') this.board.pending = null;
     const otherLanguage = foreignPiglizaReply(this.grounding, source);
     if (otherLanguage) { this.lastStrategy = 'language-fallback'; this.turn += 1; return otherLanguage; }
     this.dialogue = advancePiglizaDialogue(this.dialogue, analysis.primary);
@@ -93,12 +95,14 @@ export class PiglizaEngine {
       this.lastStrategy = 'memory';
     } else if (plan) {
       reply = realizePiglizaPlan(plan, this, this.random);
+      this.board.pending = pendingForPiglizaPlan(plan) || (plan.strategy.meta ? this.board.pending : null);
       if (!plan.strategy.meta) {
         this.lastGroup = plan.frame.primary?.id || null;
         this.lastStrategy = plan.strategy.id;
       }
     } else {
       reply = this.recall() || this.pick('fallback', this.data.fallbacks);
+      this.board.pending = null;
       this.lastGroup = null;
       this.lastStrategy = reply.startsWith('刚才小猪') ? 'memory' : 'fallback';
     }

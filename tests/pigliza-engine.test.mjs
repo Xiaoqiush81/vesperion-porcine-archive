@@ -43,4 +43,10 @@ legacyState.setState({ turn:7, memory:[], lastChoices:{} });
 assert.deepEqual(legacyState.getState().dialogue, { concept:null, topic:'', depth:0 });
 assert.deepEqual(legacyState.getState().board, { focus:{ topic:'', concept:null }, pending:null });
 
+const pendingSource = createEngine();
+pendingSource.respond('我最近考试压力很大');
+const pendingRestored = createEngine();
+pendingRestored.setState(pendingSource.getState());
+assert.doesNotMatch(pendingRestored.respond('主要是考试越来越近了'), /日常播报|后面还有|继续继续/);
+
 console.log('pigliza engine tests passed');
