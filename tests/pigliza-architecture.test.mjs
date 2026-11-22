@@ -101,6 +101,34 @@ const ordinary = createEngine();
 ordinary.respond('今天买了个新杯子');
 assert.match(ordinary.respond('然后呢？'), /杯子|继续|后面/);
 
+const agenda = createEngine();
+agenda.respond('我最近考试压力很大，朋友又不理我');
+assert.equal(agenda.getState().board.agenda.length, 1);
+assert.equal(agenda.getState().board.agenda[0].concept, 'relationship');
+const agendaState = agenda.getState();
+const restoredAgenda = createEngine();
+restoredAgenda.setState(agendaState);
+assert.deepEqual(restoredAgenda.getState(), agendaState);
+assert.match(restoredAgenda.respond('换一个说'), /不理你|刚才/);
+assert.equal(restoredAgenda.getState().board.agenda.length, 0);
+assert.equal(restoredAgenda.getState().board.focus.concept, 'relationship');
+assert.equal(restoredAgenda.getState().board.pending?.slot, 'detail');
+assert.match(restoredAgenda.respond('主要是她最近总躲着我'), /她最近总躲着我|关系|对方/);
+
+const noAgenda = createEngine();
+noAgenda.respond('我最近考试压力很大');
+const focusBeforeEmptySwitch = noAgenda.getState().board.focus;
+assert.match(noAgenda.respond('换个话题'), /没有|什么/);
+assert.deepEqual(noAgenda.getState().board.focus, focusBeforeEmptySwitch);
+const currentTopic = createEngine();
+currentTopic.respond('今天买了个新杯子');
+assert.doesNotMatch(currentTopic.respond('还有呢'), /没有压着|刚才没聊完/);
+
+const dedupedAgenda = createEngine();
+dedupedAgenda.respond('我最近考试压力很大，朋友又不理我');
+dedupedAgenda.respond('我最近考试压力很大，朋友还是不理我');
+assert.equal(dedupedAgenda.getState().board.agenda.filter(item => item.concept === 'relationship').length, 1);
+
 for (const input of ['你好','谢谢','哈哈哈哈','笨蛋猪莉莎','好无聊','在干嘛']) {
   assert.doesNotMatch(createEngine().respond(input), /最重要|最想|哪一部分对小猪/);
 }

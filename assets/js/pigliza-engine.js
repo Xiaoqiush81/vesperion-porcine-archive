@@ -2,7 +2,7 @@ import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normali
 import { advancePiglizaDialogue, createPiglizaDialogue, selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-9';
 import { realizePiglizaMoves, realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-10';
 import { adaptPiglizaTurn, createPiglizaGrounding, foreignPiglizaReply, groundPiglizaAnalysis } from './pigliza-grounding.js?v=20261122-pigliza-7';
-import { compilePiglizaTurn, createPiglizaBoard, groundPiglizaAnswer, pendingForPiglizaPlan, planPiglizaMoves, updatePiglizaBoard } from './pigliza-kernel.js?v=20261122-pigliza-2';
+import { compilePiglizaTurn, createPiglizaBoard, groundPiglizaAnswer, pendingForPiglizaPlan, planPiglizaMoves, queuePiglizaTopics, updatePiglizaBoard } from './pigliza-kernel.js?v=20261122-pigliza-3';
 
 const DEFAULT_MEMORY_SIZE = 12;
 export { reflectPorcinePhrase };
@@ -72,10 +72,12 @@ export class PiglizaEngine {
       analyzePiglizaText(source, this.data), this.activeFrame, this.data), this.grounding);
     const turn = compilePiglizaTurn(source, analysis, this.board, this.data.capabilities);
     analysis = groundPiglizaAnswer(analysis, turn, this.board, this.data);
+    this.board = queuePiglizaTopics(this.board, analysis);
     this.board = updatePiglizaBoard(this.board, turn);
-    const operationPlan = planPiglizaMoves(turn, this.data, this);
+    const operationPlan = planPiglizaMoves(turn, this.data, this, this.board);
     if (operationPlan) {
       const reply = realizePiglizaMoves(operationPlan, this, this.random);
+      if (operationPlan.board) this.board = createPiglizaBoard({ ...this.board, ...operationPlan.board });
       this.board.pending = operationPlan.pending;
       this.lastGroup = turn.domain || turn.operation;
       this.lastStrategy = operationPlan.strategy;

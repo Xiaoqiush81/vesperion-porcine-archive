@@ -1,4 +1,6 @@
-import { detectPiglizaLocale, PIGLIZA_LOCALES } from './pigliza-locales.js?v=20261122-pigliza-8';
+import { detectPiglizaLocale, PIGLIZA_LOCALES } from './pigliza-locales.js?v=20261122-pigliza-9';
+
+const MAX_AGENDA_SIZE = 6;
 
 const ACTS = Object.freeze({
   'open-question':'ask', 'clarify-request':'repair', 'why-followup':'ask',
@@ -7,6 +9,15 @@ const ACTS = Object.freeze({
 });
 
 const clean = value => String(value || '').replace(/^[“”'"\s]+|[“”'"。！？!?\s]+$/gu, '').slice(0, 120);
+
+function compactAgendaItem(value) {
+  if (!value || typeof value !== 'object') return null;
+  const topic = clean(value.topic).slice(0, 80);
+  const concept = typeof value.concept === 'string' ? value.concept.slice(0, 80) : null;
+  return topic || concept ? { topic, concept } : null;
+}
+
+const agendaKey = item => item.concept ? `concept:${item.concept}` : `topic:${item.topic || ''}`;
 
 export function createPiglizaBoard(saved = {}) {
   if (!saved || typeof saved !== 'object') saved = {};
@@ -22,7 +33,26 @@ export function createPiglizaBoard(saved = {}) {
     topic:String(saved.focus.topic || '').slice(0, 80),
     concept:typeof saved.focus.concept === 'string' ? saved.focus.concept.slice(0, 80) : null,
   } : { topic:'', concept:null };
-  return { focus, pending };
+  const agenda = Array.isArray(saved.agenda)
+    ? saved.agenda.map(compactAgendaItem).filter(Boolean).filter((item, index, items) =>
+      items.findIndex(candidate => agendaKey(candidate) === agendaKey(item)) === index).slice(-MAX_AGENDA_SIZE)
+    : [];
+  return { focus, pending, agenda };
+}
+
+export function queuePiglizaTopics(saved, analysis) {
+  const board = createPiglizaBoard(saved), primary = analysis?.primary;
+  const primaryItem = compactAgendaItem({ topic:primary?.topic, concept:primary?.primary?.id });
+  const existing = new Set(board.agenda.map(agendaKey));
+  for (const frame of [...(analysis?.frames || [])].sort((a, b) => a.index - b.index)) {
+    if (frame === primary) continue;
+    const item = compactAgendaItem({ topic:frame.topic, concept:frame.primary?.id });
+    if (!item || agendaKey(item) === agendaKey(primaryItem) || existing.has(agendaKey(item))) continue;
+    board.agenda.push(item);
+    existing.add(agendaKey(item));
+  }
+  board.agenda = board.agenda.slice(-MAX_AGENDA_SIZE);
+  return board;
 }
 
 function extractOptions(text, locale) {
@@ -53,11 +83,13 @@ export function compilePiglizaTurn(source, analysis, savedBoard, capabilities = 
   const answerBlocked = new Set(['open-question','clarify-request','why-followup','continue-chat','greeting','thanks',
     'laughter','insult','food-talk','bored','small-talk','disagree']).has(frame?.act?.id);
   const answersPending = !operation && pendingOperation === 'answer' && !answerBlocked && source.length <= 240;
+  const keepsFocus = operationId === 'next-topic';
   return {
     act:answersPending ? 'answer' : operation ? (explicit || options.length > 1 ? 'request' : 'answer')
       : ACTS[frame?.act?.id] || frame?.act?.id || 'inform',
     operation, domain:domain?.id || null, options,
-    topic:frame?.topic || board.focus.topic || '', concept:answersPending ? board.pending.concept : frame?.primary?.id || null,
+    topic:keepsFocus ? board.focus.topic : frame?.topic || board.focus.topic || '',
+    concept:keepsFocus ? board.focus.concept : answersPending ? board.pending.concept : frame?.primary?.id || null,
     locale:locale === 'unknown' ? 'zh' : locale,
     confidence:operation ? (domain || options.length > 1 ? 1 : .72) : frame ? .6 : .2,
   };
@@ -68,6 +100,8 @@ export function updatePiglizaBoard(saved, turn) {
   const preservesFocus = ['answer','repair','continue'].includes(turn.act);
   if (turn.topic || turn.concept) board.focus = { topic:turn.topic || board.focus.topic,
     concept:turn.concept || (preservesFocus ? board.focus.concept : null) };
+  const focusKey = agendaKey(board.focus);
+  board.agenda = board.agenda.filter(item => agendaKey(item) !== focusKey);
   if (turn.act === 'correct') board.pending = null;
   return board;
 }
@@ -88,7 +122,17 @@ export function pendingForPiglizaPlan(plan) {
     concept:plan.frame.primary?.id || null, strategy:plan.strategy.id };
 }
 
-export function planPiglizaMoves(turn, data, state) {
+export function planPiglizaMoves(turn, data, state, savedBoard) {
+  if (turn.operation === 'next-topic') {
+    const board = createPiglizaBoard(savedBoard), next = board.agenda[0] || null;
+    if (!next) return { strategy:'operation:next-topic', pending:null, moves:[{ type:'agenda-empty' }] };
+    return {
+      strategy:'operation:next-topic',
+      pending:{ operation:'answer', slot:'detail', topic:next.topic, concept:next.concept, strategy:'operation:next-topic' },
+      board:{ focus:next, agenda:board.agenda.slice(1) },
+      moves:[{ type:'resume-topic', slots:{ topic:next.topic || '那件事' } }],
+    };
+  }
   if (turn.operation !== 'choose') return null;
   const capability = data.capabilities?.find(item => item.id === 'choose');
   const domain = capability?.domains.find(item => item.id === turn.domain);

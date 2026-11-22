@@ -1,4 +1,4 @@
-import { detectPiglizaLocale, PIGLIZA_LOCALES } from './pigliza-locales.js?v=20261122-pigliza-7';
+import { detectPiglizaLocale, PIGLIZA_LOCALES } from './pigliza-locales.js?v=20261122-pigliza-9';
 
 const MAX_TERMS = 24;
 const MAX_BIAS = 24;

@@ -1,4 +1,4 @@
-import { PIGLIZA_LOCALES } from './pigliza-locales.js?v=20261122-pigliza-8';
+import { PIGLIZA_LOCALES } from './pigliza-locales.js?v=20261122-pigliza-9';
 
 export const PIGLIZA_LEADS = {
   neutral:['','咪。','猪莉莎把这句话先放在桌面上。'],
