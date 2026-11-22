@@ -1,7 +1,7 @@
-import { compilePiglizaBehaviors, PIGLIZA_BEHAVIORS } from './pigliza-behaviors.js?v=20261122-pigliza-9';
+import { compilePiglizaBehaviors, PIGLIZA_BEHAVIORS } from './pigliza-behaviors.js?v=20261123-pigliza-10';
 import { PIGLIZA_CAPABILITIES } from './pigliza-capabilities.js?v=20261122-pigliza-1';
 import { PIGLIZA_ACTS, PIGLIZA_CONCEPTS, PIGLIZA_COPY } from './pigliza-lexicon.js?v=20261122-pigliza-8';
-import { PIGLIZA_STRATEGIES } from './pigliza-realizer.js?v=20261122-pigliza-10';
+import { PIGLIZA_STRATEGIES } from './pigliza-realizer.js?v=20261123-pigliza-11';
 
 function assertUnique(items, label) {
   const seen = new Set();

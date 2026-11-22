@@ -133,6 +133,29 @@ for (const input of ['你好','谢谢','哈哈哈哈','笨蛋猪莉莎','好无�
   assert.doesNotMatch(createEngine().respond(input), /最重要|最想|哪一部分对小猪/);
 }
 
+const socialCorpus = [
+  ['你是谁', /猪莉莎|规则谈话机/], ['你会干嘛', /闲聊|话题|聊天/],
+  ['真的假的', /电子猪眼睛|震惊|猪事/], ['牛逼', /尾巴|猪蹄章|认可/],
+  ['无语', /停顿|文明语言|怪事/], ['啊？', /没说清楚|没跟上|困惑/],
+  ['不知道', /不用硬编|暂时空着|不知道/], ['没事', /放下|不追着问|翻篇/],
+  ['随便', /选项|候选|范围/], ['哦', /记下|收到|继续/],
+];
+for (const [input, expected] of socialCorpus) {
+  const reply = createEngine().respond(input);
+  assert.match(reply, expected, input);
+  assert.doesNotMatch(reply, /最重要|最想|哪一部分|联想到什么/u, input);
+}
+
+const opinion = createEngine();
+opinion.respond('今天买了一个新杯子');
+assert.match(opinion.respond('你觉得呢'), /新杯子/);
+
+const reactionKeepsQuestion = createEngine();
+reactionKeepsQuestion.respond('我最近考试压力很大');
+const pendingQuestion = reactionKeepsQuestion.getState().board.pending;
+reactionKeepsQuestion.respond('啊？');
+assert.deepEqual(reactionKeepsQuestion.getState().board.pending, pendingQuestion);
+
 const corpus = [
   '学业压力…还有自我焦虑','爸爸，我最近学业压力很大','还有自我焦虑','这个问题很困难',
   '我想休息','我记得小时候下雨','所有人都觉得我很差','我很开心今天数学被老师夸了',

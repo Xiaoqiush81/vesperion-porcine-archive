@@ -2,7 +2,7 @@ import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normali
 import { advancePiglizaDialogue, createPiglizaDialogue, selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-9';
 import { realizePiglizaMoves, realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-10';
 import { adaptPiglizaTurn, createPiglizaGrounding, foreignPiglizaReply, groundPiglizaAnalysis } from './pigliza-grounding.js?v=20261122-pigliza-7';
-import { compilePiglizaTurn, createPiglizaBoard, groundPiglizaAnswer, pendingForPiglizaPlan, planPiglizaMoves, queuePiglizaTopics, updatePiglizaBoard } from './pigliza-kernel.js?v=20261122-pigliza-3';
+import { compilePiglizaTurn, createPiglizaBoard, groundPiglizaAnswer, pendingForPiglizaPlan, planPiglizaMoves, queuePiglizaTopics, updatePiglizaBoard } from './pigliza-kernel.js?v=20261123-pigliza-4';
 
 const DEFAULT_MEMORY_SIZE = 12;
 export { reflectPorcinePhrase };
@@ -97,7 +97,8 @@ export class PiglizaEngine {
       this.lastStrategy = 'memory';
     } else if (plan) {
       reply = realizePiglizaPlan(plan, this, this.random);
-      this.board.pending = pendingForPiglizaPlan(plan) || (plan.strategy.meta ? this.board.pending : null);
+      this.board.pending = pendingForPiglizaPlan(plan)
+        || (plan.strategy.meta || plan.strategy.preservePending ? this.board.pending : null);
       if (!plan.strategy.meta) {
         this.lastGroup = plan.frame.primary?.id || null;
         this.lastStrategy = plan.strategy.id;

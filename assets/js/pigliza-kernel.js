@@ -7,6 +7,7 @@ const ACTS = Object.freeze({
   'continue-chat':'continue', uncertain:'inform', statement:'inform',
   acknowledge:'react', disagree:'correct',
 });
+const ANSWER_ACTS = new Set(['statement','uncertain','cause','result','belief','desire','inability','generalize','recall']);
 
 const clean = value => String(value || '').replace(/^[“”'"\s]+|[“”'"。！？!?\s]+$/gu, '').slice(0, 120);
 
@@ -80,9 +81,8 @@ export function compilePiglizaTurn(source, analysis, savedBoard, capabilities = 
   const domain = findDomain(capability, source, locale);
   const operation = explicit || options.length > 1 || (pendingOperation && domain) ? operationId : null;
   const frame = analysis.primary;
-  const answerBlocked = new Set(['open-question','clarify-request','why-followup','continue-chat','greeting','thanks',
-    'laughter','insult','food-talk','bored','small-talk','disagree']).has(frame?.act?.id);
-  const answersPending = !operation && pendingOperation === 'answer' && !answerBlocked && source.length <= 240;
+  const answerLike = Boolean(frame?.primary) || ANSWER_ACTS.has(frame?.act?.id);
+  const answersPending = !operation && pendingOperation === 'answer' && answerLike && source.length <= 240;
   const keepsFocus = operationId === 'next-topic';
   return {
     act:answersPending ? 'answer' : operation ? (explicit || options.length > 1 ? 'request' : 'answer')
