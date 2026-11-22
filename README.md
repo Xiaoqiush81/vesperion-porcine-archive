@@ -8,7 +8,7 @@
 
 **在线访问：** [xiaoqiush81.github.io/vesperion-porcine-archive](https://xiaoqiush81.github.io/vesperion-porcine-archive/)
 
-**最新入馆：** PIGLIZA · 猪莉莎自适应内核启用；将语言适配、语义帧、共同语境、策略评分、受约束生成和显著性记忆分层组合。行业术语进入会话状态，交流偏好通过反馈调整策略权重，无需为每类用户复制整套脚本；全程本地运行且不连接语言模型。
+**最新入馆：** PIGLIZA · 猪莉莎自适应内核启用；将声明式行为包、语言适配、语义帧、共同语境、策略评分、受约束生成和显著性记忆分层组合。单项日常能力在一个条目中同时声明识别与回应，行业术语进入会话状态，交流偏好通过反馈调整策略权重；全程本地运行且不连接语言模型。
 
 PIGLIZA 继承 Joseph Weizenbaum 于 1960 年代提出的 ELIZA 会话思想；工程调研参考了 [Steve02081504/ELIZA](https://github.com/steve02081504/ELIZA) 的职责分层，但引擎、中文规则、回答模板与界面均为独立实现。
 

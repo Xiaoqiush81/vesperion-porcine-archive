@@ -2,12 +2,20 @@ import assert from 'node:assert/strict';
 import { PiglizaEngine } from '../assets/js/pigliza-engine.js';
 import { analyzePiglizaText } from '../assets/js/pigliza-analyzer.js';
 import { estimatePiglizaResponseSpace, PIGLIZA_LEADS } from '../assets/js/pigliza-realizer.js';
-import { PIGLIZA_DATA } from '../assets/js/pigliza-rules.js';
+import { extendPiglizaData, PIGLIZA_DATA } from '../assets/js/pigliza-rules.js';
 
 const createEngine = () => new PiglizaEngine(PIGLIZA_DATA, { random:() => 0 });
 
 assert.ok(estimatePiglizaResponseSpace(PIGLIZA_DATA) >= 1000);
 assert.equal(new Set(PIGLIZA_DATA.strategies.map(strategy => strategy.id)).size, PIGLIZA_DATA.strategies.length);
+const baseActCount = PIGLIZA_DATA.acts.length;
+const extended = extendPiglizaData(PIGLIZA_DATA, { behaviors:[{
+  id:'weather-chat', recognize:{ priority:35, markers:['天气'] },
+  respond:{ weight:140, lead:'neutral', templates:['天气话题已接入。'] },
+}] });
+assert.equal(PIGLIZA_DATA.acts.length, baseActCount);
+assert.equal(extended.acts.length, baseActCount + 1);
+assert.equal(new PiglizaEngine(extended, { random:() => 0 }).respond('今天天气不错'), '天气话题已接入。');
 for (const strategy of PIGLIZA_DATA.strategies) {
   assert.ok(PIGLIZA_LEADS[strategy.lead], strategy.id);
   for (const template of strategy.templates) {

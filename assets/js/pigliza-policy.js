@@ -19,10 +19,17 @@ function score(strategy, frame, stage, state) {
     - (strategy.id === state.lastStrategy ? 34 : 0) - (frame.primary?.id && frame.primary.id === state.lastGroup ? 5 : 0);
 }
 
+function candidates(frame, data) {
+  if (!data.strategyIndex) return data.strategies;
+  const selected = new Set(data.strategyIndex.generic);
+  for (const act of frame.acts) for (const strategy of data.strategyIndex.byAct[act] || []) selected.add(strategy);
+  return selected;
+}
+
 export function selectPiglizaPlan(analysis, state, data) {
   const stage = piglizaStageForTurn(state.turn);
   let best = null;
-  for (const frame of analysis.frames) for (const strategy of data.strategies) {
+  for (const frame of analysis.frames) for (const strategy of candidates(frame, data)) {
     if (!matches(strategy, frame)) continue;
     if (strategy.modes && !strategy.modes.includes(state.grounding?.mode || 'adaptive')) continue;
     if (strategy.reflective && (state.grounding?.mode === 'casual' || !frame.primary)) continue;

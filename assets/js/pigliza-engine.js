@@ -1,6 +1,6 @@
-import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-7';
-import { selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-7';
-import { realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-7';
+import { analyzePiglizaText, compactFrame, contextualizePiglizaAnalysis, normalizePiglizaText, reflectPorcinePhrase } from './pigliza-analyzer.js?v=20261122-pigliza-8';
+import { selectPiglizaPlan } from './pigliza-policy.js?v=20261122-pigliza-8';
+import { realizePiglizaPlan } from './pigliza-realizer.js?v=20261122-pigliza-8';
 import { adaptPiglizaTurn, createPiglizaGrounding, foreignPiglizaReply, groundPiglizaAnalysis } from './pigliza-grounding.js?v=20261122-pigliza-7';
 
 const DEFAULT_MEMORY_SIZE = 12;
